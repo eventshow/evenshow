@@ -1,0 +1,40 @@
+{%extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-form">
+            <h3 class="form-index">Asistentes</h3>
+            </br>
+            {% for enrollment in object_list %}
+            <div class="hero-asist">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="input-exp" value="{{enrollment.created_by.username}}" disabled="true">
+                        <input type="text" class="input-exp"
+                            value="{{enrollment.created_by.profile.avg_attendee_score|floatformat:2}}" disabled="true"
+                            style="width: 15%;">
+                        <input type="text" class="input-exp" value="{{enrollment.created_by.email}}" disabled="true">
+                    </div>
+                    <div class="col">
+                        </br>
+                        <a type="button" class="ptn-experiencias" title="Aceptar"
+                            href="{% url 'update_enrollment' pk=enrollment.pk status='ACCEPTED' %}">Aceptar
+                            Solicitud</a>
+                        </br></br></br>
+                        <a type="button" class="ptn-experiencias" title="Cancelar"
+                            href="{% url 'update_enrollment' pk=enrollment.pk status='REJECTED' %}">Rechazar
+                            solicitud</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </br>
+        </div>
+        </form>
+    </div>
+    </div>
+</section>
+
+{% endblock %}

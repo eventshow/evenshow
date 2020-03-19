@@ -1,0 +1,36 @@
+{%extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero-section">
+  <div class="container">
+
+    <div class="hero-form">
+      <h3 class="form-index">Valora a tu huésped</h3>
+      </br>
+      <form method="POST" action="{% url 'create_rating_attendee' event_pk attendee_pk %}">
+        {% csrf_token %}
+        <label>PUNTUACIÓN</label></br>
+          <div class="row">
+                        <div class="col-4">
+                            {{form.score}}
+                        </div></div>
+
+
+        <div class="text">
+          <label>COMENTA TU EXPERIENCIA</label>
+            <br>
+          {{form.comment}}
+
+        </div>
+           {{ form.errors }}
+        </br></br></br>
+        <button type="submit" class="site-btn site-btn-exp">ENVIAR</button>
+      </form>
+    </div>
+  </div>
+
+</section>
+
+
+{% endblock %}

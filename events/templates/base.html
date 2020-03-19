@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es, en">
+
+<head>
+    <title>EventShow</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="loans HTML Template">
+    <meta name="keywords" content="loans, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="{% static 'img/favicon.ico' %}" rel="shortcut icon" />
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/flaticon.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css'%}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/event/search/main.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/login/main.css'%}" />
+
+
+
+</head>
+
+<body>
+
+    <header class="header-section">
+
+        <nav class="header-nav">
+            <a href="{% url 'home' %}" class="site-logo">
+                <img class="navbar-logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
+            </a>
+            <ul class="main-menu">
+                <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'signup' %}">Regístrate</a></li>
+                <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                {% endif %}
+                {% if  user.is_authenticated %}
+                <li><a href="{% url 'hosted_events' %}">Mis experiencias (Anfitrión)</a></li>
+                <li><a href="{% url 'enrolled_events' %}">Mis experiencias (Huésped)</a></li>
+                <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                <li><img src="{% static 'img/avatar.png' %}" alt="Avatar" class="avatar"></li>
+
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="footer-section">
+        <div class="container">
+
+            <div class="copyright">
+                Copyright &copy;2020 eventshow, Inc. Todos los derechos reservados | <a href="">Privacidad</a> | <a
+                    href="">Condiciones</a> | <a href="">Datos de la empresa</a>
+                <div class="social-links-div">
+                    <a href="#" class="fa fa-instagram social"></a>
+                    <a href="#" class="fa fa-twitter social"></a>
+                    <a href="#" class="fa fa-facebook social"></a>
+                </div>
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+</body>
+
+</html>

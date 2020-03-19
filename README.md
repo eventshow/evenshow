@@ -12,7 +12,7 @@ Eventshow is a PWA which main in focus is a matchamaking system that puts in tou
 * postgresql 12.2-1
 
 (The remaining requirements will specified in **requirements.txt** file)
-  
+
 ## Config
 1. Create a virtual enviroment with `$ python -m venv venv`
     1. virtualenvwrapper (alternative method for creating venvs)
