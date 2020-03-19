@@ -56,6 +56,16 @@ In order to maintain homogeneity in the commits made to the repository we provid
 ```
 If you are using `Git Desktop` we don't have a solution so keep in mind to check the template (commit_template.txt on the repo root) whenever you are about to make a new commit.
 
+### When to commit? Early and often
+A commit should be made in mainly two cases:
+- When a unit of work is completed
+- When there are changes that may be undone
+
+This means that whenever any of these conditions are met, a commit should be made. If there is work completed a new commit is created (containing only the changes relevant to the particular work, don't git add . /-a), if there are changes that you may want to undo on the future just made another commit for these (you can always use git revert) and use the WIP tag.
+
+### A unit of work
+This is not based on time nor type, we consider a unit of work when you have made enough progress to add value/functionality to a new feature. Of course this will depend on the task's context, so please be mindful about when you consider work as finished.
+
 ## Branches
 We use *Git Flow* so we have a default branch called **dev** to which we make all our *Pull Requests* made from the different branches. These follow a particular naming convention in which we separate the type, department and task code by slashes (/): feat/be|fe/task_code_trello. A branch can have any fo the following names as its first parameter:
 - feat/     (new feature)
