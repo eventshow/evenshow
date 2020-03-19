@@ -67,3 +67,5 @@ We use *Git Flow* so we have a default branch called **dev** to which we make al
 - test/     (adding or refactoring tests; no production code change)
 - release/  (version bump/new release; no production code change)
 
+When a branch is merged into **dev** it will be deleted on the remote repository. You should also delete your local branch with `$ git branch -d branch/name`
+
