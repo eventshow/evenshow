@@ -45,3 +45,13 @@ def run():
    ---> management.call_command('loaddata', 'initial_data/initial_data')
 ```
 Before you do run the command `$ python manage.py flush` and accept if the command line presents you a confirmation prompt, once you do that run the seeding script and finally, run the following command `$ python manage.py loaddata initial_data/initial_data.json`
+
+## Commits
+In order to maintain homogeneity in the commits made to the repository we provide a commit template that enforces good practices. In order to make it default the following steps must be taken:
+
+1. `$ git config commit.template rute/to/the/commit/template`
+2. Add the following line to your repo configuration file **.git/config**: 
+```
+[commit]
+  template = rute/to/the/commit/template
+```
