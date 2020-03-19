@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Eventshow stuff
+initial_data.json
+
+# IDEs stuff
+.idea/
+.vscode/
