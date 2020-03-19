@@ -18,7 +18,7 @@ Eventshow is a PWA which main in focus is a matchamaking system that puts in tou
     1. virtualenvwrapper (alternative method for creating venvs)
         1. `$ mkvirtualenv eventshow`
         2. `$ workon eventshow`
-2. We should first create a new file **settings.py** based on **settings.example.py**, that we should also edit with the appropiate info about the database that we will configure in step 6.
+2. We **MUST** first create a new file **local_settings.py** based on **settings/settings.py**, that we should also edit with the appropiate info about the database that we will configure in step 6.
 3. Once we got our venv up and running we use pip (inside the venv) to install the requirements with `$(eventshow) pip install -r requirements.txt`.
 4. Create a django superuser with `$ python manage.py createsuperuser'.
 5. The next step is to connect to postgres and create a new database and database user with:
