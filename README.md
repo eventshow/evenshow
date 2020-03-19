@@ -57,7 +57,7 @@ In order to maintain homogeneity in the commits made to the repository we provid
 If you are using `Git Desktop` we don't have a solution so keep in mind to check the template whenever you are about to make a new commit.
 
 ## Branches
-We use *Git Flow* so we have a default branch called **dev** to which we make all our *Pull Requests* made from the different branches. These follow a particular naming convention: feat/be|fe/task_code_trello. A branch can have any fo the following names as its first parameter:
+We use *Git Flow* so we have a default branch called **dev** to which we make all our *Pull Requests* made from the different branches. These follow a particular naming convention in which we separate the type, department and task code by slashes (/): feat/be|fe/task_code_trello. A branch can have any fo the following names as its first parameter:
 - feat/     (new feature)
 - fix/      (bug fix)
 - hotfix/   (bug fixes during production)
