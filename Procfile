@@ -1,0 +1,1 @@
+web: gunicorn eventshow.wsgi --log-file -

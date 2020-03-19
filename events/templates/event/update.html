@@ -1,0 +1,114 @@
+{%extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero-section">
+  <div class="container">
+
+    <div class="hero-form">
+      <h3 class="form-index">Editar evento</h3>
+      </br> </br>
+      <form method="POST" action=" {% url 'update_event' object.pk %}">
+        {% csrf_token %}
+        <div class="hero-form">
+          <labelRate>DATOS EVENTO</labelRate></br>
+          </br>
+          <label>¿QUÉ TIPO DE EVENTO OFRECES?</label>
+          {{ form.category }}
+          {{ form.category.erros }}
+          <label>TÍTULO</label>
+          {{ form.title }}
+          {{ form.title.errors }}
+          <label>DESCRIPCIÓN</label>
+          {{ form.description }}
+          {{ form.description.errors }}
+          <div class="row">
+            <div class="col">
+              <label>Nº MAX ASISTENTES</label>
+              {{ form.capacity }}
+              {{ form.capacity.errors }}
+            </div>
+            <div class="col">
+              <label>EDAD MÍNIMA</label>
+              {{ form.min_age }}
+              {{ form.min_age.errors }}
+            </div>
+            <div class="col">
+              <label>PRECIO</label>
+              {{ form.price }}
+              {{ form.price.errors }}
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <div class="hero-form">
+          <labelRate>DATOS EVENTO</labelRate></br>
+          </br>
+          <label>CIUDAD</label>
+              {{ form.location_city }}
+              {{ form.location_city.errors }}
+              <label>CALLE</label>
+            {{ form.location_street }}
+            {{ form.location_street.errors }}
+          <div class="row">
+            <div class="col">
+                 <label>NÚMERO</label>
+            {{ form.location_number }}
+            {{ form.location_number.errors }}
+              <label>FECHA</label>
+              {{ form.start_day }}
+              {{ form.start_day.errors }}
+            </div>
+            <div class="col">
+              <label>HORA INICIO</label>
+              {{ form.start_time }}
+              {{ form.start_time.errors }}
+                 <label>HORA FIN</label>
+              {{ form.end_time }}
+              {{ form.end_time.errors }}
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <div class="hero-form">
+          <labelRate>DATOS EVENTO</labelRate></br>
+          </br>
+          <div class="row">
+            <div class="col-4">
+              <label>MASCOTAS</label>
+              {{ form.pets }}
+              {{ form.pets.errors }}
+              
+            </div>
+            <div class="col-4">
+              <label>IDIOMA</label>
+              {{ form.lang }}
+              {{ form.lang.errors }}
+            </div>
+            <div class="col-4">
+              <label>APARCAMIENTO CERCANO</label>
+              {{ form.parking_nearby }}
+              {{ form.parking_nearby.errors }}
+              
+            </div>
+            <div class="col-12">
+              <label>FOTO</label>
+              {{ form.picture }}
+              {{ form.picture.errors }}
+            </div>
+            <div class="col-12">
+              <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
+              {{ form.extra_info }}
+              {{ form.extra_info.errors }}
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <button type="submit" class="site-btn site-btn-exp">Actualizar Datos</button>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

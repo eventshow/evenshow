@@ -1,0 +1,114 @@
+{%extends 'base.html'%}
+
+{% block content %}
+
+<section class="hero-section-search">
+    <div class="wrapper wrapper--w1070">
+        <!--div class="card-body">
+            <form class="form" method="POST" action="#">
+                <div class="input-group input--medium">
+                    <label class="label">Localización</label>
+                    <input class="input--style-1" type="text" placeholder="" name="going">
+                </div>
+                <div class="input-group input--medium">
+                    <label class="label">Fecha</label>
+                    <input class="input--style-1" type="date" name="checkin" placeholder="" id="input-start">
+                </div>
+                <div class="input-group input--medium">
+                    <label class="label">Precio Mínimo</label>
+                    <input class="input--style-1" type="text" name="checkout" placeholder="" id="input-end">
+                </div>
+                <div class="input-group input--medium">
+                    <label class="label">Precio Máximo</label>
+                    <input class="input--style-1" type="text" name="checkout" placeholder="" id="input-end">
+                </div>
+                <button class="btn-submit" type="submit">search</button>
+            </form>
+        </div>
+    </div>
+    </div-->
+<br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1 class="title1">Sevilla</h1>
+                <h3 class="title2"> {{ object_list|length }} resultados</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <br><br>
+                <button class="btn-category" type="submit">
+                  <h3 class="title2">Categoría 1</h3>
+                   <h3 class="">XX resultados</h3>
+            </button>
+                <button class="btn-category" type="submit">
+                  <h3 class="title2">Categoría 2</h3>
+                   <h3 class="">XX resultados</h3>
+            </button>
+                <button class="btn-category" type="submit">
+                  <h3 class="title2">Categoría 3</h3>
+                   <h3 class="">XX resultados</h3>
+            </button>
+                <button class="btn-category" type="submit">
+                  <h3 class="title2">Categoría 4</h3>
+                   <h3 class="">XX resultados</h3>
+            </button>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <br><br>
+                <h1 class="title1">Todos los resultados</h1>
+                <br>
+            </div>
+            
+        </div>
+    </div>
+    <hr>
+    
+    <div class="container">
+        <br>
+
+        {% for event in object_list %}
+        <div class="row">
+            
+            <br>
+            <div class="col-md-4">
+                <h4 class="title2"> {{ event.category }}</h4>
+                <a href="{% url 'detail_event' event.pk %}"><h2 class="title3">{{ event.title }}</h2></a>
+                <h4>Duración: {{ event.duration }} minutos | Incluye</h4>
+                <h4 class="title2">Descripción:</h4>
+                <h5>{{ event.description }}</h5>
+                <h3 class="title4-price">{{ event.price }}€</h3>
+            </div>
+            <div class="col-xs-1">
+                <i class="fa fa-star"></i>
+                
+            </div>
+            <div class="col-xs-1">
+                <h4 class="title4">{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</h4>
+            </div>
+            <div class="col-md-6">
+                {% if event.picture %}
+                <a href="{% url 'detail_event' event.pk %}"><img src=" {{ MEDIA_URL }}{{ event.picture }} " alt="event picture"></a>
+                {% else %}
+                <a href="{% url 'detail_event' event.pk %}"><img src=" {{ MEDIA_URL }}img/event.jpg " alt="detail event" ></a>
+                {% endif %}
+                <br>
+                <hr>
+                <br>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+<hr>
+</section>
+
+{% endblock %}

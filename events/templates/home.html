@@ -1,0 +1,49 @@
+{%extends 'base.html'%}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+    body {
+        background-image: url("{% static 'css/images/cena.jpg'%}");
+        background-size: cover;
+    }
+</style>
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <form class="hero-form" method="GET" action="{% url 'nearby_events' %}">
+                    <h3 class="form-index">Encuentra y reserva experiencias únicas</h3>
+
+                    <label>DISTANCIA</label>
+                    <input type="number" placeholder="Distancia en metros" name="distance">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label>FECHA</label>
+                            <input type="date" placeholder="fecha" readonly="true">
+                        </div>
+                        <div class="col-6">
+                            <label>HORA</label>
+                            <input type="time" placeholder="hh:mm" readonly="true">
+                        </div>
+                    </div>
+
+                    <button class="site-btn site-btn-form">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<style>
+    .footer-section {
+        position: fixed;
+    }
+</style>
+{% endblock %}

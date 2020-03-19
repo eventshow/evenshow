@@ -1,0 +1,144 @@
+{%extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="container">
+
+        <div class="hero-form">
+            <h3 class="form-index">Mis experiencias</h3>
+             {% if request.get_full_path == '/events/enrolled' %}
+            </br> </br>
+            <div class="col-md-12">
+
+                <h5>Experiencias siendo huésped</h5>
+
+                <div class="limiter">
+                    <div class="container-table100">
+                        <div class="wrap-table100">
+                            <div class="table">
+
+                                <div class="rowExpe header">
+                                    <div class="cell">
+                                        Puntuar
+                                    </div>
+                                    <div class="cell">
+                                        Título
+                                    </div>
+                                    <div class="cell">
+                                        Fecha
+                                    </div>
+                                    <div class="cell">
+                                        Lugar
+                                    </div>
+                                    <div class="cell">
+                                        Acciones
+                                    </div>
+                                </div>
+
+                                {% for event in object_list %}
+
+                                <div class="rowExpe">
+
+                                        <div class="cell" data-title="Punt">
+
+                                        <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" class="fa fa-star" title="Puntuar"/>
+                                        </td>
+                                        </div>
+                                        <div class="cell" data-title="title-event">
+                                            {{event.title}}
+                                        </div>
+                                        <div class="cell" data-title="event-date">
+                                            {{event.start_day}}
+                                        </div>
+                                        <div class="cell" data-title="Lugar">
+                                            {{event.location_city}}, {{event.location_street}}, {{event.location_number}}
+                                        </div>
+                                        <!--div class="cell" data-title="actions">
+                                            <button type="button" class="ptn-experiencias">ya no quiero ir</button>
+                                        </div-->
+                                </div>
+                                   {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="site-btn site-btn-exp">
+
+                    Mostrar todas las experiencias
+                </button>
+
+                {% endif %}
+                {% if request.get_full_path == '/events/hosted' %}
+                </br></br></br></br></br>
+                <h5>Experiencias siendo anfitrión</h5>
+
+                <div class="limiter">
+                    <div class="container-table100">
+                        <div class="wrap-table100">
+                            <div class="table">
+
+                                <div class="rowExpe header">
+                                    <div class="cell">
+                                        Puntuar
+                                    </div>
+                                    <div class="cell">
+                                        Título
+                                    </div>
+                                    <div class="cell">
+                                        Fecha
+                                    </div>
+                                    <div class="cell">
+                                        Lugar
+                                    </div>
+                                    <div class="cell">
+                                        Acciones
+                                    </div>
+                                </div>
+                                    {% for  event in object_list %}
+
+                                <div class="rowExpe">
+
+                                        <div class="cell" data-title="Punt">
+
+                                        <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" class="fa fa-star" title="Puntuar"/>
+                                        </td>
+                                        </div>
+                                        <div class="cell" data-title="title-event">
+                                            {{event.title}}
+                                        </div>
+                                        <div class="cell" data-title="event-date">
+                                            {{event.start_day}}
+                                        </div>
+                                        <div class="cell" data-title="Lugar">
+                                            {{event.location_city}}, {{event.location_street}}, {{event.location_number}}
+                                        </div>
+                                        <div class="cell" data-title="actions">
+                                           <a href="{% url 'update_event' event.id %}"> Editar |</a>
+                                          <a href="{% url 'delete_event' event.id %}"> Eliminar</a>
+
+                                        </div>
+
+
+                                </div>
+
+{% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="site-btn site-btn-exp">
+
+                    Mostrar todas las experiencias
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}
