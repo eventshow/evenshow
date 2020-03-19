@@ -55,3 +55,15 @@ In order to maintain homogeneity in the commits made to the repository we provid
 [commit]
   template = rute/to/the/commit/template
 ```
+
+## Branches
+We use *Git Flow* so we have a default branch called **dev** to which we make all our *Pull Requests* made from the different branches. These follow a particular naming convention: feat/be|fe/task_code_trello. A branch can have any fo the following names as its first parameter:
+- feat/     (new feature)
+- fix/      (bug fix)
+- hotfix/   (bug fixes during production)
+- refactor/ (refactoring code)
+- style/    (formatting, missing semi colons, etc; no code change)
+- doc/      (changes to documentation)
+- test/     (adding or refactoring tests; no production code change)
+- release/  (version bump/new release; no production code change)
+
