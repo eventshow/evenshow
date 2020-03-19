@@ -20,14 +20,13 @@ Eventshow is a PWA which main in focus is a matchamaking system that puts in tou
         2. `$ workon eventshow`
 2. We should first create a new file **settings.py** based on **settings.example.py**, that we should also edit with the appropiate info about the database that we will configure in step 6.
 3. Once we got our venv up and running we use pip (inside the venv) to install the requirements with `$(eventshow) pip install -r requirements.txt`.
-4. And then we use `$(eventshow) npm install` to install all that is needed for the frontend
-5. Create a django superuser with `$ python manage.py createsuperuser'.
-6. The next step is to connect to postgres and create a new database and database user with:
+4. Create a django superuser with `$ python manage.py createsuperuser'.
+5. The next step is to connect to postgres and create a new database and database user with:
     1. `$ sudo -iu postgres`
     2. `[postgres]$ psql -c "create user showman with password 'showman'"`
     3. `[postgres]$ psql -c "create database eventshow owner showman`
-7. Then we use `$(eventshow) python manage.py makemigrations` and `$(eventshow) python manage.py migrate` to apply all the migrations to the database.
-8. Finally, we use `$python manage.py runscript seed` which will seed/populate the DB and create a superuser with username 'showman' and password 'showman'. Every other user created will have a username 'x' with password 'x'. If the script returns an error like **Can't run script seed** comment the next lines in the **/scripts/seed.py** file:
+6. Then we use `$(eventshow) python manage.py makemigrations` and `$(eventshow) python manage.py migrate` to apply all the migrations to the database.
+7. Finally, we use `$python manage.py runscript seed` which will seed/populate the DB and create a superuser with username 'showman' and password 'showman'. Every other user created will have a username 'x' with password 'x'. If the script returns an error like **Can't run script seed** comment the next lines in the **/scripts/seed.py** file:
 ```
 def run():
    ---> management.call_command('flush', interactive=False)
