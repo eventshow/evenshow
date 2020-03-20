@@ -263,7 +263,7 @@ def seed_event_enrollments(event, attendees, host, event_date, price):
 def seed_transaction(transmitter, recipient, created_at, amount):
     fields = {
         'amount': amount + 1.15,
-        'concept': 'Eventshow, asistencia a evento',
+        'concept': 'Eventshow: asistencia a evento',
         'created_at': created_at + '+0000',
         'updated_at': created_at + '+0000',
         'created_by': transmitter,
