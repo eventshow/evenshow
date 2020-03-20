@@ -228,6 +228,7 @@ class Transaction(Common):
     recipient = models.ForeignKey(User, on_delete=models.SET(
         get_sentinel_user), related_name='recipient_transaction')
     amount = models.PositiveIntegerField('Amount')
+    concept = models.CharField('Concept', max_length=140)
 
     class Meta:
         ordering = ['-created_at']
