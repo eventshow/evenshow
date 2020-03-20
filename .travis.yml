@@ -19,7 +19,7 @@ before_install:
 install:
   - pip install -r requirements.txt
 before_script:
-  - cp ./eventshow/local_settings.example.py ./eventshow/local_settings.py
+  - cp ./eventshow/settings/settings.example.py ./eventshow/local_settings.py
   - export PATH="/usr/lib/postgresql/12/bin:$PATH"
   - psql -U postgres -c "CREATE USER showman WITH PASSWORD 'showman'"
   - psql -U postgres -c "ALTER USER showman CREATEDB"
