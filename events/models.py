@@ -1,4 +1,6 @@
 import pytz
+import uuid
+
 from datetime import datetime, date
 
 from django.contrib.auth import get_user_model
@@ -7,14 +9,16 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
+from django.utils.crypto import get_random_string
 from django.utils.timezone import now
+
 
 from core.models import Common
 
 # Create your models here.
 
+
 User = get_user_model()
-UTC = pytz.UTC
 
 
 def get_sentinel_user():
@@ -22,11 +26,23 @@ def get_sentinel_user():
 
 
 class Profile(models.Model):
+    EVENTPOINT_VALUE = 0.005
+    TOKEN_LENGTH = 8
+
     user = models.OneToOneField(
         User, related_name="profile", on_delete=models.CASCADE)
-    location = models.CharField('Location', max_length=250, default='')
-    picture = models.ImageField('Picture', upload_to='profiles/%Y/%m/%d/')
-    age = models.PositiveSmallIntegerField('Age')
+    location = models.CharField('Location', max_length=250, null=True)
+    picture = models.URLField('Picture url', blank=True, null=True)
+    birthdate = models.DateField('Birthdate', null=True)
+    token = models.CharField('Personal token', max_length=8,
+                             default=get_random_string(length=TOKEN_LENGTH).upper(), editable=False)
+    eventpoints = models.PositiveIntegerField(
+        'Eventpoints', default=0, editable=False)
+
+    @property
+    def age(self):
+        today = date.today()
+        return today.year - self.birthdate.year - ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
 
     @property
     def avg_attendee_score(self):
@@ -37,6 +53,10 @@ class Profile(models.Model):
     def avg_host_score(self):
         return self.user.reviewed_ratings.filter(on='HOST').aggregate(
             models.Avg('score'))['score__avg']
+
+    @property
+    def discount(self):
+        return self.eventpoints * EVENTPOINT_VALUE
 
     class Meta:
         verbose_name = 'Profile'
@@ -60,10 +80,11 @@ class Category(models.Model):
 
 
 class Event(Common):
+    UTC = pytz.UTC
+
     title = models.CharField('Title', max_length=250)
     description = models.TextField('Description')
-    picture = models.ImageField(
-        'Picture', blank=True, null=True, upload_to='events/%Y/%m/%d/')
+    picture = models.URLField('Picture url')
 
     location_city = models.CharField('City', max_length=250)
     location_street = models.CharField('Street', max_length=250)
@@ -165,7 +186,7 @@ class Rating(Common):
 
     score = models.PositiveSmallIntegerField(
         'Score', validators=[MaxValueValidator(5), MinValueValidator(1)])
-    comment = models.TextField('Comment')
+    comment = models.TextField('Comment', blank=True, null=True)
     on = models.CharField('On', max_length=8, choices=ON_CHOICES)
 
     event = models.ForeignKey(
@@ -193,3 +214,20 @@ class Rating(Common):
 
     def get_absolute_url(self):
         return reverse('rating-detail', kwargs={'pk': self.pk})
+
+
+class Transaction(Common):
+    id = models.UUIDField('Id', primary_key=True,
+                          default=uuid.uuid4, editable=False)
+    created_by = models.ForeignKey(User, on_delete=models.SET(
+        get_sentinel_user), related_name='transmitter_transaction')
+    recipient = models.ForeignKey(User, on_delete=models.SET(
+        get_sentinel_user), related_name='recipient_transaction')
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Transaction'
+        verbose_name_plural = 'Transactions'
+
+    def __str__(self):
+        return str(self.id)
