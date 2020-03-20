@@ -4,7 +4,7 @@
 
 {% load static %}
 <section class="hero-section-event">
-    <img class="hero-image" src="{{object.picture.url}}">
+    <img class="hero-image" src="{{object.picture}}">
     <br><br><br>
     <div class="container-fluid2">
         <div class="row">
@@ -12,14 +12,16 @@
                 <div class="event-page-rate">
                     <div class="row">
                         <div class="col-md-7">
-                            <img class="event-host" alt='anfitrion' src="{{object.created_by.profile.picture.url}}">
+                            <img class="event-host" alt='anfitrion' src="{{object.created_by.profile.picture}}">
                         </div>
 
                         <div class="col-2">
                             <i class=" fa fa-event fa-star"></i>
                         </div>
                         <div class="col-md-2">
-                           <h4 class="title4-rate">{{object.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }} </h4>
+                            <h4 class="title4-rate">
+                                {{object.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -28,9 +30,9 @@
         </div>
         <div class="col-md-6"></div>
         <h1 class="title1_0">{{object.title}} </h1>
-<div class="button-event-page">
-        <a class="event-submit" type="submit" href="{% url 'enroll_event' object.pk %}">INSCRIBIRSE</a>
-    </div>
+        <div class="button-event-page">
+            <a class="event-submit" type="submit" href="{% url 'enroll_event' object.pk %}">INSCRIBIRSE</a>
+        </div>
     </div>
 
     </div>
@@ -81,11 +83,12 @@
             <br>
             <h1 class="title1_anf">Anfitrión </h1>
             <br>
-            <img class="anfitrion-img" src="{{object.created_by.profile.picture.url}}">
+            <img class="anfitrion-img" src="{{object.created_by.profile.picture}}">
             <br><br>
             <div class="row row-event">
                 <i class="fa fa-star"></i>
-                <h3 class="title4-rate">{{object.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</h3>
+                <h3 class="title4-rate">
+                    {{object.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</h3>
             </div>
         </div>
         <div class="col-md-8">

@@ -31,13 +31,14 @@ class Profile(models.Model):
 
     user = models.OneToOneField(
         User, related_name="profile", on_delete=models.CASCADE)
-    location = models.CharField('Location', max_length=250, null=True)
+    location = models.CharField(
+        'Location', max_length=250, blank=True, null=True)
     picture = models.URLField('Picture url', blank=True, null=True)
-    birthdate = models.DateField('Birthdate', null=True)
-    token = models.CharField('Personal token', max_length=8,
-                             default=get_random_string(length=TOKEN_LENGTH).upper(), editable=False)
+    birthdate = models.DateField('Birthdate')
+    token = models.CharField('Personal token', max_length=8, editable=False)
     eventpoints = models.PositiveIntegerField(
         'Eventpoints', default=0, editable=False)
+    bio = models.TextField('Bio', blank=True, null=True)
 
     @property
     def age(self):
@@ -56,7 +57,11 @@ class Profile(models.Model):
 
     @property
     def discount(self):
-        return self.eventpoints * EVENTPOINT_VALUE
+        return self.eventpoints * self.EVENTPOINT_VALUE
+
+    def save(self, *args, **kwargs):
+        self.token = get_random_string(length=self.TOKEN_LENGTH).upper()
+        super(Profile, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Profile'
@@ -94,10 +99,9 @@ class Event(Common):
     start_time = models.TimeField('Starting time')
     end_time = models.TimeField('Ending time')
     price = models.DecimalField(
-        'Price', max_digits=6, decimal_places=2, blank=True, null=True)
+        'Price', max_digits=6, decimal_places=2)
     capacity = models.PositiveSmallIntegerField('Capacity')
-    min_age = models.PositiveSmallIntegerField(
-        'Minimum age', blank=True, null=True)
+    min_age = models.PositiveSmallIntegerField('Minimum age')
     lang = models.CharField('Language', max_length=250)
     pets = models.BooleanField('Pets allowed')
     parking_nearby = models.BooleanField('Parking nearby')
@@ -131,12 +135,12 @@ class Event(Common):
     @property
     def has_finished(self):
         end_datetime = datetime.combine(self.start_day, self.start_time)
-        return UTC.localize(end_datetime) <= now()
+        return self.UTC.localize(end_datetime) <= now()
 
     @property
     def has_started(self):
         start_datetime = datetime.combine(self.start_day, self.start_time)
-        return UTC.localize(start_datetime) <= now()
+        return self.UTC.localize(start_datetime) <= now()
 
     @property
     def location(self):
@@ -144,7 +148,7 @@ class Event(Common):
 
     def save(self, *args, **kwargs):
         self.full_clean()
-        return super().save(*args, **kwargs)
+        super(Event, self).save(*args, **kwargs)
 
     def clean(self):
         if self.start_time > self.end_time:
@@ -223,6 +227,7 @@ class Transaction(Common):
         get_sentinel_user), related_name='transmitter_transaction')
     recipient = models.ForeignKey(User, on_delete=models.SET(
         get_sentinel_user), related_name='recipient_transaction')
+    amount = models.PositiveIntegerField('Amount')
 
     class Meta:
         ordering = ['-created_at']

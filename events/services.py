@@ -150,7 +150,6 @@ class RatingService():
                     valid = True
                 # the attendee can only rate the event host
                 elif rating.reviewed == event.created_by:
-                    print(rating.reviewed)
                     valid = True
         return valid
 

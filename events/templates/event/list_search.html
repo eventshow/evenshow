@@ -99,7 +99,7 @@
                 </div>
                 <div class="col-md-6">
                     {% if event.picture %}
-                    <a href="{% url 'detail_event' event.pk %}"><img src=" {{ MEDIA_URL }}{{ event.picture.url }} "
+                    <a href="{% url 'detail_event' event.pk %}"><img src=" {{ MEDIA_URL }}{{ event.picture }} "
                             alt="event picture"></a>
                     {% else %}
                     <a href="{% url 'detail_event' event.pk %}"><img src=" {{ MEDIA_URL }}img/event.jpg "
