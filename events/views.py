@@ -281,7 +281,8 @@ class RatingCreateHost(generic.CreateView):
         is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
             created_by, event)
 
-        if (not exist_already_rating) and is_enrolled_for_this_event:
+
+        if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
         else:
             return redirect('events')
@@ -301,7 +302,6 @@ class RatingCreateHost(generic.CreateView):
         rating.reviewed = host
         rating.event = event
         rating.on = 'HOST'
-
         if services.RatingService.is_valid_rating(rating, event, created_by):
             services.RatingService.create(rating)
             return super().form_valid(form)
@@ -328,8 +328,7 @@ class RatingCreateAttendant(generic.CreateView):
             created_by, event.id)
         is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
             attendee, event)
-
-        if (not exist_already_rating) and is_owner_of_this_event and is_enrolled_for_this_event:
+        if (not exist_already_rating) and is_owner_of_this_event and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
         else:
             return redirect('home')

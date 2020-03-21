@@ -134,7 +134,6 @@ class RatingService():
         now = datetime.now()
         now = pytz.utc.localize(now)
         # the event must have ended
-        print(event.has_finished)
         if event.has_finished:
 
             rating_user_for_this_event = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(
