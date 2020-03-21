@@ -363,7 +363,16 @@ class SignUpView(generic.CreateView):
         user = form.save()
         birthdate = form.cleaned_data.get('birthdate')
         services.ProfileService.create(user, birthdate)
+<<<<<<< HEAD
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
+=======
+
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password2')
+        user = authenticate(username=username,
+                            password=password)
+        login(self.request, user)
+>>>>>>> [fix][WIP] Signup con nuevos campos
         return super(SignUpView, self).form_valid(form)
 
 
