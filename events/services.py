@@ -63,6 +63,14 @@ class EventService():
             raise PermissionDenied('Already enrolled')
         attendee.attendee_events.add(event)
         return event
+    
+    def can_create(user: User) -> bool:
+        res = True
+
+        if user.profile.bio is None or user.first_name is None or user.last_name is None:
+            res = False
+
+        return res
 
     @staticmethod
     def nearby_events_distance(distance):
@@ -161,6 +169,28 @@ class RatingService():
         else:
             rol = 'HOST'
         return rol
+
+class PaymentService():
+
+    def application_fee_amount(amount_host: int) -> int:
+
+        res = 0
+        const_stripe = 25
+        var_stripe = 1.029
+
+        if (amount_host >= 0) and amount_host <= 50:
+            res = (amount_host + 15)*var_stripe + const_stripe
+        elif (amount_host > 50) and (amount_host <= 150):
+            res = (amount_host * 1.25)*var_stripe + const_stripe
+        elif (amount_host > 150) and (amount_host <= 300):
+            res = (amount_host * 1.2)*var_stripe + const_stripe
+        elif (amount_host > 300) and (amount_host <= 500):
+            res = (amount_host * 1.15)*var_stripe + const_stripe
+        elif (amount_host > 500):
+            res = (amount_host * 1.10)*var_stripe + const_stripe
+        
+        return round(res-amount_host)
+
 
 
 # Metodos auxiliares

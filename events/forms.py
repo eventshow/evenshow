@@ -32,9 +32,11 @@ class EventCreateForm(forms.ModelForm):
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
+        extra_info = forms.TextInput(attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
+            'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
             'capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '4', 'name': 'capacity'}),
             'min_age': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'años', 'name': 'min_age'}),
             'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '5€', 'name': 'price'}),
@@ -47,7 +49,6 @@ class EventCreateForm(forms.ModelForm):
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'español', 'name': 'lang'}),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '...', 'name': 'extra_info'}),
         }
 
 
@@ -55,6 +56,7 @@ class EventUpdateForm(forms.ModelForm):
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
+        extra_info = forms.TextInput(attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
             'title': forms.TextInput(attrs={'name': 'title'}),
             'description': forms.TextInput(attrs={'name': 'description'}),
@@ -70,7 +72,6 @@ class EventUpdateForm(forms.ModelForm):
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.TextInput(attrs={'class': 'form-control', 'name': 'lang'}),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'class': 'form-control', 'name': 'extra_info'}),
         }
 
 
