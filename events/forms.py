@@ -3,7 +3,7 @@ from django import forms
 from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
-CHOICES_SCORE = ((0,0), (1,1), (2,2), (3,3), (4,4), (5,5))
+CHOICES_SCORE = ((1,1), (2,2), (3,3), (4,4), (5,5))
 
 class RatingForm(forms.ModelForm):
     class Meta:

@@ -134,7 +134,8 @@ class Event(Common):
 
     @property
     def has_finished(self):
-        end_datetime = datetime.combine(self.start_day, self.start_time)
+        end_datetime = datetime.combine(self.start_day, self.end_time)
+        print(end_datetime)
         return self.UTC.localize(end_datetime) <= now()
 
     @property
