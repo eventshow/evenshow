@@ -1,8 +1,12 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
+User = get_user_model()
 
 
 class RatingForm(forms.ModelForm):
@@ -65,3 +69,27 @@ class EventUpdateForm(forms.ModelForm):
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'class': 'form-control', 'name': 'extra_info'}),
         }
+
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True, label='EMAIL')
+    birthdate = forms.DateField(required=True, label='FECHA DE NACIMIENTO')
+    friend_token = forms.CharField(
+        required=False, label='CÓDIGO AMIGO', max_length=8)
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'email',
+            'birthdate',
+            'password1',
+            'password2',
+            'friend_token'
+        )
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("El email ya existe")
+        return self.cleaned_data

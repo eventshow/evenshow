@@ -1,42 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-                <div class="login100-more1">
-				</div>
-				<form class="login100-form hero-form validate-form" method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
-					<span class="login100-form-title p-b-43">
-						Regístrate
-					</span>
-                        <br>
-                    <div class="validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						{{ form.username }}
-					</div>
-                    <div class=" validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						{{ form.password1 }}
-					</div>
-                    <div class=" validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						{{ form.password2 }}
-					</div>
-                        <br>
-
-					<div class="flex-sb-m w-full p-t-3 p-b-32">
-					</div>
-
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Continúa
-						</button>
-					</div>
-                    {{ form.errors }}
-				</form>
-
-
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<div class="login100-more1">
 			</div>
+			<form class="login100-form hero-form validate-form" method="POST" action="{% url 'signup' %}">
+				{% csrf_token %}
+				<span class="login100-form-title p-b-43">
+					Regístrate
+				</span>
+				<br>
+				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+					{{ form.username }}
+				</div>
+				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+					{{ form.email }}
+				</div>
+				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+					{{ form.birthdate }}
+				</div>
+				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
+					{{ form.password1 }}
+				</div>
+				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+					{{ form.password2 }}
+				</div>
+				<div class="input">
+					{{ form.friend_token }}
+				</div>
+				<br>
+
+				<div class="flex-sb-m w-full p-t-3 p-b-32">
+				</div>
+
+
+				<div class="container-login100-form-btn">
+					<button class="login100-form-btn">
+						Continúa
+					</button>
+				</div>
+				{{ form.errors }}
+			</form>
+
+
 		</div>
 	</div>
+</div>
 {% endblock %}
