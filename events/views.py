@@ -320,15 +320,16 @@ class RatingCreateAttendant(generic.CreateView):
         created_by = request.user
         event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
         attendee_id = self.kwargs.get('attendee_pk')
+        attendee = models.User.objects.get(id=attendee_id)
         exist_already_rating = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(created_by,
                                                                                                    event,
                                                                                                    attendee_id)
         is_owner_of_this_event = selectors.EventSelector.is_owner(
             created_by, event.id)
-        print(created_by)
-        print(event)
-        print(attendee_id)
-        if (not exist_already_rating) and is_owner_of_this_event:
+        is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
+            attendee, event)
+
+        if (not exist_already_rating) and is_owner_of_this_event and is_enrolled_for_this_event:
             return super().get(self, request, args, *kwargs)
         else:
             return redirect('home')
