@@ -9,6 +9,7 @@ Django==3.0.4
 django-cloudinary-storage==0.2.3
 django-extensions==2.2.8
 django-heroku==0.3.1
+django-materialize==1.0.1a2
 Faker==4.0.2
 googlemaps==4.2.0
 gunicorn==20.0.4
