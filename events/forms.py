@@ -28,6 +28,7 @@ class EventCreateForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
+            'picture': forms.TextInput(attrs={'placeholder': 'http://'}),
             'capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '4', 'name': 'capacity'}),
             'min_age': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'años', 'name': 'min_age'}),
             'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '5€', 'name': 'price'}),

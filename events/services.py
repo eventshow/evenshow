@@ -62,6 +62,14 @@ class EventService():
             raise PermissionDenied('Already enrolled')
         attendee.attendee_events.add(event)
         return event
+    
+    def can_create(user: User) -> bool:
+        res = True
+
+        if user.profile.bio is None or user.first_name is None or user.last_name is None:
+            res = False
+
+        return res
 
     @staticmethod
     def nearby_events_distance(distance):

@@ -92,6 +92,12 @@ class EventCreateView(generic.CreateView):
     success_url = EVENT_SUCCESS_URL
     template_name = 'event/create.html'
 
+    def get(self, request, *args, **kwargs):
+        if services.EventService.can_create(self.request.user):
+            return super().get(request, *args, **kwargs)
+        else:
+            return redirect('/')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = models.Category.objects.all()
