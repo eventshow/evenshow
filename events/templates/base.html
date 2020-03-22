@@ -46,8 +46,8 @@
           <li>
             <a class='dropdown-trigger' href='#' data-target='dropdown1'>Mis experiencias</a>
             <ul id='dropdown1' class='dropdown-content'>
-            <li><a href="{% url 'hosted_events' %}">Anfitrión</a></li>
-            <li><a href="{% url 'enrolled_events' %}">Huésped</a></li>
+              <li><a href="{% url 'hosted_events' %}">Anfitrión</a></li>
+              <li><a href="{% url 'enrolled_events' %}">Huésped</a></li>
             </ul>
           </li>
           <li>
@@ -61,6 +61,40 @@
           {% endif %}
         </ul>
       </div>
+
+
+      <ul id="slide-out" class="sidenav">
+        <li>
+          <div class="user-view">
+            {% if  user.is_authenticated %}
+
+        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target='dropdown2'><img
+              src="{% static 'img/avatar.png' %}" alt="Avatar" class="avatar"></a></li>
+        <li><a href="#!">Preferencias</a></li>
+        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+        {% endif %}
+        </div>
+        {% if not user.is_authenticated %}
+        <li> <img class="logo-movil" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow"></li>
+        <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+        <li><a href="{% url 'signup' %}">Regístrate</a></li>
+        {% endif %}
+
+        <li>
+          <div class="divider"></div>
+        </li>
+        <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+        <li>
+          <div class="divider"></div>
+        </li>
+
+        <li><a class="sh-eventshow">Mis experiencias</a></li>
+        <li><a href="{% url 'hosted_events' %}">Anfitrión</a></li>
+        <li><a href="{% url 'enrolled_events' %}">Huésped</a></li>
+
+      </ul>
+      <a id="movil" href="#" data-target="slide-out"
+        class="btn-floating btn-large waves-effect waves-light sidenav-trigger"><i class="material-icons">menu</i></a>
     </nav>
   </header>
   <main>
@@ -68,21 +102,52 @@
     {% block content %}
     {% endblock %}
   </main>
-  <footer class="page-footer">
-    <div class="container">
+  <!--footer class="page-footer">
+    <div class="container-fluid2">
       <div class="footer-copyright">
-        Copyright &copy;2020 eventshow, Inc. Todos los derechos reservados<a href="">Privacidad</a><a
-          href="">Condiciones</a><a href="{% url 'home' %}">Datos de la empresa</a>
-        <div class="social-links">
+          <div class="row">
+        <div class="col l3 s12 ">Copyright &copy;2020 eventshow, Inc. Todos los derechos reservados</div>
+        <div class="col l3 s12 "><a href="">Privacidad</a></div>
+        <div class="col l3 s12 "><a href="">Condiciones</a></div>
+         <div class="col l3 s12 "> <a href="{% url 'home' %}">Datos de la empresa</a></div>
+        <div class="col l3  s12 social-links">
           <a href="#" class="fa fa-instagram social"></a>
           <a href="#" class="fa fa-twitter social"></a>
           <a href="#" class="fa fa-facebook social"></a>
         </div>
       </div>
-
+</div>
     </div>
 
+  </footer-->
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l3 s12 copy">
+          <a class="grey-text text-lighten-3 " href="#!">Link 1</a> | <a class="grey-text text-lighten-3" href="#!">Link
+            1</a> | <a class="grey-text text-lighten-3" href="#!">Link 1</a> | <a class="grey-text text-lighten-3"
+            href="#!">Link 1</a>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        Copyright &copy;2020 eventshow, Inc. Todos los derechos reservados
+      </div>
+         <div class="col l3 s12 social">
+          <a href="#" class="fa fa-instagram social"></a>
+          <a href="#" class="fa fa-twitter social"></a>
+          <a href="#" class="fa fa-facebook social"></a>
+        </div>
+    </div>
   </footer>
+
+
+
+
 
 
   {% block javascript %}
@@ -109,6 +174,12 @@
 
   <script>
     $('.dropdown-trigger').dropdown();
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $('.sidenav').sidenav();
+    });
   </script>
 
   {% endblock javascript %}

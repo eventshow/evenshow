@@ -10,14 +10,39 @@
 	margin-top: -20%;
 }
 
+#avatar-movil{
+	margin-top: 15%;
+}
+.logo {
+	height: 70px;
+	margin-top: -7px;
+}
 
 .logo {
 	height: 70px;
-	margin-top: -7px
+	margin-top: -7px;
+	align-content: center;
 }
+
+#movil{
+	color: white !important;
+	background: #B7234D ;
+	border-radius: 50% !important;
+	margin-top: 3%;
+	margin-left: 3%;
+
+
+}
+
 
 #nav {
 	background-color: #B7234D;
+}
+
+.sh-eventshow{
+	font-weight: bold !important;
+	margin-left: -10px;
+
 }
 
 nav ul li:hover {
@@ -101,6 +126,23 @@ element.style{
 
 .social-links {
 	font-size: 20px;
+}
+
+.copy{
+	color: white !important;
+	margin-left: -10px !important;
+	text-align: left !important;
+}
+
+.social{
+	color: white !important;
+	margin-right: 30px !important;
+	text-align: right !important;
+}
+
+.social a{
+	margin-right: -10px !important;
+	margin-left: 10px;
 }
 
 
@@ -220,4 +262,18 @@ label {
 	color: #B7234D;
 	font-size: 20px;
 	margin-right: 20px;
+}
+
+/* RESPONSIVE */
+
+@media only screen and (min-width: 411px) and (max-width: 731px) {
+   .form-eventshow {
+	background: #FFF;
+	width: 200%;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 25px 20px 90px !important;
+    margin-left: 5%;
+}
+
 }

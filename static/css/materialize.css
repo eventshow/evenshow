@@ -7571,7 +7571,7 @@ input[type=range]::-ms-thumb {
   height: calc(100% + 60px);
   height: -moz-calc(100%);
   padding-bottom: 60px;
-  background-color: #fff;
+  background-color: #B6244D !important;
   z-index: 999;
   overflow-y: auto;
   will-change: transform;
@@ -7604,7 +7604,7 @@ input[type=range]::-ms-thumb {
 }
 
 .sidenav li > a {
-  color: rgba(0, 0, 0, 0.87);
+  color: white !important;
   display: block;
   font-size: 14px;
   font-weight: 500;
