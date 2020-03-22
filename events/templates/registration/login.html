@@ -4,33 +4,25 @@
     <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form hero-form validate-form" method="POST" action="{% url 'login' %}">
+				<form class="login100-form form-eventshow login validate-form" method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
 					<span class="login100-form-title  p-b-43">
 						Iniciar Sesión
 					</span>
                         <br>
 					<div class="validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="" type="text" placeholder="email" name="username"  name="email">
+						<input class="" required="true" type="text" placeholder="email" name="username"  name="email">
 					</div>
 
 					<div class="validate-input" data-validate="Password is required">
-						<input class="" type="password" placeholder="password" name="password" id="id_password" name="pass">
+						<input class="" type="password"  required="true" placeholder="contraseña" name="password" id="id_password" name="pass">
 					</div>
-                        <br>
 					<div class="flex-sb-m w-full p-t-3 p-b-32">
-						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-							<label class="label-checkbox100" for="ckb1">
-								Recuérdame
-							</label>
-						</div>
 
-						<div>
 							<a href="{% url 'password_reset' %}" class="txt1"><br>
 								¿Has olvidado tu contraseña?
 							</a>
-						</div>
+
 					</div><br>
 
 
@@ -53,4 +45,5 @@
 			</div>
 		</div>
 	</div>
+
 {% endblock %}

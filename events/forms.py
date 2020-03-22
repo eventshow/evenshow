@@ -1,8 +1,15 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
+
+CHOICES_SCORE = ((1,1), (2,2), (3,3), (4,4), (5,5))
+
+User = get_user_model()
 
 
 class RatingForm(forms.ModelForm):
@@ -10,7 +17,7 @@ class RatingForm(forms.ModelForm):
         model = Rating
         exclude = ['event', 'on', 'created_by', 'reviewed']
         widgets = {
-            'score': forms.TextInput(attrs={'placeholder': 'Un valor entre 1 y 5'}),
+            'score': forms.Select(choices=CHOICES_SCORE),
             'comment': forms.Textarea(attrs={'placeholder': 'Información acerca de la valoración'}),
         }
 
@@ -66,3 +73,27 @@ class EventUpdateForm(forms.ModelForm):
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'class': 'form-control', 'name': 'extra_info'}),
         }
+
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True, label='EMAIL')
+    birthdate = forms.DateField(required=True, label='FECHA DE NACIMIENTO')
+    friend_token = forms.CharField(
+        required=False, label='CÓDIGO AMIGO', max_length=8)
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'email',
+            'birthdate',
+            'password1',
+            'password2',
+            'friend_token'
+        )
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("El email ya existe")
+        return self.cleaned_data
