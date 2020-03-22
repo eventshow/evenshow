@@ -7,7 +7,7 @@ from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
 
-CHOICES_SCORE = ((1,1), (2,2), (3,3), (4,4), (5,5))
+CHOICES_SCORE = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
 User = get_user_model()
 
@@ -75,10 +75,18 @@ class EventUpdateForm(forms.ModelForm):
 
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True, label='EMAIL')
-    birthdate = forms.DateField(required=True, label='FECHA DE NACIMIENTO')
-    friend_token = forms.CharField(
-        required=False, label='CÓDIGO AMIGO', max_length=8)
+    username = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "usuario"}))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(
+        attrs={'placeholder': "email"}))
+    birthdate = forms.DateField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "mm/dd/yyyy"}))
+    password1 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "contraseña"}))
+    password2 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "confirmación contraseña"}))
+    friend_token = forms.CharField(required=False, max_length=8, widget=forms.TextInput(
+        attrs={'placeholder': "código amigo"}))
 
     class Meta:
         model = User

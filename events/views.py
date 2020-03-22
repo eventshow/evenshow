@@ -280,7 +280,6 @@ class RateHostView(generic.CreateView):
         is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
             created_by, event)
 
-
         if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
         else:

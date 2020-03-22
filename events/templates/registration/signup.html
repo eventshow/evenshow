@@ -6,7 +6,7 @@
 		<div class="wrap-login100">
 			<div class="login100-more1">
 			</div>
-			<form class="login100-form form-eventshow login validate-form" method="POST" action="{% url 'login' %}">
+			<form class="login100-form form-eventshow login validate-form" method="POST" action="{% url 'signup' %}">
 				{% csrf_token %}
 				<span class="login100-form-title p-b-43">
 					Regístrate
@@ -25,9 +25,8 @@
 					{{ form.last_name }}
 				</div>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
-					{{ form.birthday }}
+					{{ form.birthdate }}
 				</div>
-
 				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.password1 }}
 				</div>
@@ -35,14 +34,12 @@
 					{{ form.password2 }}
 				</div>
 				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
-					{{ form.token }}
+					{{ form.friend_token }}
 				</div>
 				<br>
 
 				<div class="flex-sb-m w-full p-t-3 p-b-32">
 				</div>
-
-
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn">
 						Continúa
@@ -50,8 +47,6 @@
 				</div>
 				{{ form.errors }}
 			</form>
-
-
 		</div>
 	</div>
 </div>
