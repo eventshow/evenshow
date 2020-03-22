@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 
 from .models import Category, Event, Rating
@@ -72,6 +72,20 @@ class EventUpdateForm(forms.ModelForm):
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'class': 'form-control', 'name': 'extra_info'}),
         }
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "usuario"}))
+    password = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "contraseña"}))
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'password',
+        )
 
 
 class RegistrationForm(UserCreationForm):
