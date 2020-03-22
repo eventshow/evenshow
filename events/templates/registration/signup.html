@@ -6,7 +6,7 @@
 			<div class="wrap-login100">
                 <div class="login100-more1">
 				</div>
-				<form class="login100-form hero-form validate-form" method="POST" action="{% url 'login' %}">
+				<form class="login100-form form-eventshow login validate-form" method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
 					<span class="login100-form-title p-b-43">
 						Regístrate
@@ -15,11 +15,27 @@
                     <div class="validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						{{ form.username }}
 					</div>
+                    <div class="validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						{{ form.email }}
+					</div>
+                    <div class="validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						{{ form.first_name }}
+					</div>
+                    <div class="validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						{{ form.last_name }}
+					</div>
+                    <div class="validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						{{ form.birthday }}
+					</div>
+
                     <div class=" validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						{{ form.password1 }}
 					</div>
                     <div class=" validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						{{ form.password2 }}
+					</div>
+                     <div class=" validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						{{ form.token }}
 					</div>
                         <br>
 
