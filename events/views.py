@@ -124,7 +124,7 @@ class EventDeleteView(generic.DeleteView):
             self.object.delete()
             return redirect('hosted_events')
         else:
-            return redirect('events')
+            return redirect('/')
 
     def get(self, request, *args, **kwargs):
         host = request.user
@@ -132,7 +132,7 @@ class EventDeleteView(generic.DeleteView):
         if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, self.kwargs.get('pk')):
             return super().get(request, *args, **kwargs)
         else:
-            return redirect('events')
+            return redirect('/')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -177,7 +177,7 @@ class EventUpdateView(generic.UpdateView):
             services.EventService.update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
-            return redirect('events')
+            return redirect('/')
 
     def get(self, request, *args, **kwargs):
         host = request.user
@@ -185,7 +185,7 @@ class EventUpdateView(generic.UpdateView):
         if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, kwargs.get('pk')):
             return super().get(request, *args, **kwargs)
         else:
-            return redirect('events')
+            return redirect('/')
 
 
 def nearby_events(request, distance=None):
