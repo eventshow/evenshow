@@ -4,13 +4,14 @@
 <div class="limiter">
 	<div class="container-login100">
 		<div class="wrap-login100">
+
 			<div class="login100-more1">
 			</div>
 			<form class="login100-form form-eventshow login validate-form" method="POST" action="{% url 'signup' %}">
 				{% csrf_token %}
-				<span class="login100-form-title p-b-43">
+				<h1>
 					Regístrate
-				</span>
+				</h1>
 				<br>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.username }}
@@ -40,12 +41,17 @@
 
 				<div class="flex-sb-m w-full p-t-3 p-b-32">
 				</div>
+
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn">
 						Continúa
 					</button>
 				</div>
+
+            <div class="form-errors">
 				{{ form.errors }}
+            </div>
+
 			</form>
 		</div>
 	</div>

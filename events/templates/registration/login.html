@@ -12,12 +12,10 @@
 				<br>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{form.username}}
-					{{form.username.errors}}
 				</div>
 
 				<div class="validate-input" data-validate="Password is required">
 					{{form.password}}
-					{{form.password.errors}}
 				</div>
 				<div class="flex-sb-m w-full p-t-3 p-b-32">
 
@@ -37,8 +35,11 @@
 				<div class="txt1"><br>
 
 					¿Aún no te has registrado? Hazlo <a href="{% url 'signup' %}">aquí</a>!
-
 				</div>
+
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
 
 			</form>
 
