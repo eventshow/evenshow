@@ -45,15 +45,15 @@
           {% if  user.is_authenticated %}
           <li>
             <a class='dropdown-trigger' href='#' data-target='dropdown1'>Mis experiencias</a>
-            <ul id='dropdown2' class='dropdown-content'>
+            <ul id='dropdown1' class='dropdown-content'>
             <li><a href="{% url 'hosted_events' %}">Anfitrión</a></li>
             <li><a href="{% url 'enrolled_events' %}">Huésped</a></li>
             </ul>
           </li>
           <li>
-            <a class='dropdown-trigger' href='#' data-target='dropdown1'><img src="{% static 'img/avatar.png' %}"
+            <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{% static 'img/avatar.png' %}"
                 alt="Avatar" class="avatar"></a>
-            <ul id='dropdown1' class='dropdown-content'>
+            <ul id='dropdown2' class='dropdown-content'>
               <li><a href="#!">Panel de control</a></li>
               <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
