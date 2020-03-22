@@ -16,7 +16,6 @@ from . import forms
 from . import models
 from . import selectors
 from . import services
-from .forms_auth import UserCreationForm
 
 EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
@@ -361,14 +360,16 @@ class RateAttendeeView(generic.CreateView):
 
 
 class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = forms.RegistrationForm
+    success_url = reverse_lazy('home')
     template_name = 'registration/signup.html'
 
     def form_valid(self, form):
         user = form.save()
-        services.ProfileService.create(user, None)
+        birthdate = form.cleaned_data.get('birthdate')
+        services.ProfileService.create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
-        return redirect('/'), {'STATIC_URL': settings.STATIC_URL}
+        return super(SignUpView, self).form_valid(form)
 
 
 def attendees_list(request, event_pk):

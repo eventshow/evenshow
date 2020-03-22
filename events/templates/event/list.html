@@ -7,7 +7,7 @@
 
         <div class="hero-form">
             <h3 class="form-index">Mis experiencias</h3>
-             {% if request.get_full_path == '/events/enrolled' %}
+            {% if request.get_full_path == '/events/enrolled' %}
             </br> </br>
             <div class="col-md-12">
 
@@ -40,25 +40,27 @@
 
                                 <div class="rowExpe">
 
-                                        <div class="cell" data-title="Punt">
+                                    <div class="cell" data-title="Punt">
 
-                                        <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" class="fa fa-star" title="Puntuar"/>
+                                        <button type="button"
+                                            onclick="location.href='{% url 'create_rating_host' event.pk %}'"
+                                            class="fa fa-star" title="Puntuar" />
                                         </td>
-                                        </div>
-                                        <div class="cell" data-title="title-event">
-                                            {{event.title}}
-                                        </div>
-                                        <div class="cell" data-title="event-date">
-                                            {{event.start_day}}
-                                        </div>
-                                        <div class="cell" data-title="Lugar">
-                                            {{event.location_city}}, {{event.location_street}}, {{event.location_number}}
-                                        </div>
-                                        <!--div class="cell" data-title="actions">
+                                    </div>
+                                    <div class="cell" data-title="title-event">
+                                        <a href="{% url 'detail_event' event.pk %}">{{event.title}}</a>
+                                    </div>
+                                    <div class="cell" data-title="event-date">
+                                        {{event.start_day}}
+                                    </div>
+                                    <div class="cell" data-title="Lugar">
+                                        {{event.location_city}}, {{event.location_street}}, {{event.location_number}}
+                                    </div>
+                                    <!--div class="cell" data-title="actions">
                                             <button type="button" class="ptn-experiencias">ya no quiero ir</button>
                                         </div-->
                                 </div>
-                                   {% endfor %}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -95,34 +97,36 @@
                                         Acciones
                                     </div>
                                 </div>
-                                    {% for  event in object_list %}
+                                {% for  event in object_list %}
 
                                 <div class="rowExpe">
 
-                                        <div class="cell" data-title="Punt">
+                                    <div class="cell" data-title="Punt">
 
-                                        <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" class="fa fa-star" title="Puntuar"/>
+                                        <button type="button"
+                                            onclick="location.href='{% url 'list_attendees' event.pk %}'"
+                                            class="fa fa-star" title="Puntuar" />
                                         </td>
-                                        </div>
-                                        <div class="cell" data-title="title-event">
-                                            {{event.title}}
-                                        </div>
-                                        <div class="cell" data-title="event-date">
-                                            {{event.start_day}}
-                                        </div>
-                                        <div class="cell" data-title="Lugar">
-                                            {{event.location_city}}, {{event.location_street}}, {{event.location_number}}
-                                        </div>
-                                        <div class="cell" data-title="actions">
-                                           <a href="{% url 'update_event' event.id %}"> Editar |</a>
-                                          <a href="{% url 'delete_event' event.id %}"> Eliminar</a>
+                                    </div>
+                                    <div class="cell" data-title="title-event">
+                                        {{event.title}}
+                                    </div>
+                                    <div class="cell" data-title="event-date">
+                                        {{event.start_day}}
+                                    </div>
+                                    <div class="cell" data-title="Lugar">
+                                        {{event.location_city}}, {{event.location_street}}, {{event.location_number}}
+                                    </div>
+                                    <div class="cell" data-title="actions">
+                                        <a href="{% url 'update_event' event.id %}"> Editar |</a>
+                                        <a href="{% url 'delete_event' event.id %}"> Eliminar</a>
 
-                                        </div>
+                                    </div>
 
 
                                 </div>
 
-{% endfor %}
+                                {% endfor %}
 
 
                             </div>

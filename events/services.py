@@ -1,9 +1,10 @@
-from collections import OrderedDict
-from datetime import datetime, time
-from operator import itemgetter
-
 import googlemaps
 import pytz
+
+from collections import OrderedDict
+from datetime import date, datetime, time
+from operator import itemgetter
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.utils.timezone import now
@@ -114,8 +115,8 @@ class EventService():
 
 
 class ProfileService():
-    def create(user: User, picture: str):
-        profile = models.Profile.objects.create(user=user, picture=picture)
+    def create(user: User, birthdate: date):
+        profile = models.Profile.objects.create(user=user, birthdate=birthdate)
         profile.save()
 
 
