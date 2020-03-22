@@ -6,6 +6,9 @@ from django.core.exceptions import ValidationError
 from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
+
+CHOICES_SCORE = ((1,1), (2,2), (3,3), (4,4), (5,5))
+
 User = get_user_model()
 
 
@@ -14,7 +17,7 @@ class RatingForm(forms.ModelForm):
         model = Rating
         exclude = ['event', 'on', 'created_by', 'reviewed']
         widgets = {
-            'score': forms.TextInput(attrs={'placeholder': 'Un valor entre 1 y 5'}),
+            'score': forms.Select(choices=CHOICES_SCORE),
             'comment': forms.Textarea(attrs={'placeholder': 'Información acerca de la valoración'}),
         }
 

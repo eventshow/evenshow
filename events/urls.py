@@ -34,9 +34,9 @@ urlpatterns = [
          name='update_event'),
 
     path('ratings/new/host/<int:event_pk>',
-         views.RatingCreateHost.as_view(), name='create_rating_host'),
+         views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
-            views.RatingCreateAttendant.as_view(), name='create_rating_attendee'),
+            views.RateAttendeeView.as_view(), name='create_rating_attendee'),
     re_path(r'^ratings/host/list/(?P<event_pk>\d+)?/?$',
             views.attendees_list, name='list_attendees'),
 ]
