@@ -266,11 +266,11 @@ class EnrollmentUpdateView(generic.View):
 
 
 @method_decorator(login_required, name='dispatch')
-class RatingCreateHost(generic.CreateView):
+class RateHostView(generic.CreateView):
     template_name = 'rating/rating_host.html'
     model = models.Rating
     form_class = forms.RatingForm
-    success_url = '/home'
+    success_url = '/events/enrolled'
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
@@ -285,10 +285,10 @@ class RatingCreateHost(generic.CreateView):
         if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
         else:
-            return redirect('events')
+            return redirect('home')
 
     def get_context_data(self, **kwargs):
-        context = super(RatingCreateHost, self).get_context_data(**kwargs)
+        context = super(RateHostView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
         return context
 
@@ -310,11 +310,11 @@ class RatingCreateHost(generic.CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class RatingCreateAttendant(generic.CreateView):
+class RateAttendeeView(generic.CreateView):
     template_name = 'rating/rating_attendee.html'
     model = models.Rating
     form_class = forms.RatingForm
-    success_url = '/home'
+    success_url = '/events/hosted'
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
@@ -334,7 +334,7 @@ class RatingCreateAttendant(generic.CreateView):
             return redirect('home')
 
     def get_context_data(self, **kwargs):
-        context = super(RatingCreateAttendant, self).get_context_data(**kwargs)
+        context = super(RateAttendeeView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
         context['attendee_pk'] = self.kwargs.get('attendee_pk')
 
@@ -357,7 +357,7 @@ class RatingCreateAttendant(generic.CreateView):
             services.RatingService.create(rating)
             return super().form_valid(form)
         else:
-            return redirect('events')
+            return redirect('home')
 
 
 class SignUpView(generic.CreateView):
