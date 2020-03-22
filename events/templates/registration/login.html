@@ -6,9 +6,9 @@
 		<div class="wrap-login100">
 			<form class="login100-form form-eventshow login validate-form" method="POST" action="{% url 'login' %}">
 				{% csrf_token %}
-				<span class="login100-form-title  p-b-43">
+				<h1>
 					Iniciar Sesión
-				</span>
+				</h1>
 				<br>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{form.username}}
