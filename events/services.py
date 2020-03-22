@@ -169,6 +169,33 @@ class RatingService():
             rol = 'HOST'
         return rol
 
+class PaymentService():
+
+    def amount_attendee(amount_host: int) -> int:
+
+        res = 0
+        constStripe = 25
+        varStripe = 1.029
+
+        if (amount_host >= 0) and amount_host <= 50:
+            res = (amount_host + 15)*varStripe + constStripe
+        elif (amount_host > 50) and (amount_host <= 150):
+            res = (amount_host * 1.25)*varStripe + constStripe
+        elif (amount_host > 150) and (amount_host <= 300):
+            res = (amount_host * 1.2)*varStripe + constStripe
+        elif (amount_host > 300) and (amount_host <= 500):
+            res = (amount_host * 1.15)*varStripe + constStripe
+        elif (amount_host > 500):
+            res = (amount_host * 1.10)*varStripe + constStripe
+        
+        return round(res)
+
+    def application_fee_amount(amount_host: int) -> int:
+        
+        return round(amount_attendee(amount_host)-amount_host)
+
+
+
 
 # Metodos auxiliares
 def common_method(events):
