@@ -31,8 +31,8 @@
         <div class="col-md-6"></div>
         <h1 class="title1_0">{{object.title}} </h1>
         <div class="button-event-page">
-
-            <form action="{% url 'enroll_event' object.pk %}" method="get">
+            {% if user_can_enroll %}
+            <form action="{% url 'enroll_event' object.pk %}" method="POST">
                 {% csrf_token %}
                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ stripe_key }}"
                     data-description="A Django Charge" data-amount="500" data-locale="auto" data-label="INSCRIBIRSE">
@@ -41,7 +41,9 @@
                 <script>
                     document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "event-submit");
                 </script>
+
             </form>
+            {% endif %}
         </div>
     </div>
 
@@ -105,8 +107,7 @@
             <br><br><br>
             <div class="row">
                 <h2><b>{{object.created_by.first_name}}</b> {{object.created_by.last_name}}</h2>
-                <h3 class="descripcion">{{object.created_by.profile.bio}
-                </h3>
+                <h3 class="descripcion">{{ object.created_by.profile.bio }}</h3>
             </div>
         </div>
 
@@ -129,23 +130,23 @@
         <div class="col-md-3">
             <br><br>
             <img class="anfitrion-img" src="{{rating.created_by.profile.picture.url}}">
-                    <h3 class="title4-rate-com">{{rating.created_by.username}}</h3>
-                    <div class="event-page-comment">
-                        <div class="row row-rate">
-                            <i class="fa fa-star"></i>
-                            <h4 class="title4-rate">{{rating.score}}</h4>
-                        </div>
-                    </div>
+            <h3 class="title4-rate-com">{{rating.created_by.username}}</h3>
+            <div class="event-page-comment">
+                <div class="row row-rate">
+                    <i class="fa fa-star"></i>
+                    <h4 class="title4-rate">{{rating.score}}</h4>
+                </div>
             </div>
-            <div class="col-md-6">
-                <br>
-                <h3 class="descripcion">{{rating.comment}}</h3>
-            </div>
-            <br><br>
         </div>
-        {% endfor %}
+        <div class="col-md-6">
+            <br>
+            <h3 class="descripcion">{{rating.comment}}</h3>
+        </div>
+        <br><br>
     </div>
-    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
 </div>
 <div class="row">
     <div class="col-md-4"></div>

@@ -67,24 +67,21 @@ class EventDetailView(generic.DetailView):
         event = kwargs.get('object')
         duration = event.duration
 
-        context['user_is_old_enough'] = True
-        user_is_enrolled = False
+        event_is_full = selectors.UserSelector.event_attendees(
+            event.pk).count()
+        user_can_enroll = True
 
         if user.is_authenticated:
-            user_is_enrolled = services.EnrollmentService.user_is_enrolled(
+            user_can_enroll = services.EnrollmentService().user_can_enroll(
                 event.pk, user)
-            context['user_is_old_enough'] = event.min_age <= user.profile.age
 
-        context['attendee_count'] = selectors.UserSelector.event_attendees(
-            event.pk).count()
         context['duration'] = str(duration // 3600) + 'h ' + \
             str((duration // 60) % 60) + 'min'
         context['ratings'] = selectors.RatingSelector.on_event(
             event.pk)
         context['g_location'] = event.location.replace(' ', '+')
-
-        context['user_is_enrolled'] = user_is_enrolled
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        context['user_can_enroll'] = not event_is_full and user_can_enroll
 
         return context
 
@@ -211,21 +208,24 @@ def events_filter_ordered_by_distance(request, max_price, minimum_price, year, m
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateView(generic.View):
-    model = models.Enrollment
-
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         attendee = self.request.user
         event_pk = kwargs.get('pk')
 
-        if services.EventService.count(event_pk) and not services.EnrollmentService.user_is_enrolled(event_pk,
-                                                                                                     attendee):
+        event_exists = services.EventService.count(event_pk)
+        event_is_full = selectors.UserSelector.event_attendees(
+            event_pk).count()
+        user_can_enroll = services.EnrollmentService().user_can_enroll(
+            event_pk, attendee)
+
+        if event_exists and user_can_enroll and not event_is_full:
             services.EnrollmentService.create(event_pk, attendee)
 
             stripe.Charge.create(
                 amount=500,
                 currency='eur',
-                description='A Django charge',
-                source=request.GET['stripeToken']
+                description='Comprar entrada para evento',
+                source=kwargs.get('stripeToken')
             )
 
             return render(request, 'event/thanks.html')
