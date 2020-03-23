@@ -2537,7 +2537,7 @@ i.large {
 
 img.responsive-img,
 video.responsive-video {
-	max-width: 100%;
+	max-width: 80%;
 	height: auto
 }
 
@@ -2830,7 +2830,7 @@ th {
 	display: table-cell;
 	text-align: left;
 	vertical-align: middle;
-	border-radius: 2px
+	
 }
 
 @media only screen and (max-width: 992px) {
@@ -3241,6 +3241,7 @@ table span.badge {
 	-webkit-font-feature-settings: 'liga';
 	-moz-font-feature-settings: 'liga';
 	font-feature-settings: 'liga'
+	
 }
 
 .container {
@@ -6046,6 +6047,7 @@ textarea.materialize-textarea {
 	transition: border .3s, -webkit-box-shadow .3s;
 	transition: box-shadow .3s, border .3s;
 	transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s
+	
 }
 
 input:not([type]):disabled,
@@ -6576,11 +6578,13 @@ textarea {
 textarea.materialize-textarea {
 	line-height: normal;
 	overflow-y: hidden;
-	padding: .8rem 0 .8rem 0;
+	padding: .8rem .8rem .8rem .8rem;
 	resize: none;
 	min-height: 3rem;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box
+	
+	
 }
 
 .hiddendiv {
@@ -7017,7 +7021,8 @@ select {
 }
 
 select.browser-default {
-	display: block
+	display: block;
+	color:#b6244d;
 }
 
 select {
@@ -7061,7 +7066,12 @@ select {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	z-index: 1
+	z-index: 1;
+	border-radius: 15px;
+	border: 1px solid #b6244d;
+	color:#b6244d;
+	padding: 0rem 0rem 0rem .8rem;
+	margin-top: 5px;
 }
 
 .select-wrapper input.select-dropdown:focus {
