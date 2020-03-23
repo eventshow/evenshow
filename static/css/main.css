@@ -6,6 +6,21 @@
 	color: #5D5E5E !important;
 }
 
+.title-category{
+	font-weight: 500;
+	color: #5D5E5E;
+}
+
+.title-event{
+	color: #B6244D !important;
+	font-weight: bolder;
+
+}
+
+.subtitle-event{
+	font-weight: 200 !important;
+}
+
 
 /* NAV */
 
@@ -196,6 +211,44 @@ element.style{
 .form-home {
 	margin-left: 0 !important;
 	margin-top: 10%;
+}
+
+.text-left{
+	margin-left: -100%;
+	margin-top: 2%;
+	margin-bottom: 4%;
+}
+
+.event{
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+
+.element{
+	margin-bottom: 3%;
+}
+
+.rating-search{
+	font-weight: bold;
+	font-family: Raleway;
+	color: #5D5E5E;
+	font-style: normal;
+}
+
+.price{
+margin-right: -37%;
+margin-top: -5%;
+font-size: 20px;
+font-weight: 400;
+}
+
+.price:hover{
+color: white!important;
+}
+
+.img-search{
+	height: 40%;
+	width: 70%;
 }
 
 
