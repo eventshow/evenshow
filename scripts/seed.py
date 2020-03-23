@@ -4,13 +4,18 @@ import random
 import re
 
 
-from events.models import Category
+from random import randrange
+from datetime import datetime, timedelta
+
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core import management
 from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 from faker import Faker
+
+from events.models import Category
 
 User = get_user_model()
 
@@ -130,6 +135,13 @@ def seed_categories():
         INITIAL_DATA.append(category)
 
 
+def random_time(start, end):
+    delta = end - start
+    int_delta = delta.seconds
+    random_second = randrange(int_delta)
+    return start + timedelta(seconds=random_second)
+
+
 def seed_events(start_day, event_pks):
     addresses = generate_addresses()
     for event_pk in event_pks:
@@ -138,7 +150,7 @@ def seed_events(start_day, event_pks):
 
         aux = list(USER_PKS).copy()
         aux.remove(host)
-        attendees = random.choices(aux, k=6)
+        attendees = random.sample(aux, k=6)
         splited_address = FAKE.address().split('\n')
         city = splited_address[1].split(',')[0]
 
@@ -160,6 +172,14 @@ def seed_events(start_day, event_pks):
         number = aux[0] if aux else 0
         price = FAKE.random_int(5, 20)
 
+        min_start_time = datetime.strptime('09:00', '%H:%M')
+        max_start_time = datetime.strptime('15:00', '%H:%M')
+        min_end_time = datetime.strptime('16:00', '%H:%M')
+        max_end_time = datetime.strptime('22:00', '%H:%M')
+
+        start_time = random_time(min_start_time, max_start_time)
+        end_time = random_time(min_end_time, max_end_time)
+
         fields = {
             'title': FAKE.word(),
             'description': FAKE.text(),
@@ -174,8 +194,8 @@ def seed_events(start_day, event_pks):
             'parking_nearby': random.choice([False, True]),
             'extra_info': FAKE.sentence(),
             'start_day': start_day.strftime('%Y-%m-%d'),
-            'start_time': FAKE.time() + '+0000',
-            'end_time': FAKE.time() + '+0000',
+            'start_time': start_time.strftime('%H:%M:%S%z'),
+            'end_time': end_time.strftime('%H:%M:%S%z'),
             'price': price,
             'created_by': host,
             'category': category,
@@ -187,8 +207,6 @@ def seed_events(start_day, event_pks):
         }
 
         seed_event_enrollments(event_pk, attendees, host, start_day, price)
-        if start_day <= now().date():
-            seed_event_ratings(event_pk, host, attendees, start_day)
 
         INITIAL_DATA.append(event)
 
@@ -207,29 +225,6 @@ def generate_addresses():
 
                 data.append(new)
     return data
-
-
-def seed_event_ratings(event, reviewed, reviewers, event_date):
-    for reviewer in reviewers:
-        on = random.choice(['ATTENDEE', 'HOST'])
-        created_at = FAKE.date_time_between(
-            start_date=event_date, end_date='+1y').strftime('%Y-%m-%d %H:%M:%S%z')
-
-        fields = {
-            'score': FAKE.random_int(1, 5),
-            'comment': FAKE.text(),
-            'event': event,
-            'on': on,
-            'created_at': created_at + '+0000',
-            'updated_at': created_at + '+0000',
-            'created_by': reviewer,
-            'reviewed': reviewed,
-        }
-        rating = {
-            'model': 'events.Rating',
-            'fields': fields
-        }
-        INITIAL_DATA.append(rating)
 
 
 def seed_event_enrollments(event, attendees, host, event_date, price):
@@ -257,7 +252,33 @@ def seed_event_enrollments(event, attendees, host, event_date, price):
         if status == 'ACCEPTED':
             seed_transaction(attendee, host, updated_at, price)
 
+            if event_date <= now().date():
+                seed_event_ratings(event, host, attendee, 'HOST', event_date)
+                seed_event_ratings(event, attendee, host,
+                                   'ATTENDEE', event_date)
+
         INITIAL_DATA.append(enrollment)
+
+
+def seed_event_ratings(event, reviewed, reviewer, on, event_date):
+    created_at = FAKE.date_time_between(
+        start_date=event_date, end_date='+1y').strftime('%Y-%m-%d %H:%M:%S%z')
+
+    fields = {
+        'score': FAKE.random_int(1, 5),
+        'comment': FAKE.text(),
+        'event': event,
+        'on': on,
+        'created_at': created_at + '+0000',
+        'updated_at': created_at + '+0000',
+        'created_by': reviewer,
+        'reviewed': reviewed,
+    }
+    rating = {
+        'model': 'events.Rating',
+        'fields': fields
+    }
+    INITIAL_DATA.append(rating)
 
 
 def seed_transaction(transmitter, recipient, created_at, amount):
