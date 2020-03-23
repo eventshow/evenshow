@@ -11,6 +11,7 @@ from django.utils.timezone import now
 
 from . import models
 from . import selectors
+from .models import Event
 
 API_KEY = "AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ"
 User = get_user_model()
@@ -71,7 +72,7 @@ class EventService():
             raise PermissionDenied('Already enrolled')
         attendee.attendee_events.add(event)
         return event
-    
+
     def can_create(user: User) -> bool:
         res = True
 
@@ -81,44 +82,69 @@ class EventService():
         return res
 
     @staticmethod
-    def nearby_events_distance(distance):
-        # events = Event.objects.filter(starts_at__date__gt=datetime.now()).order_by('-starts_at')
-        events = models.Event.objects.all()
+    def nearby_events_distance(self, distance):
+        events = Event.objects.filter(start_day__gte=date.today())
 
-        # Comprobar que haya algun evento
-        events_distances_oredered = common_method(events)
+        events_cleaned = []
+        if self.request.user.is_authenticated:
+            for event in events:
+                if self.request.user not in selectors.UserSelector.event_attendees(
+                        event.pk) and event.has_started is False:
+                    events_cleaned.append(event)
+        else:
+            for event in events:
+                if event.has_started is False:
+                    events_cleaned.append(event)
 
         result = []
-        for event, eventdistance in events_distances_oredered.items():
-            if eventdistance <= int(distance):
-                result.append(event)
-            else:
-                break
+
+        if events_cleaned:
+            events_distances_oredered = common_method(events_cleaned)
+
+            for event, eventdistance in events_distances_oredered.items():
+                if eventdistance <= int(distance):
+                    result.append(event)
+                else:
+                    break
 
         return result
 
     @staticmethod
-    def nearby_events_ordered():
-        # events = Event.objects.filter(starts_at__date__gt=datetime.now()).order_by('-starts_at')
-        events = models.Event.objects.all()
+    def events_filter_home(self, location, event_date, start_hour):
 
-        # Comprobar que haya algun evento
-        events_distances_oredered = common_method(events)
+        if location and event_date and start_hour:
+            events = selectors.EventSelector.location_date_start_hour(
+                location, event_date, start_hour)
+        elif location and event_date:
+            events = selectors.EventSelector.location_date(
+                location, event_date)
+        elif location and start_hour:
+            events = selectors.EventSelector.location_start_hour(
+                location, start_hour)
+        elif event_date and start_hour:
+            events = selectors.EventSelector.date_start_hour(
+                event_date, start_hour)
+        elif location:
+            events = selectors.EventSelector.location(location)
+        elif event_date:
+            events = selectors.EventSelector.date(event_date)
+        elif start_hour:
+            events = selectors.EventSelector.start_hour(start_hour)
+        else:
+            events = Event.objects.filter(start_day__gte=date.today())
 
-        return list(events_distances_oredered.keys())
+        results = []
+        if self.request.user.is_authenticated:
+            for event in events:
+                if self.request.user not in selectors.UserSelector.event_attendees(
+                        event.pk) and event.has_started is False:
+                    results.append(event)
+        else:
+            for event in events:
+                if event.has_started is False:
+                    results.append(event)
 
-    @staticmethod
-    def events_filter_ordered_by_distance(max_price, minimum_price, year, month, day):
-        # events = Event.objects.filter(starts_at__date__gt=datetime.now()).order_by('-starts_at')
-        # Validar que la fecha es futura
-        # events = Event.objects.all()
-        events = models.Event.objects.filter(price__gte=minimum_price, price__lte=max_price, start_day__year=year,
-                                             starts_day__month=month, starts_day__day=day)
-
-        # Comprobar que haya algun evento
-        events_distances_oredered = common_method(events)
-
-        return list(events_distances_oredered.keys())
+        return results
 
     def update(event: models.Event, updated_by: User):
         event.updated_by = updated_by
@@ -178,6 +204,7 @@ class RatingService():
             rol = 'HOST'
         return rol
 
+
 class PaymentService():
 
     def application_fee_amount(amount_host: int) -> int:
@@ -196,9 +223,8 @@ class PaymentService():
             res = (amount_host * 1.15)*var_stripe + const_stripe
         elif (amount_host > 500):
             res = (amount_host * 1.10)*var_stripe + const_stripe
-        
-        return round(res-amount_host)
 
+        return round(res-amount_host)
 
 
 # Metodos auxiliares
