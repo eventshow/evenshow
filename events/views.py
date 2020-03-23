@@ -92,7 +92,7 @@ class EventDetailView(generic.DetailView):
 @method_decorator(login_required, name='dispatch')
 class EventCreateView(generic.CreateView):
     model = models.Event
-    form_class = forms.EventCreateForm
+    form_class = forms.EventForm
     success_url = EVENT_SUCCESS_URL
     template_name = 'event/create.html'
 
@@ -169,7 +169,7 @@ class EventNotEnrolledListView(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class EventUpdateView(generic.UpdateView):
     model = models.Event
-    form_class = forms.EventUpdateForm
+    form_class = forms.EventForm
     success_url = EVENT_SUCCESS_URL
     template_name = 'event/update.html'
 
