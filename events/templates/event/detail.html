@@ -31,7 +31,21 @@
         <div class="col-md-6"></div>
         <h1 class="title1_0">{{object.title}} </h1>
         <div class="button-event-page">
-            <a class="event-submit" type="submit" href="{% url 'enroll_event' object.pk %}">INSCRIBIRSE</a>
+            
+            <form action="{% url 'enroll_event' object.pk %}" method="get">
+                {% csrf_token %}
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="{{ key }}"
+                        data-description="A Django Charge"
+                        data-amount="500"
+                        data-locale="auto"
+                        data-label="INSCRIBIRSE">
+                        
+                </script>
+                <script>
+                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "event-submit");
+                </script>
+              </form>
         </div>
     </div>
 
