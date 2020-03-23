@@ -2,38 +2,37 @@
 ​
 {% block content %}
 ​
-<section class="hero-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="hero-confirm">
-                    <h1 class="title1">GRACIAS POR INSCRIBIRTE AL EVENTO</h1>
-                    <div class="hero-confirm-box">
-                        <br>
-                        <h5>¡Enhorabuena {{att}}! Se ha inscrito al evento <i>{{event.title}}</i> </h5>
-                        <br>
-                        <h5>Cuando {{event.host.name}} decida si acepta o rechaza su solicitud le avisaremos.</h5>
-                        <br>
-                        <h5>Si la ha aceptado se le cobrará <b>{{event.price}}</b>, ¡y solo tendrá que disfrutar del maravilloso evento!</h5>
-                    </div>
-                </div>
-​
+        <div class="container">
+            <div class="title">
+        
+              <div class="col s12">
+                <a id="titleThanks" class="flow-text">¡GRACIAS POR INSCRIBIRSE A [EVENTO]! </a>
             </div>
-        </div>
+          
+            <div class="col s12">
+            
+            <a id="text2Thanks" class="flow-text" >Cuando el huésped confirme su solicitud, procederemos al pago.</a>
+     
+            </div>
+            <div class="col s12">
+            
+                <p id="text3">En 5s se redigirá a la página de inicio, si no es así haga click <a class="style1">aquí</a>.</p>
+         
+                </div>
     </div>
 ​
-</section>
+
 <style>
     .footer-section {
         position: fixed;
     }
 </style>
-​
+​<!--
 <script type="text/javascript">
     function redireccionar(){
       window.location="{% url 'enrolled_events' %}";
     }
-    setTimeout ("redireccionar()", 10000); //tiempo expresado en milisegundos
+    setTimeout ("redireccionar()", 10000000000000000000); //tiempo expresado en milisegundos
 </script>
 ​
 {% endblock %}

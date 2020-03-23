@@ -17,6 +17,10 @@ from . import models
 from . import selectors
 from . import services
 
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
@@ -80,6 +84,7 @@ class EventDetailView(generic.DetailView):
         context['g_location'] = event.location.replace(' ', '+')
 
         context['user_is_enrolled'] = user_is_enrolled
+        context['key'] = settings.STRIPE_PUBLISHABLE_KEY
 
         return context
 
@@ -215,6 +220,13 @@ class EnrollmentCreateView(generic.View):
         if services.EventService.count(event_pk) and not services.EnrollmentService.user_is_enrolled(event_pk,
                                                                                                      attendee):
             services.EnrollmentService.create(event_pk, attendee)
+
+            stripe.Charge.create(
+                amount=500,
+                currency='eur',
+                description='A Django charge',
+                source=request.GET['stripeToken']
+            )
 
             return render(request, 'event/thanks.html')
         else:
