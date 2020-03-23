@@ -166,6 +166,10 @@ iframe {
 
 }
 
+.login100-form-btn:hover {
+    font-weight: bold;
+}
+
 /*==================================================================
 [ login more ]*/
 .login100-more {
