@@ -30,6 +30,7 @@ PROFILE_IMAGE_FILE = '/static/img/avatar.png'
 EVENT_IMAGE_FILE = '/static/img/event.jpg'
 FAKE = Faker('es_ES')
 USER_PKS = range(1, 51)
+TIMEZONE = '+0000'
 
 
 def run():
@@ -241,8 +242,8 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
 
         fields = {
             'status': status,
-            'created_at': created_at + '+0000',
-            'updated_at': updated_at + '+0000',
+            'created_at': created_at + TIMEZONE,
+            'updated_at': updated_at + TIMEZONE,
             'created_by': enroller,
             'event': event,
         }
@@ -281,8 +282,8 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
                 'comment': FAKE.text(),
                 'event': event,
                 'on': on,
-                'created_at': created_at + '+0000',
-                'updated_at': created_at + '+0000',
+                'created_at': created_at + TIMEZONE,
+                'updated_at': created_at + TIMEZONE,
                 'created_by': reviewer,
                 'reviewed': revieweds,
             }
@@ -298,8 +299,8 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
                 'comment': FAKE.text(),
                 'event': event,
                 'on': on,
-                'created_at': created_at + '+0000',
-                'updated_at': created_at + '+0000',
+                'created_at': created_at + TIMEZONE,
+                'updated_at': created_at + TIMEZONE,
                 'created_by': reviewers,
                 'reviewed': reviewed,
             }
@@ -314,8 +315,8 @@ def seed_transaction(transmitter, recipient, created_at, amount):
     fields = {
         'amount': amount + 1.15,
         'concept': 'Eventshow: asistencia a evento',
-        'created_at': created_at + '+0000',
-        'updated_at': created_at + '+0000',
+        'created_at': created_at + TIMEZONE,
+        'updated_at': created_at + TIMEZONE,
         'created_by': transmitter,
         'recipient': recipient,
     }
