@@ -214,6 +214,7 @@ def events_filter_ordered_by_distance(request, max_price, minimum_price, year, m
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateView(generic.View):
+    
     def post(self, request, *args, **kwargs):
         attendee = self.request.user
         event_pk = kwargs.get('pk')
@@ -223,6 +224,8 @@ class EnrollmentCreateView(generic.View):
             event_pk).count()
         user_can_enroll = services.EnrollmentService().user_can_enroll(
             event_pk, attendee)
+
+        context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full:
             services.EnrollmentService.create(event_pk, attendee)
@@ -234,7 +237,7 @@ class EnrollmentCreateView(generic.View):
                 source=request.POST['stripeToken']
             )
 
-            return render(request, 'event/thanks.html')
+            return render(request, 'event/thanks.html', context)
         else:
             return redirect('/')
 
