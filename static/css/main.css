@@ -278,6 +278,13 @@ label {
 	padding: 25px 20px 90px !important;
     margin-left: 5%;
 }
+	.footer-copyright{
+		text-align: center;
+	}
+
+	.logo{
+		margin-top: -10px;
+	}
 
 
 }

@@ -2964,7 +2964,7 @@ ul.staggered-list li {
 
 .page-footer .footer-copyright {
   overflow: hidden;
-  min-height: 50px;
+  min-height: 40px !important;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

@@ -103,9 +103,16 @@
     {% endblock %}
   </main>
 
-
-
-       
+  <footer class="page-footer">
+          <div class="footer-copyright">
+            <div class="container">
+             &copy;2020 eventshow, Inc. Todos los derechos reservados
+            <a class="right" href="">Privacidad &nbsp</a>
+            <a class="right" href="">Condiciones &nbsp</a>
+            <a class="right" href="{% url 'home' %}">Sobre nosotros &nbsp</a>
+            </div>
+          </div>
+        </footer>
 
   {% block javascript %}
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
