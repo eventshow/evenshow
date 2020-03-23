@@ -225,7 +225,7 @@ class EnrollmentCreateView(generic.View):
                 amount=500,
                 currency='eur',
                 description='Comprar entrada para evento',
-                source=kwargs.get('stripeToken')
+                source=request.POST['stripeToken']
             )
 
             return render(request, 'event/thanks.html')
