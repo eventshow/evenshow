@@ -135,13 +135,6 @@ def seed_categories():
         INITIAL_DATA.append(category)
 
 
-def random_time(start, end):
-    delta = end - start
-    int_delta = delta.seconds
-    random_second = randrange(int_delta)
-    return start + timedelta(seconds=random_second)
-
-
 def seed_events(start_day, event_pks):
     addresses = generate_addresses()
     for event_pk in event_pks:
@@ -296,3 +289,10 @@ def seed_transaction(transmitter, recipient, created_at, amount):
     }
 
     INITIAL_DATA.append(transaction)
+
+
+def random_time(start, end):
+    delta = end - start
+    int_delta = delta.seconds
+    random_second = randrange(int_delta)
+    return start + timedelta(seconds=random_second)
