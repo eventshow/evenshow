@@ -1,5 +1,27 @@
 @import url(https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
 
+/* GENERAL */
+
+.title-search{
+	color: #5D5E5E !important;
+}
+
+.title-category{
+	font-weight: 500;
+	color: #5D5E5E;
+}
+
+.title-event{
+	color: #B6244D !important;
+	font-weight: bolder;
+
+}
+
+.subtitle-event{
+	font-weight: 200 !important;
+}
+
+
 /* NAV */
 
 .avatar {
@@ -138,6 +160,16 @@ element.style{
 	font-family: Raleway, sans-serif;
 }
 
+.form-search{
+	margin-top: 80px;
+	padding-right: 10px;
+	padding-left: 40px;
+}
+
+.search{
+	margin-top: 9px !important;
+}
+
 /* FOOTER */
 
 .footer-copyright a {
@@ -179,6 +211,50 @@ element.style{
 .form-home {
 	margin-left: 0 !important;
 	margin-top: 10%;
+}
+
+.text-left{
+	margin-left: -100%;
+	margin-top: 2%;
+	margin-bottom: 4%;
+}
+
+.event{
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+
+.element{
+	margin-bottom: 3%;
+}
+
+.rating-search{
+	font-weight: bold;
+	font-family: Raleway;
+	color: #5D5E5E;
+	font-style: normal;
+}
+
+.price{
+margin-right: -37%;
+margin-top: -5%;
+font-size: 20px;
+font-weight: 400;
+}
+
+.pagination{
+	text-align: center;
+
+
+}
+
+.price:hover{
+color: white!important;
+}
+
+.img-search{
+	height: 40%;
+	width: 70%;
 }
 
 
@@ -524,6 +600,12 @@ table{
 	.logo{
 		margin-top: -10px;
 	}
+
+	.form-search{
+	margin-top: 150px;
+	padding-right: 50px;
+	padding-left: 50px;
+}
 
 
 }
