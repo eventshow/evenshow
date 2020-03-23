@@ -74,7 +74,8 @@
                     <a href="{% url 'detail_event' event.pk %}">
                         <h2 class="title-event element">{{ event.title }}</h2>
                     </a>
-                    <h4 class="subtitle-event element">Duración: {{ event.duration }} minutos | Incluye</h4>
+                    <h4 class="subtitle-event element"> Hora: {{event.start_time}}  | Duración: {{ event.duration }}</h4>
+                    <h4 class="subtitle-event element">Fecha: {{ event.start_day }}</h4>
                     <h4 class="title-category element">Descripción:</h4>
                     <h5 class="subtitle-event element">{{ event.description }}
                         <a class="waves-effect waves-light btn button-search price right" id="button-search" href="{% url 'detail_event' event.pk %}">{{ event.price }}€</a>
