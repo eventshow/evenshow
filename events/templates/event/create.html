@@ -64,9 +64,6 @@
         <div class="grid-example col s12">
           <label>DESCRIPCIÓN</label>
           {{ form.description }}
-          <div class="form-errors">
-            {{ form.description.errors }}
-          </div>
         </div>
       </div>
       <div class="row">
@@ -118,7 +115,7 @@
       <div class="row">
         <div class="grid-example col s4">
           <label>FECHA</label>
-          <input type="text" class="datepicker" name="start_day" placeholder="mm-dd-yyyy">
+          {{form.start_day}}
           <div class="form-errors">
             {{ form.start_day.errors }}
           </div>
@@ -168,6 +165,11 @@
           </div>
         </div>
         <div class="grid-example col s12">
+          <label>Imagen del evento</label>
+          {{ form.picture }}
+          <div class="form-errors">
+            {{ form.picture.errors }}
+          </div>
           <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
           {{ form.extra_info }}
           <div class="form-errors">
@@ -208,6 +210,9 @@
       </div>
 
     </div>
+    <div class="form-errors">
+      {{ form.errors }}
+          </div>
 </div>
 
 <div style="text-align:center;margin-top:40px;">
@@ -217,6 +222,7 @@
   <span class="step"></span>
 </div>
 
+
 </form>
 </div>
 <!-- <style>
@@ -224,6 +230,7 @@
     position: fixed;
   }
 </style> -->
+
 <script>
   $(document).ready(function () {
     $('ul.tabs').tabs();
@@ -231,8 +238,6 @@
   $(document).ready(function () {
     $('ul.tabs').tabs('select_tab', 'tab_id');
   });
-
-
   var currentTab = 0; // Current tab is set to be the first tab (0)
   showTab(currentTab); // Display the current tab
 

@@ -134,7 +134,7 @@ element.style{
 
 /* VISTA DEL CREATE*/
 
-#nextBtn, #nextBtn1, #nextBtn2 {
+#nextBtn, #prevtBtn {
 	background-color: #B6244D;
 	font-family: Raleway, sans-serif;
 }
