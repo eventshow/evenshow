@@ -6,7 +6,7 @@
 <div class="container">
   <div class="title-share">
     <div class="col s12">
-      <h3 class="name-host">Ofrece una experiencia</h3>
+      <h3 class="flow-text" id="name-host">Ofrece una experiencia</h3>
     </div>
   </div>
 </div>
@@ -21,7 +21,7 @@
     <div class="row">
 
       <div class="col s12">
-        <h4 class="name-host">¿Qué quieres compartir?</h4>
+        <h4 class="flow-text" id="name-host">¿Qué quieres compartir?</h4>
       </div>
 
     </div>
@@ -118,21 +118,21 @@
       <div class="row">
         <div class="grid-example col s4">
           <label>FECHA</label>
-          <input  type="text"  class="datepicker" placeholder="mm-dd-yyyy">
+          {{form.start_day}}
           <div class="form-errors">
             {{ form.start_day.errors }}
           </div>
         </div>
         <div class="grid-example col s4">
           <label>HORA INICIO</label>
-          <input type="time" placeholder="hh:mm" class="timepicker">
+          {{form.start_time}}
           <div class="form-errors">
             {{ form.start_time.errors }}
           </div>
         </div>
         <div class="grid-example col s4">
           <label>HORA FIN</label>
-          <input type="time" placeholder="hh:mm" class="timepicker">
+          {{form.end_time}}
           <div class="form-errors">
             {{ form.end_time.errors }}
           </div>
@@ -168,6 +168,11 @@
           </div>
         </div>
         <div class="grid-example col s12">
+          <label>IMAGEN EVENTO</label>
+          {{ form.picture }}
+          <div class="form-errors">
+            {{ form.picture.errors }}
+          </div>
           <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
           {{ form.extra_info }}
           <div class="form-errors">
@@ -181,37 +186,43 @@
 
 
     <div class="row">
-      <div class="grid-example col s12">
-        <div class="right">
-          <button type="button" class="waves-effect waves-light btn-large" id="prevBtn"
-            onclick="nextPrev(-1)">Anterior</button>
-          <button type="button" class="waves-effect waves-light btn-large" id="nextBtn"
-            onclick="nextPrev(1)">Siguiente</button>
-        </div>
-      </div>
-    </div>
+      <div class="grid-example col s6">
+        <h5 id="comission"></h5>
+        <!-- <script>var price = Number.parseInt(document.getElementsByName("price")[0]);
+          var comission = "0%";
 
-    <div style="text-align:center;margin-top:40px;">
-      <span class="step"></span>
-      <span class="step"></span>
-      <span class="step"></span>
-      <span class="step"></span>
+          if (price <= 0.5) {
+            comission = "10cents";
+          } else if (price <= 3) {
+            comission = "15%";
+          } else if (price <= 5) {
+            comission = "20%";
+          } else if (price <= 10) {
+            comission = "25%";
+          } else {
+            comission = "27%";
+          }
+          document.getElementById('comission').innerHTML = "Se cobrará un " + comission + " de cada transacción a modo de gastos de mantenimiento de la aplicación.";
+        </script> -->
+      </div>
+      <div class="grid-example col s6">
+        <button type="button" class="waves-effect waves-light btn-large" id="prevBtn"
+          onclick="nextPrev(-1)">Anterior</button>
+        <button type="button" class="waves-effect waves-light btn-large" id="nextBtn"
+          onclick="nextPrev(1)">Siguiente</button>
+      </div>
+
     </div>
-    <!--           {{ form.description.errors }}
-          {{ form.capacity.errors }}
-          {{ form.min_age.errors }}
-          {{ form.price.errors }}
-          {{ form.location_city.errors }}
-          {{ form.location_street.errors }}
-          {{ form.location_number.errors }}
-          {{ form.start_day.errors }}
-          {{ form.start_time.errors }}
-          {{ form.end_time.errors }}
-          {{ form.pets.errors }}
-          {{ form.lang.errors }}
-          {{ form.parking_nearby.errors }}
-          {{ form.extra_info.errors }} -->
-  </form>
+</div>
+
+<div style="text-align:center;margin-top:40px;">
+  <span class="step"></span>
+  <span class="step"></span>
+  <span class="step"></span>
+  <span class="step"></span>
+</div>
+
+</form>
 </div>
 <!-- <style>
   .footer-section {
@@ -261,7 +272,7 @@
     // if you have reached the end of the form... :
     if (currentTab >= x.length) {
       //...the form gets submitted:
-      document.getElementById("form-eventshow").submit();
+      document.getElementById("create-event").submit();
       return false;
     }
     // Otherwise, display the correct tab:
@@ -301,12 +312,8 @@
     M.Tabs.getInstance(elem).updateTabIndicator().destroy();
   }
 
-  $(document).ready(function(){
+  $(document).ready(function () {
     $('.datepicker').datepicker();
-  });
-
-  $(document).ready(function(){
-    $('.timepicker').timepicker();
   });
 </script>
 

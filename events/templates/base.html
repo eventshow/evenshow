@@ -22,6 +22,14 @@
   <link rel="stylesheet" href="{% static 'css/login/main.css'%}" />
 
 
+  <script>
+    $(document).ready(function () {
+      $('select').material_select();
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
   <meta charset="UTF-8">
@@ -61,40 +69,6 @@
           {% endif %}
         </ul>
       </div>
-
-
-      <ul id="slide-out" class="sidenav">
-        <li>
-          <div class="user-view">
-            {% if  user.is_authenticated %}
-
-        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target='dropdown2'><img
-              src="{% static 'img/avatar.png' %}" alt="Avatar" class="avatar"></a></li>
-        <li><a href="#!">Preferencias</a></li>
-        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
-        {% endif %}
-        </div>
-        {% if not user.is_authenticated %}
-        <li> <img class="logo-movil" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow"></li>
-        <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
-        <li><a href="{% url 'signup' %}">Regístrate</a></li>
-        {% endif %}
-
-        <li>
-          <div class="divider"></div>
-        </li>
-        <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
-        <li>
-          <div class="divider"></div>
-        </li>
-
-        <li><a class="sh-eventshow">Mis experiencias</a></li>
-        <li><a href="{% url 'hosted_events' %}">Anfitrión</a></li>
-        <li><a href="{% url 'enrolled_events' %}">Huésped</a></li>
-
-      </ul>
-      <a id="movil" href="#" data-target="slide-out"
-        class="btn-floating btn-large waves-effect waves-light sidenav-trigger"><em id="menu-movil" class="material-icons">menu</em></a>
     </nav>
   </header>
   <main>
@@ -102,28 +76,35 @@
     {% block content %}
     {% endblock %}
   </main>
-
   <footer class="page-footer">
-          <div class="footer-copyright">
-            <div class="container">
-             &copy;2020 eventshow, Inc. Todos los derechos reservados
-            <a class="right" href="">Privacidad &nbsp</a>
-            <a class="right" href="">Condiciones &nbsp</a>
-            <a class="right" href="{% url 'home' %}">Sobre nosotros &nbsp</a>
-            </div>
-          </div>
-        </footer>
+    <div class="container">
+      <div class="footer-copyright">
+        Copyright &copy;2020 eventshow, Inc. Todos los derechos reservados<a href="">Privacidad</a><a
+          href="">Condiciones</a><a href="{% url 'home' %}">Datos de la empresa</a>
+        <div class="social-links">
+          <a href="#" class="fa fa-instagram social"></a>
+          <a href="#" class="fa fa-twitter social"></a>
+          <a href="#" class="fa fa-facebook social"></a>
+        </div>
+      </div>
+
+    </div>
+
+  </footer>
+
 
   {% block javascript %}
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js"
     integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
   <script>
     $(document).ready(function () {
 
       // Initialize materialize data picker
-      $('.datepicker').datepicker({ 'format': 'mm-dd-yyyy' });
+      $('.datepicker').datepicker({ 'format': 'dd/mm/yyyy' });
       $('select').formSelect();
 
     });
@@ -136,18 +117,9 @@
 
   </script>
 
+
   <script>
     $('.dropdown-trigger').dropdown();
   </script>
 
-  <script>
-    $(document).ready(function () {
-      $('.sidenav').sidenav();
-    });
-  </script>
-
   {% endblock javascript %}
-
-</body>
-
-</html>
