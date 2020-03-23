@@ -242,6 +242,12 @@ font-size: 20px;
 font-weight: 400;
 }
 
+.pagination{
+	text-align: center;
+
+
+}
+
 .price:hover{
 color: white!important;
 }

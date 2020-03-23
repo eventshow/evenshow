@@ -11,6 +11,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 from . import forms
 from . import models
@@ -188,6 +190,7 @@ class EventUpdateView(generic.UpdateView):
 
 def nearby_events(request, distance=None):
     distance = request.GET.get('distance', '')
+
     try:
         if distance:
             events = services.EventService.nearby_events_distance(distance)
@@ -195,6 +198,16 @@ def nearby_events(request, distance=None):
             events = services.EventService.nearby_events_ordered()
     except ValueError:
         events = services.EventService.nearby_events_ordered()
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(events, 12)
+
+    try:
+        events = paginator.page(page)
+    except PageNotAnInteger:
+        events = paginator.page(1)
+    except EmptyPage:
+        events = paginator.page(paginator.num_pages)
 
     context = {'object_list': events, 'STATIC_URL': settings.STATIC_URL}
 
