@@ -16,7 +16,7 @@ API_KEY = "AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ"
 User = get_user_model()
 
 
-class EnrollmentService():
+class EnrollmentService:
     def count(enrollment_pk: int) -> int:
         count = models.Enrollment.objects.filter(pk=enrollment_pk).count()
         return count
@@ -42,7 +42,15 @@ class EnrollmentService():
         enrollment.updated_by = updated_by
         enrollment.save()
 
-    def user_is_enrolled(event_pk: int, user: User) -> bool:
+    def user_can_enroll(self, event_pk: int, user: User) -> bool:
+        event = models.Event.objects.get(pk=event_pk)
+        user_is_enrolled = self.user_is_enrolled(
+            event_pk, user)
+        user_is_old_enough = event.min_age <= user.profile.age
+
+        return not user_is_enrolled and user_is_old_enough
+
+    def user_is_enrolled(self, event_pk: int, user: User) -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user).exists()
 
 
