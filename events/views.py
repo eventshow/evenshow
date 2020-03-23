@@ -221,8 +221,7 @@ class EnrollmentCreateView(generic.View):
                                                                                                      attendee):
             services.EnrollmentService.create(event_pk, attendee)
 
-            print(request.GET['stripeToken'])
-            charge = stripe.Charge.create(
+            stripe.Charge.create(
                 amount=500,
                 currency='eur',
                 description='A Django charge',
