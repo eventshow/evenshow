@@ -1,23 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="hero-section"><div class="container">
-<form class="hero-form" action = "" method="post">
-{% csrf_token %}
+<div class="container">
+    <div class="confirm-delete">
+        <form class="form-eventshow-confirm-delete" action="" method="post">
+            {% csrf_token %}
 
-    <div class="row">
-        <h1>¿Estás seguro de que quieres eliminar el evento?</h1>
-                        <div class="col-xl-6">
-                            <br><br>
-                            <button class="site-btn" type="submit">Sí</button>
-                        </div>
-                        <div class="col-xl-6">
-                             <br><br>
-                          <a class="site-btn" href="{% url 'hosted_events'%}">Volver Atrás</a>
+            <div class="row">
+                <div class="grid-example col s12">
+                    <h1 id="name-host" class="flow-text">¿Estás seguro de que quieres eliminar el evento
+                        {{object.title}}?</h1>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="grid-example col s5 offset-s3">
+                    <div class="left">
+                        <div class="delete-buttons">
+                            <button id="delete-btn" class="waves-effect waves-light btn-large" type="submit">Sí</button>
                         </div>
                     </div>
-</form>
+                    <div class="right">
+
+                        <div class="delete-buttons">
+                            <button id="delete-btn" class="waves-effect waves-light btn-large"
+                                href="{% url 'hosted_events'%}">No</button>
+                        </div>
+                    </div>
+
+                </div>
+        </form>
+    </div>
 </div>
-</section>
+
+
+
 
 {% endblock %}

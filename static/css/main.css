@@ -47,6 +47,27 @@ element.style{
 	border-radius: 0px;
 }
 
+.form-eventshow-confirm-delete {
+	background: #FFF;
+	width: 85%;
+	margin-top: 10%;
+}
+
+.delete-buttons{
+	margin-top: 32%;
+}
+
+#delete-btn{
+	width: 130%;
+	height: auto;
+	max-width: 127px;
+	max-height: 62px;
+}
+
+#create-event{
+	margin-bottom: 2% !important;
+}
+
 .form-eventshow h3 {
 	font-weight: bold;
 	color: #5D5E5E;
@@ -76,6 +97,16 @@ element.style{
 	margin-left: 7px;
 }
 
+.form-eventshow select {
+	width: 100% !important;
+	height: 60px !important;
+	margin-bottom: 30px !important;
+	color: #5D5E5E !important;
+	border: 1px solid #B6244D !important;
+	border-radius: 12px !important;
+	padding-left: 3% !important;
+	font-family: Raleway, sans-serif;
+}
 
 /* FOOTER */
 
@@ -103,9 +134,48 @@ element.style{
 
 /* VISTA DEL CREATE*/
 
-#event-create-button {
+#nextBtn, #nextBtn1, #nextBtn2 {
 	background-color: #B6244D;
 	font-family: Raleway, sans-serif;
+}
+
+.tab a{
+	color: #B6244D !important;
+	font-family: Raleway, sans-serif;
+	font-weight: bold;
+}
+
+.tabs .indicator{
+	color: #B6244D !important;
+}
+
+
+.browser-default{
+	
+	width:30% !important;
+	border-radius: 15px;
+	border: 1px solid #b6244d;
+	margin-top:10px;
+}
+  
+select {
+	background-color: rgba(255, 255, 255, 0.9) !important;
+	width: 100% !important;
+	padding: 5px !important;
+	height: 3rem !important;
+}
+
+.container#cuadro {
+	width: 800px;
+	margin: auto;
+	max-width: 100%;
+	padding: 2rem 2rem 2rem 2rem;
+	margin-top: 2rem;
+	background-color: rgb(255, 255, 255);
+	margin-top: 40px;
+	margin-bottom: 150px;
+	border-radius: 15px;
+	border: solid 1px #b6244d;
 }
 
 .share-event {
@@ -122,6 +192,22 @@ element.style{
 	color: #686868;
 }
 
+.share-event-princ{
+	width: 490px;
+	height: 49px;
+	font-family: Raleway;
+	font-size: 42px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: center;
+	color: #686868;
+	padding-left: 10%;
+}
+
+
 label {
 	font-weight: bold;
 	font-family: Raleway;
@@ -132,6 +218,55 @@ label {
 .input-create-event {
 	border-radius: 10px !important;
 	border: solid 1px #b6244d !important;
+	width: 100%;
+	height: 100%;
+	max-height: 62px;
+}
+
+.regForm {
+    background-color: #ffffff;
+	margin: 1% auto;
+	padding: 4%;
+	padding-top: 1% !important;
+    width: 70%;
+    min-width: 640px;
+  }
+
+.section-create {
+	width: 100%;
+	margin: auto;
+	max-width: 700px;
+	padding: 2% 2% 2% 2%;
+	background-color: rgb(255, 255, 255);
+	margin-top: 1%;
+	margin-bottom: 1%;
+	border-radius: 15px;
+	border: solid 1px #b6244d;
+}
+
+.section {
+	width: 800px;
+	margin: auto;
+	max-width: 100%;
+	padding: 2rem 0rem 2rem 0rem;
+	margin-top: 2rem;
+	background-color: rgb(255, 255, 255);
+	margin-top: 15px;
+	margin-bottom: 150px;
+	border-radius: 15px;
+	border: solid 1px #b6244d;
+}
+
+
+.titulo {
+	margin-top: 70px;
+	margin-left: 15px;
+}
+
+.title-share {
+	margin-top: 5%;
+	margin-left: -9%;
+	margin-bottom: 2%;
 }
 
 .site-btn {
@@ -178,7 +313,7 @@ label {
 	border: solid 1px #b6244d;
 }
 
-.name-host {
+.name-host, #name-host {
 	height: 40px;
 	font-family: Raleway;
 	font-size: 34px;
@@ -191,7 +326,19 @@ label {
 	color: #7e8080;
 }
 
-.name-host .color {
+.name-host-share {
+	height: 40px;
+	font-family: Raleway;
+	font-size: 42px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #686868;
+}
+
+.nombre-host .color {
 	color: #b6244d;
 }
 
