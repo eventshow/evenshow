@@ -1,13 +1,11 @@
-from django.shortcuts import render
-from datetime import datetime, date
+import stripe
+
+from datetime import datetime, date, time
 
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
@@ -17,7 +15,6 @@ from . import models
 from . import selectors
 from . import services
 
-import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -189,32 +186,56 @@ class EventUpdateView(generic.UpdateView):
             return redirect('/')
 
 
-def nearby_events(request, distance=None):
-    distance = request.GET.get('distance', '')
-    try:
-        if distance:
-            events = services.EventService.nearby_events_distance(distance)
-        else:
-            events = services.EventService.nearby_events_ordered()
-    except ValueError:
-        events = services.EventService.nearby_events_ordered()
+class EventSearchByLocationDateStartHourView(generic.ListView):
+    template_name = 'event/list_search.html'
 
-    context = {'object_list': events, 'STATIC_URL': settings.STATIC_URL}
+    def get(self, request, *args, **kwargs):
+        location = request.GET.get('location', None)
+        event_date = request.GET.get('date', None)
+        start_hour = request.GET.get('start_hour', None)
 
-    return render(request, 'event/list_search.html', context)
+        home_template = 'home.html'
+
+        errors = []
+        events = []
+
+        if event_date != '':
+            try:
+                fecha = datetime.strptime(event_date, '%Y-%m-%d').date()
+                if fecha <= date.today():
+                    errors.append("Introduzca una fecha futura")
+                    template_name = home_template
+            except ValueError:
+                errors.append("Introduzca una fecha con el patrón válido")
+                template_name = home_template
+
+        if start_hour != '':
+            try:
+                datetime.strptime(start_hour, '%H:%M').time()
+            except ValueError:
+                errors.append("Introduzca una hora válida")
+                template_name = home_template
+
+        if not errors:
+            events = services.EventService.events_filter_home(
+                self, location, event_date, start_hour)
+            template_name = self.template_name
+
+        return render(request, template_name,
+                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'errors': errors, 'place': location})
 
 
-def events_filter_ordered_by_distance(request, max_price, minimum_price, year, month, day):
-    events_distances_ordered = services.EventService.events_filter_ordered_by_distance(
-        max_price, minimum_price, year, month, day)
-    context = {'object_list': events_distances_ordered}
+class EventSearchNearbyView(generic.ListView):
+    template_name = 'event/list_search.html'
 
-    return render(request, 'event/list.html', context)
+    def get(self, request, *args, **kwargs):
+        events = services.EventService.nearby_events_distance(self, 50000)
+        return render(request, self.template_name, {'object_list': events, 'STATIC_URL': settings.STATIC_URL})
 
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateView(generic.View):
-    
+
     def post(self, request, *args, **kwargs):
         attendee = self.request.user
         event_pk = kwargs.get('pk')
@@ -403,6 +424,5 @@ def attendees_list(request, event_pk):
         return render(request, 'rating/attendees_list.html', context)
     else:
         return redirect('/home')
-
 
 # Create your views here.
