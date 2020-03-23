@@ -145,6 +145,9 @@ element.style{
 	margin-left: 10px;
 }
 
+.social-footer{
+	margin-right: 30px !important;
+}
 
 /* OTHER */
 
@@ -275,5 +278,6 @@ label {
 	padding: 25px 20px 90px !important;
     margin-left: 5%;
 }
+
 
 }
