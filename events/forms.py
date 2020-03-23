@@ -18,7 +18,7 @@ class RatingForm(forms.ModelForm):
         exclude = ['event', 'on', 'created_by', 'reviewed']
         widgets = {
             'score': forms.Select(choices=CHOICES_SCORE),
-            'comment': forms.Textarea(attrs={'placeholder': 'Información acerca de la valoración'}),
+            'comment': forms.Textarea(attrs={'placeholder': '-'}),
         }
 
 
