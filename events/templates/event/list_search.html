@@ -1,11 +1,10 @@
 {%extends 'base.html'%}
 
 {% block content %}
-
-<section class="hero-section-search">
+    <div class="row">
     <div class="wrapper wrapper--w1070">
-        <!--div class="card-body">
-            <form class="form" method="POST" action="#">
+        <div class="card-body">
+            <form class="form-search" method="POST" action="#">
                 <div class="input-group input--medium">
                     <label class="label">Localización</label>
                     <input class="input--style-1" type="text" placeholder="" name="going">
@@ -22,12 +21,11 @@
                     <label class="label">Precio Máximo</label>
                     <input class="input--style-1" type="text" name="checkout" placeholder="" id="input-end">
                 </div>
-                <button class="btn-submit" type="submit">search</button>
+                <button class="btn-submit search" type="submit">Buscar</button>
             </form>
         </div>
     </div>
-    </div-->
-        <br><br>
+</div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -115,6 +113,4 @@
 
         </div>
         <hr>
-</section>
-
 {% endblock %}

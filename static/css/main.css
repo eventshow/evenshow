@@ -138,6 +138,16 @@ element.style{
 	font-family: Raleway, sans-serif;
 }
 
+.form-search{
+	margin-top: 80px;
+	padding-right: 10px;
+	padding-left: 40px;
+}
+
+.search{
+	margin-top: 9px !important;
+}
+
 /* FOOTER */
 
 .footer-copyright a {
@@ -524,6 +534,12 @@ table{
 	.logo{
 		margin-top: -10px;
 	}
+
+	.form-search{
+	margin-top: 150px;
+	padding-right: 50px;
+	padding-left: 50px;
+}
 
 
 }
