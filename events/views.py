@@ -67,13 +67,13 @@ class EventDetailView(generic.DetailView):
         event = kwargs.get('object')
         duration = event.duration
 
+        context['user_is_old_enough'] = True
+        user_is_enrolled = False
+
         if user.is_authenticated:
             user_is_enrolled = services.EnrollmentService.user_is_enrolled(
                 event.pk, user)
             context['user_is_old_enough'] = event.min_age <= user.profile.age
-        else:
-            user_is_enrolled = False
-            context['user_is_old_enough'] = True
 
         context['attendee_count'] = selectors.UserSelector.event_attendees(
             event.pk).count()
@@ -84,7 +84,7 @@ class EventDetailView(generic.DetailView):
         context['g_location'] = event.location.replace(' ', '+')
 
         context['user_is_enrolled'] = user_is_enrolled
-        context['key'] = settings.STRIPE_PUBLISHABLE_KEY
+        context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
 
         return context
 

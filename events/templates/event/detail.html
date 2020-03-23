@@ -31,21 +31,17 @@
         <div class="col-md-6"></div>
         <h1 class="title1_0">{{object.title}} </h1>
         <div class="button-event-page">
-            
+
             <form action="{% url 'enroll_event' object.pk %}" method="get">
                 {% csrf_token %}
-                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                        data-key="{{ key }}"
-                        data-description="A Django Charge"
-                        data-amount="500"
-                        data-locale="auto"
-                        data-label="INSCRIBIRSE">
-                        
-                </script>
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ stripe_key }}"
+                    data-description="A Django Charge" data-amount="500" data-locale="auto" data-label="INSCRIBIRSE">
+
+                    </script>
                 <script>
                     document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "event-submit");
                 </script>
-              </form>
+            </form>
         </div>
     </div>
 
@@ -109,11 +105,7 @@
             <br><br><br>
             <div class="row">
                 <h2><b>{{object.created_by.first_name}}</b> {{object.created_by.last_name}}</h2>
-                <h3 class="descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <h3 class="descripcion">{{object.created_by.profile.bio}
                 </h3>
             </div>
         </div>
@@ -137,23 +129,23 @@
         <div class="col-md-3">
             <br><br>
             <img class="anfitrion-img" src="{{rating.created_by.profile.picture.url}}">
-            <h3 class="title4-rate-com">{{rating.created_by.username}}</h3>
-            <div class="event-page-comment">
-                <div class="row row-rate">
-                    <i class="fa fa-star"></i>
-                    <h4 class="title4-rate">{{rating.score}}</h4>
-                </div>
+                    <h3 class="title4-rate-com">{{rating.created_by.username}}</h3>
+                    <div class="event-page-comment">
+                        <div class="row row-rate">
+                            <i class="fa fa-star"></i>
+                            <h4 class="title4-rate">{{rating.score}}</h4>
+                        </div>
+                    </div>
             </div>
+            <div class="col-md-6">
+                <br>
+                <h3 class="descripcion">{{rating.comment}}</h3>
+            </div>
+            <br><br>
         </div>
-        <div class="col-md-6">
-            <br>
-            <h3 class="descripcion">{{rating.comment}}</h3>
-        </div>
-        <br><br>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-{% endif %}
+    {% endif %}
 </div>
 <div class="row">
     <div class="col-md-4"></div>
