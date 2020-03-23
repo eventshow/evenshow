@@ -11,227 +11,196 @@
   </div>
 </div>
 
-
-
 <div class="container">
-
-
-
-    <form class="form-eventshow" id="create-event" method="post" action="{% url 'create_event' %}">
-      {% csrf_token %}
-      <div class="row">
-
-        <div class="col s12">
-          <h4 class="flow-text" id="name-host-serg">¿Qué quieres compartir?</h4>
-        </div>
-
+  <form class="form-eventshow" id="create-event" method="post" action="{% url 'create_event' %}">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col s12">
+        <h4 class="flow-text" id="name-host-serg">¿Qué quieres compartir?</h4>
       </div>
+    </div>
+    <div class="row">
+      <div class="grid-example col s12">
+        <ul class="tabs">
+          <li class="tab col s4"><a class="active" href="#test1">¿Cómo será?</a></li>
+          <li class="tab col s4"><a href="#test2">¿Cuándo será?</a></li>
+          <li class="tab col s4"><a href="#test3">Extra</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div id="test1" class="tab-content">
+      <label>CATEGORÍA</label>
       <div class="row">
         <div class="grid-example col s12">
-          <ul class="tabs">
-            <li class="tab col s4"><a class="active" href="#test1">¿Cómo será?</a></li>
-            <li class="tab col s4"><a href="#test2">¿Cuándo será?</a></li>
-            <li class="tab col s4"><a href="#test3">Extra</a></li>
-          </ul>
+          <div class="form-errors">
+            {{ form.category }}
+          </div>
         </div>
       </div>
 
 
-      <div id="test1" class="tab-content">
-        <label>CATEGORÍA</label>
-        <div class="row">
-          <div class="grid-example col s12">
-            <div class="form-errors">
-              {{ form.category }}
-            </div>
-          </div>
-        </div>
-
-
-        <!-- <input type="text" placeholder="Cata" class="input-create-event" /> -->
-
-        <div class="row">
-          <div class="grid-example col s12">
-            <label>TÍTULO</label>
-            {{ form.title }}
-            <div class="form-errors">
-              {{ form.title.errors }}
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="grid-example col s12">
-            <label>DESCRIPCIÓN</label>
-            {{ form.description }}
-          </div>
-        </div>
-        <div class="row">
-          <div class="grid-example col s4">
-            <!-- Tiene que ser aforo, porque lo que pone en el mockup no cabe -->
-            <label>AFORO</label>
-            {{ form.capacity }}
-            <div class="form-errors">
-              {{ form.capacity.errors }}
-            </div>
-          </div>
-          <div class="grid-example col s4">
-            <label>EDAD MÍN</label>
-            {{ form.min_age }}
-            <div class="form-errors">
-              {{ form.min_age.errors }}
-            </div>
-          </div>
-          <div class="grid-example col s4">
-            <label>PRECIO</label>
-            {{ form.price }}
-            <div class="form-errors">
-              {{ form.price.errors }}
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div id="test2" class="tab-content">
-        <div class="row">
-          <div class="grid-example col s12">
-
-            <label>UBICACIÓN</label>
-            {{ form.location_city }}
-            <div class="form-errors">
-              {{ form.location_city.errors }}
-            </div>
-            {{ form.location_street }}
-            <div class="form-errors">
-              {{ form.location_street.errors }}
-            </div>
-            {{ form.location_number }}
-            <div class="form-errors">
-              {{ form.location_number.errors }}
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="grid-example col s4">
-            <label>FECHA</label>
-            {{form.start_day}}
-            <div class="form-errors">
-              {{ form.start_day.errors }}
-            </div>
-          </div>
-          <div class="grid-example col s4">
-            <label>HORA INICIO</label>
-            {{form.start_time}}
-            <div class="form-errors">
-              {{ form.start_time.errors }}
-            </div>
-          </div>
-          <div class="grid-example col s4">
-            <label>HORA FIN</label>
-            {{form.end_time}}
-            <div class="form-errors">
-              {{ form.end_time.errors }}
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div id="test3" class="tab-content">
-
-        <div class="row">
-          <div class="grid-example col s4">
-            <label>MASCOTAS</label>
-            {{ form.pets }}
-            <div class="form-errors">
-              {{ form.pets.errors }}
-            </div>
-          </div>
-          <div class="grid-example col s4">
-            <label>IDIOMA</label>
-            {{ form.lang }}
-            <div class="form-errors">
-              {{ form.lang.errors }}
-            </div>
-          </div>
-          <div class="grid-example col s4">
-            <label>APARCAMIENTO</label>
-            {{ form.parking_nearby }}
-            <div class="form-errors">
-              {{ form.parking_nearby.errors }}
-            </div>
-          </div>
-          <div class="grid-example col s12">
-            <label>IMAGEN DEL EVENTO</label>
-            {{ form.picture }}
-            <div class="form-errors">
-              {{ form.picture.errors }}
-            </div>
-            <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
-            {{ form.extra_info }}
-            <div class="form-errors">
-              {{ form.extra_info.errors }}
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
+      <!-- <input type="text" placeholder="Cata" class="input-create-event" /> -->
 
       <div class="row">
-        <div class="grid-example col s6">
-          <h5 id="comission"></h5>
-          <!-- <script>var price = Number.parseInt(document.getElementsByName("price")[0]);
-          var comission = "0%";
-
-          if (price <= 0.5) {
-            comission = "10cents";
-          } else if (price <= 3) {
-            comission = "15%";
-          } else if (price <= 5) {
-            comission = "20%";
-          } else if (price <= 10) {
-            comission = "25%";
-          } else {
-            comission = "27%";
-          }
-          document.getElementById('comission').innerHTML = "Se cobrará un " + comission + " de cada transacción a modo de gastos de mantenimiento de la aplicación.";
-        </script> -->
-        </div>
-        <div class="grid-example col s6">
-          <button type="button" class="waves-effect waves-light btn-large" id="prevBtn"
-            onclick="nextPrev(-1)">Anterior</button>
-          <button type="button" class="waves-effect waves-light btn-large" id="nextBtn"
-            onclick="nextPrev(1)">Siguiente</button>
+        <div class="grid-example col s12">
+          <label>TÍTULO</label>
+          {{ form.title }}
+          <div class="form-errors">
+            {{ form.title.errors }}
+          </div>
         </div>
 
       </div>
-      <div class="form-errors">
-        {{ form.errors }}
+
+      <div class="row">
+        <div class="grid-example col s12">
+          <label>DESCRIPCIÓN</label>
+          {{ form.description }}
+        </div>
       </div>
-  
+      <div class="row">
+        <div class="grid-example col s4">
+          <!-- Tiene que ser aforo, porque lo que pone en el mockup no cabe -->
+          <label>AFORO</label>
+          {{ form.capacity }}
+          <div class="form-errors">
+            {{ form.capacity.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s4">
+          <label>EDAD MÍN</label>
+          {{ form.min_age }}
+          <div class="form-errors">
+            {{ form.min_age.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s4">
+          <label>PRECIO</label>
+          {{ form.price }}
+          <div class="form-errors">
+            {{ form.price.errors }}
+          </div>
+        </div>
+      </div>
 
-  <div style="text-align:center;margin-top:40px;">
-    <span class="step"></span>
-    <span class="step"></span>
-    <span class="step"></span>
-    <span class="step"></span>
-  </div>
+    </div>
+
+    <div id="test2" class="tab-content">
+      <div class="row">
+        <div class="grid-example col s12">
+
+          <label>UBICACIÓN</label>
+          {{ form.location_city }}
+          <div class="form-errors">
+            {{ form.location_city.errors }}
+          </div>
+          {{ form.location_street }}
+          <div class="form-errors">
+            {{ form.location_street.errors }}
+          </div>
+          {{ form.location_number }}
+          <div class="form-errors">
+            {{ form.location_number.errors }}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="grid-example col s4">
+          <label>FECHA</label>
+          {{form.start_day}}
+          <div class="form-errors">
+            {{ form.start_day.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s4">
+          <label>HORA INICIO</label>
+          {{form.start_time}}
+          <div class="form-errors">
+            {{ form.start_time.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s4">
+          <label>HORA FIN</label>
+          {{form.end_time}}
+          <div class="form-errors">
+            {{ form.end_time.errors }}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
 
 
+    <div id="test3" class="tab-content">
+
+      <div class="row">
+        <div class="grid-example col s4">
+          <label>MASCOTAS</label>
+          {{ form.pets }}
+          <div class="form-errors">
+            {{ form.pets.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s4">
+          <label>IDIOMA</label>
+          {{ form.lang }}
+          <div class="form-errors">
+            {{ form.lang.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s4">
+          <label>APARCAMIENTO</label>
+          {{ form.parking_nearby }}
+          <div class="form-errors">
+            {{ form.parking_nearby.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s12">
+          <label>IMAGEN DEL EVENTO</label>
+          {{ form.picture }}
+          <div class="form-errors">
+            {{ form.picture.errors }}
+          </div>
+        </div>
+        <div class="grid-example col s12">
+          <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
+          {{ form.extra_info }}
+          <div class="form-errors">
+            {{ form.extra_info.errors }}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="row">
+      
+      <div class="grid-example col s6 offset-s5">
+        <div class="delete-buttons">
+        <button class="waves-effect waves-light btn-large" id="prevBtn"
+          onclick="nextPrev(-1)">Anterior</button>
+        <button class="waves-effect waves-light btn-large" id="nextBtn"
+          onclick="nextPrev(1)">Siguiente</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-errors">
+      {{ form.errors }}
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
   </form>
 </div>
-
-<!-- <style>
-  .footer-section {
-    position: fixed;
-  }
-</style> -->
 
 <script>
   $(document).ready(function () {
@@ -252,11 +221,13 @@
       document.getElementById("prevBtn").style.display = "none";
     } else {
       document.getElementById("prevBtn").style.display = "inline";
+      document.getElementById("nextBtn").style.marginTop = "-20%";
     }
     if (n == (x.length - 1)) {
       document.getElementById("nextBtn").innerHTML = "Crear";
     } else {
       document.getElementById("nextBtn").innerHTML = "Siguiente";
+      document.getElementById("nextBtn").style.marginLeft = "40%";
     }
     // ... and run a function that displays the correct step indicator:
     fixStepIndicator(n)

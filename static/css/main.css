@@ -54,7 +54,8 @@ element.style{
 }
 
 .delete-buttons{
-	margin-top: 32%;
+	margin-top: 5%;
+	margin-bottom:-2%;
 }
 
 #delete-btn{
@@ -69,6 +70,8 @@ element.style{
 	margin-bottom: 2% !important;
 	padding-bottom: 2% !important;
 }
+
+
 
 #create-event input{
 	width: 100% !important;
@@ -149,9 +152,15 @@ element.style{
 
 /* VISTA DEL CREATE*/
 
-#nextBtn, #prevtBtn {
+#nextBtn{
 	background-color: #B6244D;
 	font-family: Raleway, sans-serif;
+}
+
+#prevtBtn{
+	background-color: #B6244D;
+	font-family: Raleway, sans-serif;
+	margin-top: -2%;
 }
 
 .tab a{
@@ -343,7 +352,7 @@ label {
 
 #name-host-serg {
 	height: 40px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 34px;
 	font-weight: bold;
 	font-stretch: normal;
