@@ -5602,7 +5602,7 @@ button.btn-floating {
 }
 
 .dropdown-content li:hover, .dropdown-content li.active {
-  background-color: #eee;
+  background-color: none;
 }
 
 .dropdown-content li:focus {
@@ -6124,7 +6124,7 @@ select:focus {
 
 button:focus {
   outline: none;
-  background-color: #B6244D !important;
+  background-color: white !important;
 }
 
 label {
