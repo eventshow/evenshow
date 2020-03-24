@@ -176,6 +176,7 @@ class EventUpdateView(generic.UpdateView):
             return super(EventUpdateView, self).form_valid(form)
         else:
             return redirect('events')
+            
 
     def get(self, request, *args, **kwargs):
         host = request.user

@@ -3,28 +3,49 @@
 
 
 {% block content %}
+
+{% if request.get_full_path == '/events/create' %}
 <div class="container">
   <div class="title-share">
     <div class="col s12">
-      <h3 class="flow-text" id="name-host-serg">Ofrece una experiencia</h3>
+      <h3 class="flow-text" id="name-host-serg">Crea una experiencia</h3>
     </div>
   </div>
 </div>
 
 <div class="container">
-  <form class="form-eventshow" id="create-event" method="post" action="{% url 'create_event' %}">
+  <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
     {% csrf_token %}
     <div class="row">
       <div class="col s12">
         <h4 class="flow-text" id="name-host-serg">¿Qué quieres compartir?</h4>
       </div>
     </div>
+    {% else %}
+    <div class="container">
+      <div class="title-share">
+        <div class="col s12">
+          <h3 class="flow-text" id="name-host-serg">{{event.title}}</h3>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col s12">
+            <h4 class="flow-text" id="name-host-serg">Editar</h4>
+          </div>
+        </div>
+        {% endif %}
+
     <div class="row">
 
 
 
-      <div id="test1" class="tab-content"><h4 class="flow-text separated-create" id="">¿Cómo será?</h4><br>
-
+      <div id="test1"><h4 class="flow-text separated-create" id="">¿Cómo será?</h4><br>
+      <div class="container-create">
       <label>CATEGORÍA</label>
       <div class="row">
         <div class="grid-example col s12">
@@ -74,8 +95,10 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="test2" class="tab-content"><h4 class="flow-text separated-create" id="">¿Cuándo será?</h4><br>
+    <div id="test2"><h4 class="flow-text separated-create" id="">¿Cuándo será?</h4><br>
+      <div class="container-create">
       <div class="row">
         <div class="grid-example col s12">
           <label>UBICACIÓN</label>
@@ -119,10 +142,11 @@
       </div>
 
     </div>
+    </div>
 
 
-    <div id="test3" class="tab-content"><h4 class="flow-text separated-create" id="">Extra</h4><br>
-
+    <div id="test3"><h4 class="flow-text separated-create" id="">Extra</h4><br>
+      <div class="container-create">
       <div class="row">
         <div class="grid-example col s4">
           <label>MASCOTAS</label>
@@ -133,7 +157,9 @@
         </div>
         <div class="grid-example col s4">
           <label>IDIOMA</label>
+          <div class="event-lang">
             {{ form.lang }}
+          </div>
           <div class="form-errors">
             {{ form.lang.errors }}
           </div>
@@ -160,13 +186,14 @@
           </div>
         </div>
       </div>
+      </div>
     </div>
 
     <div class="row">
-      <div class="grid-example col s6 offset-s5">
-        <div class="delete-buttons">
-          <button type="submit" class="waves-effect waves-light btn-large">Enviar</button>
-        </div>
+      <div class="grid-example col s3 offset-s9">
+ 
+          <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
+      
       </div>
 
     </div>
