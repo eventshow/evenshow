@@ -40,18 +40,43 @@ class EventForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
-            'capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '4', 'name': 'capacity'}),
-            'min_age': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'años', 'name': 'min_age'}),
-            'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '5€', 'name': 'price'}),
+            'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
+            'min_age': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
+            'price': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_time': forms.TextInput(
-                attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'start_time'}),
-            'end_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'end_time'}),
+            'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}),
+            'start_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}),
+            'end_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
-            'lang': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'español', 'name': 'lang'}),
+            'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
+            'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
+        }
+
+
+class EventUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        exclude = ['created_by', 'attendees']
+        widgets = {
+             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
+            'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
+            'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
+            'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
+            'min_age': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
+            'price': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
+            'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
+            'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
+            'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
+            'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}),
+            'start_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}),
+            'end_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}),
+            'pets': forms.Select(choices=CHOICES_YES_NO),
+            'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
+            'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
+            'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
 
 

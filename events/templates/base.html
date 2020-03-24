@@ -22,6 +22,14 @@
   <link rel="stylesheet" href="{% static 'css/login/main.css'%}" />
 
 
+  <script>
+    $(document).ready(function () {
+      $('select').material_select();
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
   <meta charset="UTF-8">
@@ -125,7 +133,7 @@
     $(document).ready(function () {
 
       // Initialize materialize data picker
-      $('.datepicker').datepicker({ 'format': 'mm-dd-yyyy' });
+      $('.datepicker').datepicker({ 'format': 'dd/mm/yyyy' });
       $('select').formSelect();
 
     });
@@ -138,6 +146,7 @@
     });
 
   </script>
+
 
   <script>
     $('.dropdown-trigger').dropdown();

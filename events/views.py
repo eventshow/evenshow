@@ -100,7 +100,7 @@ class EventCreateView(generic.CreateView):
     model = models.Event
     form_class = forms.EventForm
     success_url = EVENT_SUCCESS_URL
-    template_name = 'event/create.html'
+    template_name = 'event/update.html'
 
     def get(self, request, *args, **kwargs):
         if services.EventService().can_create(self.request.user):
@@ -188,7 +188,8 @@ class EventUpdateView(generic.UpdateView):
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
-            return redirect('/')
+            return redirect('events')
+            
 
     def get(self, request, *args, **kwargs):
         host = request.user

@@ -268,6 +268,43 @@ element.style{
 	border: 1px solid #B6244D;
 	padding: 25px 40px 90px;
 }
+.form-eventshow-create {
+	background: #FFF;
+	width: 85%;
+	max-width: 800px;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 25px 40px 70px;
+}
+
+.form-errors-create{
+		font-weight: bold !important;
+		color: red !important;
+	    margin-left: 10%;
+    margin-top: -12%;
+	}
+
+.center-form{
+	margin-left: 7.5%;
+	margin-right: 7.5%;
+}
+
+.container-create {
+	background: #FFF;
+	margin-top: 4%;
+	margin-left: 10%;
+	margin-bottom: 7%;
+	width: 90%;
+	max-width: 600px;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 5% 5% 5% 5%;
+	padding-bottom: -5% !important;
+}
+
+.event-lang{
+	margin-top: 3.5%;
+}
 
 .form-errors{
 		font-weight: bold !important;
@@ -286,22 +323,74 @@ element.style{
 	background: #FFF;
 	width: 85%;
 	margin-top: 10%;
+	margin-left: 6%;
 }
 
 .delete-buttons{
-	margin-top: 32%;
+	margin-top: 5%;
+	margin-bottom:-2%;
+	margin-left: 486%;
 }
+
+#send-buttons{
+	margin-top: 5%;
+	margin-bottom:-2%;
+	margin-left: 1500% !important;
+}
+
+#del-left{
+	margin-top: 25%;
+}
+
+.delete-buttons-conf{
+	margin-top: -8%;
+	align-content: center;
+}
+
 
 #delete-btn{
-	width: 130%;
-	height: auto;
-	max-width: 127px;
-	max-height: 62px;
+	font-weight:bold;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 62px;
+	margin-top: 63px;
+	margin-left: -55px;
 }
 
-#create-event{
-	margin-bottom: 2% !important;
+#delete-btn-a{
+	width: 127px;
+	height: 62px;
+	font-weight:bold;
+	text-align: center;
+	padding-top: 3px;
+	font-size: 20px;
+	margin-top: 66px;
+	margin-left: -110px;
 }
+
+
+
+#create-event{
+	margin-left: 35px !important;
+	margin-bottom: 2% !important;
+	padding-bottom: 2% !important;
+}
+
+
+
+#create-event input{
+	width: 100% !important;
+	height: 60px !important;
+	margin-bottom: 30px !important;
+	color: #5D5E5E !important;
+	border: 1px solid #B6244D !important;
+	border-radius: 12px !important;
+	padding-left: 4% !important;
+	margin-left: -2.5% !important;
+	font-family: Raleway, sans-serif;
+}
+
 
 .form-eventshow h3 {
 	font-weight: bold;
@@ -452,9 +541,15 @@ color: white!important;
 
 /* VISTA DEL CREATE*/
 
-#nextBtn, #nextBtn1, #nextBtn2 {
+#nextBtn{
 	background-color: #B6244D;
 	font-family: Raleway, sans-serif;
+}
+
+#prevtBtn{
+	background-color: #B6244D;
+	font-family: Raleway, sans-serif;
+	margin-top: -2%;
 }
 
 .tab a{
@@ -587,6 +682,33 @@ label {
 	margin-bottom: 2%;
 }
 
+#title-delete{
+	margin-left: 1%;
+	margin-right: 1%;
+	max-width: 1149px;
+	width: auto;
+	max-height: 47px;
+	height:auto;
+	font-family: Raleway, sans-serif;
+	font-size: 40px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #686969;
+}
+#delete-title{
+	margin-top: -5%;
+	position: center;
+	text-align: center;
+	margin-left: 10%;
+}
+
+#title-del-event{
+	color: #B6244D !important;
+}
+
 .site-btn {
 	display: inline-block;
 	border: none;
@@ -643,6 +765,21 @@ label {
 	margin-top: 10px;
 	color: #5D5E5E;
 }
+
+#name-host-serg {
+	height: 40px;
+	font-family: Raleway, sans-serif;
+	font-size: 34px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	margin-top: 10px;
+	margin-bottom: 4%;
+	color: #5D5E5E;
+}
+
 
 .name-host-share {
 	height: 40px;
@@ -801,5 +938,9 @@ table{
 
 
 
+
+}
+.separated-create h4{
+	color: #cf2a6e !important;
 
 }
