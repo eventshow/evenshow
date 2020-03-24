@@ -200,6 +200,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
         errors = []
         events = []
         length = 0
+        fecha=""
 
         if event_date != '':
             try:
@@ -219,8 +220,9 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                 template_name = home_template
 
         if not errors:
+            print(fecha)
             events = services.EventService().events_filter_home(
-                self, location, datetime.strptime(event_date, '%d/%m/%Y').strftime('%Y-%m-%d'), start_hour)
+                self, location, fecha, start_hour)
             template_name = self.template_name
 
             length = len(events)
