@@ -97,12 +97,23 @@ class RegistrationForm(UserCreationForm):
             'friend_token'
         )
 
-    def clean(self):
+    def clean_birthdate(self):
         birthdate = self.cleaned_data.get('birthdate')
+        if birthdate >= now().date():
+            raise ValidationError(
+                'La fecha de cumpleaños debe ser en el pasado')
+        return birthdate
+
+    def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise ValidationError('El email ya existe')
-        elif birthdate >= now().date():
-            raise ValidationError(
-                'La fecha de cumpleaños debe ser en el pasado')
-        return self.cleaned_data
+
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise ValidationError('El usuario ya existe')
+
+        return username

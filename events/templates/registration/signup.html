@@ -15,43 +15,47 @@
 				<br>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.username }}
+					<div class="form-errors">
+						{{ form.username.errors }}
+					</div>
 				</div>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.email }}
-				</div>
-				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
-					{{ form.first_name }}
-				</div>
-				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
-					{{ form.last_name }}
+					<div class="form-errors">
+						{{ form.email.errors }}
+					</div>
 				</div>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.birthdate }}
+					<div class="form-errors">
+						{{ form.birthdate.errors }}
+					</div>
 				</div>
 				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.password1 }}
+					<div class="form-errors">
+						{{ form.password1.errors }}
+					</div>
 				</div>
 				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.password2 }}
+					<div class="form-errors">
+						{{ form.password2.errors }}
+					</div>
 				</div>
 				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.friend_token }}
+					<div class="form-errors">
+						{{ form.friend_token.errors }}
+					</div>
 				</div>
 				<br>
-
-				<div class="flex-sb-m w-full p-t-3 p-b-32">
-				</div>
 
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn">
 						Continúa
 					</button>
 				</div>
-
-            <div class="form-errors">
-				{{ form.errors }}
-            </div>
-
 			</form>
 		</div>
 	</div>
