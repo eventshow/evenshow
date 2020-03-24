@@ -242,7 +242,8 @@ class EventSearchNearbyView(generic.ListView):
     template_name = 'event/list_search.html'
 
     def get(self, request, *args, **kwargs):
-        events = services.EventService.nearby_events_distance(self, 50000000)
+        events = services.EventService.nearby_events_distance(self, 50000)
+        length = len(events)
 
         page = request.GET.get('page', 1)
         paginator = Paginator(events, 12)
@@ -254,7 +255,7 @@ class EventSearchNearbyView(generic.ListView):
         except EmptyPage:
             events = paginator.page(paginator.num_pages)
 
-        return render(request, self.template_name, {'object_list': events, 'STATIC_URL': settings.STATIC_URL})
+        return render(request, self.template_name, {'object_list': events, 'STATIC_URL': settings.STATIC_URL,'length': length})
 
 
 @method_decorator(login_required, name='dispatch')
