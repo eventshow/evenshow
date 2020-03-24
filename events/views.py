@@ -366,7 +366,7 @@ class RateHostView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
-        context['host_name'] = selectors.UserSelector.event_host(self.kwargs.get('event_pk'))
+        context['host_name'] = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         context['event_title'] = models.Event.objects.get(id=self.kwargs.get('event_pk')).title
 
         return context
@@ -459,7 +459,7 @@ def attendees_list(request, event_pk):
     page = request.GET.get('page',1)
 
     if event.created_by == request.user:
-        attendees = selectors.UserSelector.event_attendees(event_pk)
+        attendees = selectors.UserSelector().event_attendees(event_pk)
         paginator  = Paginator(attendees, 5)
 
         try:
