@@ -6,7 +6,7 @@
             <div class="title">
         
               <div class="col s12">
-                <a id="titleThanks" class="flow-text">¡GRACIAS POR INSCRIBIRSE A <a>{{event.title}}</a>! </a>
+                <a id="titleThanks" class="flow-text">¡GRACIAS POR INSCRIBIRSE A {{event.title}}!</a>
             </div>
           
             <div class="col s12">
@@ -32,7 +32,7 @@
     function redireccionar(){
       window.location="{% url 'enrolled_events' %}";
     }
-    setTimeout ("redireccionar()", 50000); //tiempo expresado en milisegundos
+    setTimeout ("redireccionar()", 5000); //tiempo expresado en milisegundos
 </script>
 ​
 {% endblock %}
