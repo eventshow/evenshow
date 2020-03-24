@@ -11,12 +11,10 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-
 from . import forms
 from . import models
 from . import selectors
 from . import services
-
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -75,7 +73,7 @@ class EventDetailView(generic.DetailView):
                 event.pk, user)
 
         context['duration'] = str(duration // 3600) + 'h ' + \
-            str((duration // 60) % 60) + 'min'
+                              str((duration // 60) % 60) + 'min'
         context['ratings'] = selectors.RatingSelector.on_event(
             event.pk)
         context['g_location'] = event.location.replace(' ', '+')
@@ -201,8 +199,6 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
         errors = []
         events = []
 
-
-
         if event_date != '':
             try:
                 fecha = datetime.strptime(event_date, '%Y-%m-%d').date()
@@ -225,6 +221,8 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                 self, location, event_date, start_hour)
             template_name = self.template_name
 
+            length = len(events)
+
             page = request.GET.get('page', 1)
             paginator = Paginator(events, 12)
 
@@ -236,14 +234,15 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                 events = paginator.page(paginator.num_pages)
 
         return render(request, template_name,
-                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'errors': errors, 'place': location})
+                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'errors': errors, 'place': location,
+                       'length': length})
 
 
 class EventSearchNearbyView(generic.ListView):
     template_name = 'event/list_search.html'
 
     def get(self, request, *args, **kwargs):
-        events = services.EventService.nearby_events_distance(self, 50000)
+        events = services.EventService.nearby_events_distance(self, 50000000)
 
         page = request.GET.get('page', 1)
         paginator = Paginator(events, 12)
