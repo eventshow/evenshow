@@ -32,6 +32,10 @@ a:hover {
   color: #B6244D;
 }
 
+#button-search:hover{
+  font-weight: bold !important;
+}
+
 /*---------------------------------------------*/
 h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
@@ -164,6 +168,10 @@ iframe {
   align-items: stretch;
   flex-direction: row-reverse;
 
+}
+
+.login100-form-btn:hover {
+    font-weight: bold;
 }
 
 /*==================================================================

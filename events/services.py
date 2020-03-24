@@ -11,38 +11,46 @@ from django.utils.timezone import now
 
 from . import models
 from . import selectors
+from .models import Event
 
 API_KEY = "AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ"
 User = get_user_model()
 
 
-class EnrollmentService():
-    def count(enrollment_pk: int) -> int:
+class EnrollmentService:
+    def count(self, enrollment_pk: int) -> int:
         count = models.Enrollment.objects.filter(pk=enrollment_pk).count()
         return count
 
-    def create(event_pk: int, created_by: User):
+    def create(self, event_pk: int, created_by: User):
         event = models.Event.objects.get(pk=event_pk)
         enrollment = models.Enrollment.objects.create(
             created_by=created_by, event=event)
         enrollment.save()
 
-    def is_pending(enrollment_pk: int) -> bool:
+    def is_pending(self, enrollment_pk: int) -> bool:
         enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
         return enrollment.status == 'PENDING'
 
-    def host_can_update(host: User, enrollment_pk: int) -> bool:
+    def host_can_update(self, host: User, enrollment_pk: int) -> bool:
         created_by = models.Enrollment.objects.get(
             pk=enrollment_pk).event.created_by
         return host == created_by
 
-    def update(enrollment_pk: int, updated_by: User, status: str):
+    def update(self, enrollment_pk: int, updated_by: User, status: str):
         enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
         enrollment.status = status
         enrollment.updated_by = updated_by
         enrollment.save()
 
-    def user_is_enrolled(event_pk: int, user: User) -> bool:
+    def user_can_enroll(self, event_pk: int, user: User) -> bool:
+        event = models.Event.objects.get(pk=event_pk)
+        user_is_enrolled = self.user_is_enrolled(
+            event_pk, user)
+        user_is_old_enough = event.min_age <= user.profile.age
+        return not user_is_enrolled and user_is_old_enough
+
+    def user_is_enrolled(self, event_pk: int, user: User) -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user).exists()
 
 
@@ -64,45 +72,103 @@ class EventService():
         attendee.attendee_events.add(event)
         return event
 
-    @staticmethod
-    def nearby_events_distance(distance):
-        # events = Event.objects.filter(starts_at__date__gt=datetime.now()).order_by('-starts_at')
-        events = models.Event.objects.all()
+    def can_create(user: User) -> bool:
+        res = True
 
-        # Comprobar que haya algun evento
-        events_distances_oredered = common_method(events)
+        if user.profile.bio is None or user.first_name is None or user.last_name is None:
+            res = False
+
+        return res
+
+    def nearby_events_distance(self, self_view, distance):
+        events = Event.objects.filter(start_day__gte=date.today())
+
+        events_cleaned = []
+        if self_view.request.user.is_authenticated:
+            for event in events:
+                if self.request.user not in selectors.UserSelector().event_attendees(
+                        event.pk) and event.has_started is False:
+                    events_cleaned.append(event)
+        else:
+            for event in events:
+                if event.has_started is False:
+                    events_cleaned.append(event)
 
         result = []
-        for event, eventdistance in events_distances_oredered.items():
-            if eventdistance <= int(distance):
-                result.append(event)
-            else:
-                break
+
+        if events_cleaned:
+            events_distances_oredered = self.common_method_distance_order(
+                events_cleaned)
+
+            for event, eventdistance in events_distances_oredered.items():
+                if eventdistance <= int(distance):
+                    result.append(event)
+                else:
+                    break
 
         return result
 
-    @staticmethod
-    def nearby_events_ordered():
-        # events = Event.objects.filter(starts_at__date__gt=datetime.now()).order_by('-starts_at')
-        events = models.Event.objects.all()
+    def events_filter_home(self, self_view, location, event_date, start_hour):
+        if location and event_date and start_hour:
+            events = selectors.EventSelector.location_date_start_hour(
+                location, event_date, start_hour)
+        elif location and event_date:
+            events = selectors.EventSelector.location_date(
+                location, event_date)
+        elif location and start_hour:
+            events = selectors.EventSelector.location_start_hour(
+                location, start_hour)
+        elif event_date and start_hour:
+            events = selectors.EventSelector.date_start_hour(
+                event_date, start_hour)
+        elif location:
+            events = selectors.EventSelector.location(location)
+        elif event_date:
+            events = selectors.EventSelector.date(event_date)
+        elif start_hour:
+            events = selectors.EventSelector.start_hour(start_hour)
+        else:
+            events = Event.objects.filter(start_day__gte=date.today())
 
-        # Comprobar que haya algun evento
-        events_distances_oredered = common_method(events)
+        results = []
+        if self_view.request.user.is_authenticated:
+            for event in events:
+                if self.request.user not in selectors.UserSelector().event_attendees(
+                        event.pk) and event.has_started is False:
+                    results.append(event)
+        else:
+            for event in events:
+                if event.has_started is False:
+                    results.append(event)
 
-        return list(events_distances_oredered.keys())
+        return results
 
-    @staticmethod
-    def events_filter_ordered_by_distance(max_price, minimum_price, year, month, day):
-        # events = Event.objects.filter(starts_at__date__gt=datetime.now()).order_by('-starts_at')
-        # Validar que la fecha es futura
-        # events = Event.objects.all()
-        events = models.Event.objects.filter(price__gte=minimum_price, price__lte=max_price, start_day__year=year,
-                                             starts_day__month=month, starts_day__day=day)
+    def common_method_distance_order(self, events):
+        gmaps = googlemaps.Client(key=API_KEY)
 
-        # Comprobar que haya algun evento
-        events_distances_oredered = common_method(events)
+        geolocation = gmaps.geolocate()
 
-        return list(events_distances_oredered.keys())
+        latitude_user = geolocation['location']['lat']
+        longitude_user = geolocation['location']['lng']
+
+        origins = [{"lat": latitude_user, "lng": longitude_user}]
+        destinations = ""
+
+        for event in events:
+            destinations = destinations + str(
+                event.location_number) + " " + event.location_street + ", " + event.location_city + "|"
+
+        distancematrix = gmaps.distance_matrix(origins, destinations)
+        events_distances = {}
+
+        for element, event in zip(distancematrix['rows'][0]['elements'], events):
+            if element['status'] == 'OK':
+                events_distances[event] = element['distance']['value']
+
+        events_distances_oredered = OrderedDict(
+            sorted(events_distances.items(), key=itemgetter(1), reverse=False))
+
+        return events_distances_oredered
 
     def update(event: models.Event, updated_by: User):
         event.updated_by = updated_by
@@ -142,7 +208,7 @@ class RatingService():
             # the user cannot have already rated this event
             if not rating_user_for_this_event:
 
-                enroll_reviewed = selectors.EnrollmentSelector.enrolled_for_this_event(
+                enroll_reviewed = selectors.EnrollmentSelector().enrolled_for_this_event(
                     rating.reviewed, event)
 
                 # the host can only rate their attendees for this event
@@ -163,30 +229,24 @@ class RatingService():
         return rol
 
 
-# Metodos auxiliares
-def common_method(events):
-    gmaps = googlemaps.Client(key=API_KEY)
+class PaymentService():
 
-    geolocation = gmaps.geolocate()
+    def application_fee_amount(amount_host: int) -> int:
 
-    latitude_user = geolocation['location']['lat']
-    longitude_user = geolocation['location']['lng']
+        res = 0
+        const_stripe = 25
+        var_stripe = 1.029
 
-    origins = [{"lat": latitude_user, "lng": longitude_user}]
-    destinations = ""
+        if (amount_host >= 0) and amount_host <= 50:
+            res = (amount_host + 15) * var_stripe + const_stripe
+        elif (amount_host > 50) and (amount_host <= 150):
+            res = (amount_host * 1.25) * var_stripe + const_stripe
+        elif (amount_host > 150) and (amount_host <= 300):
+            res = (amount_host * 1.2) * var_stripe + const_stripe
+        elif (amount_host > 300) and (amount_host <= 500):
+            res = (amount_host * 1.15) * var_stripe + const_stripe
+        elif (amount_host > 500):
+            res = (amount_host * 1.10) * var_stripe + const_stripe
 
-    for event in events:
-        destinations = destinations + str(
-            event.location_number) + " " + event.location_street + ", " + event.location_city + "|"
+        return round(res - amount_host)
 
-    distancematrix = gmaps.distance_matrix(origins, destinations)
-    events_distances = {}
-
-    for element, event in zip(distancematrix['rows'][0]['elements'], events):
-        if element['status'] == 'OK':
-            events_distances[event] = element['distance']['value']
-
-    events_distances_oredered = OrderedDict(
-        sorted(events_distances.items(), key=itemgetter(1), reverse=False))
-
-    return events_distances_oredered

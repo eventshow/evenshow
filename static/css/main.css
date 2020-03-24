@@ -1,5 +1,27 @@
 @import url(https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
 
+/* GENERAL */
+
+.title-search{
+	color: #5D5E5E !important;
+}
+
+.title-category{
+	font-weight: 500;
+	color: #5D5E5E;
+}
+
+.title-event{
+	color: #B6244D !important;
+	font-weight: bolder;
+
+}
+
+.subtitle-event{
+	font-weight: 200 !important;
+}
+
+
 /* NAV */
 
 .avatar {
@@ -10,14 +32,40 @@
 	margin-top: -20%;
 }
 
+#avatar-movil{
+	margin-top: 15%;
+}
+
 
 .logo {
 	height: 70px;
-	margin-top: -7px
+	margin-top: -7px;
+	align-content: center;
 }
+
+#movil{
+	color: white !important;
+	background: #B7234D ;
+	border-radius: 50% !important;
+	margin-top: 3%;
+	margin-left: 3%;
+
+}
+
+#menu-movil{
+	margin-top: 15px;
+
+}
+
 
 #nav {
 	background-color: #B7234D;
+}
+
+.sh-eventshow{
+	font-weight: bold !important;
+	margin-left: -10px;
+
 }
 
 nav ul li:hover {
@@ -43,8 +91,17 @@ element.style{
 	padding: 25px 40px 90px;
 }
 
+.form-errors{
+		font-weight: bold !important;
+		color: red !important;
+	}
+
 .login{
 	border-radius: 0px;
+}
+
+.login h1{
+	margin-top: -20%;
 }
 
 .form-eventshow-confirm-delete {
@@ -108,6 +165,16 @@ element.style{
 	font-family: Raleway, sans-serif;
 }
 
+.form-search{
+	margin-top: 80px;
+	padding-right: 10px;
+	padding-left: 40px;
+}
+
+.search{
+	margin-top: 9px !important;
+}
+
 /* FOOTER */
 
 .footer-copyright a {
@@ -123,6 +190,26 @@ element.style{
 	font-size: 20px;
 }
 
+.copy{
+	color: white !important;
+	margin-left: -10px !important;
+	text-align: left !important;
+}
+
+.social{
+	color: white !important;
+	margin-right: 30px !important;
+	text-align: right !important;
+}
+
+.social a{
+	margin-right: -10px !important;
+	margin-left: 10px;
+}
+
+.social-footer{
+	margin-right: 30px !important;
+}
 
 /* OTHER */
 
@@ -130,6 +217,57 @@ element.style{
 	margin-left: 0 !important;
 	margin-top: 10%;
 }
+
+.space{
+margin-top: 5% !important;
+
+.text-left{
+	margin-left: -100%;
+	margin-top: 2%;
+	margin-bottom: 4%;
+}
+
+.event{
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+
+.element{
+	margin-bottom: 3%;
+}
+
+.rating-search{
+	font-weight: bold;
+	font-family: Raleway;
+	color: #5D5E5E;
+	font-style: normal;
+}
+
+.price{
+margin-right: -170px;
+margin-top: -5%;
+font-size: 20px;
+font-weight: 400;
+}
+
+.pagination{
+	text-align: center;
+
+
+}
+
+.price:hover{
+color: white!important;
+}
+
+.img-search{
+	height: 40%;
+	width: 70%;
+	border-radius: 15px;
+}
+
+.sep{
+	margin-right: -13%;
 
 
 /* VISTA DEL CREATE*/
@@ -368,6 +506,13 @@ table{
 	margin-top: 60px;
 }
 
+
+.fa {
+	color: #B7234D;
+	font-size: 20px;
+	margin-right: 20px;
+}
+
 .browser-default{
 	
 	width:30%;
@@ -448,3 +593,33 @@ table{
   }
   
 /* FIN PARTE MIGUEL- NO TOCAR */
+
+/* RESPONSIVE */
+
+@media only screen and (min-width: 411px) and (max-width: 731px) {
+   .form-eventshow {
+	background: #FFF;
+	width: 200%;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 25px 20px 90px !important;
+    margin-left: 5%;
+}
+	.footer-copyright{
+		text-align: center;
+	}
+
+	.logo{
+		margin-top: -10px;
+	}
+
+	.form-search{
+	margin-top: 150px;
+	padding-right: 50px;
+	padding-left: 50px;
+}
+
+
+
+
+}
