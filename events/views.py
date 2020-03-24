@@ -291,7 +291,7 @@ class EventSearchNearbyView(generic.ListView):
     template_name = 'event/list_search.html'
 
     def get(self, request, *args, **kwargs):
-        events = services.EventService.nearby_events_distance(self, 50000)
+        events = services.EventService().nearby_events_distance(self, 50000)
         length = len(events)
 
         page = request.GET.get('page', 1)
