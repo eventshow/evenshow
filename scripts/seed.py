@@ -39,9 +39,8 @@ def run():
     seed_users()
     seed_profiles()
     seed_categories()
-    seed_events(FAKE.date_this_year(), EVENT_PKS_THIS_YEAR)
-    seed_events(FAKE.date_between(start_date='+1y',
-                                  end_date='+2y'), EVENT_PKS_FUTURE)
+    seed_events(EVENT_PKS_THIS_YEAR)
+    seed_events(EVENT_PKS_FUTURE, True)
 
     with open('initial_data/initial_data.json', 'w') as file:
         file.write(json.dumps(INITIAL_DATA, indent=4))
@@ -136,9 +135,14 @@ def seed_categories():
         INITIAL_DATA.append(category)
 
 
-def seed_events(start_day, event_pks):
+def seed_events(event_pks, future=False):
     addresses = generate_addresses()
     for event_pk in event_pks:
+        if future:
+            start_day = FAKE.date_between(start_date='now',
+                                          end_date='+2y')
+        else:
+            start_day = FAKE.date_between(start_date='-1y', end_date='now')
         category = CATEGORIES.index(random.choice(CATEGORIES))
         host = random.choice(USER_PKS)
 
