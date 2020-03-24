@@ -86,7 +86,7 @@ class EventService():
         events_cleaned = []
         if self_view.request.user.is_authenticated:
             for event in events:
-                if self.request.user not in selectors.UserSelector().event_attendees(
+                if self_view.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     events_cleaned.append(event)
         else:
@@ -110,30 +110,30 @@ class EventService():
 
     def events_filter_home(self, self_view, location, event_date, start_hour):
         if location and event_date and start_hour:
-            events = selectors.EventSelector.location_date_start_hour(
+            events = selectors.EventSelector().location_date_start_hour(
                 location, event_date, start_hour)
         elif location and event_date:
-            events = selectors.EventSelector.location_date(
+            events = selectors.EventSelector().location_date(
                 location, event_date)
         elif location and start_hour:
-            events = selectors.EventSelector.location_start_hour(
+            events = selectors.EventSelector().location_start_hour(
                 location, start_hour)
         elif event_date and start_hour:
-            events = selectors.EventSelector.date_start_hour(
+            events = selectors.EventSelector().date_start_hour(
                 event_date, start_hour)
         elif location:
-            events = selectors.EventSelector.location(location)
+            events = selectors.EventSelector().location(location)
         elif event_date:
-            events = selectors.EventSelector.date(event_date)
+            events = selectors.EventSelector().date(event_date)
         elif start_hour:
-            events = selectors.EventSelector.start_hour(start_hour)
+            events = selectors.EventSelector().start_hour(start_hour)
         else:
             events = Event.objects.filter(start_day__gte=date.today())
 
         results = []
         if self_view.request.user.is_authenticated:
             for event in events:
-                if self.request.user not in selectors.UserSelector().event_attendees(
+                if self_view.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     results.append(event)
         else:
@@ -249,4 +249,3 @@ class PaymentService():
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
         return round(res - amount_host)
-
