@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
+from django.views.generic import TemplateView
 
 from . import forms
 from . import models
@@ -25,6 +25,17 @@ User = get_user_model()
 
 def index(request):
     return render(request, 'home.html', {'STATIC_URL': settings.STATIC_URL})
+
+
+class HomeView(TemplateView):
+    form = forms.SearchHomeForm()
+    template_name = 'home.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['form'] = self.form
+        context['STATIC_URL'] = settings.STATIC_URL
+        return render(request, self.template_name, context)
 
 
 class AttendeeListView(generic.ListView):
@@ -128,7 +139,8 @@ class EventDeleteView(generic.DeleteView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get('pk')):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host,
+                                                                                             self.kwargs.get('pk')):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -189,6 +201,7 @@ class EventUpdateView(generic.UpdateView):
 
 class EventSearchByLocationDateStartHourView(generic.ListView):
     template_name = 'event/list_search.html'
+    form = forms.SearchHomeForm()
 
     def get(self, request, *args, **kwargs):
         location = request.GET.get('location', None)
@@ -200,7 +213,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
         errors = []
         events = []
         length = 0
-        fecha=""
+        fecha = ""
 
         if event_date != '':
             try:
@@ -220,7 +233,6 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                 template_name = home_template
 
         if not errors:
-            print(fecha)
             events = services.EventService().events_filter_home(
                 self, location, fecha, start_hour)
             template_name = self.template_name
@@ -239,7 +251,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
 
         return render(request, template_name,
                       {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'errors': errors, 'place': location,
-                       'length': length})
+                       'length': length, 'form': self.form})
 
 
 class EventSearchNearbyView(generic.ListView):
@@ -259,12 +271,12 @@ class EventSearchNearbyView(generic.ListView):
         except EmptyPage:
             events = paginator.page(paginator.num_pages)
 
-        return render(request, self.template_name, {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'length': length})
+        return render(request, self.template_name,
+                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'length': length})
 
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateView(generic.View):
-
     model = models.Enrollment
 
     def get_context_data(self, **kwargs):
