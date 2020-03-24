@@ -201,10 +201,12 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
         errors = []
         events = []
 
+
+
         if event_date != '':
             try:
                 fecha = datetime.strptime(event_date, '%Y-%m-%d').date()
-                if fecha <= date.today():
+                if fecha < date.today():
                     errors.append("Introduzca una fecha futura")
                     template_name = home_template
             except ValueError:
@@ -223,6 +225,16 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                 self, location, event_date, start_hour)
             template_name = self.template_name
 
+            page = request.GET.get('page', 1)
+            paginator = Paginator(events, 12)
+
+            try:
+                events = paginator.page(page)
+            except PageNotAnInteger:
+                events = paginator.page(1)
+            except EmptyPage:
+                events = paginator.page(paginator.num_pages)
+
         return render(request, template_name,
                       {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'errors': errors, 'place': location})
 
@@ -232,6 +244,17 @@ class EventSearchNearbyView(generic.ListView):
 
     def get(self, request, *args, **kwargs):
         events = services.EventService.nearby_events_distance(self, 50000)
+
+        page = request.GET.get('page', 1)
+        paginator = Paginator(events, 12)
+
+        try:
+            events = paginator.page(page)
+        except PageNotAnInteger:
+            events = paginator.page(1)
+        except EmptyPage:
+            events = paginator.page(paginator.num_pages)
+
         return render(request, self.template_name, {'object_list': events, 'STATIC_URL': settings.STATIC_URL})
 
 
