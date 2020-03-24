@@ -29,6 +29,9 @@
 .pos{
 	margin-bottom: 2% !important;
 }
+.pos1{
+	margin-bottom: 20% !important;
+}
 
 .map-detail{
 	margin-top: -7% ;
@@ -57,7 +60,7 @@
 	margin-top: -5.5% !important;
 }
 .user-rat{
-	margin-left: 50% !important;
+	margin-left: 57% !important;
 	margin-top: -1.5% !important;
 }
 
@@ -222,6 +225,7 @@ element.style{
 
 }
 .subtitle-detail{
+	font-size: 26px!important;
 	font-weight: 500 !important;
 }
 
@@ -241,7 +245,8 @@ element.style{
 
 .button-detail{
 	color: white !important;
-	margin-top: 6% !important;
+	margin-top: -8% !important;
+	margin-left: 674% !important;
 }
 
 .button-detail:hover{

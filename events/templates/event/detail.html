@@ -34,7 +34,7 @@
 
                 </script>
             <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "event-submit");
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail");
             </script>
 
         </form>
@@ -99,4 +99,32 @@
         {% endfor %}
     </div>
 </div>
+
+    <style>
+       .page-footer {
+           width: 100%;
+           margin-top: 20% !important;
+       }
+    </style>
+
 {% endblock %}
+
+<style>
+    body {
+        background-image: url("{% static 'css/images/cena.jpg'%}");
+        background-size: cover;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+
+    .page-footer{
+        width: 100%;
+        margin-bottom: 29% !important;
+    }
+</style>
+
