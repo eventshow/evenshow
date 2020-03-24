@@ -112,7 +112,7 @@ def seed_profiles():
         'fields': {
             'location': FAKE.city(),
             'picture': PROFILE_IMAGE_FILE,
-            'birthdate': FAKE.date_of_birth().strftime('%Y-%m-%d'),
+            'birthdate': '1980-01-01',
             'token': get_random_string(length=8).upper(),
             'bio': FAKE.text(),
             'user': USER_PKS[-1]+1

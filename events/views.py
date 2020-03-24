@@ -65,7 +65,7 @@ class EventDetailView(generic.DetailView):
         duration = event.duration
 
         event_is_full = selectors.UserSelector.event_attendees(
-            event.pk).count()
+            event.pk).count() >= event.capacity
         user_can_enroll = True
 
         if user.is_authenticated:
@@ -274,7 +274,7 @@ class EnrollmentCreateView(generic.View):
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full:
-            services.EnrollmentService.create(event_pk, attendee)
+            services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
                 amount=500,
@@ -314,8 +314,8 @@ class EnrollmentUpdateView(generic.View):
     def get(self, request, *args, **kwargs):
         host = self.request.user
 
-        if services.EnrollmentService.count(kwargs.get('pk')) and self.updatable(host):
-            services.EnrollmentService.update(
+        if services.EnrollmentService().count(kwargs.get('pk')) and self.updatable(host):
+            services.EnrollmentService().update(
                 kwargs.get('pk'), host, kwargs.get('status'))
             event_pk = selectors.EventSelector.with_enrollment(
                 kwargs.get('pk')).values_list('pk', flat=True).first()
@@ -326,8 +326,8 @@ class EnrollmentUpdateView(generic.View):
 
     def updatable(self, host):
         enrollment_pk = self.kwargs.get('pk')
-        return services.EnrollmentService.host_can_update(host,
-                                                          enrollment_pk) and services.EnrollmentService.is_pending(
+        return services.EnrollmentService().host_can_update(host,
+                                                            enrollment_pk) and services.EnrollmentService().is_pending(
             enrollment_pk)
 
 
