@@ -181,7 +181,7 @@ class EventService():
 
 
 class ProfileService():
-    def create(user: User, birthdate: date):
+    def create(self, user: User, birthdate: date):
         profile = models.Profile.objects.create(user=user, birthdate=birthdate)
         profile.save()
 

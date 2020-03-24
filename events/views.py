@@ -262,15 +262,15 @@ class EventSearchNearbyView(generic.ListView):
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateView(generic.View):
-  
+
     model = models.Enrollment
-    
-    def get_context_data(self,**kwargs):
-        context=super().get_context_data(**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         event_pk = kwargs.get('pk')
-        event=models.Event.object.get(pk=event_pk)
+        event = models.Event.object.get(pk=event_pk)
         context['event_title'] = event.title
-   
+
     def post(self, request, *args, **kwargs):
 
         attendee = self.request.user
@@ -353,7 +353,7 @@ class RateHostView(generic.CreateView):
         created_by = request.user
         event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
         exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
-                                                                                                   event.created_by)
+                                                                                                     event.created_by)
 
         is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
             created_by, event)
@@ -366,8 +366,10 @@ class RateHostView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
-        context['host_name'] = selectors.UserSelector.event_host(self.kwargs.get('event_pk'))
-        context['event_title'] = models.Event.objects.get(id=self.kwargs.get('event_pk')).title
+        context['host_name'] = selectors.UserSelector(
+        ).event_host(self.kwargs.get('event_pk'))
+        context['event_title'] = models.Event.objects.get(
+            id=self.kwargs.get('event_pk')).title
 
         return context
 
@@ -401,8 +403,8 @@ class RateAttendeeView(generic.CreateView):
         attendee_id = self.kwargs.get('attendee_pk')
         attendee = models.User.objects.get(id=attendee_id)
         exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
-                                                                                                   event,
-                                                                                                   attendee_id)
+                                                                                                     event,
+                                                                                                     attendee_id)
         is_owner_of_this_event = selectors.EventSelector().is_owner(
             created_by, event.id)
         is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
@@ -416,8 +418,10 @@ class RateAttendeeView(generic.CreateView):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
         context['attendee_pk'] = self.kwargs.get('attendee_pk')
-        context['attendee_name'] = models.User.objects.get(id=self.kwargs.get('attendee_pk')).username
-        context['event_title'] = models.Event.objects.get(id=self.kwargs.get('event_pk')).title
+        context['attendee_name'] = models.User.objects.get(
+            id=self.kwargs.get('attendee_pk')).username
+        context['event_title'] = models.Event.objects.get(
+            id=self.kwargs.get('event_pk')).title
 
         return context
 
@@ -449,29 +453,29 @@ class SignUpView(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         birthdate = form.cleaned_data.get('birthdate')
-        services.ProfileService.create(user, birthdate)
+        services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
 
 
 def attendees_list(request, event_pk):
     event = models.Event.objects.get(id=event_pk)
-    page = request.GET.get('page',1)
+    page = request.GET.get('page', 1)
 
     if event.created_by == request.user:
-        attendees = selectors.UserSelector.event_attendees(event_pk)
-        paginator  = Paginator(attendees, 5)
+        attendees = selectors.UserSelector().event_attendees(event_pk)
+        paginator = Paginator(attendees, 5)
 
         try:
             attendees = paginator.page(page)
         except PageNotAnInteger:
-            attendees= paginator.page(1)
+            attendees = paginator.page(1)
         except EmptyPage:
             attendees = paginator.page(paginator.num_pages)
-        
-        context = {'attendees': attendees, 'event': event_pk, 'event_title': event.title}
-        
+
+        context = {'attendees': attendees,
+                   'event': event_pk, 'event_title': event.title}
+
         return render(request, 'rating/attendees_list.html', context)
     else:
         return redirect('/home')
-
