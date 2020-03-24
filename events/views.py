@@ -94,7 +94,7 @@ class EventCreateView(generic.CreateView):
     model = models.Event
     form_class = forms.EventCreateForm
     success_url = EVENT_SUCCESS_URL
-    template_name = 'event/create.html'
+    template_name = 'event/update.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
