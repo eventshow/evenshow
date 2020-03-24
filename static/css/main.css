@@ -218,8 +218,9 @@ element.style{
 	margin-top: 10%;
 }
 
-.space{
-margin-top: 5% !important;
+.space {
+	margin-top: 5% !important;
+}
 
 .text-left{
 	margin-left: -100%;
@@ -266,8 +267,9 @@ color: white!important;
 	border-radius: 15px;
 }
 
-.sep{
+.sep {
 	margin-right: -13%;
+}
 
 
 /* VISTA DEL CREATE*/
@@ -530,7 +532,7 @@ table{
 	font-size: large;
 	margin-top:10px;
 	margin-bottom: 10px;
-    -webkit-text-stroke: medium;
+
 }
 .btn#yaNo:hover{
 	background-color: black!important;
