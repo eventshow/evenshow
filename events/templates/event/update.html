@@ -16,7 +16,7 @@
 
 <div class="container">
   <div class="center-form">
-  <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
+<form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
     {% csrf_token %}
     <div class="row">
       <div class="col s12">
@@ -185,10 +185,11 @@
           <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
           {{ form.extra_info }}
           <div class="form-errors">
-            {{ form.extra_info.errors }}
           </div>
         </div>
       </div>
+                      {{ form.extra_info.errors }}
+
       </div>
     </div>
 
@@ -200,11 +201,12 @@
       </div>
 
     </div>
-    <div class="form-errors">
+
+    </div>
+     <div class="form-errors-create">
       {{ form.errors }}
     </div>
-
-  </form>
+</form>
 </div>
 </div>
 
