@@ -51,11 +51,17 @@ element.style{
 	padding: 25px 40px 70px;
 }
 
+.center-form{
+	margin-left: 7.5%;
+	margin-right: 7.5%;
+}
+
 .container-create {
 	background: #FFF;
 	margin-bottom: 3%;
-	margin-top: 1%;
+	margin-top: 4%;
 	margin-left: 10%;
+	margin-bottom: 7%;
 	width: 90%;
 	max-width: 600px;
 	border-radius: 15px;
@@ -101,22 +107,24 @@ element.style{
 
 
 #delete-btn{
-	width: 170%;
-	height: 100%;
 	font-weight:bold;
-	max-width: 127px;
-	max-height: 62px;
-	margin-top: 10%;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 62px;
+	margin-top: 63px;
+	margin-left: -55px;
 }
 
 #delete-btn-a{
-	width: 170%;
-	height: 100%;
+	width: 127px;
+	height: 62px;
 	font-weight:bold;
-	max-width: 127px;
-	max-height: 62px;
-	margin-top: -80%;
-	margin-left: -70%;
+	text-align: center;
+	padding-top: 3px;
+	font-size: 20px;
+	margin-top: 66px;
+	margin-left: -110px;
 }
 
 
@@ -350,6 +358,8 @@ label {
 }
 
 #title-delete{
+	margin-left: 1%;
+	margin-right: 1%;
 	max-width: 1149px;
 	width: auto;
 	max-height: 47px;
@@ -365,6 +375,7 @@ label {
 }
 #delete-title{
 	margin-top: -5%;
+	position: center;
 	text-align: center;
 	margin-left: 10%;
 }
@@ -440,6 +451,7 @@ label {
 	line-height: normal;
 	letter-spacing: normal;
 	margin-top: 10px;
+	margin-bottom: 4%;
 	color: #5D5E5E;
 }
 
