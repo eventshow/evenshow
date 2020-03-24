@@ -23,34 +23,43 @@
     }
 </style>
 
-<section class="hero-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
+<div class="container">
+    <div class="row">
+        <div class="col s6 form-home">
 
-                <form class="hero-form" method="GET" action="{% url 'event_search_home' %}">
-                    <h3 class="form-index">Encuentra y reserva experiencias únicas</h3>
-
-                    <label>LOCALIDAD</label>
-                    <input type="text" placeholder="Sevilla" name="location">
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label>FECHA</label>
-                            <input type="date" placeholder="dd/mm/yyyy" name="date">
-                        </div>
-                        <div class="col-6">
-                            <label>HORA INICIO</label>
-                            <input type="time" placeholder="hh:mm" name="start_hour">
-                        </div>
+            <form class="form-eventshow" method="GET" action="{% url 'nearby_events' %}">
+                <h3 class="">Encuentra y reserva experiencias únicas</h3>
+                <div class="row">
+                <div class="col s9">
+                        <label>DISTANCIA
+                            <input type="number" placeholder="Distancia en metros" name="distance"> </input>
+                        </label>
                     </div>
-                    <button class="site-btn site-btn-form">Buscar</button>
-                </form>
-                <p>{{ errors }}</p>
-            </div>
+
+                    <div class="col s3">
+                         <label>
+                             <button class="waves-effect waves-light btn-small location "><i class="material-icons">location_on</i></button>
+                         </label>
+                    </div>
+                     </div>
+                <div class="row">
+                    <div class="col s6">
+                        <label>FECHA
+                            <input type="text" class="datepicker" placeholder="mm-dd-yyyy">
+                        </label>
+                    </div>
+                    <div class="col s6">
+                        <label>HORA
+                            <input type="text" class="" placeholder="hh:mm">
+                        </label>
+                    </div>
+                </div>
+
+                <button class="waves-effect waves-light btn-large right">Buscar</button>
+            </form>
         </div>
     </div>
-    </div>
+</div>
 
 
-    {% endblock %}
+{% endblock %}
