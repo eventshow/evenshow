@@ -29,8 +29,8 @@
         <div class="container">
             <div class="row text-left">
                 <div class="col l6 ">
-                    <h1 class="title-search">[LUGAR]</h1>
-                    <h3 class="title-search"> {{ object_list|length }} resultados</h3>
+                    <h1 class="title-search">{{ place }}</h1>
+                    <h3 class="title-search"> {{ length }} resultados</h3>
                 </div>
             </div>
 
@@ -104,7 +104,7 @@
 {% if object_list.has_other_pages %}
   <div class="pagination">
     {% if object_list.has_previous %}
-      <a href="?page={{ object_list.previous_page_number }}">&laquo;</a>
+      <a href="{{ request.get_full_path }}&page={{ object_list.previous_page_number }}">&laquo;</a>
     {% else %}
       <a class="disabled"><span>&laquo;</span></a>
     {% endif %}
@@ -112,11 +112,11 @@
       {% if object_list.number == i %}
         <a class="active"><span>{{ i }} <span class="sr-only">(actual)</span></span></a>
       {% else %}
-        <a href="?page={{ i }}">{{ i }}</a>
+        <a href="{{ request.get_full_path }}&page={{ i }}">{{ i }}</a>
       {% endif %}
     {% endfor %}
     {% if object_list.has_next %}
-      <a href="?page={{ object_list.next_page_number }}">&raquo;</a>
+      <a href="{{ request.get_full_path }}&page={{ object_list.next_page_number }}">&raquo;</a>
     {% else %}<span>&raquo;</span>
     {% endif %}
   </div>

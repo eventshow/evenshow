@@ -91,6 +91,11 @@ element.style{
 	padding: 25px 40px 90px;
 }
 
+.form-errors{
+		font-weight: bold !important;
+		color: red !important;
+	}
+
 .login{
 	border-radius: 0px;
 }
@@ -236,7 +241,7 @@ element.style{
 }
 
 .price{
-margin-right: -37%;
+margin-right: -170px;
 margin-top: -5%;
 font-size: 20px;
 font-weight: 400;
@@ -255,6 +260,12 @@ color: white!important;
 .img-search{
 	height: 40%;
 	width: 70%;
+	border-radius: 15px;
+}
+
+.sep{
+	margin-right: -13%;
+
 }
 
 
@@ -606,6 +617,8 @@ table{
 	padding-right: 50px;
 	padding-left: 50px;
 }
+
+
 
 
 }
