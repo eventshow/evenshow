@@ -367,14 +367,14 @@ class RateHostView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
-        context['host_name'] = selectors.UserSelector(
-        ).event_host(self.kwargs.get('event_pk'))
-        context['event_title'] = models.Event.objects.get(
-            id=self.kwargs.get('event_pk')).title
+        context['host_name'] = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
+        context['event_title'] = models.Event.objects.get(id=self.kwargs.get('event_pk')).title
+
 
         return context
 
     def form_valid(self, form):
+
         rating = form.save(commit=False)
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
         host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
@@ -428,6 +428,7 @@ class RateAttendeeView(generic.CreateView):
 
     def form_valid(self, form):
         rating = form.save(commit=False)
+
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
         host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         created_by = self.request.user
@@ -465,7 +466,9 @@ def attendees_list(request, event_pk):
 
     if event.created_by == request.user:
         attendees = selectors.UserSelector().event_attendees(event_pk)
+
         paginator = Paginator(attendees, 5)
+
 
         try:
             attendees = paginator.page(page)

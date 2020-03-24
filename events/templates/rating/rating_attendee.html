@@ -18,7 +18,7 @@
 </br>
     </div>
     <div class="container" id="cuadro">
-      <form method="POST" action="{% url 'create_rating_host' event_pk %}">
+      <form method="POST" action="{% url 'create_rating_attendee' event_pk attendee_pk %}">
         {% csrf_token %}
         <div class="row">
           

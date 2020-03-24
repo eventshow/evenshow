@@ -74,7 +74,7 @@ class RatingSelector:
         return exists
 
 
-class UserSelector():
+class UserSelector:
     def event_host(self, event_pk: int) -> QuerySet:
         host = User.objects.filter(host_events=event_pk).first()
         return host

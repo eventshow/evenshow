@@ -202,8 +202,7 @@ class RatingService:
         now = pytz.utc.localize(now)
         # the event must have ended
         if event.has_finished:
-
-            rating_user_for_this_event = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(
+            rating_user_for_this_event = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(
                 rating.created_by, event, rating.reviewed)
             # the user cannot have already rated this event
             if not rating_user_for_this_event:
@@ -217,6 +216,7 @@ class RatingService:
                     valid = True
                 # the attendee can only rate the event host
                 elif rating.reviewed == event.created_by:
+
                     valid = True
         return valid
 
