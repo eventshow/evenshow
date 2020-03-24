@@ -81,7 +81,7 @@ class UserSelector:
 
     def event_not_rated_attendees(self, event_pk: int) -> QuerySet:
         event_attendees = User.objects.filter(
-            Q(attendee_enrollments__event__pk=event_pk) & Q(attendee_enrollments__status='ACCEPTED') & ~Q(reviewed_ratings__event=event_pk))
+            Q(attendee_enrollments__event__pk=event_pk) & Q(attendee_enrollments__status='ACCEPTED') & ~Q(reviewed_ratings__event=event_pk)).order_by('username')
         return event_attendees
 
     def enrolled_for_this_event(self, created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:

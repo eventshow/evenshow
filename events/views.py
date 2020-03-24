@@ -160,32 +160,28 @@ class EventDeleteView(generic.DeleteView):
         else:
             return redirect('/')
 
-    
 
 @method_decorator(login_required, name='dispatch')
 class EventHostedListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
 
-    def get(self,request,*args,**kwargs):
+    def get(self, request, *args, **kwargs):
         events = selectors.EventSelector().hosted(self.request.user)
-        page = request.GET.get('page',1)
+        page = request.GET.get('page', 1)
 
-        paginator  = Paginator(events, 5)
+        paginator = Paginator(events, 5)
 
         try:
             events = paginator.page(page)
         except PageNotAnInteger:
-            events= paginator.page(1)
+            events = paginator.page(1)
         except EmptyPage:
             events = paginator.page(paginator.num_pages)
-            
+
         context = {'object_list': events}
-            
+
         return render(request, self.template_name, context)
-         
-        
-    
 
 
 @method_decorator(login_required, name='dispatch')
@@ -193,21 +189,21 @@ class EventEnrolledListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
 
-    def get(self,request,*args,**kwargs):
+    def get(self, request, *args, **kwargs):
         events = selectors.EventSelector().enrolled(self.request.user)
-        page = request.GET.get('page',1)
+        page = request.GET.get('page', 1)
 
-        paginator  = Paginator(events, 5)
+        paginator = Paginator(events, 5)
 
         try:
             events = paginator.page(page)
         except PageNotAnInteger:
-            events= paginator.page(1)
+            events = paginator.page(1)
         except EmptyPage:
             events = paginator.page(paginator.num_pages)
-            
+
         context = {'object_list': events}
-            
+
         return render(request, self.template_name, context)
 
 
@@ -236,7 +232,6 @@ class EventUpdateView(generic.UpdateView):
             return super(EventUpdateView, self).form_valid(form)
         else:
             return redirect('events')
-            
 
     def get(self, request, *args, **kwargs):
         host = request.user
