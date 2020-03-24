@@ -372,6 +372,7 @@ class RateHostView(generic.CreateView):
         return context
 
     def form_valid(self, form):
+
         rating = form.save(commit=False)
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
         host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
@@ -423,6 +424,7 @@ class RateAttendeeView(generic.CreateView):
 
     def form_valid(self, form):
         rating = form.save(commit=False)
+
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
         host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         created_by = self.request.user
