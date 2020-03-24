@@ -59,15 +59,16 @@ class EventSelector:
     def date_start_hour(self, date: str, start_hour: time) -> QuerySet:
         return models.Event.objects.filter(start_day=date, start_time__gte=start_hour)
 
-    def location_date(self, location: str, date: str,) -> QuerySet:
+    def location_date(self, location: str, date: str, ) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_day=date)
 
 
 class RatingSelector:
-    def on_event(event_pk: int, on='HOST') -> QuerySet:
+    def on_event(self, event_pk: int, on='HOST') -> QuerySet:
         return models.Rating.objects.filter(event__pk=event_pk, on=on)
 
-    def exists_this_rating_for_this_user_and_event(created_by: User, event: models.Event, reviewed: User) -> QuerySet:
+    def exists_this_rating_for_this_user_and_event(self, created_by: User, event: models.Event,
+                                                   reviewed: User) -> QuerySet:
         exists = models.Rating.objects.filter(created_by=created_by, event=event,
                                               reviewed=reviewed).exists()
         return exists

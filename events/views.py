@@ -75,7 +75,7 @@ class EventDetailView(generic.DetailView):
 
         context['duration'] = str(duration // 3600) + 'h ' + \
             str((duration // 60) % 60) + 'min'
-        context['ratings'] = selectors.RatingSelector.on_event(
+        context['ratings'] = selectors.RatingSelector().on_event(
             event.pk)
         context['g_location'] = event.location.replace(' ', '+')
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
@@ -352,7 +352,7 @@ class RateHostView(generic.CreateView):
     def get(self, request, *args, **kwargs):
         created_by = request.user
         event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-        exist_already_rating = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(created_by, event,
+        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
                                                                                                    event.created_by)
 
         is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
@@ -381,8 +381,8 @@ class RateHostView(generic.CreateView):
         rating.reviewed = host
         rating.event = event
         rating.on = 'HOST'
-        if services.RatingService.is_valid_rating(rating, event, created_by):
-            services.RatingService.create(rating)
+        if services.RatingService().is_valid_rating(rating, event, created_by):
+            services.RatingService().create(rating)
             return super().form_valid(form)
         else:
             return redirect('home')
@@ -400,7 +400,7 @@ class RateAttendeeView(generic.CreateView):
         event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
         attendee_id = self.kwargs.get('attendee_pk')
         attendee = models.User.objects.get(id=attendee_id)
-        exist_already_rating = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(created_by,
+        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
                                                                                                    event,
                                                                                                    attendee_id)
         is_owner_of_this_event = selectors.EventSelector.is_owner(
@@ -434,8 +434,8 @@ class RateAttendeeView(generic.CreateView):
         rating.event = event
         rating.on = 'ATTENDEE'
 
-        if services.RatingService.is_valid_rating(rating, event, created_by):
-            services.RatingService.create(rating)
+        if services.RatingService().is_valid_rating(rating, event, created_by):
+            services.RatingService().create(rating)
             return super().form_valid(form)
         else:
             return redirect('home')
