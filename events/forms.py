@@ -2,12 +2,14 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
+from django.utils.timezone import now
+
 
 from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
 
-CHOICES_SCORE = (('--'," " ),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
+CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
 User = get_user_model()
 
@@ -23,6 +25,10 @@ class RatingForm(forms.ModelForm):
 
 
 class EventForm(forms.ModelForm):
+    start_day = forms.DateField(input_formats=('%d/%m/%Y',),
+                                widget=forms.DateInput(format='%d/%m/%Y',
+                                                       attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa', 'name': 'start_day'}))
+
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
@@ -38,7 +44,6 @@ class EventForm(forms.ModelForm):
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_day': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'mm/dd/yyyy', 'name': 'start_day'}),
             'start_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'start_time'}),
             'end_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
@@ -92,8 +97,23 @@ class RegistrationForm(UserCreationForm):
             'friend_token'
         )
 
-    def clean(self):
+    def clean_birthdate(self):
+        birthdate = self.cleaned_data.get('birthdate')
+        if birthdate >= now().date():
+            raise ValidationError(
+                'La fecha de cumpleaños debe ser en el pasado')
+        return birthdate
+
+    def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise ValidationError("El email ya existe")
-        return self.cleaned_data
+            raise ValidationError('El email ya existe')
+
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise ValidationError('El usuario ya existe')
+
+        return username
