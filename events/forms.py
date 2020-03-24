@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
+from django.utils.timezone import now
+
 
 from .models import Category, Event, Rating
 
@@ -96,7 +98,11 @@ class RegistrationForm(UserCreationForm):
         )
 
     def clean(self):
+        birthdate = self.cleaned_data.get('birthdate')
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise ValidationError("El email ya existe")
+            raise ValidationError('El email ya existe')
+        elif birthdate >= now().date():
+            raise ValidationError(
+                'La fecha de cumpleaños debe ser en el pasado')
         return self.cleaned_data
