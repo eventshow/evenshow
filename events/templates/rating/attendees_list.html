@@ -1,55 +1,73 @@
 {% extends 'base.html' %}
 {% block content %}
-    <br><br><br><br><br>
+
+<body>
     <div class="container">
-    <div class="col-md-12">
-                <div class="limiter">
-                    <div class="container-table100">
-                        <div class="wrap-table100">
-                            <div class="table">
+    <div class="title">
+    <div class="col s12">
+        <h3 class="name-host">Huéspedes del evento <a id="title-name">{{event_title}}</a></h3>
+    </div>       
+        </div>
+    
+        <div class="table-generic" >
+        
+     
+          <table  cellpadding="1" cellspacing="1" class="centre" id="myTable">
+    
+          <thead>
+            <div class="provisional">
+              <tr>
+                  <th>Puntuar</th>
+                  <th>Usuario</th>
+                  <th>Nombre</th>
+                  <th>Apellidos</th>
+              </tr>
+            </div>
+          </thead>  
+        
+    
+    {%for att in attendees %}
+    <tbody>
+        
+      <tr>
+        <td><button type="button" onclick="location.href='{% url 'create_rating_attendee' event att.pk %}'"  title="Puntuar">
+            <i id="title-name" class="samll material-icons" >star</i>
+        </button></td>
+        <td>{{att.username}}</td>
+        <td>{{att.first_name}}</td>
+        <td> {{att.last_name}}</td>
+      </tr>
+      
+    </tbody>
+    {% endfor %}
+  </table>
 
-                                <div class="rowExpe header">
-                                    <div class="cell">
-                                        Puntuar
-                                    </div>
-                                     <div class="cell">
-                                        Usuario
-                                    </div>
-                                    <div class="cell">
-                                        Nombre
-                                    </div>
-                                    <div class="cell">
-                                        Apellidos
-                                    </div>
-                                </div>
 
- {%for att in attendees %}
-                                <div class="rowExpe">
-
-                                        <div class="cell" data-title="Punt">
-
-                                        <button type="button" onclick="location.href='{% url 'create_rating_attendee' event att.pk %}'" class="fa fa-star" title="Puntuar"/>
-                                        </td>
-                                        </div>
-                                    <div class="cell" data-title="attendee-name">
-                                            {{att.username}}
-                                        </div>
-                                        <div class="cell" data-title="attendee-name">
-                                            {{att.name}}
-                                        </div>
-                                        <div class="cell" data-title="attendee-surname">
-                                            {{att.surname}}
-                                        </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-    </div>
-
+      {% if attendees.has_other_pages %}
+  <div class="pagination">
+    {% if libros.has_previous %}
+      <a  href="?page={{ attendees.previous_page_number }}" > </a>
+      
+    {% else %}
+      <a class="disabled"><span>|</span></a>
+    {% endif %}
+    {% for i in attendees.paginator.page_range %}
+      {% if attendees.number == i %}
+        <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
+      {% else %}
+        <a href="?page={{ i }}">{{ i }} |</a>
+      {% endif %}
+    {% endfor %}
+    {% if libros.has_next %}
+      <a href="?page={{ attendees.next_page_number }}"></a>
+    {% else %}<span></span>
+    {% endif %}
+  </div>
+{% endif %}
+  </div>
 </div>
+
+</body>
 
     <style>
     .footer-section {
@@ -57,10 +75,6 @@
     }
 </style>
 
+
+
 {%endblock%}
-
-
-
-
-
-

@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
+
 from . import forms
 from . import models
 from . import selectors
@@ -261,8 +262,17 @@ class EventSearchNearbyView(generic.ListView):
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateView(generic.View):
-
+  
+    model = models.Enrollment
+    
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        event_pk = kwargs.get('pk')
+        event=models.Event.object.get(pk=event_pk)
+        context['event_title'] = event.title
+   
     def post(self, request, *args, **kwargs):
+
         attendee = self.request.user
         event_pk = kwargs.get('pk')
 
@@ -356,6 +366,9 @@ class RateHostView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
+        context['host_name'] = selectors.UserSelector.event_host(self.kwargs.get('event_pk'))
+        context['event_title'] = models.Event.objects.get(id=self.kwargs.get('event_pk')).title
+
         return context
 
     def form_valid(self, form):
@@ -403,6 +416,8 @@ class RateAttendeeView(generic.CreateView):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
         context['attendee_pk'] = self.kwargs.get('attendee_pk')
+        context['attendee_name'] = models.User.objects.get(id=self.kwargs.get('attendee_pk')).username
+        context['event_title'] = models.Event.objects.get(id=self.kwargs.get('event_pk')).title
 
         return context
 
@@ -441,14 +456,22 @@ class SignUpView(generic.CreateView):
 
 def attendees_list(request, event_pk):
     event = models.Event.objects.get(id=event_pk)
+    page = request.GET.get('page',1)
 
     if event.created_by == request.user:
-        attendees = selectors.UserSelector().event_attendees(event_pk)
+        attendees = selectors.UserSelector.event_attendees(event_pk)
+        paginator  = Paginator(attendees, 5)
 
-        context = {'attendees': attendees, 'event': event_pk}
-
+        try:
+            attendees = paginator.page(page)
+        except PageNotAnInteger:
+            attendees= paginator.page(1)
+        except EmptyPage:
+            attendees = paginator.page(paginator.num_pages)
+        
+        context = {'attendees': attendees, 'event': event_pk, 'event_title': event.title}
+        
         return render(request, 'rating/attendees_list.html', context)
     else:
         return redirect('/home')
 
-# Create your views here.
