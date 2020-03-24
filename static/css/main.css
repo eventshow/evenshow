@@ -21,6 +21,46 @@
 	font-weight: 200 !important;
 }
 
+.rating-bio{
+	margin-left: 5.5%;
+}
+
+.pos{
+	margin-bottom: 2% !important;
+}
+
+.map-detail{
+	margin-top: -7% ;
+	margin-left: 38%;
+}
+
+.address-detail{
+	margin-left: 3%;
+	margin-top: 2%;
+}
+
+.img-comment{
+	margin-left: 37%;
+	margin-top: 2%;
+	width: 100px;
+
+}
+
+.comment-detail {
+	margin-left: 44%;
+	margin-top: 1%;
+	font-size: 18px;
+}
+.user-comment{
+	margin-left: 44% !important;
+	margin-top: -5.5% !important;
+}
+.user-rat{
+	margin-left: 50% !important;
+	margin-top: -1.5% !important;
+}
+
+
 
 /* NAV */
 
@@ -97,6 +137,7 @@ element.style{
     height: 900px;
     width: 100%;
 	margin-top: -45%;
+	margin-bottom: 8%;
 }
 
 .title-section{
@@ -115,7 +156,20 @@ element.style{
 }
 
 .name-host-detail{
+	margin-top: -3%;
+    margin-left: 30%;
 
+}
+
+.host-bio{
+	margin-left: 30%;
+	margin-top: 1%;
+}
+
+.img-bio{
+	margin-left: 3%;
+	margin-top: -4%;
+	width: 150px;
 }
 
 

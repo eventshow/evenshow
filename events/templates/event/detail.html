@@ -25,40 +25,83 @@
       <div class="col m6 rectangle-info separated2" id="detail-info">
         <h2 class="title-detail">idioma</h2>
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
-        <a class="button-detail" class="waves-effect waves-light btn-large button-detail price right" id="button-search" href=""></a>
         <a class="waves-effect waves-light btn-large" id="separated3"><h2 class="button-detail">INSCRIBIRSE</h2></a>
 
     </div>
 </div>
 
 <div class="section-detail">
-<div clas="row">
     <div class="col-3 title-section">
     <h1 class="title-section">Descripción</h1>
     </div>
-
     <div class="col-9 title-section">
     <h3 class="title-text">{{object.description}}</h3>
-    </div>
-</div>
-    <hr>
 
+
+</div>
+ <hr>
 </div>
 
 <div class="section-detail">
-<div clas="row">
     <div class="col-3 title-section">
     <h1 class="title-section">Anfitrión</h1>
     </div>
 
-    <div class="col-9 title-section">
-    <h3 class="name-host-detail">{{object.name}}</h3>
+
+    <div class="col-9 title-section pos">
+    <h3 class="name-host-detail">Nombre Apellidos</h3>
+        <h3 class="host-bio">{{object.description}}</h3>
+        <img class="img-bio" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+        <div class="rating-bio">
+        <i class="fa fa-star"><i class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
+        </div>
     </div>
+        <hr>
+
+<div class="col-9 title-section pos">
+        <h1 class="title-section">Dirección</h1>
+
+    <h3 class="address-detail">Calle Numero<br> y ciudad</h3>
+    <div class="col-md-7 map-detail">
+            <br>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3171.280887375974!2d-5.988450184736177!3d37.35953007983709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c2b2b60f659%3A0x957d9e61ca03f160!2sAv.%20de%20la%20Reina%20Mercedes%2C%2041012%20Sevilla!5e0!3m2!1ses!2ses!4v1584287236974!5m2!1ses!2ses"
+                width="838" height="346" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+                tabindex="0"></iframe>
+            <br>
+        </div>
+
+
+    </div>
+        <hr>
+
+<div class="col-9 title-section pos">
+    <h1 class="title-section">Comentarios de otros húespedes <br> asistieron a algún evento de este anfitrión</h1>
+
+    <div class="comments">
+            <img class="img-comment" alt='' src="{{object.created_by.profile.picture}}">
+           <h3 class="name-host-detail user-comment">Usuario</h3>
+
+
+              <div class="user-rat">
+        <i class="fa fa-star"><i class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
+        </div>
+
+                <h3 class="comment-detail">{{object.description}}</h3>
+
+
+
+
+
+
+    </div>
+
+
+
 </div>
+
+
 </div>
-
-
-
 
 
 {% endblock %}
