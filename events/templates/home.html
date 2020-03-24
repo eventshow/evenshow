@@ -32,7 +32,7 @@
                 <div class="row">
                 <div class="col s9">
                         <label>UBICACIÓN
-                            <input type="text" placeholder="Ciudad" name="location">
+                            {{ form.location }}
                         </label>
                     </div>
 
@@ -45,12 +45,12 @@
                 <div class="row">
                     <div class="col s6">
                         <label>FECHA
-                            <input type="text" class="" placeholder="dd/mm/aaaa" name="date">
+                            {{ form.date }}
                         </label>
                     </div>
                     <div class="col s6">
                         <label>HORA
-                            <input type="time" class="" placeholder="hh:mm" name="start_hour">
+                            {{ form.start_hour }}
                         </label>
                     </div>
                 </div>

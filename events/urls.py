@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [
     path('auth/signup/', views.SignUpView.as_view(), name='signup'),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('home', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('home', views.HomeView.as_view(), name='home'),
 
     path('enrollments/<int:pk>/update/<str:status>',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),

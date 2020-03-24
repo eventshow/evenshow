@@ -1,3 +1,5 @@
+from datetime import datetime, date
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -27,7 +29,8 @@ class RatingForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     start_day = forms.DateField(input_formats=('%d/%m/%Y',),
                                 widget=forms.DateInput(format='%d/%m/%Y',
-                                                       attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa', 'name': 'start_day'}))
+                                                       attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
+                                                              'name': 'start_day'}))
 
     class Meta:
         model = Event
@@ -44,7 +47,8 @@ class EventForm(forms.ModelForm):
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'start_time'}),
+            'start_time': forms.TextInput(
+                attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'start_time'}),
             'end_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'español', 'name': 'lang'}),
@@ -117,3 +121,12 @@ class RegistrationForm(UserCreationForm):
             raise ValidationError('El usuario ya existe')
 
         return username
+
+
+class SearchHomeForm(forms.Form):
+    location = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "Ciudad"}))
+    date = forms.DateField(required=False, widget=forms.DateInput(
+        attrs={'placeholder': "dd/mm/aaaa"}))
+    start_hour = forms.TimeField(required=False, widget=forms.TimeInput(
+        attrs={'placeholder': "hh:mm"}))
