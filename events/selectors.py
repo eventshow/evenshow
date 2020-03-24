@@ -19,26 +19,26 @@ class EnrollmentSelector:
 
 
 class EventSelector:
-    def hosted(host: User) -> QuerySet:
+    def hosted(self, host: User) -> QuerySet:
         hosted_events = models.Event.objects.filter(created_by=host)
         return hosted_events
 
-    def is_owner(host: User, event_id: int) -> QuerySet:
+    def is_owner(self, host: User, event_id: int) -> QuerySet:
         hosted_events = models.Event.objects.filter(
             created_by=host, id=event_id).exists()
         return hosted_events
 
-    def enrolled(attendee: User, status='ACCEPTED') -> QuerySet:
+    def enrolled(self, attendee: User, status='ACCEPTED') -> QuerySet:
         enrolled_events = models.Event.objects.filter(
             event_enrollments__created_by=attendee)
         return enrolled_events
 
-    def not_enrolled(attendee: User) -> QuerySet:
+    def not_enrolled(self, attendee: User) -> QuerySet:
         not_enrolled_events = models.Event.objects.exclude(
             event_enrollments__created_by=attendee)
         return not_enrolled_events
 
-    def with_enrollment(enrollment_pk: int) -> models.Event:
+    def with_enrollment(self, enrollment_pk: int) -> models.Event:
         return models.Event.objects.filter(event_enrollments=enrollment_pk)
 
     def location_date_start_hour(self, location: str, date: str, start_hour: time) -> QuerySet:
