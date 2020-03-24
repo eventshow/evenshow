@@ -38,19 +38,40 @@
                               <td>{{event.title}}</td>
                               <td>{{event.start_day}}</td>
                               <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
-                              <td><em class="waves-effect waves-light btn" id="yaNo">Ya no quiero ir</em></td>
+                              <td><i class="waves-effect waves-light btn" id="yaNo">Ya no quiero ir</i></td>
                             </tr>
                             
                           </tbody>                             
                             {% endfor %}
                         </table>
+                        {% if object_list.has_other_pages %}
+
+                        <div class="pagination">
+                          {% if object_list.has_previous %}
+                            <a  href="?page={{ object_list.previous_page_number }}" > </a>
+                            
+                          {% else %}
+                            <a class="disabled"><span>|</span></a>
+                          {% endif %}
+                          {% for i in object_list.paginator.page_range %}
+                            {% if object_list.number == i %}
+                              <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
+                            {% else %}
+                              <a href="?page={{ i }}">{{ i }} |</a>
+                            {% endif %}
+                          {% endfor %}
+                          {% if object_list.has_next %}
+                            <a href="?page={{ object_list.next_page_number }}"></a>
+                          {% else %}<span></span>
+                          {% endif %}
                             </div>
-                        
+                            {% endif %}
                     </div>
                 
                 
                 </body>
                 {% endif %}
+
                 {% if request.get_full_path == '/events/hosted' %}
                 <body>
                 <div class="container">
@@ -79,22 +100,23 @@
                                     <tbody>
                                         <tr>
                                           <td><button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Puntuar">
-                                              <em id="title-name" class="samll material-icons">star</em>
+                                              <i id="title-name" class="small material-icons">star</i>
                                           </button></td>
                                           <td>{{event.title}}</td>
                                           <td>{{event.start_day}}</td>
                                           <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
-                                          <td><button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Editar">
-                                            <em id="title-name" class="samll material-icons">edit</em>
+                                          <td>
+                                            <button type="button" onclick="location.href='{% url '#'" title="Editar">
+                                            <i id="title-name" class="small material-icons">edit</i>
                                         </button>
                                         <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Asistentes">
-                                            <em id="title-name" class="samll material-icons">person</em>
+                                            <i id="title-name" class="small material-icons">person</i>
                                         </button>
-                                        <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Eliminar">
-                                            <em id="title-name" class="samll material-icons">delete</em>
+                                        <button type="button" onclick="location.href='#'" title="Eliminar">
+                                            <i id="title-name" class="small material-icons">delete</i>
                                         </button>
-                                        <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="">
-                                            <em id="title-name" class="samll material-icons">attach_money</em>
+                                        <button type="button" onclick="location.href='#'" title="">
+                                            <i id="title-name" class="small material-icons">attach_money</i>
                                         </button>
                                           </td>
                                         </tr>
@@ -103,24 +125,24 @@
                                 
 {% endfor %}
 </table>
-{% if event.has_other_pages %}
+{% if object_list.has_other_pages %}
 
   <div class="pagination">
-    {% if event.has_previous %}
-      <a  href="?page={{ event.previous_page_number }}" > </a>
+    {% if object_list.has_previous %}
+      <a  href="?page={{ object_list.previous_page_number }}" > </a>
       
     {% else %}
       <a class="disabled"><span>|</span></a>
     {% endif %}
-    {% for i in event.paginator.page_range %}
-      {% if event.number == i %}
+    {% for i in object_list.paginator.page_range %}
+      {% if object_list.number == i %}
         <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
       {% else %}
         <a href="?page={{ i }}">{{ i }} |</a>
       {% endif %}
     {% endfor %}
-    {% if event.has_next %}
-      <a href="?page={{ event.next_page_number }}"></a>
+    {% if object_list.has_next %}
+      <a href="?page={{ object_list.next_page_number }}"></a>
     {% else %}<span></span>
     {% endif %}
   </div>
