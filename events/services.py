@@ -80,12 +80,11 @@ class EventService():
 
         return res
 
-    @staticmethod
-    def nearby_events_distance(self, distance):
+    def nearby_events_distance(self, self_view, distance):
         events = Event.objects.filter(start_day__gte=date.today())
 
         events_cleaned = []
-        if self.request.user.is_authenticated:
+        if self_view.request.user.is_authenticated:
             for event in events:
                 if self.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
@@ -98,7 +97,8 @@ class EventService():
         result = []
 
         if events_cleaned:
-            events_distances_oredered = common_method(events_cleaned)
+            events_distances_oredered = self.common_method_distance_order(
+                events_cleaned)
 
             for event, eventdistance in events_distances_oredered.items():
                 if eventdistance <= int(distance):
@@ -108,9 +108,7 @@ class EventService():
 
         return result
 
-    @staticmethod
-    def events_filter_home(self, location, event_date, start_hour):
-
+    def events_filter_home(self, self_view, location, event_date, start_hour):
         if location and event_date and start_hour:
             events = selectors.EventSelector.location_date_start_hour(
                 location, event_date, start_hour)
@@ -133,7 +131,7 @@ class EventService():
             events = Event.objects.filter(start_day__gte=date.today())
 
         results = []
-        if self.request.user.is_authenticated:
+        if self_view.request.user.is_authenticated:
             for event in events:
                 if self.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
@@ -144,6 +142,33 @@ class EventService():
                     results.append(event)
 
         return results
+
+    def common_method_distance_order(self, events):
+        gmaps = googlemaps.Client(key=API_KEY)
+
+        geolocation = gmaps.geolocate()
+
+        latitude_user = geolocation['location']['lat']
+        longitude_user = geolocation['location']['lng']
+
+        origins = [{"lat": latitude_user, "lng": longitude_user}]
+        destinations = ""
+
+        for event in events:
+            destinations = destinations + str(
+                event.location_number) + " " + event.location_street + ", " + event.location_city + "|"
+
+        distancematrix = gmaps.distance_matrix(origins, destinations)
+        events_distances = {}
+
+        for element, event in zip(distancematrix['rows'][0]['elements'], events):
+            if element['status'] == 'OK':
+                events_distances[event] = element['distance']['value']
+
+        events_distances_oredered = OrderedDict(
+            sorted(events_distances.items(), key=itemgetter(1), reverse=False))
+
+        return events_distances_oredered
 
     def update(event: models.Event, updated_by: User):
         event.updated_by = updated_by
@@ -213,43 +238,15 @@ class PaymentService():
         var_stripe = 1.029
 
         if (amount_host >= 0) and amount_host <= 50:
-            res = (amount_host + 15)*var_stripe + const_stripe
+            res = (amount_host + 15) * var_stripe + const_stripe
         elif (amount_host > 50) and (amount_host <= 150):
-            res = (amount_host * 1.25)*var_stripe + const_stripe
+            res = (amount_host * 1.25) * var_stripe + const_stripe
         elif (amount_host > 150) and (amount_host <= 300):
-            res = (amount_host * 1.2)*var_stripe + const_stripe
+            res = (amount_host * 1.2) * var_stripe + const_stripe
         elif (amount_host > 300) and (amount_host <= 500):
-            res = (amount_host * 1.15)*var_stripe + const_stripe
+            res = (amount_host * 1.15) * var_stripe + const_stripe
         elif (amount_host > 500):
-            res = (amount_host * 1.10)*var_stripe + const_stripe
+            res = (amount_host * 1.10) * var_stripe + const_stripe
 
-        return round(res-amount_host)
+        return round(res - amount_host)
 
-
-# Metodos auxiliares
-def common_method(events):
-    gmaps = googlemaps.Client(key=API_KEY)
-
-    geolocation = gmaps.geolocate()
-
-    latitude_user = geolocation['location']['lat']
-    longitude_user = geolocation['location']['lng']
-
-    origins = [{"lat": latitude_user, "lng": longitude_user}]
-    destinations = ""
-
-    for event in events:
-        destinations = destinations + str(
-            event.location_number) + " " + event.location_street + ", " + event.location_city + "|"
-
-    distancematrix = gmaps.distance_matrix(origins, destinations)
-    events_distances = {}
-
-    for element, event in zip(distancematrix['rows'][0]['elements'], events):
-        if element['status'] == 'OK':
-            events_distances[event] = element['distance']['value']
-
-    events_distances_oredered = OrderedDict(
-        sorted(events_distances.items(), key=itemgetter(1), reverse=False))
-
-    return events_distances_oredered
