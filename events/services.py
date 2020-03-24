@@ -11,7 +11,6 @@ from django.utils.timezone import now
 
 from . import models
 from . import selectors
-from .models import Event
 
 API_KEY = "AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ"
 User = get_user_model()
@@ -95,18 +94,17 @@ class EventService():
                     events_cleaned.append(event)
 
         result = []
+        for event, eventdistance in events_distances_oredered.items():
+            if eventdistance <= int(distance):
+                result.append(event)
+            else:
+                break
 
         if events_cleaned:
             events_distances_oredered = self.common_method_distance_order(
                 events_cleaned)
-
-            for event, eventdistance in events_distances_oredered.items():
-                if eventdistance <= int(distance):
-                    result.append(event)
-                else:
-                    break
-
         return result
+
 
     def events_filter_home(self, self_view, location, event_date, start_hour):
         if location and event_date and start_hour:
@@ -141,7 +139,7 @@ class EventService():
                 if event.has_started is False:
                     results.append(event)
 
-        return results
+        return list(events_distances_oredered.keys())
 
     def common_method_distance_order(self, events):
         gmaps = googlemaps.Client(key=API_KEY)
@@ -227,7 +225,6 @@ class RatingService:
         else:
             rol = 'HOST'
         return rol
-
 
 class PaymentService():
 
