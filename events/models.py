@@ -171,7 +171,7 @@ class Enrollment(Common):
     created_by = models.ForeignKey(
         User, on_delete=models.SET(get_sentinel_user), related_name='attendee_enrollments')
     event = models.ForeignKey(
-        Event, on_delete=models.SET(get_sentinel_user), related_name='event_enrollments')
+        Event, on_delete=models.CASCADE, related_name='event_enrollments')
 
     class Meta:
         ordering = ['-created_at']

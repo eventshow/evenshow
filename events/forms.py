@@ -26,15 +26,12 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
-
-
-class EventCreateForm(forms.ModelForm):
-    class Meta:
-        model = Event
-        exclude = ['created_by', 'attendees']
+        extra_info = forms.TextInput(
+            attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
+            'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
             'capacity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '4', 'name': 'capacity'}),
             'min_age': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'años', 'name': 'min_age'}),
             'price': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '5€', 'name': 'price'}),
@@ -47,30 +44,6 @@ class EventCreateForm(forms.ModelForm):
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'español', 'name': 'lang'}),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '...', 'name': 'extra_info'}),
-        }
-
-
-class EventUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Event
-        exclude = ['created_by', 'attendees']
-        widgets = {
-            'title': forms.TextInput(attrs={'name': 'title'}),
-            'description': forms.TextInput(attrs={'name': 'description'}),
-            'capacity': forms.TextInput(attrs={'class': 'form-control', 'name': 'capacity'}),
-            'min_age': forms.TextInput(attrs={'class': 'form-control', 'name': 'min_age'}),
-            'price': forms.TextInput(attrs={'class': 'form-control', 'name': 'price'}),
-            'location_city': forms.TextInput(attrs={'name': 'location_city'}),
-            'location_street': forms.TextInput(attrs={'name': 'location_street'}),
-            'location_number': forms.TextInput(attrs={'name': 'location_number'}),
-            'start_day': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'mm/dd/yyyy', 'name': 'start_day'}),
-            'start_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'start_time'}),
-            'end_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'end_time'}),
-            'pets': forms.Select(choices=CHOICES_YES_NO),
-            'lang': forms.TextInput(attrs={'class': 'form-control', 'name': 'lang'}),
-            'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'class': 'form-control', 'name': 'extra_info'}),
         }
 
 
@@ -93,8 +66,14 @@ class RegistrationForm(UserCreationForm):
         attrs={'placeholder': "usuario"}))
     email = forms.EmailField(required=True, widget=forms.EmailInput(
         attrs={'placeholder': "email"}))
-    birthdate = forms.DateField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': "mm/dd/yyyy"}))
+    birthdate = forms.DateField(
+        required=True,
+        widget=forms.DateInput(
+            format='%d/%m/%Y',
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=('%d/%m/%Y',)
+    )
     password1 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "contraseña"}))
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
