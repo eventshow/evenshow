@@ -42,7 +42,7 @@ class EventCreateForm(forms.ModelForm):
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_day': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'mm/dd/yyyy', 'name': 'start_day'}),
+            'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'mm/dd/yyyy', 'name': 'start_day'}),
             'start_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}),
             'end_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
@@ -57,7 +57,7 @@ class EventUpdateForm(forms.ModelForm):
         model = Event
         exclude = ['created_by', 'attendees']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
+             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
             'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
@@ -66,7 +66,7 @@ class EventUpdateForm(forms.ModelForm):
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_day': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'mm/dd/yyyy', 'name': 'start_day'}),
+            'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'mm/dd/yyyy', 'name': 'start_day'}),
             'start_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}),
             'end_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),

@@ -40,18 +40,14 @@
         </div>
       </div>
 
-
-      <!-- <input type="text" placeholder="Cata" class="input-create-event" /> -->
-
       <div class="row">
         <div class="grid-example col s12">
           <label>TÍTULO</label>
-          {{ form.title }}
+           {{ form.title }}
           <div class="form-errors">
             {{ form.title.errors }}
           </div>
         </div>
-
       </div>
 
       <div class="row">
@@ -62,45 +58,42 @@
       </div>
       <div class="row">
         <div class="grid-example col s4">
-          <!-- Tiene que ser aforo, porque lo que pone en el mockup no cabe -->
           <label>AFORO</label>
-          {{ form.capacity }}
+            {{ form.capacity }}
           <div class="form-errors">
             {{ form.capacity.errors }}
           </div>
         </div>
         <div class="grid-example col s4">
           <label>EDAD MÍN</label>
-          {{ form.min_age }}
+            {{ form.min_age }}
           <div class="form-errors">
             {{ form.min_age.errors }}
           </div>
         </div>
         <div class="grid-example col s4">
           <label>PRECIO</label>
-          {{ form.price }}
+            {{ form.price }}
           <div class="form-errors">
             {{ form.price.errors }}
           </div>
         </div>
       </div>
-
     </div>
 
     <div id="test2" class="tab-content">
       <div class="row">
         <div class="grid-example col s12">
-
           <label>UBICACIÓN</label>
-          {{ form.location_city }}
+            {{ form.location_city }}
           <div class="form-errors">
             {{ form.location_city.errors }}
           </div>
-          {{ form.location_street }}
+            {{ form.location_street }}
           <div class="form-errors">
             {{ form.location_street.errors }}
           </div>
-          {{ form.location_number }}
+            {{ form.location_number }}
           <div class="form-errors">
             {{ form.location_number.errors }}
           </div>
@@ -109,21 +102,21 @@
       <div class="row">
         <div class="grid-example col s4">
           <label>FECHA</label>
-          {{form.start_day}}
+            {{form.start_day}}
           <div class="form-errors">
             {{ form.start_day.errors }}
           </div>
         </div>
         <div class="grid-example col s4">
           <label>HORA INICIO</label>
-          {{form.start_time}}
+            {{form.start_time}}
           <div class="form-errors">
             {{ form.start_time.errors }}
           </div>
         </div>
         <div class="grid-example col s4">
           <label>HORA FIN</label>
-          {{form.end_time}}
+            {{form.end_time}}
           <div class="form-errors">
             {{ form.end_time.errors }}
           </div>
@@ -139,14 +132,14 @@
       <div class="row">
         <div class="grid-example col s4">
           <label>MASCOTAS</label>
-          {{ form.pets }}
+            {{ form.pets }}
           <div class="form-errors">
             {{ form.pets.errors }}
           </div>
         </div>
         <div class="grid-example col s4">
           <label>IDIOMA</label>
-          {{ form.lang }}
+            {{ form.lang }}
           <div class="form-errors">
             {{ form.lang.errors }}
           </div>
@@ -160,7 +153,7 @@
         </div>
         <div class="grid-example col s12">
           <label>IMAGEN DEL EVENTO</label>
-          {{ form.picture }}
+            {{ form.picture }}
           <div class="form-errors">
             {{ form.picture.errors }}
           </div>
@@ -172,20 +165,14 @@
             {{ form.extra_info.errors }}
           </div>
         </div>
-
       </div>
-
     </div>
 
-
     <div class="row">
-      
       <div class="grid-example col s6 offset-s5">
         <div class="delete-buttons">
-        <button class="waves-effect waves-light btn-large" id="prevBtn"
-          onclick="nextPrev(-1)">Anterior</button>
-        <button class="waves-effect waves-light btn-large" id="nextBtn"
-          onclick="nextPrev(1)">Siguiente</button>
+          <button class="waves-effect waves-light btn-large" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
+          <button class="waves-effect waves-light btn-large" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
         </div>
       </div>
 
@@ -289,8 +276,4 @@
     $('.datepicker').datepicker();
   });
 </script>
-
-
-
-
 {% endblock %}
