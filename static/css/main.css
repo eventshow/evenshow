@@ -850,7 +850,8 @@ table{
 
 }
 .btn#yaNo:hover{
-	background-color: black!important;
+	background-color: #B6244D!important;
+	color:white!important;
 }
 #title-name{
 	color: #B6244D;

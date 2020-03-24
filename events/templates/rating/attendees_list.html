@@ -12,15 +12,15 @@
         <div class="table-generic" >
         
      
-          <table  cellpadding="1" cellspacing="1" class="centre" id="myTable">
+          <table  summary="" cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
     
           <thead>
             <div class="provisional">
               <tr>
-                  <th>Puntuar</th>
-                  <th>Usuario</th>
-                  <th>Nombre</th>
-                  <th>Apellidos</th>
+                  <th id="">Puntuar</th>
+                  <th id="">Usuario</th>
+                  <th id="">Nombre</th>
+                  <th id="">Apellidos</th>
               </tr>
             </div>
           </thead>  
@@ -31,7 +31,7 @@
         
       <tr>
         <td><button type="button" onclick="location.href='{% url 'create_rating_attendee' event att.pk %}'"  title="Puntuar">
-            <i id="title-name" class="samll material-icons" >star</i>
+            <em id="title-name" class="samll material-icons" >star</em>
         </button></td>
         <td>{{att.username}}</td>
         <td>{{att.first_name}}</td>

@@ -5459,7 +5459,7 @@ button.btn-floating {
 
 .dropdown-content li:hover,
 .dropdown-content li.active {
-	background-color: #eee
+	background-color: none
 }
 
 .dropdown-content li:focus {

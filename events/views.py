@@ -145,14 +145,32 @@ class EventDeleteView(generic.DeleteView):
         else:
             return redirect('/')
 
+    
 
 @method_decorator(login_required, name='dispatch')
 class EventHostedListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
 
-    def get_queryset(self):
-        return selectors.EventSelector().hosted(self.request.user)
+    def get(self,request,*args,**kwargs):
+        events = selectors.EventSelector().hosted(self.request.user)
+        page = request.GET.get('page',1)
+
+        paginator  = Paginator(events, 5)
+
+        try:
+            events = paginator.page(page)
+        except PageNotAnInteger:
+            events= paginator.page(1)
+        except EmptyPage:
+            events = paginator.page(paginator.num_pages)
+            
+        context = {'object_list': events}
+            
+        return render(request, self.template_name, context)
+         
+        
+    
 
 
 @method_decorator(login_required, name='dispatch')
@@ -160,8 +178,22 @@ class EventEnrolledListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
 
-    def get_queryset(self):
-        return selectors.EventSelector().enrolled(self.request.user)
+    def get(self,request,*args,**kwargs):
+        events = selectors.EventSelector().enrolled(self.request.user)
+        page = request.GET.get('page',1)
+
+        paginator  = Paginator(events, 5)
+
+        try:
+            events = paginator.page(page)
+        except PageNotAnInteger:
+            events= paginator.page(1)
+        except EmptyPage:
+            events = paginator.page(paginator.num_pages)
+            
+        context = {'object_list': events}
+            
+        return render(request, self.template_name, context)
 
 
 @method_decorator(login_required, name='dispatch')
