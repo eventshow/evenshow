@@ -278,13 +278,14 @@ class EnrollmentCreateView(generic.View):
 
         event_exists = services.EventService().count(event_pk)
         event_is_full = selectors.UserSelector().event_attendees(
-            event_pk).count()
+            event_pk).count() >= models.Event.objects.get(pk=event_pk).capacity
         user_can_enroll = services.EnrollmentService().user_can_enroll(
             event_pk, attendee)
 
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full:
+            print('-------------------')
             services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
