@@ -87,7 +87,7 @@ class EventService():
         events_cleaned = []
         if self.request.user.is_authenticated:
             for event in events:
-                if self.request.user not in selectors.UserSelector.event_attendees(
+                if self.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     events_cleaned.append(event)
         else:
@@ -135,7 +135,7 @@ class EventService():
         results = []
         if self.request.user.is_authenticated:
             for event in events:
-                if self.request.user not in selectors.UserSelector.event_attendees(
+                if self.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     results.append(event)
         else:
@@ -183,7 +183,7 @@ class RatingService():
             # the user cannot have already rated this event
             if not rating_user_for_this_event:
 
-                enroll_reviewed = selectors.EnrollmentSelector.enrolled_for_this_event(
+                enroll_reviewed = selectors.EnrollmentSelector().enrolled_for_this_event(
                     rating.reviewed, event)
 
                 # the host can only rate their attendees for this event

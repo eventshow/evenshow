@@ -9,10 +9,10 @@ User = get_user_model()
 
 
 class EnrollmentSelector:
-    def on_event(event_pk: int, status: str) -> QuerySet:
+    def on_event(self, event_pk: int, status: str) -> QuerySet:
         return models.Enrollment.objects.filter(event__pk=event_pk, status=status)
 
-    def enrolled_for_this_event(created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:
+    def enrolled_for_this_event(self, created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:
         enrolled_events = models.Enrollment.objects.filter(
             created_by=created_by, status=status, event=event).exists()
         return enrolled_events
@@ -74,16 +74,16 @@ class RatingSelector:
 
 
 class UserSelector():
-    def event_host(event_pk: int) -> QuerySet:
+    def event_host(self, event_pk: int) -> QuerySet:
         host = User.objects.filter(host_events=event_pk).first()
         return host
 
-    def event_attendees(event_pk: int) -> QuerySet:
+    def event_attendees(self, event_pk: int) -> QuerySet:
         event_attendees = User.objects.filter(
             attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED')
         return event_attendees
 
-    def enrolled_for_this_event(created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:
+    def enrolled_for_this_event(self, created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:
         enrolled_events = models.Enrollment.objects.filter(
             created_by=created_by, status=status, event=event).exists()
         return enrolled_events

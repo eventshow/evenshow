@@ -64,7 +64,7 @@ class EventDetailView(generic.DetailView):
         event = kwargs.get('object')
         duration = event.duration
 
-        event_is_full = selectors.UserSelector.event_attendees(
+        event_is_full = selectors.UserSelector().event_attendees(
             event.pk).count() >= event.capacity
         user_can_enroll = True
 
@@ -73,7 +73,7 @@ class EventDetailView(generic.DetailView):
                 event.pk, user)
 
         context['duration'] = str(duration // 3600) + 'h ' + \
-                              str((duration // 60) % 60) + 'min'
+            str((duration // 60) % 60) + 'min'
         context['ratings'] = selectors.RatingSelector.on_event(
             event.pk)
         context['g_location'] = event.location.replace(' ', '+')
@@ -255,7 +255,7 @@ class EventSearchNearbyView(generic.ListView):
         except EmptyPage:
             events = paginator.page(paginator.num_pages)
 
-        return render(request, self.template_name, {'object_list': events, 'STATIC_URL': settings.STATIC_URL,'length': length})
+        return render(request, self.template_name, {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'length': length})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -266,7 +266,7 @@ class EnrollmentCreateView(generic.View):
         event_pk = kwargs.get('pk')
 
         event_exists = services.EventService.count(event_pk)
-        event_is_full = selectors.UserSelector.event_attendees(
+        event_is_full = selectors.UserSelector().event_attendees(
             event_pk).count()
         user_can_enroll = services.EnrollmentService().user_can_enroll(
             event_pk, attendee)
@@ -303,7 +303,7 @@ class EnrollmentListView(generic.ListView):
             return redirect('events')
 
     def get_queryset(self):
-        return selectors.EnrollmentSelector.on_event(self.kwargs.get('pk'), 'PENDING')
+        return selectors.EnrollmentSelector().on_event(self.kwargs.get('pk'), 'PENDING')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -344,7 +344,7 @@ class RateHostView(generic.CreateView):
         exist_already_rating = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(created_by, event,
                                                                                                    event.created_by)
 
-        is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
+        is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
             created_by, event)
 
         if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
@@ -360,7 +360,7 @@ class RateHostView(generic.CreateView):
     def form_valid(self, form):
         rating = form.save(commit=False)
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
-        host = selectors.UserSelector.event_host(self.kwargs.get('event_pk'))
+        host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         created_by = self.request.user
 
         rating.created_by = created_by
@@ -391,7 +391,7 @@ class RateAttendeeView(generic.CreateView):
                                                                                                    attendee_id)
         is_owner_of_this_event = selectors.EventSelector.is_owner(
             created_by, event.id)
-        is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
+        is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
             attendee, event)
         if (not exist_already_rating) and is_owner_of_this_event and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
@@ -408,7 +408,7 @@ class RateAttendeeView(generic.CreateView):
     def form_valid(self, form):
         rating = form.save(commit=False)
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
-        host = selectors.UserSelector.event_host(self.kwargs.get('event_pk'))
+        host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         created_by = self.request.user
 
         rating.created_by = created_by
@@ -442,7 +442,7 @@ def attendees_list(request, event_pk):
     event = models.Event.objects.get(id=event_pk)
 
     if event.created_by == request.user:
-        attendees = selectors.UserSelector.event_attendees(event_pk)
+        attendees = selectors.UserSelector().event_attendees(event_pk)
 
         context = {'attendees': attendees, 'event': event_pk}
 
