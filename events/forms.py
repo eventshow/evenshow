@@ -23,7 +23,9 @@ class RatingForm(forms.ModelForm):
 
 
 class EventForm(forms.ModelForm):
-    start_day = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'form-control', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}))
+    start_day = forms.DateField(input_formats=('%d/%m/%Y',),
+        widget=forms.DateInput(format='%d/%m/%Y', 
+        attrs={'class': 'form-control', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}))
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
