@@ -93,6 +93,33 @@ element.style{
 	margin-top: -10%;
 }
 
+.section-detail{
+    height: 900px;
+    width: 100%;
+	margin-top: -45%;
+}
+
+.title-section{
+	margin-top: 2%;
+	color: #5D5E5E;
+	font-weight: 600;
+	margin-left: 3%;
+}
+
+.title-text{
+	margin-top: -3%;
+	margin-left: 30%;
+	color: #5D5E5E;
+	font-weight: 300;
+	margin-bottom: 10%;
+}
+
+.name-host-detail{
+
+}
+
+
+
 .rectangle-info {
 	position: absolute;
 	z-index:1;
@@ -106,6 +133,7 @@ element.style{
 }
 
 #host-datail{
+	margin-top: -53%;
 	margin-top: -53%;
 	padding: 30px 30px 30px 30px ;
 
@@ -151,7 +179,7 @@ element.style{
 }
 
 #separated3{
-	margin-left: 700%;
+	margin-left: 588%;
     margin-top: -50%;
 	padding-top: 1% ;
 }
