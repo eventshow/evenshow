@@ -80,6 +80,91 @@ element.style{
 	top: 70px !important;
 }
 
+/* IMG */
+
+.img-detail{
+	margin-top: -10px !important;
+	width: 100% !important;
+}
+
+.principal-detail{
+    height: 900px;
+    width: 100%;
+	margin-top: -10%;
+}
+
+.rectangle-info {
+	position: absolute;
+	z-index:1;
+	margin-left: 5%;
+	width: 145px;
+	height: 93px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+	border: solid 1px #979797;
+	background-color: #ffffff;
+}
+
+#host-datail{
+	margin-top: -53%;
+	padding: 30px 30px 30px 30px ;
+
+}
+
+.img-host{
+	height: 71px;
+    margin-left: -23px;
+    margin-top: -25%;
+}
+
+.host-rating{
+	margin-top: -50px;
+    margin-left: 50px;
+}
+
+#detail-info{
+	margin-top: -12%;
+
+}
+
+.rectangle-info h2{
+    margin-top: 9%;
+    margin-bottom: -10%;
+    color: #5D5E5E;
+	text-align: center;
+}
+
+.title-detail{
+	font-weight: 200 !important ;
+
+}
+.subtitle-detail{
+	font-weight: 500 !important;
+}
+
+.separated1{
+	margin-left: 16%;
+}
+
+.separated2{
+	margin-left: 27%;
+}
+
+#separated3{
+	margin-left: 700%;
+    margin-top: -50%;
+	padding-top: 1% ;
+}
+
+.button-detail{
+	color: white !important;
+	margin-top: 6% !important;
+}
+
+.button-detail:hover{
+	font-weight: 600;
+}
+
 
 /* FORM */
 
