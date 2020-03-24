@@ -25,6 +25,7 @@
     <div class="col m6 rectangle-info separated2" id="detail-info">
         <h2 class="title-detail">idioma</h2>
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
+
         {% if user_can_enroll %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
@@ -39,6 +40,11 @@
 
         </form>
         {% endif %}
+    </div>
+
+        <div class="col m6 rectangle-info separated4" id="detail-info">
+        <h2 class="title-detail">precio</h2>
+        <h2 class="subtitle-detail">{{ object.price }} €</h2>
     </div>
 </div>
 
