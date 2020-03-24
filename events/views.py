@@ -40,7 +40,7 @@ class AttendeePaymentView(generic.View):
     template_name = 'main/payment.html'
 
     def get(self, request, *args, **kwargs):
-        if services.EventService.count(kwargs.get('pk')):
+        if services.EventService().count(kwargs.get('pk')):
             pk = self.kwargs.get('pk')
             event = models.Event.objects.get(pk=pk)
             payment = event.price
@@ -54,7 +54,7 @@ class EventDetailView(generic.DetailView):
     template_name = 'event/detail.html'
 
     def get(self, request, *args, **kwargs):
-        if services.EventService.count(kwargs.get('pk')):
+        if services.EventService().count(kwargs.get('pk')):
             return super().get(self, request, *args, **kwargs)
         else:
             return redirect('/')
@@ -92,7 +92,7 @@ class EventCreateView(generic.CreateView):
     template_name = 'event/create.html'
 
     def get(self, request, *args, **kwargs):
-        if services.EventService.can_create(self.request.user):
+        if services.EventService().can_create(self.request.user):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -105,7 +105,7 @@ class EventCreateView(generic.CreateView):
 
     def form_valid(self, form):
         event = form.save(commit=False)
-        services.EventService.create(event, self.request.user)
+        services.EventService().create(event, self.request.user)
         return super(EventCreateView, self).form_valid(form)
 
 
@@ -118,7 +118,7 @@ class EventDeleteView(generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, kwargs.get('pk')):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
             self.object.delete()
             return redirect('hosted_events')
@@ -128,7 +128,7 @@ class EventDeleteView(generic.DeleteView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, self.kwargs.get('pk')):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get('pk')):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -140,7 +140,7 @@ class EventHostedListView(generic.ListView):
     template_name = 'event/list.html'
 
     def get_queryset(self):
-        return selectors.EventSelector.hosted(self.request.user)
+        return selectors.EventSelector().hosted(self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -149,7 +149,7 @@ class EventEnrolledListView(generic.ListView):
     template_name = 'event/list.html'
 
     def get_queryset(self):
-        return selectors.EventSelector.enrolled(self.request.user)
+        return selectors.EventSelector().enrolled(self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -158,7 +158,7 @@ class EventNotEnrolledListView(generic.ListView):
     template_name = 'event/list.html'
 
     def get_queryset(self):
-        return selectors.EventSelector.not_enrolled(self.request.user)
+        return selectors.EventSelector().not_enrolled(self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -171,9 +171,9 @@ class EventUpdateView(generic.UpdateView):
     def form_valid(self, form):
         host = self.request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
-            services.EventService.update(event, host)
+            services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
             return redirect('/')
@@ -181,7 +181,7 @@ class EventUpdateView(generic.UpdateView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, kwargs.get('pk')):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -276,7 +276,7 @@ class EnrollmentCreateView(generic.View):
         attendee = self.request.user
         event_pk = kwargs.get('pk')
 
-        event_exists = services.EventService.count(event_pk)
+        event_exists = services.EventService().count(event_pk)
         event_is_full = selectors.UserSelector().event_attendees(
             event_pk).count()
         user_can_enroll = services.EnrollmentService().user_can_enroll(
@@ -308,7 +308,7 @@ class EnrollmentListView(generic.ListView):
         host = request.user
         event_pk = kwargs.get('pk')
 
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('events')
@@ -328,7 +328,7 @@ class EnrollmentUpdateView(generic.View):
         if services.EnrollmentService().count(kwargs.get('pk')) and self.updatable(host):
             services.EnrollmentService().update(
                 kwargs.get('pk'), host, kwargs.get('status'))
-            event_pk = selectors.EventSelector.with_enrollment(
+            event_pk = selectors.EventSelector().with_enrollment(
                 kwargs.get('pk')).values_list('pk', flat=True).first()
 
             return redirect('event_attendees', event_pk)
@@ -403,7 +403,7 @@ class RateAttendeeView(generic.CreateView):
         exist_already_rating = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(created_by,
                                                                                                    event,
                                                                                                    attendee_id)
-        is_owner_of_this_event = selectors.EventSelector.is_owner(
+        is_owner_of_this_event = selectors.EventSelector().is_owner(
             created_by, event.id)
         is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
             attendee, event)
