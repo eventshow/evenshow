@@ -7,7 +7,7 @@ from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
 
-CHOICES_SCORE = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
+CHOICES_SCORE = (('--'," " ),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
 User = get_user_model()
 
@@ -18,7 +18,7 @@ class RatingForm(forms.ModelForm):
         exclude = ['event', 'on', 'created_by', 'reviewed']
         widgets = {
             'score': forms.Select(choices=CHOICES_SCORE),
-            'comment': forms.Textarea(attrs={'placeholder': 'Información acerca de la valoración'}),
+            'comment': forms.Textarea(attrs={'placeholder': '-'}),
         }
 
 
