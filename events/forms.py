@@ -7,7 +7,7 @@ from .models import Category, Event, Rating
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
 
-CHOICES_SCORE = (('--'," " ),(1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
+CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
 User = get_user_model()
 
@@ -24,8 +24,9 @@ class RatingForm(forms.ModelForm):
 
 class EventForm(forms.ModelForm):
     start_day = forms.DateField(input_formats=('%d/%m/%Y',),
-        widget=forms.DateInput(format='%d/%m/%Y', 
-        attrs={'class': 'form-control', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}))
+                                widget=forms.DateInput(format='%d/%m/%Y',
+                                                       attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa', 'name': 'start_day'}))
+
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
