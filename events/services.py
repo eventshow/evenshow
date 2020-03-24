@@ -55,16 +55,16 @@ class EnrollmentService:
 
 
 class EventService():
-    def count(event_pk: int) -> int:
+    def count(self, event_pk: int) -> int:
         count = models.Event.objects.filter(pk=event_pk).count()
         return count
 
-    def create(event: models.Event, created_by: User):
+    def create(self, event: models.Event, created_by: User):
         event.created_by = created_by
         event.full_clean()
         event.save()
 
-    def enroll(attendee: User, event_pk: int) -> models.Event:
+    def enroll(self, attendee: User, event_pk: int) -> models.Event:
         event = models.Event.objects.get(pk=event_pk)
 
         if attendee.attendee_events.filter(pk=event_pk).exists():
@@ -72,7 +72,7 @@ class EventService():
         attendee.attendee_events.add(event)
         return event
 
-    def can_create(user: User) -> bool:
+    def can_create(self, user: User) -> bool:
         res = True
 
         if user.profile.bio is None or user.first_name is None or user.last_name is None:
@@ -170,12 +170,12 @@ class EventService():
 
         return events_distances_oredered
 
-    def update(event: models.Event, updated_by: User):
+    def update(self, event: models.Event, updated_by: User):
         event.updated_by = updated_by
         event.full_clean()
         event.save()
 
-    def user_is_owner(host: User, event_pk: int):
+    def user_is_owner(self, host: User, event_pk: int):
         created_by = models.Event.objects.get(pk=event_pk).created_by
         return host == created_by
 
@@ -231,7 +231,7 @@ class RatingService:
 
 class PaymentService():
 
-    def application_fee_amount(amount_host: int) -> int:
+    def application_fee_amount(self, amount_host: int) -> int:
 
         res = 0
         const_stripe = 25
