@@ -112,7 +112,7 @@ def seed_profiles():
         'fields': {
             'location': FAKE.city(),
             'picture': PROFILE_IMAGE_FILE,
-            'birthdate': FAKE.date_of_birth().strftime('%Y-%m-%d'),
+            'birthdate': '1980-01-01',
             'token': get_random_string(length=8).upper(),
             'bio': FAKE.text(),
             'user': USER_PKS[-1]+1
@@ -148,7 +148,7 @@ def seed_events(event_pks, future=False):
 
         aux = list(USER_PKS).copy()
         aux.remove(host)
-        enrollers = random.sample(aux, k=FAKE.random_int(1, 20))
+        enrollers = random.sample(set(aux), k=FAKE.random_int(1, len(aux)))
         splited_address = FAKE.address().split('\n')
         city = splited_address[1].split(',')[0]
 
@@ -266,12 +266,12 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
         ix += 1
 
     if status == 'ACCEPTED' and event_date <= now().date():
-        attendees_sublist = random.sample(
-            attendees, k=FAKE.random_int(1, len(attendees)))
+        attendees_sublist = set(random.sample(
+            attendees, k=FAKE.random_int(1, len(attendees))))
         seed_event_ratings(event, host, attendees_sublist, 'HOST', event_date)
 
-        attendees_sublist = random.sample(
-            attendees, k=FAKE.random_int(1, len(attendees)))
+        attendees_sublist = set(random.sample(
+            attendees, k=FAKE.random_int(1, len(attendees))))
         seed_event_ratings(event, attendees_sublist, host,
                            'ATTENDEE', event_date)
 

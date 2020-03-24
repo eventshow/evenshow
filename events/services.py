@@ -18,26 +18,26 @@ User = get_user_model()
 
 
 class EnrollmentService:
-    def count(enrollment_pk: int) -> int:
+    def count(self, enrollment_pk: int) -> int:
         count = models.Enrollment.objects.filter(pk=enrollment_pk).count()
         return count
 
-    def create(event_pk: int, created_by: User):
+    def create(self, event_pk: int, created_by: User):
         event = models.Event.objects.get(pk=event_pk)
         enrollment = models.Enrollment.objects.create(
             created_by=created_by, event=event)
         enrollment.save()
 
-    def is_pending(enrollment_pk: int) -> bool:
+    def is_pending(self, enrollment_pk: int) -> bool:
         enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
         return enrollment.status == 'PENDING'
 
-    def host_can_update(host: User, enrollment_pk: int) -> bool:
+    def host_can_update(self, host: User, enrollment_pk: int) -> bool:
         created_by = models.Enrollment.objects.get(
             pk=enrollment_pk).event.created_by
         return host == created_by
 
-    def update(enrollment_pk: int, updated_by: User, status: str):
+    def update(self, enrollment_pk: int, updated_by: User, status: str):
         enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
         enrollment.status = status
         enrollment.updated_by = updated_by
@@ -48,7 +48,6 @@ class EnrollmentService:
         user_is_enrolled = self.user_is_enrolled(
             event_pk, user)
         user_is_old_enough = event.min_age <= user.profile.age
-
         return not user_is_enrolled and user_is_old_enough
 
     def user_is_enrolled(self, event_pk: int, user: User) -> bool:
@@ -88,7 +87,7 @@ class EventService():
         events_cleaned = []
         if self.request.user.is_authenticated:
             for event in events:
-                if self.request.user not in selectors.UserSelector.event_attendees(
+                if self.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     events_cleaned.append(event)
         else:
@@ -136,7 +135,7 @@ class EventService():
         results = []
         if self.request.user.is_authenticated:
             for event in events:
-                if self.request.user not in selectors.UserSelector.event_attendees(
+                if self.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     results.append(event)
         else:
@@ -184,7 +183,7 @@ class RatingService():
             # the user cannot have already rated this event
             if not rating_user_for_this_event:
 
-                enroll_reviewed = selectors.EnrollmentSelector.enrolled_for_this_event(
+                enroll_reviewed = selectors.EnrollmentSelector().enrolled_for_this_event(
                     rating.reviewed, event)
 
                 # the host can only rate their attendees for this event
