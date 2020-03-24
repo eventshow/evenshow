@@ -186,16 +186,16 @@ class ProfileService():
         profile.save()
 
 
-class RatingService():
-    def count(rating_pk: int) -> int:
+class RatingService:
+    def count(self, rating_pk: int) -> int:
         count = models.Rating.objects.filter(pk=rating_pk).count()
         return count
 
-    def create(rating: models.Rating):
+    def create(self, rating: models.Rating):
         rating.full_clean()
         rating.save()
 
-    def is_valid_rating(rating: models.Rating, event: models.Event, user: User):
+    def is_valid_rating(self, rating: models.Rating, event: models.Event, user: User):
         rating.created_by = user
         valid = False
         now = datetime.now()
@@ -220,7 +220,7 @@ class RatingService():
                     valid = True
         return valid
 
-    def is_attendee_or_host(event: models.Event, rating: models.Rating):
+    def is_attendee_or_host(self, event: models.Event, rating: models.Rating):
         rol = rating.on
         if event.created_by == rating.created_by:
             rol = 'ATTENDEE'
