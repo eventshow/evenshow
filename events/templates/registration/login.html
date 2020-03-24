@@ -17,6 +17,11 @@
 				<div class="validate-input" data-validate="Password is required">
 					{{form.password}}
 				</div>
+
+				<div class="form-errors">
+					{{ form.non_field_errors }}
+				</div>
+
 				<div class="flex-sb-m w-full p-t-3 p-b-32">
 
 					<a href="{% url 'password_reset' %}" class="txt1"><br>
@@ -36,10 +41,6 @@
 
 					¿Aún no te has registrado? Hazlo <a href="{% url 'signup' %}">aquí</a>!
 				</div>
-
-                <div class="form-errors">
-                    {{ form.non_field_errors }}
-                </div>
 
 			</form>
 
