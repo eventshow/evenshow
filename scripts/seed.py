@@ -144,7 +144,7 @@ def seed_events(start_day, event_pks):
 
         aux = list(USER_PKS).copy()
         aux.remove(host)
-        enrollers = random.sample(aux, k=6)
+        enrollers = random.sample(aux, k=FAKE.random_int(1, 20))
         splited_address = FAKE.address().split('\n')
         city = splited_address[1].split(',')[0]
 
@@ -255,7 +255,8 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
         if status == 'ACCEPTED':
             seed_transaction(enroller, host, updated_at, price)
             ac += 1
-            attendees.append(enroller)
+            if enroller not in attendees:
+                attendees.append(enroller)
 
         INITIAL_DATA.append(enrollment)
         ix += 1
