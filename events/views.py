@@ -198,6 +198,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
 
         errors = []
         events = []
+        length = 0
 
         if event_date != '':
             try:
@@ -217,7 +218,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                 template_name = home_template
 
         if not errors:
-            events = services.EventService.events_filter_home(
+            events = services.EventService().events_filter_home(
                 self, location, event_date, start_hour)
             template_name = self.template_name
 
@@ -242,7 +243,7 @@ class EventSearchNearbyView(generic.ListView):
     template_name = 'event/list_search.html'
 
     def get(self, request, *args, **kwargs):
-        events = services.EventService.nearby_events_distance(self, 50000)
+        events = services.EventService().nearby_events_distance(self, 50000)
         length = len(events)
 
         page = request.GET.get('page', 1)
