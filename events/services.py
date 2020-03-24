@@ -86,7 +86,7 @@ class EventService():
         events_cleaned = []
         if self_view.request.user.is_authenticated:
             for event in events:
-                if self_view.user not in selectors.UserSelector().event_attendees(
+                if self_view.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     events_cleaned.append(event)
         else:
@@ -133,7 +133,7 @@ class EventService():
         results = []
         if self_view.request.user.is_authenticated:
             for event in events:
-                if self_view.user not in selectors.UserSelector().event_attendees(
+                if self_view.request.user not in selectors.UserSelector().event_attendees(
                         event.pk) and event.has_started is False:
                     results.append(event)
         else:

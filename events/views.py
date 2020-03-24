@@ -203,7 +203,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
 
         if event_date != '':
             try:
-                fecha = datetime.strptime(event_date, '%Y-%m-%d').date()
+                fecha = datetime.strptime(event_date, '%d/%m/%Y').date()
                 if fecha < date.today():
                     errors.append("Introduzca una fecha futura")
                     template_name = home_template
@@ -219,8 +219,8 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                 template_name = home_template
 
         if not errors:
-            events = services.EventService.events_filter_home(
-                self, location, event_date, start_hour)
+            events = services.EventService().events_filter_home(
+                self, location, datetime.strptime(event_date, '%d/%m/%Y').strftime('%Y-%m-%d'), start_hour)
             template_name = self.template_name
 
             length = len(events)
@@ -367,9 +367,10 @@ class RateHostView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
-        context['host_name'] = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
-        context['event_title'] = models.Event.objects.get(id=self.kwargs.get('event_pk')).title
-
+        context['host_name'] = selectors.UserSelector(
+        ).event_host(self.kwargs.get('event_pk'))
+        context['event_title'] = models.Event.objects.get(
+            id=self.kwargs.get('event_pk')).title
 
         return context
 
@@ -468,7 +469,6 @@ def attendees_list(request, event_pk):
         attendees = selectors.UserSelector().event_attendees(event_pk)
 
         paginator = Paginator(attendees, 5)
-
 
         try:
             attendees = paginator.page(page)
