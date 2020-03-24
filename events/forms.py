@@ -124,7 +124,26 @@ class RegistrationForm(UserCreationForm):
 class SearchHomeForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "Ciudad"}))
-    date = forms.DateField(required=False, widget=forms.DateInput(
-        attrs={'placeholder': "dd/mm/aaaa"}))
-    start_hour = forms.TimeField(required=False, widget=forms.TimeInput(
-        attrs={'placeholder': "hh:mm"}))
+    date = forms.DateField(
+        required=False,
+        widget=forms.DateInput(
+            format='%d/%m/%Y',
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=('%d/%m/%Y',)
+    )
+    start_hour = forms.TimeField(
+        required=False,
+        widget=forms.TimeInput(
+            format='%H:%M',
+            attrs={'placeholder': "hh:mm"}
+        ),
+        input_formats=('%H:%M',)
+    )
+
+    def clean_date(self):
+        date = self.cleaned_data.get('date')
+        if date < now().date():
+            raise ValidationError(
+                'La fecha debe ser futura')
+        return date
