@@ -38,13 +38,28 @@ class HomeView(TemplateView):
         return render(request, self.template_name, context)
 
 
+@method_decorator(login_required, name='dispatch')
 class AttendeeListView(generic.ListView):
     model = User
-    template_name = 'user/list.html'
+    template_name = 'attendee/list.html'
+    paginate_by = 5
 
     def get(self, request, *args, **kwargs):
-        host = request.user
-        event_pk = kwargs.get('pk')
+        if services.EventService().user_is_owner(request.user, kwargs.get('event_pk')):
+            return super(AttendeeListView, self).get(self, request, *args, **kwargs)
+        else:
+            return redirect('/')
+
+    def get_context_data(self, **kwargs):
+        context = super(AttendeeListView, self).get_context_data(**kwargs)
+        context['event_pk'] = self.kwargs.get('event_pk')
+        return context
+
+    def get_queryset(self):
+        queryset = super(AttendeeListView, self).get_queryset()
+        queryset = selectors.UserSelector().event_not_rated_attendees(
+            self.kwargs.get('event_pk'))
+        return queryset
 
 
 class AttendeePaymentView(generic.View):
@@ -332,7 +347,6 @@ class EnrollmentCreateView(generic.View):
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full:
-            print('-------------------')
             services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
@@ -444,7 +458,6 @@ class RateAttendeeView(generic.CreateView):
     template_name = 'rating/rating_attendee.html'
     model = models.Rating
     form_class = forms.RatingForm
-    success_url = '/events/hosted'
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
@@ -473,6 +486,9 @@ class RateAttendeeView(generic.CreateView):
             id=self.kwargs.get('event_pk')).title
 
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('list_attendees', kwargs={'event_pk': self.kwargs.get('event_pk')})
 
     def form_valid(self, form):
         rating = form.save(commit=False)
@@ -506,27 +522,3 @@ class SignUpView(generic.CreateView):
         services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
-
-
-def attendees_list(request, event_pk):
-    event = models.Event.objects.get(id=event_pk)
-    page = request.GET.get('page', 1)
-
-    if event.created_by == request.user:
-        attendees = selectors.UserSelector().event_attendees(event_pk)
-
-        paginator = Paginator(attendees, 5)
-
-        try:
-            attendees = paginator.page(page)
-        except PageNotAnInteger:
-            attendees = paginator.page(1)
-        except EmptyPage:
-            attendees = paginator.page(paginator.num_pages)
-
-        context = {'attendees': attendees,
-                   'event': event_pk, 'event_title': event.title}
-
-        return render(request, 'rating/attendees_list.html', context)
-    else:
-        return redirect('/home')

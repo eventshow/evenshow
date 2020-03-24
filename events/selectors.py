@@ -1,7 +1,7 @@
 from datetime import time
 
 from django.contrib.auth import get_user_model
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 
 from . import models
 
@@ -79,9 +79,9 @@ class UserSelector:
         host = User.objects.filter(host_events=event_pk).first()
         return host
 
-    def event_attendees(self, event_pk: int) -> QuerySet:
+    def event_not_rated_attendees(self, event_pk: int) -> QuerySet:
         event_attendees = User.objects.filter(
-            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED')
+            Q(attendee_enrollments__event__pk=event_pk) & Q(attendee_enrollments__status='ACCEPTED') & ~Q(reviewed_ratings__event=event_pk))
         return event_attendees
 
     def enrolled_for_this_event(self, created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:

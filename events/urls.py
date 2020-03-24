@@ -4,9 +4,13 @@ from django.views.generic.base import TemplateView
 from . import views
 
 urlpatterns = [
-    path('auth/signup/', views.SignUpView.as_view(), name='signup'),
     path('', views.HomeView.as_view(), name='home'),
     path('home', views.HomeView.as_view(), name='home'),
+
+    path('attendees/<int:event_pk>',
+         views.AttendeeListView.as_view(), name='list_attendees'),
+
+    path('auth/signup/', views.SignUpView.as_view(), name='signup'),
 
     path('enrollments/<int:pk>/update/<str:status>',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),
@@ -37,9 +41,6 @@ urlpatterns = [
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
-    re_path(r'^ratings/host/list/(?P<event_pk>\d+)?/?$',
-            views.attendees_list, name='list_attendees'),
-     
-      path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
+    path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
 ]
