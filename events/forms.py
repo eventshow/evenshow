@@ -26,7 +26,8 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
-        extra_info = forms.TextInput(attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
+        extra_info = forms.TextInput(
+            attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
@@ -65,8 +66,14 @@ class RegistrationForm(UserCreationForm):
         attrs={'placeholder': "usuario"}))
     email = forms.EmailField(required=True, widget=forms.EmailInput(
         attrs={'placeholder': "email"}))
-    birthdate = forms.DateField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': "mm/dd/yyyy"}))
+    birthdate = forms.DateField(
+        required=True,
+        widget=forms.DateInput(
+            format='%d/%m/%Y',
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=('%d/%m/%Y',)
+    )
     password1 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "contraseña"}))
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
