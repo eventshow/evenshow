@@ -23,6 +23,7 @@ class RatingForm(forms.ModelForm):
 
 
 class EventForm(forms.ModelForm):
+    start_day = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'form-control', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}))
     class Meta:
         model = Event
         exclude = ['created_by', 'attendees']
@@ -38,7 +39,6 @@ class EventForm(forms.ModelForm):
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_day': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'mm/dd/yyyy', 'name': 'start_day'}),
             'start_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'start_time'}),
             'end_time': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
