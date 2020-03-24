@@ -1,83 +1,79 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
 {% load static %}
-<section class="hero-section-event">
-    <img class="hero-image" src="{{object.picture}}">
-    <br><br><br>
-    <div class="container-fluid2">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="event-page-rate">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <img class="event-host" alt='anfitrion' src="{{object.created_by.profile.picture}}">
-                        </div>
+<img class="img-detail" src="{{object.picture}}">
 
-                        <div class="col-2">
-                            <i class=" fa fa-event fa-star"></i>
-                        </div>
-                        <div class="col-md-2">
-                            <h4 class="title4-rate">
-                                {{object.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
+<div class="principal-detail">
+    <div class="col m6 rectangle-info" id="host-datail">
+        <img class="img-host" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+        <div class="col m5 host-rating">
+            <i class="fa fa-star"><i
+                    class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
         </div>
-        <div class="col-md-6"></div>
-        <h1 class="title1_0">{{object.title}} </h1>
-        <div class="button-event-page">
-            {% if user_can_enroll %}
-            <form action="{% url 'enroll_event' object.pk %}" method="POST">
-                {% csrf_token %}
-                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ stripe_key }}"
-                    data-description="A Django Charge" data-amount="500" data-locale="auto" data-label="INSCRIBIRSE">
+    </div>
 
-                    </script>
-                <script>
-                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "event-submit");
+    <div class="col m6 rectangle-info" id="detail-info">
+        <h2 class="title-detail">duración</h2>
+        <h2 class="subtitle-detail">{{ duration }}</h2>
+    </div>
+
+    <div class="col m6 rectangle-info separated1" id="detail-info">
+        <h2 class="title-detail">aforo</h2>
+        <h2 class="subtitle-detail">{{ object.capacity }}</h2>
+    </div>
+
+    <div class="col m6 rectangle-info separated2" id="detail-info">
+        <h2 class="title-detail">idioma</h2>
+        <h2 class="subtitle-detail">{{ object.lang }}</h2>
+        {% if user_can_enroll %}
+        <form action="{% url 'enroll_event' object.pk %}" method="POST">
+            {% csrf_token %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="500" data-locale="auto"
+                data-label="INSCRIBIRSE">
+
                 </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "event-submit");
+            </script>
 
-            </form>
-            {% endif %}
-        </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+<div class="section-detail">
+    <div class="col-3 title-section">
+        <h1 class="title-section">Descripción</h1>
+    </div>
+    <div class="col-9 title-section">
+        <h3 class="title-text">{{object.description}}</h3>
+    </div>
+    <hr>
+</div>
+
+<div class="section-detail">
+    <div class="col-3 title-section">
+        <h1 class="title-section">Anfitrión</h1>
     </div>
 
-    </div>
-
-</section>
-<section class="hero-section-desc">
-    <div class="container-fluid">
-
-        <div class="row">
-            <div class="col-md-6">
-                <h1 class="title1_desc">Descripción </h1>
-            </div>
-            <div class="col-md-6">
-                <h3 class="descripcion1">{{object.description}}</h3>
-            </div>
-
+    <div class="col-9 title-section pos">
+        <h3 class="name-host-detail">{{object.created_by.first_name}} {{object.created_by.last_name}}</h3>
+        <h3 class="host-bio">{{object.created_by.profile.bio}}</h3>
+        <img class="img-bio" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+        <div class="rating-bio">
+            <i class="fa fa-star"><i
+                    class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
         </div>
-        <hr>
     </div>
-</section>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-5">
-            <br>
-            <h1 class="title1_anf_dir">Dirección </h1>
-            <div class="row">
-                <h3 class="title_dir">{{object.location_city}}</h3>
-            </div>
-            <div class="row">
-                <h3 class="title_dir">{{object.location_street}} {{object.location_number}}</h3>
-            </div>
-        </div>
-        <div class="col-md-7">
+    <hr>
+
+    <div class="col-9 title-section pos">
+        <h1 class="title-section">Dirección</h1>
+
+        <h3 class="address-detail">{{object.location_street}} {{object.location_number}}<br> {{object.location_city}}
+        </h3>
+        <div class="col-md-7 map-detail">
             <br>
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3171.280887375974!2d-5.988450184736177!3d37.35953007983709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c2b2b60f659%3A0x957d9e61ca03f160!2sAv.%20de%20la%20Reina%20Mercedes%2C%2041012%20Sevilla!5e0!3m2!1ses!2ses!4v1584287236974!5m2!1ses!2ses"
@@ -86,77 +82,21 @@
             <br>
         </div>
     </div>
-    <br>
     <hr>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4">
-            <br>
-            <h1 class="title1_anf">Anfitrión </h1>
-            <br>
-            <img class="anfitrion-img" src="{{object.created_by.profile.picture}}">
-            <br><br>
-            <div class="row row-event">
-                <i class="fa fa-star"></i>
-                <h3 class="title4-rate">
-                    {{object.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</h3>
+
+    <div class="col-9 title-section pos">
+        <h1 class="title-section">Comentarios de otros húespedes <br> asistieron a algún evento de este anfitrión</h1>
+        {% for rating in ratings %}
+        <div class="comments">
+            <img class="img-comment" alt='' src="{{rating.created_by.profile.picture}}">
+            <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
+            <div class="user-rat">
+                <i class="fa fa-star"><i
+                        class="rating-search">&nbsp{{event.created_by.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
             </div>
+            <h3 class="comment-detail">{{rating.comment}}</h3>
         </div>
-        <div class="col-md-8">
-            <br><br><br>
-            <div class="row">
-                <h2><b>{{object.created_by.first_name}}</b> {{object.created_by.last_name}}</h2>
-                <h3 class="descripcion">{{ object.created_by.profile.bio }}</h3>
-            </div>
-        </div>
-
-    </div>
-    <div class="row"><br></div>
-    <hr>
-</div>
-{% if object.has_finished %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-5">
-            <br>
-            <h1 class="title1_com">Comentarios de los huéspedes </h1>
-        </div>
-    </div>
-    {% for rating in object.ratings.all %}
-    <div class="row">
-        <div class="col-md-3"></div>
-        <br>
-        <div class="col-md-3">
-            <br><br>
-            <img class="anfitrion-img" src="{{rating.created_by.profile.picture.url}}">
-            <h3 class="title4-rate-com">{{rating.created_by.username}}</h3>
-            <div class="event-page-comment">
-                <div class="row row-rate">
-                    <i class="fa fa-star"></i>
-                    <h4 class="title4-rate">{{rating.score}}</h4>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <br>
-            <h3 class="descripcion">{{rating.comment}}</h3>
-        </div>
-        <br><br>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-</div>
-<div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-8">
-        <hr>
+        {% endfor %}
     </div>
 </div>
-</div>
-
-
-
-
 {% endblock %}

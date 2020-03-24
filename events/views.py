@@ -73,8 +73,8 @@ class EventDetailView(generic.DetailView):
             user_can_enroll = services.EnrollmentService().user_can_enroll(
                 event.pk, user)
 
-        context['duration'] = str(duration // 3600) + 'h ' + \
-            str((duration // 60) % 60) + 'min'
+        hours, minutes = divmod(duration, 60)
+        context['duration'] = '{0}h {1}min'.format(hours, minutes)
         context['ratings'] = selectors.RatingSelector().on_event(
             event.pk)
         context['g_location'] = event.location.replace(' ', '+')
