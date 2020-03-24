@@ -41,25 +41,25 @@ class EventSelector:
     def with_enrollment(enrollment_pk: int) -> models.Event:
         return models.Event.objects.filter(event_enrollments=enrollment_pk)
 
-    def location_date_start_hour(location: str, date: str, start_hour: time) -> QuerySet:
+    def location_date_start_hour(self, location: str, date: str, start_hour: time) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_day=date, start_time__gte=start_hour)
 
-    def location(location: str) -> QuerySet:
+    def location(self, location: str) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location)
 
-    def date(date: str) -> QuerySet:
+    def date(self, date: str) -> QuerySet:
         return models.Event.objects.filter(start_day=date)
 
-    def start_hour(start_hour: time) -> QuerySet:
+    def start_hour(self, start_hour: time) -> QuerySet:
         return models.Event.objects.filter(start_time__gte=start_hour)
 
-    def location_start_hour(location: str, start_hour: time) -> QuerySet:
+    def location_start_hour(self, location: str, start_hour: time) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_time__gte=start_hour)
 
-    def date_start_hour(date: str, start_hour: time) -> QuerySet:
+    def date_start_hour(self, date: str, start_hour: time) -> QuerySet:
         return models.Event.objects.filter(start_day=date, start_time__gte=start_hour)
 
-    def location_date(location: str, date: str,) -> QuerySet:
+    def location_date(self, location: str, date: str,) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_day=date)
 
 
