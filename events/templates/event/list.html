@@ -55,7 +55,7 @@
                               <td>{{event.title}}</td>
                               <td>{{event.start_day}}</td>
                               <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
-                              <td><i class="waves-effect waves-light btn" id="yaNo">Ya no quiero ir</i></td>
+                              <td><em class="waves-effect waves-light btn" id="yaNo">Ya no quiero ir</em></td>
                             </tr>
                             
                           </tbody>                             
@@ -118,23 +118,23 @@
                                     <tbody>
                                         <tr>
                                           <td><button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Puntuar">
-                                              <i id="title-name" class="small material-icons">star</i>
+                                              <em id="title-name" class="small material-icons">star</em>
                                           </button></td>
                                           <td>{{event.title}}</td>
                                           <td>{{event.start_day}}</td>
                                           <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
                                           <td>
                                             <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar">
-                                            <i id="title-name" class="small material-icons">edit</i>
+                                            <em id="title-name" class="small material-icons">edit</em>
                                         </button>
                                         <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Asistentes">
-                                            <i id="title-name" class="small material-icons">person</i>
+                                            <em id="title-name" class="small material-icons">person</em>
                                         </button>
                                         <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
-                                            <i id="title-name" class="small material-icons">delete</i>
+                                            <em id="title-name" class="small material-icons">delete</em>
                                         </button>
                                         <button type="button" onclick="location.href='#'" title="">
-                                            <i id="title-name" class="small material-icons">attach_money</i>
+                                            <em id="title-name" class="small material-icons">attach_money</em>
                                         </button>
                                           </td>
                                         </tr>
