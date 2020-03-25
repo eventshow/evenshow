@@ -32,6 +32,8 @@ class EventForm(forms.ModelForm):
                                                               'name': 'start_day'}))
     start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
     end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+    category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
+
 
     class Meta:
         model = Event
@@ -61,14 +63,6 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El aforo no puede ser menor que uno')
         return capacity
-        
-    def clean_category(self):
-        categories = Category.objects.all()
-        category = self.cleaned_data.get('category')
-        if category not in categories:
-            raise ValidationError(
-                'Seleccione una categoría')
-        return category
     
     def clean_start_day(self):
         start_day = self.cleaned_data.get('start_day')

@@ -151,8 +151,9 @@ class Event(Common):
         super(Event, self).save(*args, **kwargs)
 
     def clean(self):
-        if type(self.start_day) != datetime or type(self.start_day) != datetime: 
-            raise ValidationError('Inserte un ahora')
+        time = now().time()
+        if not isinstance(self.start_time, type(time)) or not isinstance(self.end_time, type(time)): 
+            raise ValidationError('Inserte una hora')
         elif self.start_time > self.end_time:
             raise ValidationError('An event cannot starts after it has ended')
 
