@@ -48,7 +48,8 @@ class EnrollmentService:
         user_is_enrolled = self.user_is_enrolled(
             event_pk, user)
         user_is_old_enough = event.min_age <= user.profile.age
-        return not user_is_enrolled and user_is_old_enough
+        user_is_owner = EventService().user_is_owner(user, event_pk)
+        return not user_is_enrolled and user_is_old_enough and not user_is_owner
 
     def user_is_enrolled(self, event_pk: int, user: User) -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user).exists()
