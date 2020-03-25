@@ -150,13 +150,6 @@ class Event(Common):
         self.full_clean()
         super(Event, self).save(*args, **kwargs)
 
-    def clean(self):
-        time = now().time()
-        if not isinstance(self.start_time, type(time)) or not isinstance(self.end_time, type(time)): 
-            raise ValidationError('Inserte una hora')
-        elif self.start_time > self.end_time:
-            raise ValidationError('An event cannot starts after it has ended')
-
     def __str__(self):
         return self.title
 
