@@ -15,6 +15,8 @@ CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
 User = get_user_model()
 
+time = now().time()
+
 
 class RatingForm(forms.ModelForm):
     class Meta:
@@ -76,11 +78,10 @@ class EventForm(forms.ModelForm):
     def clean_start_time(self):
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
-        time = now().time()
-        time2 = now().time()
+        print(type(end_time))
         if not isinstance(start_time, type(time)): 
             raise ValidationError('Inserte una hora')
-        elif isinstance(end_time, type(start_time)):
+        elif isinstance(end_time, type(time)):
             if (start_time >= end_time):
                 raise ValidationError(
                     'El evento no puede empezar después de terminar')
@@ -88,7 +89,7 @@ class EventForm(forms.ModelForm):
 
     def clean_end_time(self):
         end_time = self.cleaned_data.get('end_time')
-        time = now().time()
+        print(type(end_time))
         if not isinstance(end_time, type(time)): 
             raise ValidationError('Inserte una hora')
         return end_time
