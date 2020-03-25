@@ -29,6 +29,7 @@
         {% if user_can_enroll %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
+            {% if user.is_authenticated %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="500" data-locale="auto"
                 data-label="INSCRIBIRSE">
@@ -37,12 +38,15 @@
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail");
             </script>
-
+            {% else %}
+            <a class="waves-effect waves-light btn-large button-detail" id="enroll"
+                href="{% url 'login' %}">INSCRIBIRSE</a>
+            {% endif %}
         </form>
         {% endif %}
     </div>
 
-        <div class="col m6 rectangle-info separated4" id="detail-info">
+    <div class="col m6 rectangle-info separated4" id="detail-info">
         <h2 class="title-detail">precio</h2>
         <h2 class="subtitle-detail">{{ object.price }} €</h2>
     </div>
@@ -106,12 +110,12 @@
     </div>
 </div>
 
-    <style>
-       .page-footer {
-           width: 100%;
-           margin-top: 20% !important;
-       }
-    </style>
+<style>
+    .page-footer {
+        width: 100%;
+        margin-top: 20% !important;
+    }
+</style>
 
 {% endblock %}
 
@@ -128,9 +132,8 @@
         flex: 1 0 auto;
     }
 
-    .page-footer{
+    .page-footer {
         width: 100%;
         margin-bottom: 29% !important;
     }
 </style>
-
