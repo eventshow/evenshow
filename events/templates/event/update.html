@@ -193,16 +193,18 @@
 
       </div>
     </div>
-
     <div class="row">
       <div class="grid-example col s3 offset-s9">
  
           <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
-          {{ form.errors }}
+          
       </div>
 
     </div>
 
+    </div>
+    <div class="form-errors-create">
+      {{ form.non_field_errors }}
     </div>
 </form>
 </div>
