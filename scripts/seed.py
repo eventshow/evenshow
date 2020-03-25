@@ -39,9 +39,8 @@ def run():
     seed_users()
     seed_profiles()
     seed_categories()
-    seed_events(FAKE.date_this_year(), EVENT_PKS_THIS_YEAR)
-    seed_events(FAKE.date_between(start_date='+1y',
-                                  end_date='+2y'), EVENT_PKS_FUTURE)
+    seed_events(EVENT_PKS_THIS_YEAR)
+    seed_events(EVENT_PKS_FUTURE, True)
 
     with open('initial_data/initial_data.json', 'w') as file:
         file.write(json.dumps(INITIAL_DATA, indent=4))
@@ -113,7 +112,7 @@ def seed_profiles():
         'fields': {
             'location': FAKE.city(),
             'picture': PROFILE_IMAGE_FILE,
-            'birthdate': FAKE.date_of_birth().strftime('%Y-%m-%d'),
+            'birthdate': '1980-01-01',
             'token': get_random_string(length=8).upper(),
             'bio': FAKE.text(),
             'user': USER_PKS[-1]+1
@@ -136,15 +135,20 @@ def seed_categories():
         INITIAL_DATA.append(category)
 
 
-def seed_events(start_day, event_pks):
+def seed_events(event_pks, future=False):
     addresses = generate_addresses()
     for event_pk in event_pks:
+        if future:
+            start_day = FAKE.date_between(start_date='now',
+                                          end_date='+2y')
+        else:
+            start_day = FAKE.date_between(start_date='-1y', end_date='now')
         category = CATEGORIES.index(random.choice(CATEGORIES))
         host = random.choice(USER_PKS)
 
         aux = list(USER_PKS).copy()
         aux.remove(host)
-        enrollers = random.sample(aux, k=6)
+        enrollers = random.sample(set(aux), k=FAKE.random_int(1, len(aux)))
         splited_address = FAKE.address().split('\n')
         city = splited_address[1].split(',')[0]
 
@@ -255,18 +259,19 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
         if status == 'ACCEPTED':
             seed_transaction(enroller, host, updated_at, price)
             ac += 1
-            attendees.append(enroller)
+            if enroller not in attendees:
+                attendees.append(enroller)
 
         INITIAL_DATA.append(enrollment)
         ix += 1
 
     if status == 'ACCEPTED' and event_date <= now().date():
-        attendees_sublist = random.sample(
-            attendees, k=FAKE.random_int(1, len(attendees)))
+        attendees_sublist = set(random.sample(
+            attendees, k=FAKE.random_int(1, len(attendees))))
         seed_event_ratings(event, host, attendees_sublist, 'HOST', event_date)
 
-        attendees_sublist = random.sample(
-            attendees, k=FAKE.random_int(1, len(attendees)))
+        attendees_sublist = set(random.sample(
+            attendees, k=FAKE.random_int(1, len(attendees))))
         seed_event_ratings(event, attendees_sublist, host,
                            'ATTENDEE', event_date)
 

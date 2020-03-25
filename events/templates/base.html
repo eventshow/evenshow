@@ -22,6 +22,14 @@
   <link rel="stylesheet" href="{% static 'css/login/main.css'%}" />
 
 
+  <script>
+    $(document).ready(function () {
+      $('select').material_select();
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
   <meta charset="UTF-8">
@@ -68,7 +76,7 @@
           <div class="user-view">
             {% if  user.is_authenticated %}
 
-        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target='dropdown2'><img
+        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img
               src="{% static 'img/avatar.png' %}" alt="Avatar" class="avatar"></a></li>
         <li><a href="#!">Preferencias</a></li>
         <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
@@ -117,17 +125,20 @@
   {% block javascript %}
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js"
     integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
   <script>
     $(document).ready(function () {
 
       // Initialize materialize data picker
-      $('.datepicker').datepicker({ 'format': 'mm-dd-yyyy' });
+      $('.datepicker').datepicker({ 'format': 'dd/mm/yyyy' });
       $('select').formSelect();
 
     });
   </script>
+
   <script>
     $(document).ready(function () {
       $('.timepicker').timepicker({ 'format': 'hh:mm' });
@@ -135,6 +146,7 @@
     });
 
   </script>
+
 
   <script>
     $('.dropdown-trigger').dropdown();

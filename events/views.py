@@ -1,25 +1,21 @@
-from django.shortcuts import render
-from datetime import datetime, date
+import stripe
+
+from datetime import datetime, date, time
 
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
+from django.views.generic import TemplateView
 
 from . import forms
 from . import models
 from . import selectors
 from . import services
-
-import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -31,20 +27,51 @@ def index(request):
     return render(request, 'home.html', {'STATIC_URL': settings.STATIC_URL})
 
 
-class AttendeeListView(generic.ListView):
-    model = User
-    template_name = 'user/list.html'
+class HomeView(TemplateView):
+    form = forms.SearchHomeForm()
+    template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
-        host = request.user
-        event_pk = kwargs.get('pk')
+        context = self.get_context_data(**kwargs)
+        context['form'] = self.form
+        context['STATIC_URL'] = settings.STATIC_URL
+        return render(request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class AttendeeListView(generic.ListView):
+    model = User
+    template_name = 'attendee/list.html'
+    paginate_by = 5
+
+    def get(self, request, *args, **kwargs):
+        if services.EventService().user_is_owner(request.user, kwargs.get('event_pk')):
+            return super(AttendeeListView, self).get(self, request, *args, **kwargs)
+        else:
+            return redirect('/')
+
+    def get_context_data(self, **kwargs):
+        event_pk = self.kwargs.get('event_pk')
+        event = models.Event.objects.get(pk=event_pk)
+        context = super(AttendeeListView, self).get_context_data(**kwargs)
+        context['event_has_finished'] = event.has_finished
+        context['event_has_started'] = event.has_started
+        context['event_pk'] = event_pk
+        context['rated_attendees'] = selectors.UserSelector(
+        ).rated_on_event(event_pk)
+        return context
+
+    def get_queryset(self):
+        queryset = super(AttendeeListView, self).get_queryset()
+        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('event_pk'))
+        return queryset
 
 
 class AttendeePaymentView(generic.View):
     template_name = 'main/payment.html'
 
     def get(self, request, *args, **kwargs):
-        if services.EventService.count(kwargs.get('pk')):
+        if services.EventService().count(kwargs.get('pk')):
             pk = self.kwargs.get('pk')
             event = models.Event.objects.get(pk=pk)
             payment = event.price
@@ -58,7 +85,7 @@ class EventDetailView(generic.DetailView):
     template_name = 'event/detail.html'
 
     def get(self, request, *args, **kwargs):
-        if services.EventService.count(kwargs.get('pk')):
+        if services.EventService().count(kwargs.get('pk')):
             return super().get(self, request, *args, **kwargs)
         else:
             return redirect('/')
@@ -69,17 +96,17 @@ class EventDetailView(generic.DetailView):
         event = kwargs.get('object')
         duration = event.duration
 
-        event_is_full = selectors.UserSelector.event_attendees(
-            event.pk).count()
+        event_is_full = selectors.UserSelector().event_attendees(
+            event.pk).count() >= event.capacity
         user_can_enroll = True
 
         if user.is_authenticated:
             user_can_enroll = services.EnrollmentService().user_can_enroll(
                 event.pk, user)
 
-        context['duration'] = str(duration // 3600) + 'h ' + \
-            str((duration // 60) % 60) + 'min'
-        context['ratings'] = selectors.RatingSelector.on_event(
+        hours, minutes = divmod(duration, 60)
+        context['duration'] = '{0}h {1}min'.format(hours, minutes)
+        context['ratings'] = selectors.RatingSelector().on_event(
             event.pk)
         context['g_location'] = event.location.replace(' ', '+')
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
@@ -93,10 +120,10 @@ class EventCreateView(generic.CreateView):
     model = models.Event
     form_class = forms.EventForm
     success_url = EVENT_SUCCESS_URL
-    template_name = 'event/create.html'
+    template_name = 'event/update.html'
 
     def get(self, request, *args, **kwargs):
-        if services.EventService.can_create(self.request.user):
+        if services.EventService().can_create(self.request.user):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -109,7 +136,7 @@ class EventCreateView(generic.CreateView):
 
     def form_valid(self, form):
         event = form.save(commit=False)
-        services.EventService.create(event, self.request.user)
+        services.EventService().create(event, self.request.user)
         return super(EventCreateView, self).form_valid(form)
 
 
@@ -122,7 +149,7 @@ class EventDeleteView(generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, kwargs.get('pk')):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
             self.object.delete()
             return redirect('hosted_events')
@@ -132,7 +159,8 @@ class EventDeleteView(generic.DeleteView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, self.kwargs.get('pk')):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host,
+                                                                                             self.kwargs.get('pk')):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -142,18 +170,36 @@ class EventDeleteView(generic.DeleteView):
 class EventHostedListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super(EventHostedListView, self).get_context_data(**kwargs)
+        context['role'] = 'anfitrión'
+        return context
 
     def get_queryset(self):
-        return selectors.EventSelector.hosted(self.request.user)
+        queryset = super(EventHostedListView, self).get_queryset()
+        queryset = selectors.EventSelector().hosted(self.request.user)
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
 class EventEnrolledListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super(EventEnrolledListView, self).get_context_data(**kwargs)
+        context['user_rated_events'] = selectors.EventSelector().rated_by_user(
+            self.request.user)
+        context['role'] = 'huésped'
+        return context
 
     def get_queryset(self):
-        return selectors.EventSelector.enrolled(self.request.user)
+        queryset = super(EventEnrolledListView, self).get_queryset()
+        queryset = selectors.EventSelector().enrolled(self.request.user)
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
@@ -162,7 +208,7 @@ class EventNotEnrolledListView(generic.ListView):
     template_name = 'event/list.html'
 
     def get_queryset(self):
-        return selectors.EventSelector.not_enrolled(self.request.user)
+        return selectors.EventSelector().not_enrolled(self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -175,73 +221,123 @@ class EventUpdateView(generic.UpdateView):
     def form_valid(self, form):
         host = self.request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
-            services.EventService.update(event, host)
+            services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
-            return redirect('/')
+            return redirect('events')
 
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, kwargs.get('pk')):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
 
 
-def nearby_events(request, distance=None):
-    distance = request.GET.get('distance', '')
+class EventSearchByLocationDateStartHourView(generic.ListView):
+    template_name = 'event/list_search.html'
+    form = forms.SearchHomeForm()
 
-    try:
-        if distance:
-            events = services.EventService.nearby_events_distance(distance)
-        else:
-            events = services.EventService.nearby_events_ordered()
-    except ValueError:
-        events = services.EventService.nearby_events_ordered()
+    def get(self, request, *args, **kwargs):
+        location = request.GET.get('location', None)
+        event_date = request.GET.get('date', None)
+        start_hour = request.GET.get('start_hour', None)
 
-    page = request.GET.get('page', 1)
-    paginator = Paginator(events, 12)
+        home_template = 'home.html'
 
-    try:
-        events = paginator.page(page)
-    except PageNotAnInteger:
-        events = paginator.page(1)
-    except EmptyPage:
-        events = paginator.page(paginator.num_pages)
+        errors = []
+        events = []
+        length = 0
+        fecha = ""
 
-    context = {'object_list': events, 'STATIC_URL': settings.STATIC_URL}
+        if event_date != '':
+            try:
+                fecha = datetime.strptime(event_date, '%d/%m/%Y').date()
+                if fecha < date.today():
+                    errors.append("Introduzca una fecha futura")
+                    template_name = home_template
+            except ValueError:
+                errors.append("Introduzca una fecha con el patrón válido")
+                template_name = home_template
 
-    return render(request, 'event/list_search.html', context)
+        if start_hour != '':
+            try:
+                datetime.strptime(start_hour, '%H:%M').time()
+            except ValueError:
+                errors.append("Introduzca una hora válida")
+                template_name = home_template
+
+        if not errors:
+            events = services.EventService().events_filter_home(
+                self, location, fecha, start_hour)
+            template_name = self.template_name
+
+            length = len(events)
+
+            page = request.GET.get('page', 1)
+            paginator = Paginator(events, 12)
+
+            try:
+                events = paginator.page(page)
+            except PageNotAnInteger:
+                events = paginator.page(1)
+            except EmptyPage:
+                events = paginator.page(paginator.num_pages)
+
+        return render(request, template_name,
+                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'errors': errors, 'place': location,
+                       'length': length, 'form': self.form})
 
 
-def events_filter_ordered_by_distance(request, max_price, minimum_price, year, month, day):
-    events_distances_ordered = services.EventService.events_filter_ordered_by_distance(
-        max_price, minimum_price, year, month, day)
-    context = {'object_list': events_distances_ordered}
+class EventSearchNearbyView(generic.ListView):
+    template_name = 'event/list_search.html'
 
-    return render(request, 'event/list.html', context)
+    def get(self, request, *args, **kwargs):
+        events = services.EventService().nearby_events_distance(self, 50000)
+        length = len(events)
+
+        page = request.GET.get('page', 1)
+        paginator = Paginator(events, 12)
+
+        try:
+            events = paginator.page(page)
+        except PageNotAnInteger:
+            events = paginator.page(1)
+        except EmptyPage:
+            events = paginator.page(paginator.num_pages)
+
+        return render(request, self.template_name,
+                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'length': length})
 
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateView(generic.View):
-    
+    model = models.Enrollment
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        event_pk = kwargs.get('pk')
+        event = models.Event.object.get(pk=event_pk)
+        context['event_title'] = event.title
+
     def post(self, request, *args, **kwargs):
+
         attendee = self.request.user
         event_pk = kwargs.get('pk')
 
-        event_exists = services.EventService.count(event_pk)
-        event_is_full = selectors.UserSelector.event_attendees(
-            event_pk).count()
+        event_exists = services.EventService().count(event_pk)
+        event_is_full = selectors.UserSelector().event_attendees(
+            event_pk).count() >= models.Event.objects.get(pk=event_pk).capacity
         user_can_enroll = services.EnrollmentService().user_can_enroll(
             event_pk, attendee)
 
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full:
-            services.EnrollmentService.create(event_pk, attendee)
+            services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
                 amount=500,
@@ -264,13 +360,13 @@ class EnrollmentListView(generic.ListView):
         host = request.user
         event_pk = kwargs.get('pk')
 
-        if services.EventService.count(event_pk) and services.EventService.user_is_owner(host, event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('events')
 
     def get_queryset(self):
-        return selectors.EnrollmentSelector.on_event(self.kwargs.get('pk'), 'PENDING')
+        return selectors.EnrollmentSelector().on_event(self.kwargs.get('pk'), 'PENDING')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -281,10 +377,10 @@ class EnrollmentUpdateView(generic.View):
     def get(self, request, *args, **kwargs):
         host = self.request.user
 
-        if services.EnrollmentService.count(kwargs.get('pk')) and self.updatable(host):
-            services.EnrollmentService.update(
+        if services.EnrollmentService().count(kwargs.get('pk')) and self.updatable(host):
+            services.EnrollmentService().update(
                 kwargs.get('pk'), host, kwargs.get('status'))
-            event_pk = selectors.EventSelector.with_enrollment(
+            event_pk = selectors.EventSelector().with_enrollment(
                 kwargs.get('pk')).values_list('pk', flat=True).first()
 
             return redirect('event_attendees', event_pk)
@@ -293,8 +389,8 @@ class EnrollmentUpdateView(generic.View):
 
     def updatable(self, host):
         enrollment_pk = self.kwargs.get('pk')
-        return services.EnrollmentService.host_can_update(host,
-                                                          enrollment_pk) and services.EnrollmentService.is_pending(
+        return services.EnrollmentService().host_can_update(host,
+                                                            enrollment_pk) and services.EnrollmentService().is_pending(
             enrollment_pk)
 
 
@@ -308,11 +404,10 @@ class RateHostView(generic.CreateView):
     def get(self, request, *args, **kwargs):
         created_by = request.user
         event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-        exist_already_rating = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(created_by, event,
-                                                                                                   event.created_by)
+        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
+                                                                                                     event.created_by)
 
-        is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
-            created_by, event)
+        is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
 
         if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
@@ -322,20 +417,26 @@ class RateHostView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
+        context['host_name'] = selectors.UserSelector(
+        ).event_host(self.kwargs.get('event_pk'))
+        context['event_title'] = models.Event.objects.get(
+            id=self.kwargs.get('event_pk')).title
+
         return context
 
     def form_valid(self, form):
+
         rating = form.save(commit=False)
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
-        host = selectors.UserSelector.event_host(self.kwargs.get('event_pk'))
+        host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         created_by = self.request.user
 
         rating.created_by = created_by
         rating.reviewed = host
         rating.event = event
         rating.on = 'HOST'
-        if services.RatingService.is_valid_rating(rating, event, created_by):
-            services.RatingService.create(rating)
+        if services.RatingService().is_valid_rating(rating, event, created_by):
+            services.RatingService().create(rating)
             return super().form_valid(form)
         else:
             return redirect('home')
@@ -346,21 +447,19 @@ class RateAttendeeView(generic.CreateView):
     template_name = 'rating/rating_attendee.html'
     model = models.Rating
     form_class = forms.RatingForm
-    success_url = '/events/hosted'
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
         event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
         attendee_id = self.kwargs.get('attendee_pk')
         attendee = models.User.objects.get(id=attendee_id)
-        exist_already_rating = selectors.RatingSelector.exists_this_rating_for_this_user_and_event(created_by,
-                                                                                                   event,
-                                                                                                   attendee_id)
-        is_owner_of_this_event = selectors.EventSelector.is_owner(
+        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
+                                                                                                     event,
+                                                                                                     attendee_id)
+        is_owner_of_this_event = selectors.EventSelector().is_owner(
             created_by, event.id)
-        is_enrolled_for_this_event = selectors.EnrollmentSelector.enrolled_for_this_event(
-            attendee, event)
-        if (not exist_already_rating) and is_owner_of_this_event and is_enrolled_for_this_event and event.has_finished:
+        attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
+        if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
         else:
             return redirect('home')
@@ -369,13 +468,21 @@ class RateAttendeeView(generic.CreateView):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
         context['attendee_pk'] = self.kwargs.get('attendee_pk')
+        context['attendee_name'] = models.User.objects.get(
+            id=self.kwargs.get('attendee_pk')).username
+        context['event_title'] = models.Event.objects.get(
+            id=self.kwargs.get('event_pk')).title
 
         return context
 
+    def get_success_url(self):
+        return reverse_lazy('list_attendees', kwargs={'event_pk': self.kwargs.get('event_pk')})
+
     def form_valid(self, form):
         rating = form.save(commit=False)
+
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
-        host = selectors.UserSelector.event_host(self.kwargs.get('event_pk'))
+        host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         created_by = self.request.user
 
         rating.created_by = created_by
@@ -385,8 +492,8 @@ class RateAttendeeView(generic.CreateView):
         rating.event = event
         rating.on = 'ATTENDEE'
 
-        if services.RatingService.is_valid_rating(rating, event, created_by):
-            services.RatingService.create(rating)
+        if services.RatingService().is_valid_rating(rating, event, created_by):
+            services.RatingService().create(rating)
             return super().form_valid(form)
         else:
             return redirect('home')
@@ -400,22 +507,6 @@ class SignUpView(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         birthdate = form.cleaned_data.get('birthdate')
-        services.ProfileService.create(user, birthdate)
+        services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
-
-
-def attendees_list(request, event_pk):
-    event = models.Event.objects.get(id=event_pk)
-
-    if event.created_by == request.user:
-        attendees = selectors.UserSelector.event_attendees(event_pk)
-
-        context = {'attendees': attendees, 'event': event_pk}
-
-        return render(request, 'rating/attendees_list.html', context)
-    else:
-        return redirect('/home')
-
-
-# Create your views here.
