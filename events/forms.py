@@ -1,7 +1,6 @@
 from datetime import datetime, date
 
 from django import forms
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
@@ -27,8 +26,8 @@ class RatingForm(forms.ModelForm):
 
 
 class EventForm(forms.ModelForm):
-    start_day = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS,
-                                widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
+    start_day = forms.DateField(input_formats=('%d/%m/%Y',),
+                                widget=forms.DateInput(format='%d/%m/%Y',
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
 
@@ -62,7 +61,7 @@ class EventUpdateForm(forms.ModelForm):
         model = Event
         exclude = ['created_by', 'attendees']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
+             'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
             'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
@@ -103,10 +102,10 @@ class RegistrationForm(UserCreationForm):
     birthdate = forms.DateField(
         required=True,
         widget=forms.DateInput(
-            format=settings.DATE_INPUT_FORMATS[0],
+            format='%d/%m/%Y',
             attrs={'placeholder': "dd/mm/aaaa"}
         ),
-        input_formats=settings.DATE_INPUT_FORMATS
+        input_formats=('%d/%m/%Y',)
     )
     password1 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "contraseña"}))
@@ -149,14 +148,14 @@ class RegistrationForm(UserCreationForm):
 
 class SearchHomeForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad"}))
+        attrs={'placeholder': "Ciudad"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
-            format=settings.DATE_INPUT_FORMATS[0],
+            format='%d/%m/%Y',
             attrs={'placeholder': "dd/mm/aaaa"}
         ),
-        input_formats=settings.DATE_INPUT_FORMATS
+        input_formats=('%d/%m/%Y',)
     )
     start_hour = forms.TimeField(
         required=False,
@@ -169,7 +168,7 @@ class SearchHomeForm(forms.Form):
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
-        if date and date < now().date():
+        if date < now().date():
             raise ValidationError(
                 'La fecha debe ser futura')
         return date

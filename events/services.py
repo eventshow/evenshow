@@ -48,8 +48,7 @@ class EnrollmentService:
         user_is_enrolled = self.user_is_enrolled(
             event_pk, user)
         user_is_old_enough = event.min_age <= user.profile.age
-        user_is_owner = EventService().user_is_owner(user, event_pk)
-        return not user_is_enrolled and user_is_old_enough and not user_is_owner
+        return not user_is_enrolled and user_is_old_enough
 
     def user_is_enrolled(self, event_pk: int, user: User) -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user).exists()
@@ -208,7 +207,8 @@ class RatingService:
             # the user cannot have already rated this event
             if not rating_user_for_this_event:
 
-                enroll_reviewed = event in selectors.EventSelector().enrolled(rating.reviewed)
+                enroll_reviewed = selectors.EnrollmentSelector().enrolled_for_this_event(
+                    rating.reviewed, event)
 
                 # the host can only rate their attendees for this event
                 if rating.on == 'ATTENDEE' and enroll_reviewed:
