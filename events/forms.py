@@ -75,12 +75,9 @@ class EventForm(forms.ModelForm):
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
 
-        if (start_day < now().date()):
+        if (start_day < now().date()) or (isinstance(start_time, type(time)) and (start_day == now().date() and start_time <= now().time())):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
-        elif isinstance(start_time, type(time)) and (start_day == now().date() and start_time <= now().time()):
-                raise ValidationError(
-                    'El evento no puede comenzar en el pasado')
 
         
         if not isinstance(start_time, type(time)): 
