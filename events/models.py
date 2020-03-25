@@ -146,6 +146,15 @@ class Event(Common):
     def location(self):
         return ' '.join([self.location_city, self.location_street, str(self.location_number)])
 
+    @property
+    def location(self):
+        return ' '.join([self.location_city, self.location_street, str(self.location_number)])
+
+    @property
+    def g_location(self):
+        aux = ','.join([self.location_street, self.location_city])
+        return '+'.join([str(self.location_number), aux])
+
     def save(self, *args, **kwargs):
         self.full_clean()
         super(Event, self).save(*args, **kwargs)
