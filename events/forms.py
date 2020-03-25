@@ -67,9 +67,12 @@ class EventForm(forms.ModelForm):
                 'El aforo no puede ser menor que uno')
         return capacity
     
-    def clean_start_day(self):
-        start_day = self.cleaned_data.get('start_day')
-        start_time = self.cleaned_data.get('start_time')
+    def clean(self):
+        clean_data = self.cleaned_data
+        start_day = clean_data.get('start_day')
+        start_time = clean_data.get('start_time')
+        end_time = clean_data.get('end_time')
+
         if (start_day < now().date()):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
@@ -77,24 +80,20 @@ class EventForm(forms.ModelForm):
             if start_day == now().date and start_time <= now().time():
                 raise ValidationError(
                     'El evento no puede comenzar en el pasado')
-        return start_day
 
-    def clean_start_time(self):
-        start_time = self.cleaned_data.get('start_time')
-        if not isinstance(start_time, type(time)): 
-            raise ValidationError('Inserte una hora')
         
-        return start_time
-
-    def clean_end_time(self):
-        start_time = self.cleaned_data.get('start_time')
-        end_time = self.cleaned_data.get('end_time')
-        if not isinstance(end_time, type(time)): 
+        if not isinstance(start_time, type(time)): 
             raise ValidationError('Inserte una hora')
         elif isinstance(end_time, type(time)):
             if (start_time >= end_time):
                 raise ValidationError(
                     'El evento no puede empezar después de terminar')
+        return clean_data
+
+    def clean_end_time(self):
+        end_time = self.cleaned_data.get('end_time')
+        if not isinstance(end_time, type(time)): 
+            raise ValidationError('Inserte una hora')
         return end_time
 
 
