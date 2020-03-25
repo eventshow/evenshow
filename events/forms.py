@@ -30,6 +30,8 @@ class EventForm(forms.ModelForm):
                                 widget=forms.DateInput(format='%d/%m/%Y',
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
+    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
 
     class Meta:
         model = Event
@@ -47,13 +49,34 @@ class EventForm(forms.ModelForm):
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
             'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}),
-            'start_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}),
-            'end_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
+
+    def clean_capacity(self):
+        capacity = self.cleaned_data.get('capacity')
+        if capacity < 1:
+            raise ValidationError(
+                'El aforo no puede ser menor que uno')
+        return capacity
+        
+    def clean_category(self):
+        categories = Category.objects.all()
+        category = self.cleaned_data.get('category')
+        if category not in categories:
+            raise ValidationError(
+                'Seleccione una categoría')
+        return category
+    
+    def clean_start_day(self):
+        start_day = self.cleaned_data.get('start_day')
+        start_time = self.cleaned_data.get('start_time')
+        if (start_day <= now().date()) or (start_day == now().date and  start_time <= now().time()):
+            raise ValidationError(
+                'El evento no puede comenzar en el pasado')
+        return start_day
 
 
 class EventUpdateForm(forms.ModelForm):
