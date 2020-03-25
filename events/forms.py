@@ -81,21 +81,20 @@ class EventForm(forms.ModelForm):
 
     def clean_start_time(self):
         start_time = self.cleaned_data.get('start_time')
-        end_time = self.cleaned_data.get('end_time')
-        print(type(end_time))
         if not isinstance(start_time, type(time)): 
+            raise ValidationError('Inserte una hora')
+        
+        return start_time
+
+    def clean_end_time(self):
+        start_time = self.cleaned_data.get('start_time')
+        end_time = self.cleaned_data.get('end_time')
+        if not isinstance(end_time, type(time)): 
             raise ValidationError('Inserte una hora')
         elif isinstance(end_time, type(time)):
             if (start_time >= end_time):
                 raise ValidationError(
                     'El evento no puede empezar después de terminar')
-        return start_time
-
-    def clean_end_time(self):
-        end_time = self.cleaned_data.get('end_time')
-        print(type(end_time))
-        if not isinstance(end_time, type(time)): 
-            raise ValidationError('Inserte una hora')
         return end_time
 
 
