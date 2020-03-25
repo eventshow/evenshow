@@ -34,7 +34,7 @@
     
     <div class="container">
       <div class="center-form">
-      <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'update_event' event.pk %}">
+      <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
         {% csrf_token %}
         <div class="row">
           <div class="col s12">
