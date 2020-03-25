@@ -27,24 +27,50 @@ def index(request):
     return render(request, 'home.html', {'STATIC_URL': settings.STATIC_URL})
 
 
-class HomeView(TemplateView):
-    form = forms.SearchHomeForm()
+class HomeView(generic.FormView):
+    form_class = forms.SearchHomeForm
     template_name = 'home.html'
 
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['form'] = self.form
-        context['STATIC_URL'] = settings.STATIC_URL
-        return render(request, self.template_name, context)
+    def get_success_url(self):
+        request = self.request.POST
+        date = request.get('date')
+        location = request.get('location')
+        start_hour = request.get('start_hour')
+        return reverse_lazy('event_search_home', kwargs={
+            'date': date,
+            'location': location,
+            'start_hour': start_hour
+        }
+        )
 
 
+@method_decorator(login_required, name='dispatch')
 class AttendeeListView(generic.ListView):
     model = User
-    template_name = 'user/list.html'
+    template_name = 'attendee/list.html'
+    paginate_by = 5
 
     def get(self, request, *args, **kwargs):
-        host = request.user
-        event_pk = kwargs.get('pk')
+        if services.EventService().user_is_owner(request.user, kwargs.get('event_pk')):
+            return super(AttendeeListView, self).get(self, request, *args, **kwargs)
+        else:
+            return redirect('/')
+
+    def get_context_data(self, **kwargs):
+        event_pk = self.kwargs.get('event_pk')
+        event = models.Event.objects.get(pk=event_pk)
+        context = super(AttendeeListView, self).get_context_data(**kwargs)
+        context['event_has_finished'] = event.has_finished
+        context['event_has_started'] = event.has_started
+        context['event_pk'] = event_pk
+        context['rated_attendees'] = selectors.UserSelector(
+        ).rated_on_event(event_pk)
+        return context
+
+    def get_queryset(self):
+        queryset = super(AttendeeListView, self).get_queryset()
+        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('event_pk'))
+        return queryset
 
 
 class AttendeePaymentView(generic.View):
@@ -145,55 +171,41 @@ class EventDeleteView(generic.DeleteView):
         else:
             return redirect('/')
 
-    
 
 @method_decorator(login_required, name='dispatch')
 class EventHostedListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
+    paginate_by = 5
 
-    def get(self,request,*args,**kwargs):
-        events = selectors.EventSelector().hosted(self.request.user)
-        page = request.GET.get('page',1)
+    def get_context_data(self, **kwargs):
+        context = super(EventHostedListView, self).get_context_data(**kwargs)
+        context['role'] = 'anfitrión'
+        return context
 
-        paginator  = Paginator(events, 5)
-
-        try:
-            events = paginator.page(page)
-        except PageNotAnInteger:
-            events= paginator.page(1)
-        except EmptyPage:
-            events = paginator.page(paginator.num_pages)
-            
-        context = {'object_list': events}
-            
-        return render(request, self.template_name, context)
-         
-        
-    
+    def get_queryset(self):
+        queryset = super(EventHostedListView, self).get_queryset()
+        queryset = selectors.EventSelector().hosted(self.request.user)
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
 class EventEnrolledListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
+    paginate_by = 5
 
-    def get(self,request,*args,**kwargs):
-        events = selectors.EventSelector().enrolled(self.request.user)
-        page = request.GET.get('page',1)
+    def get_context_data(self, **kwargs):
+        context = super(EventEnrolledListView, self).get_context_data(**kwargs)
+        context['user_rated_events'] = selectors.EventSelector().rated_by_user(
+            self.request.user)
+        context['role'] = 'huésped'
+        return context
 
-        paginator  = Paginator(events, 5)
-
-        try:
-            events = paginator.page(page)
-        except PageNotAnInteger:
-            events= paginator.page(1)
-        except EmptyPage:
-            events = paginator.page(paginator.num_pages)
-            
-        context = {'object_list': events}
-            
-        return render(request, self.template_name, context)
+    def get_queryset(self):
+        queryset = super(EventEnrolledListView, self).get_queryset()
+        queryset = selectors.EventSelector().enrolled(self.request.user)
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
@@ -221,7 +233,6 @@ class EventUpdateView(generic.UpdateView):
             return super(EventUpdateView, self).form_valid(form)
         else:
             return redirect('events')
-            
 
     def get(self, request, *args, **kwargs):
         host = request.user
@@ -233,79 +244,46 @@ class EventUpdateView(generic.UpdateView):
 
 
 class EventSearchByLocationDateStartHourView(generic.ListView):
+    model = models.Event
     template_name = 'event/list_search.html'
-    form = forms.SearchHomeForm()
+    paginate_by = 12
 
-    def get(self, request, *args, **kwargs):
-        location = request.GET.get('location', None)
-        event_date = request.GET.get('date', None)
-        start_hour = request.GET.get('start_hour', None)
+    def get_context_data(self, **kwargs):
+        context = super(EventSearchByLocationDateStartHourView,
+                        self).get_context_data(**kwargs)
+        context['length'] = len(self.get_queryset())
+        return context
 
-        home_template = 'home.html'
-
-        errors = []
-        events = []
-        length = 0
-        fecha = ""
-
-        if event_date != '':
-            try:
-                fecha = datetime.strptime(event_date, '%d/%m/%Y').date()
-                if fecha < date.today():
-                    errors.append("Introduzca una fecha futura")
-                    template_name = home_template
-            except ValueError:
-                errors.append("Introduzca una fecha con el patrón válido")
-                template_name = home_template
-
-        if start_hour != '':
-            try:
-                datetime.strptime(start_hour, '%H:%M').time()
-            except ValueError:
-                errors.append("Introduzca una hora válida")
-                template_name = home_template
-
-        if not errors:
-            events = services.EventService().events_filter_home(
-                self, location, fecha, start_hour)
-            template_name = self.template_name
-
-            length = len(events)
-
-            page = request.GET.get('page', 1)
-            paginator = Paginator(events, 12)
-
-            try:
-                events = paginator.page(page)
-            except PageNotAnInteger:
-                events = paginator.page(1)
-            except EmptyPage:
-                events = paginator.page(paginator.num_pages)
-
-        return render(request, template_name,
-                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'errors': errors, 'place': location,
-                       'length': length, 'form': self.form})
+    def get_queryset(self):
+        queryset = super(
+            EventSearchByLocationDateStartHourView, self).get_queryset()
+        es_date = self.kwargs.get('date')
+        if es_date and es_date != '':
+            date = datetime.strptime(
+                es_date, '%d/%m/%Y').strftime('%Y-%m-%d')
+        else:
+            date = es_date
+        location = self.kwargs.get('location')
+        start_hour = self.kwargs.get('start_hour')
+        queryset = services.EventService().events_filter_home(
+            self, location, date, start_hour)
+        return queryset
 
 
 class EventSearchNearbyView(generic.ListView):
+    model = models.Event
     template_name = 'event/list_search.html'
+    paginate_by = 12
 
-    def get(self, request, *args, **kwargs):
-        events = services.EventService().nearby_events_distance(self, 50000)
-        length = len(events)
+    def get_context_data(self, **kwargs):
+        context = super(EventSearchNearbyView, self).get_context_data(**kwargs)
+        context['length'] = len(self.get_queryset())
+        return context
 
-        page = request.GET.get('page', 1)
-        paginator = Paginator(events, 12)
-
-        try:
-            events = paginator.page(page)
-        except PageNotAnInteger:
-            events = paginator.page(1)
-        except EmptyPage:
-            events = paginator.page(paginator.num_pages)
-
-        return render(request, self.template_name,
-                      {'object_list': events, 'STATIC_URL': settings.STATIC_URL, 'length': length})
+    def get_queryset(self):
+        queryset = super(EventSearchNearbyView, self).get_queryset()
+        queryset = services.EventService().nearby_events_distance(self, 50000)
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
@@ -402,8 +380,7 @@ class RateHostView(generic.CreateView):
         exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
                                                                                                      event.created_by)
 
-        is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
-            created_by, event)
+        is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
 
         if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
@@ -443,7 +420,6 @@ class RateAttendeeView(generic.CreateView):
     template_name = 'rating/rating_attendee.html'
     model = models.Rating
     form_class = forms.RatingForm
-    success_url = '/events/hosted'
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
@@ -455,9 +431,8 @@ class RateAttendeeView(generic.CreateView):
                                                                                                      attendee_id)
         is_owner_of_this_event = selectors.EventSelector().is_owner(
             created_by, event.id)
-        is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
-            attendee, event)
-        if (not exist_already_rating) and is_owner_of_this_event and is_enrolled_for_this_event and event.has_finished:
+        attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
+        if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
         else:
             return redirect('home')
@@ -472,6 +447,9 @@ class RateAttendeeView(generic.CreateView):
             id=self.kwargs.get('event_pk')).title
 
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('list_attendees', kwargs={'event_pk': self.kwargs.get('event_pk')})
 
     def form_valid(self, form):
         rating = form.save(commit=False)
@@ -505,27 +483,3 @@ class SignUpView(generic.CreateView):
         services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
-
-
-def attendees_list(request, event_pk):
-    event = models.Event.objects.get(id=event_pk)
-    page = request.GET.get('page', 1)
-
-    if event.created_by == request.user:
-        attendees = selectors.UserSelector().event_attendees(event_pk)
-
-        paginator = Paginator(attendees, 5)
-
-        try:
-            attendees = paginator.page(page)
-        except PageNotAnInteger:
-            attendees = paginator.page(1)
-        except EmptyPage:
-            attendees = paginator.page(paginator.num_pages)
-
-        context = {'attendees': attendees,
-                   'event': event_pk, 'event_title': event.title}
-
-        return render(request, 'rating/attendees_list.html', context)
-    else:
-        return redirect('/home')
