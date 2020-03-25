@@ -12,15 +12,11 @@ class EnrollmentSelector:
     def on_event(self, event_pk: int, status: str) -> QuerySet:
         return models.Enrollment.objects.filter(event__pk=event_pk, status=status)
 
-    def enrolled_for_this_event(self, created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:
-        enrolled_events = models.Enrollment.objects.filter(
-            created_by=created_by, status=status, event=event).exists()
-        return enrolled_events
-
 
 class EventSelector:
     def hosted(self, host: User) -> QuerySet:
-        hosted_events = models.Event.objects.filter(created_by=host)
+        hosted_events = models.Event.objects.filter(
+            created_by=host).order_by('title')
         return hosted_events
 
     def is_owner(self, host: User, event_id: int) -> QuerySet:
@@ -30,7 +26,7 @@ class EventSelector:
 
     def enrolled(self, attendee: User, status='ACCEPTED') -> QuerySet:
         enrolled_events = models.Event.objects.filter(
-            event_enrollments__created_by=attendee)
+            event_enrollments__created_by=attendee).order_by('title')
         return enrolled_events
 
     def not_enrolled(self, attendee: User) -> QuerySet:
@@ -49,6 +45,9 @@ class EventSelector:
 
     def date(self, date: str) -> QuerySet:
         return models.Event.objects.filter(start_day=date)
+
+    def rated_by_user(self, user: User, on='HOST') -> QuerySet:
+        return models.Event.objects.filter(ratings__created_by=user, ratings__on=on)
 
     def start_hour(self, start_hour: time) -> QuerySet:
         return models.Event.objects.filter(start_time__gte=start_hour)
@@ -79,12 +78,10 @@ class UserSelector:
         host = User.objects.filter(host_events=event_pk).first()
         return host
 
-    def event_not_rated_attendees(self, event_pk: int) -> QuerySet:
+    def event_attendees(self, event_pk: int) -> QuerySet:
         event_attendees = User.objects.filter(
-            Q(attendee_enrollments__event__pk=event_pk) & Q(attendee_enrollments__status='ACCEPTED') & ~Q(reviewed_ratings__event=event_pk)).order_by('username')
+            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED').order_by('username')
         return event_attendees
 
-    def enrolled_for_this_event(self, created_by: User, event: models.Event, status='ACCEPTED') -> QuerySet:
-        enrolled_events = models.Enrollment.objects.filter(
-            created_by=created_by, status=status, event=event).exists()
-        return enrolled_events
+    def rated_on_event(self, event_pk: int) -> QuerySet:
+        return User.objects.filter(reviewed_ratings__event=event_pk)

@@ -207,8 +207,7 @@ class RatingService:
             # the user cannot have already rated this event
             if not rating_user_for_this_event:
 
-                enroll_reviewed = selectors.EnrollmentSelector().enrolled_for_this_event(
-                    rating.reviewed, event)
+                enroll_reviewed = event in selectors.EventSelector().enrolled(rating.reviewed)
 
                 # the host can only rate their attendees for this event
                 if rating.on == 'ATTENDEE' and enroll_reviewed:

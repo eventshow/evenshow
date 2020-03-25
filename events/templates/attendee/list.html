@@ -30,41 +30,31 @@
         <tbody>
 
           <tr>
-            <td><button type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
+            <td>
+              {% if att not in rated_attendees and event_has_finished %}
+              <button type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
                 title="Puntuar">
                 <i id="title-name" class="samll material-icons">star</i>
-              </button></td>
+              </button>
+              {% elif att in rated_attendees %}
+              Ya puntuado
+              {% elif not event_has_started%}
+              No ha empezado
+              {% elif not event_has_finished%}
+              No ha terminado
+              {% endif %}
+            </td>
             <td>{{att.username}}</td>
             <td>{{att.first_name}}</td>
-            <td> {{att.last_name}}</td>
+            <td>{{att.last_name}}</td>
           </tr>
 
         </tbody>
         {% endfor %}
       </table>
 
+      {% include "pagination.html" %}
 
-      {% if is_paginated %}
-      <div class="pagination">
-        {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}"> </a>
-
-        {% else %}
-        <a class="disabled"><span>|</span></a>
-        {% endif %}
-        {% for i in page_obj.paginator.page_range %}
-        {% if page_obj.number == i %}
-        <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
-        {% else %}
-        <a href="?page={{ i }}">{{ i }} |</a>
-        {% endif %}
-        {% endfor %}
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}"></a>
-        {% else %}<span></span>
-        {% endif %}
-      </div>
-      {% endif %}
     </div>
   </div>
 

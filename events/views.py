@@ -51,14 +51,19 @@ class AttendeeListView(generic.ListView):
             return redirect('/')
 
     def get_context_data(self, **kwargs):
+        event_pk = self.kwargs.get('event_pk')
+        event = models.Event.objects.get(pk=event_pk)
         context = super(AttendeeListView, self).get_context_data(**kwargs)
-        context['event_pk'] = self.kwargs.get('event_pk')
+        context['event_has_finished'] = event.has_finished
+        context['event_has_started'] = event.has_started
+        context['event_pk'] = event_pk
+        context['rated_attendees'] = selectors.UserSelector(
+        ).rated_on_event(event_pk)
         return context
 
     def get_queryset(self):
         queryset = super(AttendeeListView, self).get_queryset()
-        queryset = selectors.UserSelector().event_not_rated_attendees(
-            self.kwargs.get('event_pk'))
+        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('event_pk'))
         return queryset
 
 
@@ -165,46 +170,36 @@ class EventDeleteView(generic.DeleteView):
 class EventHostedListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
+    paginate_by = 5
 
-    def get(self, request, *args, **kwargs):
-        events = selectors.EventSelector().hosted(self.request.user)
-        page = request.GET.get('page', 1)
+    def get_context_data(self, **kwargs):
+        context = super(EventHostedListView, self).get_context_data(**kwargs)
+        context['role'] = 'anfitrión'
+        return context
 
-        paginator = Paginator(events, 5)
-
-        try:
-            events = paginator.page(page)
-        except PageNotAnInteger:
-            events = paginator.page(1)
-        except EmptyPage:
-            events = paginator.page(paginator.num_pages)
-
-        context = {'object_list': events}
-
-        return render(request, self.template_name, context)
+    def get_queryset(self):
+        queryset = super(EventHostedListView, self).get_queryset()
+        queryset = selectors.EventSelector().hosted(self.request.user)
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
 class EventEnrolledListView(generic.ListView):
     model = models.Event
     template_name = 'event/list.html'
+    paginate_by = 5
 
-    def get(self, request, *args, **kwargs):
-        events = selectors.EventSelector().enrolled(self.request.user)
-        page = request.GET.get('page', 1)
+    def get_context_data(self, **kwargs):
+        context = super(EventEnrolledListView, self).get_context_data(**kwargs)
+        context['user_rated_events'] = selectors.EventSelector().rated_by_user(
+            self.request.user)
+        context['role'] = 'huésped'
+        return context
 
-        paginator = Paginator(events, 5)
-
-        try:
-            events = paginator.page(page)
-        except PageNotAnInteger:
-            events = paginator.page(1)
-        except EmptyPage:
-            events = paginator.page(paginator.num_pages)
-
-        context = {'object_list': events}
-
-        return render(request, self.template_name, context)
+    def get_queryset(self):
+        queryset = super(EventEnrolledListView, self).get_queryset()
+        queryset = selectors.EventSelector().enrolled(self.request.user)
+        return queryset
 
 
 @method_decorator(login_required, name='dispatch')
@@ -412,8 +407,7 @@ class RateHostView(generic.CreateView):
         exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
                                                                                                      event.created_by)
 
-        is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
-            created_by, event)
+        is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
 
         if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
@@ -464,9 +458,8 @@ class RateAttendeeView(generic.CreateView):
                                                                                                      attendee_id)
         is_owner_of_this_event = selectors.EventSelector().is_owner(
             created_by, event.id)
-        is_enrolled_for_this_event = selectors.EnrollmentSelector().enrolled_for_this_event(
-            attendee, event)
-        if (not exist_already_rating) and is_owner_of_this_event and is_enrolled_for_this_event and event.has_finished:
+        attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
+        if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:
             return super().get(self, request, args, *kwargs)
         else:
             return redirect('home')
