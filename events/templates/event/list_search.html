@@ -82,7 +82,7 @@
                         </h5>
                 </div>
                 <div class="col s1 rating-search">
-                    <i class="fa fa-star"><i class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
+                    <em class="fa fa-star"><em class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
                 </div>
                 <div class="col m6">
                     {% if event.picture %}
