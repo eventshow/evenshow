@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 
 {% block content %}
-<div class="row">
+    <div class="row">
     <div class="wrapper wrapper--w1070">
         <div class="card-body">
             <form class="form-search" method="POST" action="#">
@@ -26,83 +26,100 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row text-left">
-        <div class="col l6 ">
-            <h1 class="title-search">{{ place }}</h1>
-            <h3 class="title-search"> {{ length }} resultados</h3>
+        <div class="container">
+            <div class="row text-left">
+                <div class="col l6 ">
+                    <h1 class="title-search">{{ place }}</h1>
+                    <h3 class="title-search"> {{ length }} resultados</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button class="btn-category" type="submit">
+                        <h3 class="title-search">Categoría 1</h3>
+                        <h3 class="title-search">XX resultados</h3>
+                    </button>
+                    <button class="btn-category" type="submit">
+                        <h3 class="title-search">Categoría 2</h3>
+                        <h3 class="title-search">XX resultados</h3>
+                    </button>
+                    <button class="btn-category" type="submit">
+                        <h3 class="title-search">Categoría 3</h3>
+                        <h3 class="title-search">XX resultados</h3>
+                    </button>
+                    <button class="btn-category" type="submit">
+                        <h3 class="title-search">Categoría 4</h3>
+                        <h3 class="title-search">XX resultados</h3>
+                    </button>
+                </div>
+
+
+            </div>
+
+            <div class="row text-left">
+                <div class="col l6">
+                    <h1 class="title-search">Todos los resultados</h1>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col">
-            <button class="btn-category" type="submit">
-                <h3 class="title-search">Categoría 1</h3>
-                <h3 class="title-search">XX resultados</h3>
-            </button>
-            <button class="btn-category" type="submit">
-                <h3 class="title-search">Categoría 2</h3>
-                <h3 class="title-search">XX resultados</h3>
-            </button>
-            <button class="btn-category" type="submit">
-                <h3 class="title-search">Categoría 3</h3>
-                <h3 class="title-search">XX resultados</h3>
-            </button>
-            <button class="btn-category" type="submit">
-                <h3 class="title-search">Categoría 4</h3>
-                <h3 class="title-search">XX resultados</h3>
-            </button>
-        </div>
+        <div class="container">
 
-
-    </div>
-
-    <div class="row text-left">
-        <div class="col l6">
-            <h1 class="title-search">Todos los resultados</h1>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-
-    {% for event in object_list %}
-    <hr>
-    <div class="row event">
-        <div class="col m4">
-            <h3 class="title-category"> {{ event.category }}</h3>
-            <a href="{% url 'detail_event' event.pk %}">
-                <h2 class="title-event element">{{ event.title }}</h2>
-            </a>
-            <h4 class="subtitle-event element"> Hora: {{event.start_time}} | Duración: {{ event.duration }}</h4>
-            <h4 class="subtitle-event element">Fecha: {{ event.start_day }}</h4>
-            <h4 class="title-category element">Descripción:</h4>
-            <h5 class="subtitle-event element">{{ event.description }}
-                <a class="waves-effect waves-light btn button-search price right" id="button-search"
-                    href="{% url 'detail_event' event.pk %}">{{ event.price }}€</a>
-            </h5>
-        </div>
-        <div class="col s1 rating-search">
-            <i class="fa fa-star"><i
-                    class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
-        </div>
-        <div class="col m6">
-            {% if event.picture %}
-            <a href="{% url 'detail_event' event.pk %}"><img class="img-search"
-                    src=" {{ MEDIA_URL }}{{ event.picture }} " alt="event picture"></a>
-            {% else %}
+            {% for event in object_list %}
+                <hr>
+            <div class="row event">
+                <div class="col m4">
+                    <h3 class="title-category"> {{ event.category }}</h3>
+                    <a href="{% url 'detail_event' event.pk %}">
+                        <h2 class="title-event element">{{ event.title }}</h2>
+                    </a>
+                    <h4 class="subtitle-event element"> Hora: {{event.start_time}}  | Duración: {{ event.duration }}</h4>
+                    <h4 class="subtitle-event element">Fecha: {{ event.start_day }}</h4>
+                    <h4 class="title-category element">Descripción:</h4>
+                    <h5 class="subtitle-event element">{{ event.description }}
+                        <a class="waves-effect waves-light btn button-search price right" id="button-search" href="{% url 'detail_event' event.pk %}">{{ event.price }}€</a>
+                        </h5>
+                </div>
+                <div class="col s1 rating-search">
+                    <em class="fa fa-star"><em class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
+                </div>
+                <div class="col m6">
+                    {% if event.picture %}
+                    <a href="{% url 'detail_event' event.pk %}"><img class="img-search" src=" {{ MEDIA_URL }}{{ event.picture }} "
+                            alt="event picture"></a>
+                    {% else %}
 
 
-            {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+
+            {% endfor %}
+  <hr>
 
         </div>
-    </div>
 
+{% if object_list.has_other_pages %}
+  <div class="pagination">
+    {% if object_list.has_previous %}
+      <a href="{{ request.get_full_path }}&page={{ object_list.previous_page_number }}">&laquo;</a>
+    {% else %}
+      <a class="disabled"><span>&laquo;</span></a>
+    {% endif %}
+    {% for i in object_list.paginator.page_range %}
+      {% if object_list.number == i %}
+        <a class="active"><span>{{ i }} <span class="sr-only">(actual)</span></span></a>
+      {% else %}
+        <a href="{{ request.get_full_path }}&page={{ i }}">{{ i }}</a>
+      {% endif %}
     {% endfor %}
-    <hr>
-    {% include 'pagination.html' %}
-</div>
-
-
+    {% if object_list.has_next %}
+      <a href="{{ request.get_full_path }}&page={{ object_list.next_page_number }}">&raquo;</a>
+    {% else %}<span>&raquo;</span>
+    {% endif %}
+  </div>
+{% endif %}
 
 {% endblock %}

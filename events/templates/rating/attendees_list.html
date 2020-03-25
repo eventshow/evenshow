@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body>
+    <div class="container">
+    <div class="title">
+    <div class="col s12">
+        <h3 class="name-host">Huéspedes del evento <a id="title-name">{{event_title}}</a></h3>
+    </div>       
+        </div>
+    
+        <div class="table-generic" >
+        
+     
+          <table  class="responsive-table" id="myTable">
+    
+          <thead>
+            <div class="provisional">
+              <tr>
+                  <th id="">Puntuar</th>
+                  <th id="">Usuario</th>
+                  <th id="">Nombre</th>
+                  <th id="">Apellidos</th>
+              </tr>
+            </div>
+          </thead>  
+        
+    
+    {%for att in attendees %}
+    <tbody>
+        
+      <tr>
+        <td><button type="button" onclick="location.href='{% url 'create_rating_attendee' event att.pk %}'"  title="Puntuar">
+            <em id="title-name" class="samll material-icons" >star</em>
+        </button></td>
+        <td>{{att.username}}</td>
+        <td>{{att.first_name}}</td>
+        <td> {{att.last_name}}</td>
+      </tr>
+      
+    </tbody>
+    {% endfor %}
+  </table>
+
+
+      {% if attendees.has_other_pages %}
+  <div class="pagination">
+    {% if libros.has_previous %}
+      <a  href="?page={{ attendees.previous_page_number }}" > </a>
+      
+    {% else %}
+      <a class="disabled"><span>|</span></a>
+    {% endif %}
+    {% for i in attendees.paginator.page_range %}
+      {% if attendees.number == i %}
+        <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
+      {% else %}
+        <a href="?page={{ i }}">{{ i }} |</a>
+      {% endif %}
+    {% endfor %}
+    {% if libros.has_next %}
+      <a href="?page={{ attendees.next_page_number }}"></a>
+    {% else %}<span></span>
+    {% endif %}
+  </div>
+{% endif %}
+  </div>
+</div>
+
+</body>
+
+    <style>
+    .footer-section {
+        position: fixed;
+    }
+</style>
+
+
+
+{%endblock%}

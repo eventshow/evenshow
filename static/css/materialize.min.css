@@ -5533,7 +5533,8 @@ body.keyboard-focused .dropdown-content li:focus {
 	vertical-align: middle;
 	z-index: 1;
 	-webkit-transition: .3s ease-out;
-	transition: .3s ease-out
+	transition: .3s ease-out;
+	font-style: normal;
 }
 
 .waves-effect .waves-ripple {
