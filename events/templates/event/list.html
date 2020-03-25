@@ -1,176 +1,87 @@
 {%extends 'base.html' %}
 
 {% block content %}
-<style>
-  body {
-     
-      background-size: cover;
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-  }
 
-  main {
-      flex: 1 0 auto;
-  }
+<body>
+  <div class="container">
 
-  .page-footer {
-      width: 100%;
-  }
-</style>
+    <div class="titulo">
+      <div class="col s12">
+        <h3 class="name-host">Experiencias siendo {{role}}</h3>
+      </div>
+    </div>
 
-    
-
-             {% if request.get_full_path == '/events/enrolled' %}
-        <body>
-             <div class="container">
-    
-            <div class="titulo">
-                <div class="col s12">
-                    <h3 class="name-host">Experiencias siendo huésped</h3>
-                </div>       
-                    </div>
-
-                    <div class="table-generic" >
-        
-     
-                        <table  cellspacing="1" class="responsive-table" id="myTable">
-                  
-                        <thead>
-                            <tr>
-                                <th id="">Puntuar</th>
-                                <th id="">Título</th>
-                                <th id="">Fecha</th>
-                                <th id="">Dirección</th>
-                                <th id="">Acciones</th>
-                            </tr>
-                        </thead>  
-                        {% for event in object_list %}
-                        <tbody>
-        
-                            <tr>
-                              <td><button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" title="Puntuar">
-                                  <em id="title-name" class="samll material-icons">star</em>
-                              </button></td>
-                              <td>{{event.title}}</td>
-                              <td>{{event.start_day}}</td>
-                              <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
-                              <td><em class="waves-effect waves-light btn" id="yaNo">Ya no quiero ir</em></td>
-                            </tr>
-                            
-                          </tbody>                             
-                            {% endfor %}
-                        </table>
-                        {% if object_list.has_other_pages %}
-
-                        <div class="pagination">
-                          {% if object_list.has_previous %}
-                            <a  href="?page={{ object_list.previous_page_number }}" > </a>
-                            
-                          {% else %}
-                            <a class="disabled"><span>|</span></a>
-                          {% endif %}
-                          {% for i in object_list.paginator.page_range %}
-                            {% if object_list.number == i %}
-                              <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
-                            {% else %}
-                              <a href="?page={{ i }}">{{ i }} |</a>
-                            {% endif %}
-                          {% endfor %}
-                          {% if object_list.has_next %}
-                            <a href="?page={{ object_list.next_page_number }}"></a>
-                          {% else %}<span></span>
-                          {% endif %}
-                            </div>
-                            {% endif %}
-                    </div>
-                
-                
-                </body>
-                
-                {% endif %}
-
-                {% if request.get_full_path == '/events/hosted' %}
-                <body>
-                <div class="container">
-                
-                <div class="titulo">
-                    <div class="col s12">
-                        <h3 class="name-host">Experiencias siendo anfitrión</h3>
-                    </div>       
-                        </div>
-
-                        <div class="table-generic" >
-        
-     
-                            <table  cellspacing="1" class="responsive-table" id="myTable">
-                      
-                            <thead>
-                                <tr>
-                                    <th id="">Puntuar</th>
-                                    <th id="">Título</th>
-                                    <th id="">Fecha</th>
-                                    <th id="">Dirección</th>
-                                    <th id="">Acciones</th>
-                                </tr>
-                            </thead>  
-                                    {% for  event in object_list %}
-                                    <tbody>
-                                        <tr>
-                                          <td><button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Puntuar">
-                                              <em id="title-name" class="small material-icons">star</em>
-                                          </button></td>
-                                          <td>{{event.title}}</td>
-                                          <td>{{event.start_day}}</td>
-                                          <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
-                                          <td>
-                                            <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar">
-                                            <em id="title-name" class="small material-icons">edit</em>
-                                        </button>
-                                        <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Asistentes">
-                                            <em id="title-name" class="small material-icons">person</em>
-                                        </button>
-                                        <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
-                                            <em id="title-name" class="small material-icons">delete</em>
-                                        </button>
-                                        <button type="button" onclick="location.href='#'" title="">
-                                            <em id="title-name" class="small material-icons">attach_money</em>
-                                        </button>
-                                          </td>
-                                        </tr>
-                                        
-                                      </tbody> 
-                                
-{% endfor %}
-</table>
-{% if object_list.has_other_pages %}
-
-  <div class="pagination">
-    {% if object_list.has_previous %}
-      <a  href="?page={{ object_list.previous_page_number }}" > </a>
-      
-    {% else %}
-      <a class="disabled"><span>|</span></a>
-    {% endif %}
-    {% for i in object_list.paginator.page_range %}
-      {% if object_list.number == i %}
-        <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
-      {% else %}
-        <a href="?page={{ i }}">{{ i }} |</a>
-      {% endif %}
-    {% endfor %}
-    {% if object_list.has_next %}
-      <a href="?page={{ object_list.next_page_number }}"></a>
-    {% else %}<span></span>
-    {% endif %}
-  </div>
-{% endif %}
+    <div class="table-generic">
 
 
-</div>
+      <table summary="" cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
 
-</div>
-                
-</body>   
-{% endif %}
+        <thead>
+          <tr>
+            <th id="">Puntuar</th>
+            <th id="">Título</th>
+            <th id="">Fecha</th>
+            <th id="">Dirección</th>
+            <th id="">Acciones</th>
+          </tr>
+        </thead>
+        {% for event in object_list %}
+        <tbody>
+
+          <tr>
+            <td>
+              {% if event not in user_rated_events and event.has_finished %}
+              <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" title="Puntuar">
+                <em id="title-name" class="samll material-icons">star</em>
+              </button>
+              {% elif event in user_rated_events %}
+              Ya puntuado
+              {% elif not event.has_started%}
+              No ha empezado
+              {% elif not event.has_finished%}
+              No ha terminado
+              {% endif %}
+            </td>
+            <td>{{event.title}}</td>
+            <td>{{event.start_day}}</td>
+            <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
+            <td>
+              {% if role == "huésped" and not event.has_started %}
+              <i class="waves-effect waves-light btn" id="yaNo">Ya no quiero ir</i>
+              {% elif event.has_finished %}
+              Ya ha acabado
+              {% elif event.has_started %}
+              Ya ha empezado
+              {% endif %}
+            </td>
+
+            <td>
+              {% ifequal role 'anfitrión' %}
+              <button type="button"
+                onclick="location.href='{% url '#'" title="Editar">
+                                              <i id="title-name" class="small material-icons">edit</i>
+                                          </button>
+                                          <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'"
+                title="Asistentes">
+                <i id="title-name" class="small material-icons">person</i>
+              </button>
+              <button type="button" onclick="location.href='#'" title="Eliminar">
+                <i id="title-name" class="small material-icons">delete</i>
+              </button>
+              <button type="button" onclick="location.href='#'" title="">
+                <i id="title-name" class="small material-icons">attach_money</i>
+              </button>
+              {% endifequal %}
+            </td>
+          </tr>
+
+        </tbody>
+        {% endfor %}
+      </table>
+      {% include "pagination.html" %}
+    </div>
+
+
+</body>
+
 {% endblock %}
