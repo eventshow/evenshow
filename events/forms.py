@@ -78,16 +78,14 @@ class EventForm(forms.ModelForm):
         if (start_day < now().date()):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
-        elif isinstance(start_time, type(time)):
-            if start_day == now().date() and start_time <= now().time():
+        elif isinstance(start_time, type(time)) and (start_day == now().date() and start_time <= now().time()):
                 raise ValidationError(
                     'El evento no puede comenzar en el pasado')
 
         
         if not isinstance(start_time, type(time)): 
             raise ValidationError('Inserte una hora')
-        elif isinstance(end_time, type(time)):
-            if (start_time >= end_time):
+        elif isinstance(end_time, type(time)) and (start_time >= end_time):
                 raise ValidationError(
                     'El evento no puede empezar después de terminar')
         return clean_data
