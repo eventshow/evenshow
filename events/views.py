@@ -1,7 +1,6 @@
+from datetime import datetime
+
 import stripe
-
-from datetime import datetime, date, time
-
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
@@ -36,7 +35,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour
         }
-        )
+                            )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -164,7 +163,8 @@ class EventDeleteView(generic.DeleteView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get('pk')) and not services.EventService().has_finished(event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get(
+                'pk')) and not services.EventService().has_finished(event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -227,7 +227,8 @@ class EventUpdateView(generic.UpdateView):
         host = request.user
         event_pk = self.kwargs.get('pk')
 
-        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')) and not services.EventService().has_finished(event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
+                'pk')) and not services.EventService().has_finished(event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -367,16 +368,17 @@ class RateHostView(generic.CreateView):
     def get(self, request, *args, **kwargs):
         created_by = request.user
         event_exist = selectors.EventSelector().exist_event(self.kwargs.get('event_pk'))
-        if not event_exist:
+        if (not event_exist):
             return redirect('home')
         else:
             event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-            exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
+            exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
+                                                                                                         event,
                                                                                                          event.created_by)
 
             is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
-
-            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
+            auto_rating = self.request.user.id == event.created_by.id
+            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating):
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -432,7 +434,10 @@ class RateAttendeeView(generic.CreateView):
             is_owner_of_this_event = selectors.EventSelector().is_owner(
                 created_by, event.id)
             attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
-            if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:
+            auto_rating = self.request.user.id == attendee.id
+            if (
+            not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
+                    not auto_rating):
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
