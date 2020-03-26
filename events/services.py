@@ -180,6 +180,10 @@ class EventService():
         created_by = models.Event.objects.get(pk=event_pk).created_by
         return host == created_by
 
+    def has_finished(self, event_pk: int):
+        event = models.Event.objects.get(pk = event_pk)
+        return event.has_finished
+
 
 class ProfileService():
     def create(self, user: User, birthdate: date):
