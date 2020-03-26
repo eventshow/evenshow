@@ -16,14 +16,21 @@
         <div class="container">
         <div class="row">
 
-            <div class=" col s4">
+            <div class="grid-example col s4 offset-s2">
                 <div class="delete-buttons-conf">
-                    <div class="col">
+                    <div class="right">
 
-                        <button id="delete-btn" class="waves-effect waves-light btn-large btn-block left"
+                        <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
                             type="submit">Sí</button>
 
-                        <a id="delete-btn-a" class="waves-effect waves-light btn-large btn-block right"
+                    </div>
+                </div>
+            </div>
+            <div class="grid-example col s6">
+                <div class="delete-buttons-conf">
+                    <div class="left">
+
+                        <a id="delete-btn-a" class="waves-effect waves-light btn-large btn-block"
                             href="{% url 'hosted_events'%}">No</a>
 
                     </div>
