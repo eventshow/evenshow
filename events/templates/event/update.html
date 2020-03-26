@@ -34,7 +34,7 @@
     
     <div class="container">
       <div class="center-form">
-      <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
+      <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'update_event' event.pk %}">
         {% csrf_token %}
         <div class="row">
           <div class="col s12">
@@ -54,6 +54,7 @@
         <div class="grid-example col s12">
           <div class="form-errors">
             {{ form.category }}
+            {{ form.category.errors }}
           </div>
         </div>
       </div>
@@ -192,19 +193,18 @@
 
       </div>
     </div>
-
     <div class="row">
       <div class="grid-example col s3 offset-s9">
  
           <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
-      
+          
       </div>
 
     </div>
 
     </div>
-     <div class="form-errors-create">
-      {{ form.errors }}
+    <div class="form-errors-create">
+      {{ form.non_field_errors }}
     </div>
 </form>
 </div>

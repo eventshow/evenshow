@@ -159,10 +159,6 @@ class Event(Common):
         self.full_clean()
         super(Event, self).save(*args, **kwargs)
 
-    def clean(self):
-        if self.start_time > self.end_time:
-            raise ValidationError('An event cannot starts after it has ended')
-
     def __str__(self):
         return self.title
 

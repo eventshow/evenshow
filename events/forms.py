@@ -15,6 +15,9 @@ CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
 User = get_user_model()
 
+time = now().time()
+date = now().date()
+
 
 class RatingForm(forms.ModelForm):
     class Meta:
@@ -31,6 +34,10 @@ class EventForm(forms.ModelForm):
                                 widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
+    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
+    category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
+
 
     class Meta:
         model = Event
@@ -47,9 +54,6 @@ class EventForm(forms.ModelForm):
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}),
-            'start_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}),
-            'end_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
@@ -57,28 +61,39 @@ class EventForm(forms.ModelForm):
         }
 
 
-class EventUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Event
-        exclude = ['created_by', 'attendees']
-        widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
-            'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
-            'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
-            'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
-            'min_age': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
-            'price': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
-            'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
-            'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
-            'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}),
-            'start_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}),
-            'end_time': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}),
-            'pets': forms.Select(choices=CHOICES_YES_NO),
-            'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
-            'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
-        }
+
+    def clean_capacity(self):
+        capacity = self.cleaned_data.get('capacity')
+        if capacity < 1:
+            raise ValidationError(
+                'El aforo no puede ser menor que uno')
+        return capacity
+    
+    def clean(self):
+        clean_data = self.cleaned_data
+        start_day = self.cleaned_data.get('start_day')
+        start_time = self.cleaned_data.get('start_time')
+        end_time = self.cleaned_data.get('end_time')
+
+        if isinstance(start_day, type(date)) and (start_day < now().date() or 
+            (isinstance(start_time, type(time)) and 
+            (start_day == now().date() and start_time <= now().time()))):
+            raise ValidationError(
+                'El evento no puede comenzar en el pasado')
+
+        
+        if not isinstance(start_time, type(time)): 
+            raise ValidationError('Inserte una hora')
+        elif isinstance(end_time, type(time)) and (start_time >= end_time):
+                raise ValidationError(
+                    'El evento no puede empezar después de terminar')
+        return clean_data
+
+    def clean_end_time(self):
+        end_time = self.cleaned_data.get('end_time')
+        if not isinstance(end_time, type(time)): 
+            raise ValidationError('Inserte una hora')
+        return end_time
 
 
 class LoginForm(AuthenticationForm):
