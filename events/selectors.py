@@ -63,8 +63,8 @@ class EventSelector:
 
 
 class RatingSelector:
-    def on_event(self, event_pk: int, on='HOST') -> QuerySet:
-        return models.Rating.objects.filter(event__pk=event_pk, on=on)
+    def on_user(self, reviewed: User, on='HOST') -> QuerySet:
+        return models.Rating.objects.filter(reviewed=reviewed, on=on)
 
     def exists_this_rating_for_this_user_and_event(self, created_by: User, event: models.Event,
                                                    reviewed: User) -> QuerySet:

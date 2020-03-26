@@ -27,6 +27,7 @@ User = get_user_model()
 def index(request):
     return render(request, 'home.html', {'STATIC_URL': settings.STATIC_URL})
 
+
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
@@ -100,8 +101,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
     def get_context_data(self, **kwargs):
         user = self.request.user
         event = kwargs.get('object')
-        object_list = selectors.RatingSelector().on_event(
-            event.pk)
+        object_list = selectors.RatingSelector().on_user(
+            event.created_by)
         context = super(EventDetailView, self).get_context_data(
             object_list=object_list, **kwargs)
         duration = event.duration
@@ -238,7 +239,7 @@ class EventUpdateView(generic.UpdateView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        
+
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')) and not services.EventService().has_finished(event_pk):
             return super().get(request, *args, **kwargs)
         else:

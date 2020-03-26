@@ -64,6 +64,16 @@
 
 <div class="section-detail">
     <div class="col-3 title-section">
+        <h1 class="title-section">Información extra</h1>
+    </div>
+    <div class="col-5 title-section">
+        <h3 class="title-text">{{object.extra_info}}</h3>
+    </div>
+    <hr>
+</div>
+
+<div class="section-detail">
+    <div class="col-3 title-section">
         <h1 class="title-section">Anfitrión</h1>
     </div>
 
@@ -91,7 +101,6 @@
             <br>
         </div>
     </div>
-    {% if event.has_finished %}
     <hr>
     <div class="col-9 title-section pos">
         <h1 class="title-section">Comentarios de otros húespedes <br> asistieron a algún evento de este anfitrión</h1>
@@ -101,14 +110,14 @@
             <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
                 <i class="fa fa-star"><i
-                        class="rating-search">&nbsp{{event.created_by.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
+                        class="rating-search">&nbsp{{rating.created_by.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
             </div>
             <h3 class="comment-detail">{{rating.comment}}</h3>
+            <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score}}</i></i>
         </div>
         {% endfor %}
     </div>
     {% include 'pagination.html' %}
-    {% endif %}
 </div>
 
 {% endblock %}
