@@ -1,4 +1,5 @@
-from django.urls import path, re_path
+from django.conf.urls import url
+from django.urls import path, re_path, include
 from django.views.generic.base import TemplateView
 
 from . import views
@@ -43,4 +44,6 @@ urlpatterns = [
 
     path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
+
+    url('^', include('django.contrib.auth.urls')),
 ]
