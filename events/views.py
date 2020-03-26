@@ -297,7 +297,7 @@ class EnrollmentCreateView(generic.View):
         event_exists = services.EventService().count(event_pk)
         event_is_full = selectors.UserSelector().event_attendees(
             event_pk).count() >= event.capacity
-        event_has_started = event.has_started()
+        event_has_started = event.has_started
         user_can_enroll = services.EnrollmentService().user_can_enroll(
             event_pk, attendee)
 
