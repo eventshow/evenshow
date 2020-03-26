@@ -183,6 +183,9 @@ class EventService():
         event = models.Event.objects.get(pk=event_pk)
         return event.has_finished
 
+    def exist_event(self, event_id: int) -> bool:
+        exist = models.Event.objects.filter(id=event_id).exists()
+        return exist
 
 class ProfileService():
     def create(self, user: User, birthdate: date):
