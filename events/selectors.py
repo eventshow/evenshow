@@ -80,7 +80,3 @@ class UserSelector:
 
     def rated_on_event(self, event_pk: int) -> QuerySet:
         return User.objects.filter(reviewed_ratings__event=event_pk)
-
-    def exist_user(self, user_id: int) -> QuerySet:
-        exist = models.User.objects.filter(id=user_id).exists()
-        return exist

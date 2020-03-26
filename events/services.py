@@ -252,3 +252,8 @@ class PaymentService():
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
         return round(res - amount_host)
+
+class UserService:
+    def exist_user(self, user_id: int) -> bool:
+        exist = models.User.objects.filter(id=user_id).exists()
+        return exist

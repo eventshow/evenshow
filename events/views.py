@@ -35,7 +35,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour
         }
-                            )
+        )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -420,8 +420,7 @@ class RateAttendeeView(generic.CreateView):
     def get(self, request, *args, **kwargs):
         created_by = request.user
         event_exist = selectors.EventSelector().exist_event(self.kwargs.get('event_pk'))
-        attendee_exist = selectors.UserSelector().exist_user(
-            self.kwargs.get('attendee_pk'))
+        attendee_exist = services.UserService().exist_user(self.kwargs.get('attendee_pk'))
         if not (event_exist and attendee_exist):
             return redirect('home')
         else:
@@ -436,7 +435,7 @@ class RateAttendeeView(generic.CreateView):
             attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
             auto_rating = self.request.user.id == attendee.id
             if (
-            not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
+                not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
                     not auto_rating):
                 return super().get(self, request, args, *kwargs)
             else:
