@@ -177,7 +177,7 @@ class EventService():
         event.save()
 
     def user_is_owner(self, host: User, event_pk: int) -> bool:
-        return models.Event.objects.filter(created_by=user, pk=event_pk).exists()
+        return models.Event.objects.filter(created_by=host, pk=event_pk).exists()
 
     def has_finished(self, event_pk: int):
         event = models.Event.objects.get(pk=event_pk)
