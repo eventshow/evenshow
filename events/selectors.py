@@ -34,9 +34,6 @@ class EventSelector:
             event_enrollments__created_by=attendee)
         return not_enrolled_events
 
-    def with_enrollment(self, enrollment_pk: int) -> models.Event:
-        return models.Event.objects.filter(event_enrollments=enrollment_pk)
-
     def location_date_start_hour(self, location: str, date: str, start_hour: time) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_day=date, start_time__gte=start_hour)
 

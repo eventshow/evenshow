@@ -9,7 +9,7 @@ urlpatterns = [
 
     path('auth/signup/', views.SignUpView.as_view(), name='signup'),
 
-    path('enrollments/<int:pk>/update/<str:status>',
+    path('enrollments/<int:pk>/update',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),
 
     path('events/enrolled',
@@ -40,6 +40,7 @@ urlpatterns = [
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
+
     path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
 ]

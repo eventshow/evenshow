@@ -59,7 +59,7 @@ class AttendeeListView(generic.ListView):
             return redirect('/')
 
     def get_context_data(self, **kwargs):
-        event_pk = self.kwargs.get('event_pk')
+        event_pk = self.kwargs.get('pk')
         event = models.Event.objects.get(pk=event_pk)
         context = super(AttendeeListView, self).get_context_data(**kwargs)
         context['event_has_finished'] = event.has_finished
@@ -71,7 +71,7 @@ class AttendeeListView(generic.ListView):
 
     def get_queryset(self):
         queryset = super(AttendeeListView, self).get_queryset()
-        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('event_pk'))
+        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('pk'))
         return queryset
 
 
@@ -211,7 +211,6 @@ class EventEnrolledListView(generic.ListView):
         return queryset
 
 
-
 @method_decorator(login_required, name='dispatch')
 class EventUpdateView(generic.UpdateView):
     model = models.Event
@@ -293,7 +292,6 @@ class EnrollmentCreateView(generic.View):
         context['event_title'] = event.title
 
     def post(self, request, *args, **kwargs):
-
         attendee = self.request.user
         event_pk = kwargs.get('pk')
 
@@ -343,24 +341,24 @@ class EnrollmentUpdateView(generic.View):
     model = models.Enrollment
     template_name = 'enrollment/list.html'
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         host = self.request.user
+        enrollment_pk = kwargs.get('pk')
 
-        if services.EnrollmentService().count(kwargs.get('pk')) and self.updatable(host):
+        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
             services.EnrollmentService().update(
-                kwargs.get('pk'), host, kwargs.get('status'))
-            event_pk = selectors.EventSelector().with_enrollment(
-                kwargs.get('pk')).values_list('pk', flat=True).first()
+                enrollment_pk, host, request.POST.get('status'))
+            event_pk = models.Enrollment.objects.get(pk=enrollment_pk).event.pk
 
-            return redirect('event_attendees', event_pk)
+            return redirect('list_enrollments', event_pk)
         else:
             return redirect('/')
 
     def updatable(self, host):
         enrollment_pk = self.kwargs.get('pk')
-        return services.EnrollmentService().host_can_update(host,
-                                                            enrollment_pk) and services.EnrollmentService().is_pending(
-            enrollment_pk)
+        event_has_started = models.Enrollment.objects.get(
+            pk=enrollment_pk).event.has_started
+        return services.EnrollmentService().host_can_update(host, enrollment_pk) and services.EnrollmentService().is_pending(enrollment_pk) and not event_has_started
 
 
 @method_decorator(login_required, name='dispatch')

@@ -181,7 +181,7 @@ class EventService():
         return host == created_by
 
     def has_finished(self, event_pk: int):
-        event = models.Event.objects.get(pk = event_pk)
+        event = models.Event.objects.get(pk=event_pk)
         return event.has_finished
 
 
