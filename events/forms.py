@@ -16,6 +16,7 @@ CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 User = get_user_model()
 
 time = now().time()
+date = now().date()
 
 
 class RatingForm(forms.ModelForm):
@@ -53,7 +54,6 @@ class EventForm(forms.ModelForm):
             'location_city': forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}),
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
-            'start_day': forms.DateInput(attrs={'class': 'form-eventshow', 'placeholder': 'dd/mm/yyyy', 'name': 'start_day'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
@@ -75,7 +75,9 @@ class EventForm(forms.ModelForm):
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
 
-        if (start_day < now().date()) or (isinstance(start_time, type(time)) and (start_day == now().date() and start_time <= now().time())):
+        if isinstance(start_day, type(date)) and (start_day < now().date() or 
+            (isinstance(start_time, type(time)) and 
+            (start_day == now().date() and start_time <= now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
