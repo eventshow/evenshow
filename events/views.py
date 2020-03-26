@@ -52,7 +52,8 @@ class AttendeeListView(generic.ListView):
     paginate_by = 5
 
     def get(self, request, *args, **kwargs):
-        if services.EventService().user_is_owner(request.user, kwargs.get('event_pk')):
+        event_pk = kwargs.get('pk')
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(request.user, event_pk):
             return super(AttendeeListView, self).get(self, request, *args, **kwargs)
         else:
             return redirect('/')
@@ -209,14 +210,6 @@ class EventEnrolledListView(generic.ListView):
         queryset = selectors.EventSelector().enrolled(self.request.user)
         return queryset
 
-
-@method_decorator(login_required, name='dispatch')
-class EventNotEnrolledListView(generic.ListView):
-    model = models.Event
-    template_name = 'event/list.html'
-
-    def get_queryset(self):
-        return selectors.EventSelector().not_enrolled(self.request.user)
 
 
 @method_decorator(login_required, name='dispatch')

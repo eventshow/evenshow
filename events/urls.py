@@ -7,14 +7,11 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('home', views.HomeView.as_view(), name='home'),
 
-    path('attendees/<int:event_pk>',
-         views.AttendeeListView.as_view(), name='list_attendees'),
-
     path('auth/signup/', views.SignUpView.as_view(), name='signup'),
 
     path('enrollments/<int:pk>/update/<str:status>',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),
-    path('events', views.EventNotEnrolledListView.as_view(), name='events'),
+
     path('events/enrolled',
          views.EventEnrolledListView.as_view(), name='enrolled_events'),
     path('events/hosted', views.EventHostedListView.as_view(),
@@ -27,9 +24,11 @@ urlpatterns = [
          name='create_event'),
     path('events/payment/<int:pk>',
          views.AttendeePaymentView.as_view(), name='attendee_payment'),
-    path('events/<int:pk>/', views.EventDetailView.as_view(), name='detail_event'),
+    path('events/<int:pk>', views.EventDetailView.as_view(), name='detail_event'),
     path('events/<int:pk>/attendees',
-         views.EnrollmentListView.as_view(), name='event_attendees'),
+         views.AttendeeListView.as_view(), name='list_attendees'),
+    path('events/<int:pk>/enrollments',
+         views.EnrollmentListView.as_view(), name='list_enrollments'),
     path('events/<int:pk>/enroll',
          views.EnrollmentCreateView.as_view(), name='enroll_event'),
     path('events/<int:pk>/delete', views.EventDeleteView.as_view(),
