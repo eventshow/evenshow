@@ -40,7 +40,7 @@
               No ha terminado
               {% endif %}
             </td>
-            <td>{{event.title}}</td>
+            <td><a href="{% url 'detail_event' event.pk %}">{{event.title}}</a></td>
             <td>{{event.start_day}}</td>
             <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
             <td>
