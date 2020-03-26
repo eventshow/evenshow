@@ -68,6 +68,13 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El aforo no puede ser menor que uno')
         return capacity
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price < 0.0:
+            raise ValidationError(
+                'El precio no puede ser negativo')
+        return price
     
     def clean(self):
         clean_data = self.cleaned_data
