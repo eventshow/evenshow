@@ -354,6 +354,7 @@ element.style{
 	width: 127px;
 	height: 63px;
 	margin-top: 77px!important;
+	margin-left: -164%;
 	position: relative !important;
 	display: block !important;
 
@@ -366,8 +367,8 @@ element.style{
 	text-align: center;
 	padding-top: 3px;
 	font-size: 20px;
-	margin-top: 88px !important;
-	margin-left: 12% !important;
+	margin-top: 78px !important;
+	margin-right: 69% !important;
 	position: relative !important;
 	display: block !important;
 }
