@@ -333,9 +333,7 @@ element.style{
 }
 
 #send-buttons{
-	margin-top: 5%;
-	margin-bottom:-2%;
-	margin-left: 1500% !important;
+	margin-bottom: 65px !important;
 }
 
 #del-left{
