@@ -167,7 +167,7 @@ class EventDeleteView(generic.DeleteView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get('pk') and not services.EventService().has_finished(event_pk)):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get('pk')) and not services.EventService().has_finished(event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
