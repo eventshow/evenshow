@@ -26,7 +26,7 @@
     </div>
       <div class="table-generic">
 
-      <table summary="" cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
+      <table class="responsive-table" id="myTable">
 
         <thead>
           <tr>
@@ -43,7 +43,7 @@
 
                         <td>
                             {% if enrollment.created_by.profile.avg_attendee_score > 0 %}
-                           <i class="fa fa-star">  <i class="rating-search">&nbsp{{enrollment.created_by.profile.avg_attendee_score|floatformat:2}}</i></i></td>
+                           <em class="fa fa-star">  <em class="rating-search">&nbsp{{enrollment.created_by.profile.avg_attendee_score|floatformat:2}}</em></em></td>
                         {% endif %}
                         <td>{{enrollment.created_by.username}}</td>
                         <td>{{enrollment.created_by.first_name}}</td>
