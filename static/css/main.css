@@ -321,6 +321,7 @@ element.style{
 
 .form-eventshow-confirm-delete {
 	background: #FFF;
+	align-content: center;
 	width: 85%;
 	margin-top: 10%;
 	margin-left: 6%;
@@ -353,9 +354,11 @@ element.style{
 	font-size: 20px;
 	text-align: center;
 	width: 127px;
-	height: 62px;
-	margin-top: 63px;
-	margin-left: -55px;
+	height: 63px;
+	margin-top: 77px!important;
+	position: relative !important;
+	display: block !important;
+
 }
 
 #delete-btn-a{
@@ -365,8 +368,10 @@ element.style{
 	text-align: center;
 	padding-top: 3px;
 	font-size: 20px;
-	margin-top: 66px;
-	margin-left: -110px;
+	margin-top: 88px !important;
+	margin-left: 12% !important;
+	position: relative !important;
+	display: block !important;
 }
 
 
@@ -683,8 +688,6 @@ label {
 }
 
 #title-delete{
-	margin-left: 1%;
-	margin-right: 1%;
 	max-width: 1149px;
 	width: auto;
 	max-height: 47px;
@@ -697,11 +700,17 @@ label {
 	line-height: normal;
 	letter-spacing: normal;
 	color: #686969;
+	margin: 0% auto;
+    position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 #delete-title{
 	margin-top: -5%;
 	position: center;
 	text-align: center;
+	align-content: center;
 	margin-left: 10%;
 }
 
