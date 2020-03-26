@@ -366,16 +366,20 @@ class RateHostView(generic.CreateView):
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
-        event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
-                                                                                                     event.created_by)
-
-        is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
-
-        if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
-            return super().get(self, request, args, *kwargs)
-        else:
+        event_exist = selectors.EventSelector().exist_event(self.kwargs.get('event_pk'))
+        if not event_exist:
             return redirect('home')
+        else:
+            event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
+            exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
+                                                                                                         event.created_by)
+
+            is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
+
+            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
+                return super().get(self, request, args, *kwargs)
+            else:
+                return redirect('home')
 
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
@@ -413,19 +417,25 @@ class RateAttendeeView(generic.CreateView):
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
-        event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-        attendee_id = self.kwargs.get('attendee_pk')
-        attendee = models.User.objects.get(id=attendee_id)
-        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
-                                                                                                     event,
-                                                                                                     attendee_id)
-        is_owner_of_this_event = services.EventService().user_is_owner(
-            created_by, event.id)
-        attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
-        if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:
-            return super().get(self, request, args, *kwargs)
-        else:
+        event_exist = selectors.EventSelector().exist_event(self.kwargs.get('event_pk'))
+        attendee_exist = selectors.UserSelector().exist_user(
+            self.kwargs.get('attendee_pk'))
+        if not (event_exist and attendee_exist):
             return redirect('home')
+        else:
+            event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
+            attendee_id = self.kwargs.get('attendee_pk')
+            attendee = models.User.objects.get(id=attendee_id)
+            exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
+                                                                                                         event,
+                                                                                                         attendee_id)
+            is_owner_of_this_event = selectors.EventSelector().is_owner(
+                created_by, event.id)
+            attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
+            if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:
+                return super().get(self, request, args, *kwargs)
+            else:
+                return redirect('home')
 
     def get_context_data(self, **kwargs):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)
