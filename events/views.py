@@ -3,14 +3,12 @@ import stripe
 from datetime import datetime, date, time
 
 from django.conf import settings
-from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.generic import TemplateView
 from django.views.generic.list import MultipleObjectMixin
 
 from . import forms
@@ -294,16 +292,17 @@ class EnrollmentCreateView(generic.View):
     def post(self, request, *args, **kwargs):
         attendee = self.request.user
         event_pk = kwargs.get('pk')
-
+        event = models.Event.objects.get(pk=event_pk)
         event_exists = services.EventService().count(event_pk)
         event_is_full = selectors.UserSelector().event_attendees(
-            event_pk).count() >= models.Event.objects.get(pk=event_pk).capacity
+            event_pk).count() >= event.capacity
+        event_has_started = event.has_started()
         user_can_enroll = services.EnrollmentService().user_can_enroll(
             event_pk, attendee)
 
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
-        if event_exists and user_can_enroll and not event_is_full:
+        if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
@@ -423,7 +422,7 @@ class RateAttendeeView(generic.CreateView):
         exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
                                                                                                      event,
                                                                                                      attendee_id)
-        is_owner_of_this_event = selectors.EventSelector().is_owner(
+        is_owner_of_this_event = services.EventService().user_is_owner(
             created_by, event.id)
         attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
         if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:

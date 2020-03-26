@@ -140,7 +140,7 @@ class Event(Common):
     @property
     def has_started(self):
         start_datetime = datetime.combine(self.start_day, self.start_time)
-        return self.UTC.localize(start_datetime) <= now()
+        return self.UTC.localize(start_datetime) >= now()
 
     @property
     def location(self):

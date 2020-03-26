@@ -5,6 +5,7 @@ from collections import OrderedDict
 from datetime import date, datetime, time
 from operator import itemgetter
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.utils.timezone import now
@@ -13,7 +14,6 @@ from . import models
 from . import selectors
 from .models import Event
 
-API_KEY = "AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ"
 User = get_user_model()
 
 
@@ -145,7 +145,7 @@ class EventService():
         return results
 
     def common_method_distance_order(self, events):
-        gmaps = googlemaps.Client(key=API_KEY)
+        gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
 
         geolocation = gmaps.geolocate()
 
@@ -176,9 +176,8 @@ class EventService():
         event.full_clean()
         event.save()
 
-    def user_is_owner(self, host: User, event_pk: int):
-        created_by = models.Event.objects.get(pk=event_pk).created_by
-        return host == created_by
+    def user_is_owner(self, host: User, event_pk: int) -> bool:
+        return models.Event.objects.filter(created_by=host, pk=event_pk).exists()
 
     def has_finished(self, event_pk: int):
         event = models.Event.objects.get(pk=event_pk)
