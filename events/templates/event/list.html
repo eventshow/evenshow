@@ -85,8 +85,8 @@
                     id="title-name" class="small material-icons">people</em></button>
             <button type="button" onclick="location.href='{% url 'list_enrollments' event.pk %}'" title="Añadir sistentes"> <em
                     id="title-name" class="small material-icons">group_add</em> </button>
-                <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar"></button>
-              <i id="title-name" class="small material-icons">delete</i>
+                <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
+              <i id="title-name" class="small material-icons">delete</i></button>
             {% endif %}
           {% endif %}
           </td>
