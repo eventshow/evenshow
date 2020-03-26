@@ -15,8 +15,8 @@ CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
 User = get_user_model()
 
-time = now().time()
-date = now().date()
+time = datetime.now().time()
+date = datetime.now().date()
 
 
 class RatingForm(forms.ModelForm):
@@ -82,9 +82,11 @@ class EventForm(forms.ModelForm):
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
 
-        if isinstance(start_day, type(date)) and (start_day < now().date() or 
+        print(datetime.now().time())
+        print(start_time)
+        if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or 
             (isinstance(start_time, type(time)) and 
-            (start_day == now().date() and start_time <= now().time()))):
+            (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 

@@ -16,199 +16,202 @@
 
 <div class="container">
   <div class="center-form">
-<form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
-    {% csrf_token %}
-    <div class="row">
-      <div class="col s12">
-        <h4 class="flow-text" id="name-host-serg">¿Qué quieres compartir?</h4>
-      </div>
-    </div>
-    {% else %}
-    <div class="container">
-      <div class="title-share">
+    <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
+      {% csrf_token %}
+      <div class="row">
         <div class="col s12">
-          <h3 class="flow-text" id="name-host-serg">{{event.title}}</h3>
+          <h4 class="flow-text" id="name-host-serg">¿Qué quieres compartir?</h4>
         </div>
       </div>
-    </div>
-    
-    <div class="container">
-      <div class="center-form">
-      <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'update_event' event.pk %}">
-        {% csrf_token %}
-        <div class="row">
+      {% else %}
+      <div class="container">
+        <div class="title-share">
           <div class="col s12">
-            <h4 class="flow-text" id="name-host-serg">Editar</h4>
-          </div>
-        </div>
-        {% endif %}
-
-    <div class="row">
-
-
-
-      <div id="test1"><h4 class="flow-text separated-create" id="">¿Cómo será?</h4><br>
-      <div class="container-create">
-      <label>CATEGORÍA</label>
-      <div class="row">
-        <div class="grid-example col s12">
-          <div class="form-errors">
-            {{ form.category }}
-            {{ form.category.errors }}
+            <h3 class="flow-text" id="name-host-serg">{{event.title}}</h3>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="grid-example col s12">
-          <label>TÍTULO</label>
-           {{ form.title }}
-          <div class="form-errors">
-            {{ form.title.errors }}
-          </div>
+      <div class="container">
+        <div class="center-form">
+          <form class="form-eventshow-create" id="create-event" method="post"
+            action="{% url 'update_event' event.pk %}">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col s12">
+                <h4 class="flow-text" id="name-host-serg">Editar</h4>
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="row">
+
+
+
+              <div id="test1">
+                <h4 class="flow-text separated-create" id="">¿Cómo será?</h4><br>
+                <div class="container-create">
+                  <label>CATEGORÍA</label>
+                  <div class="row">
+                    <div class="grid-example col s12">
+                      <div class="form-errors">
+                        {{ form.category }}
+                        {{ form.category.errors }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="grid-example col s12">
+                      <label>TÍTULO</label>
+                      {{ form.title }}
+                      <div class="form-errors">
+                        {{ form.title.errors }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="grid-example col s12">
+                      <label>DESCRIPCIÓN</label>
+                      {{ form.description }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="grid-example col s4">
+                      <label>AFORO</label>
+                      {{ form.capacity }}
+                      <div class="form-errors">
+                        {{ form.capacity.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s4">
+                      <label>EDAD MÍN</label>
+                      {{ form.min_age }}
+                      <div class="form-errors">
+                        {{ form.min_age.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s4">
+                      <label>PRECIO</label>
+                      {{ form.price }}
+                      <div class="form-errors">
+                        {{ form.price.errors }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="test2">
+                <h4 class="flow-text separated-create" id="">¿Cuándo será?</h4><br>
+                <div class="container-create">
+                  <div class="row">
+                    <div class="grid-example col s12">
+                      <label>UBICACIÓN</label>
+                      {{ form.location_city }}
+                      <div class="form-errors">
+                        {{ form.location_city.errors }}
+                      </div>
+                      {{ form.location_street }}
+                      <div class="form-errors">
+                        {{ form.location_street.errors }}
+                      </div>
+                      {{ form.location_number }}
+                      <div class="form-errors">
+                        {{ form.location_number.errors }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="grid-example col s4">
+                      <label>FECHA</label>
+                      {{form.start_day}}
+                      <div class="form-errors">
+                        {{ form.start_day.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s4">
+                      <label>HORA INICIO</label>
+                      {{form.start_time}}
+                      <div class="form-errors">
+                        {{ form.start_time.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s4">
+                      <label>HORA FIN</label>
+                      {{form.end_time}}
+                      <div class="form-errors">
+                        {{ form.end_time.errors }}
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+
+              <div id="test3">
+                <h4 class="flow-text separated-create" id="">Extra</h4><br>
+                <div class="container-create">
+                  <div class="row">
+                    <div class="grid-example col s4">
+                      <label>MASCOTAS</label>
+                      {{ form.pets }}
+                      <div class="form-errors">
+                        {{ form.pets.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s4">
+                      <label>IDIOMA</label>
+                      <div class="event-lang">
+                        {{ form.lang }}
+                      </div>
+                      <div class="form-errors">
+                        {{ form.lang.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s4">
+                      <label>APARCAMIENTO</label>
+                      {{ form.parking_nearby }}
+                      <div class="form-errors">
+                        {{ form.parking_nearby.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s12">
+                      <label>IMAGEN DEL EVENTO</label>
+                      {{ form.picture }}
+                      <div class="form-errors">
+                        {{ form.picture.errors }}
+                      </div>
+                    </div>
+                    <div class="grid-example col s12">
+                      <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
+                      {{ form.extra_info }}
+                      <div class="form-errors">
+                      </div>
+                    </div>
+                  </div>
+                  {{ form.extra_info.errors }}
+
+                </div>
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="grid-example col s3 offset-s10">
+                    <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+          </form>
         </div>
       </div>
 
-      <div class="row">
-        <div class="grid-example col s12">
-          <label>DESCRIPCIÓN</label>
-          {{ form.description }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="grid-example col s4">
-          <label>AFORO</label>
-            {{ form.capacity }}
-          <div class="form-errors">
-            {{ form.capacity.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s4">
-          <label>EDAD MÍN</label>
-            {{ form.min_age }}
-          <div class="form-errors">
-            {{ form.min_age.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s4">
-          <label>PRECIO</label>
-            {{ form.price }}
-          <div class="form-errors">
-            {{ form.price.errors }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-    <div id="test2"><h4 class="flow-text separated-create" id="">¿Cuándo será?</h4><br>
-      <div class="container-create">
-      <div class="row">
-        <div class="grid-example col s12">
-          <label>UBICACIÓN</label>
-            {{ form.location_city }}
-          <div class="form-errors">
-            {{ form.location_city.errors }}
-          </div>
-            {{ form.location_street }}
-          <div class="form-errors">
-            {{ form.location_street.errors }}
-          </div>
-            {{ form.location_number }}
-          <div class="form-errors">
-            {{ form.location_number.errors }}
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="grid-example col s4">
-          <label>FECHA</label>
-            {{form.start_day}}
-          <div class="form-errors">
-            {{ form.start_day.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s4">
-          <label>HORA INICIO</label>
-            {{form.start_time}}
-          <div class="form-errors">
-            {{ form.start_time.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s4">
-          <label>HORA FIN</label>
-            {{form.end_time}}
-          <div class="form-errors">
-            {{ form.end_time.errors }}
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-    </div>
-
-
-    <div id="test3"><h4 class="flow-text separated-create" id="">Extra</h4><br>
-      <div class="container-create">
-      <div class="row">
-        <div class="grid-example col s4">
-          <label>MASCOTAS</label>
-            {{ form.pets }}
-          <div class="form-errors">
-            {{ form.pets.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s4">
-          <label>IDIOMA</label>
-          <div class="event-lang">
-            {{ form.lang }}
-          </div>
-          <div class="form-errors">
-            {{ form.lang.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s4">
-          <label>APARCAMIENTO</label>
-          {{ form.parking_nearby }}
-          <div class="form-errors">
-            {{ form.parking_nearby.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s12">
-          <label>IMAGEN DEL EVENTO</label>
-            {{ form.picture }}
-          <div class="form-errors">
-            {{ form.picture.errors }}
-          </div>
-        </div>
-        <div class="grid-example col s12">
-          <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
-          {{ form.extra_info }}
-          <div class="form-errors">
-          </div>
-        </div>
-      </div>
-                      {{ form.extra_info.errors }}
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="grid-example col s3 offset-s9">
- 
-          <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
-          
-      </div>
-
-    </div>
-
-    </div>
-    <div class="form-errors-create">
-      {{ form.non_field_errors }}
-    </div>
-</form>
-</div>
-</div>
-
-
-{% endblock %}
+      {% endblock %}

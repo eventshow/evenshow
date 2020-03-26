@@ -1,16 +1,13 @@
+from datetime import datetime
+
 import stripe
-
-from datetime import datetime, date, time
-
 from django.conf import settings
-from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.generic import TemplateView
 from django.views.generic.list import MultipleObjectMixin
 
 from . import forms
@@ -22,10 +19,6 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
-
-
-def index(request):
-    return render(request, 'home.html', {'STATIC_URL': settings.STATIC_URL})
 
 
 class HomeView(generic.FormView):
@@ -65,6 +58,7 @@ class AttendeeListView(generic.ListView):
         context['event_has_finished'] = event.has_finished
         context['event_has_started'] = event.has_started
         context['event_pk'] = event_pk
+        context['event_title'] = event.title
         context['rated_attendees'] = selectors.UserSelector(
         ).rated_on_event(event_pk)
         return context
@@ -169,7 +163,8 @@ class EventDeleteView(generic.DeleteView):
     def get(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
-        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get('pk')) and not services.EventService().has_finished(event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get(
+                'pk')) and not services.EventService().has_finished(event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -232,7 +227,8 @@ class EventUpdateView(generic.UpdateView):
         host = request.user
         event_pk = self.kwargs.get('pk')
 
-        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')) and not services.EventService().has_finished(event_pk):
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
+                'pk')) and not services.EventService().has_finished(event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -294,16 +290,17 @@ class EnrollmentCreateView(generic.View):
     def post(self, request, *args, **kwargs):
         attendee = self.request.user
         event_pk = kwargs.get('pk')
-
+        event = models.Event.objects.get(pk=event_pk)
         event_exists = services.EventService().count(event_pk)
         event_is_full = selectors.UserSelector().event_attendees(
-            event_pk).count() >= models.Event.objects.get(pk=event_pk).capacity
+            event_pk).count() >= event.capacity
+        event_has_started = event.has_started()
         user_can_enroll = services.EnrollmentService().user_can_enroll(
             event_pk, attendee)
 
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
-        if event_exists and user_can_enroll and not event_is_full:
+        if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
@@ -370,16 +367,21 @@ class RateHostView(generic.CreateView):
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
-        event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by, event,
-                                                                                                     event.created_by)
-
-        is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
-
-        if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished:
-            return super().get(self, request, args, *kwargs)
-        else:
+        event_exist = services.EventService().exist_event(self.kwargs.get('event_pk'))
+        if (not event_exist):
             return redirect('home')
+        else:
+            event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
+            exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
+                                                                                                         event,
+                                                                                                         event.created_by)
+
+            is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
+            auto_rating = self.request.user.id == event.created_by.id
+            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating):
+                return super().get(self, request, args, *kwargs)
+            else:
+                return redirect('home')
 
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
@@ -417,19 +419,27 @@ class RateAttendeeView(generic.CreateView):
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
-        event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-        attendee_id = self.kwargs.get('attendee_pk')
-        attendee = models.User.objects.get(id=attendee_id)
-        exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
-                                                                                                     event,
-                                                                                                     attendee_id)
-        is_owner_of_this_event = selectors.EventSelector().is_owner(
-            created_by, event.id)
-        attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
-        if (not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished:
-            return super().get(self, request, args, *kwargs)
-        else:
+        event_exist = services.EventService().exist_event(self.kwargs.get('event_pk'))
+        attendee_exist = services.UserService().exist_user(self.kwargs.get('attendee_pk'))
+        if not (event_exist and attendee_exist):
             return redirect('home')
+        else:
+            event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
+            attendee_id = self.kwargs.get('attendee_pk')
+            attendee = models.User.objects.get(id=attendee_id)
+            exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
+                                                                                                         event,
+                                                                                                         attendee_id)
+            is_owner_of_this_event = selectors.EventSelector().is_owner(
+                created_by, event.id)
+            attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
+            auto_rating = self.request.user.id == attendee.id
+            if (
+                not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
+                    not auto_rating):
+                return super().get(self, request, args, *kwargs)
+            else:
+                return redirect('home')
 
     def get_context_data(self, **kwargs):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)

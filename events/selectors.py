@@ -19,11 +19,6 @@ class EventSelector:
             created_by=host).order_by('title')
         return hosted_events
 
-    def is_owner(self, host: User, event_id: int) -> QuerySet:
-        hosted_events = models.Event.objects.filter(
-            created_by=host, id=event_id).exists()
-        return hosted_events
-
     def enrolled(self, attendee: User, status='ACCEPTED') -> QuerySet:
         enrolled_events = models.Event.objects.filter(
             event_enrollments__created_by=attendee).order_by('title')
@@ -57,7 +52,6 @@ class EventSelector:
 
     def location_date(self, location: str, date: str, ) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_day=date)
-
 
 class RatingSelector:
     def on_user(self, reviewed: User, on='HOST') -> QuerySet:

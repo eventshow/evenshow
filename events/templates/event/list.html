@@ -78,6 +78,7 @@
             Ya ha empezado
             {% endif %}
             {% else %}
+            {% if not event.has_started %}
             <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar"> <i
                 id="title-name" class="small material-icons">edit</i>
             <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Lista de asistentes"> <em
@@ -86,8 +87,6 @@
                 id="title-name" class="small material-icons">group_add</em>
             <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
               <i id="title-name" class="small material-icons">delete</i>
-        
-            
             {% endif %}
           </td>
         </tr>
