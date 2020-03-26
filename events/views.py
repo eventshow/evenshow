@@ -63,6 +63,7 @@ class AttendeeListView(generic.ListView):
         context['event_has_finished'] = event.has_finished
         context['event_has_started'] = event.has_started
         context['event_pk'] = event_pk
+        context['event_title'] = event.title
         context['rated_attendees'] = selectors.UserSelector(
         ).rated_on_event(event_pk)
         return context
