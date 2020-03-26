@@ -367,7 +367,7 @@ class RateHostView(generic.CreateView):
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
-        event_exist = selectors.EventSelector().exist_event(self.kwargs.get('event_pk'))
+        event_exist = services.EventService().exist_event(self.kwargs.get('event_pk'))
         if (not event_exist):
             return redirect('home')
         else:
@@ -419,7 +419,7 @@ class RateAttendeeView(generic.CreateView):
 
     def get(self, request, *args, **kwargs):
         created_by = request.user
-        event_exist = selectors.EventSelector().exist_event(self.kwargs.get('event_pk'))
+        event_exist = services.EventService().exist_event(self.kwargs.get('event_pk'))
         attendee_exist = services.UserService().exist_user(self.kwargs.get('attendee_pk'))
         if not (event_exist and attendee_exist):
             return redirect('home')

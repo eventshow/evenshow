@@ -53,10 +53,6 @@ class EventSelector:
     def location_date(self, location: str, date: str, ) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_day=date)
 
-    def exist_event(self, event_id: int) -> QuerySet:
-        exist = models.Event.objects.filter(id=event_id).exists()
-        return exist
-
 class RatingSelector:
     def on_user(self, reviewed: User, on='HOST') -> QuerySet:
         return models.Rating.objects.filter(reviewed=reviewed, on=on)
