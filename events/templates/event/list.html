@@ -2,7 +2,6 @@
 
 {% block content %}
 
-<body>
   <div class="container">
 
     <div class="titulo">
@@ -12,7 +11,6 @@
     </div>
 
     <div class="table-generic">
-
 
       <table summary="" cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
 
@@ -58,13 +56,8 @@
             <td>
               {% ifequal role 'anfitrión' %}
               <button type="button"
-                onclick="location.href='{% url '#'" title="Editar">
-                                              <i id="title-name" class="small material-icons">edit</i>
-                                          </button>
-                                          <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'"
-                title="Asistentes">
-                <i id="title-name" class="small material-icons">person</i>
-              </button>
+                onclick="location.href='{% url '#'" title="Editar"> <i id="title-name" class="small material-icons">edit</i></button>
+                <button type="button" title="Asistentes"> <i id="title-name" class="small material-icons">person</i></button>
               <button type="button" onclick="location.href='#'" title="Eliminar">
                 <i id="title-name" class="small material-icons">delete</i>
               </button>
@@ -80,8 +73,7 @@
       </table>
       {% include "pagination.html" %}
     </div>
+  </div>
 
-
-</body>
 
 {% endblock %}
