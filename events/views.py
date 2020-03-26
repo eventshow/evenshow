@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from django.views import generic
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import TemplateView
+from django.views.generic.list import MultipleObjectMixin
 
 from . import forms
 from . import models
@@ -25,7 +26,6 @@ User = get_user_model()
 
 def index(request):
     return render(request, 'home.html', {'STATIC_URL': settings.STATIC_URL})
-
 
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
@@ -86,9 +86,10 @@ class AttendeePaymentView(generic.View):
             return redirect('/')
 
 
-class EventDetailView(generic.DetailView):
+class EventDetailView(generic.DetailView, MultipleObjectMixin):
     model = models.Event
     template_name = 'event/detail.html'
+    paginate_by = 5
 
     def get(self, request, *args, **kwargs):
         if services.EventService().count(kwargs.get('pk')):
@@ -98,8 +99,11 @@ class EventDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         user = self.request.user
-        context = super().get_context_data(**kwargs)
         event = kwargs.get('object')
+        object_list = selectors.RatingSelector().on_event(
+            event.pk)
+        context = super(EventDetailView, self).get_context_data(
+            object_list=object_list, **kwargs)
         duration = event.duration
 
         event_is_full = selectors.UserSelector().event_attendees(
@@ -112,9 +116,7 @@ class EventDetailView(generic.DetailView):
 
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
-        context['ratings'] = selectors.RatingSelector().on_event(
-            event.pk)
-        context['g_location'] = event.location.replace(' ', '+')
+        context['gmaps_key'] = settings.GOOGLE_API_KEY
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
         context['user_can_enroll'] = not event_is_full and user_can_enroll
 
