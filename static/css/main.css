@@ -811,7 +811,7 @@ label {
 }
 
 .table-generic{
-    width: 60%;
+    width: 80%;
 	text-align-last: center;
 	margin:auto;
 }
@@ -852,6 +852,7 @@ table{
 .btn#yaNo:hover{
 	background-color: #B6244D!important;
 	color:white!important;
+	white-space: normal;
 }
 #title-name{
 	color: #B6244D;
