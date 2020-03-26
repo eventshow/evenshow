@@ -10,7 +10,6 @@ from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
 from django.utils.crypto import get_random_string
-from django.utils.timezone import now
 
 
 from core.models import Common
@@ -85,8 +84,6 @@ class Category(models.Model):
 
 
 class Event(Common):
-    UTC = pytz.UTC
-
     title = models.CharField('Title', max_length=250)
     description = models.TextField('Description')
     picture = models.URLField('Picture url')
@@ -135,12 +132,12 @@ class Event(Common):
     @property
     def has_finished(self):
         end_datetime = datetime.combine(self.start_day, self.end_time)
-        return self.UTC.localize(end_datetime) <= now()
+        return end_datetime <= datetime.now()
 
     @property
     def has_started(self):
         start_datetime = datetime.combine(self.start_day, self.start_time)
-        return self.UTC.localize(start_datetime) >= now()
+        return start_datetime <= datetime.now()
 
     @property
     def location(self):

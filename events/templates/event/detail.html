@@ -26,7 +26,7 @@
         <h2 class="title-detail">idioma</h2>
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
 
-        {% if user_can_enroll and not event.has_finished and not event.has_started %}
+        {% if user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
             {% if user.is_authenticated %}
