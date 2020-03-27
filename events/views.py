@@ -245,6 +245,8 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
         context = super(EventSearchByLocationDateStartHourView,
                         self).get_context_data(**kwargs)
         context['length'] = len(self.get_queryset())
+        context['location'] = self.kwargs.get('location')
+        
         return context
 
     def get_queryset(self):
