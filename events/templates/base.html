@@ -120,11 +120,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js"
     integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-
   <script>
+
+  $('.dropdown-trigger').dropdown();
+
    $(document).ready(function() {
     $('.datepicker').datepicker({
         'format': 'dd/mm/yyyy'
@@ -139,9 +138,6 @@
         });
         $('select').formSelect();
     });
-
-
-    $('.dropdown-trigger').dropdown();
 
     $(document).ready(function() {
         $('.sidenav').sidenav();

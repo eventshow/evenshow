@@ -975,3 +975,12 @@ table{
 	color: #cf2a6e !important;
 
 }
+
+.location-prov{
+	margin-left: 0% !important;
+}
+
+.location-prov input{
+	width: 100% !important;
+	padding-right: 34% !important;
+}
