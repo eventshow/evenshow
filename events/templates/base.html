@@ -10,7 +10,7 @@
   <meta name="keywords" content="loans, html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!--link href="{% static 'img/favicon.ico' %}" rel="shortcut icon" /-->
+  <link href="" rel="shortcut icon" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{% static 'css/materialize.css'%}" />
@@ -45,10 +45,10 @@
           <img class="logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a></li>
-            <li><a id="myBtn" href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
-        
+          <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
           {% if not user.is_authenticated %}
+              <li> <button data-target="modal1" class="btn modal-trigger ">Modal</button>{{ username }}lll</li>
+
           <li><a href="{% url 'signup' %}">Regístrate</a></li>
           <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
           {% endif %}
@@ -64,7 +64,7 @@
             <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{% static 'img/avatar.png' %}"
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
-              <li><a href="#!">Panel de control</a></li>
+              <li><a href="{% url 'preferences' %}">Panel de control</a></li>
               <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
           </li>
@@ -83,7 +83,6 @@
         <li><a href="#!">Preferencias</a></li>
         <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
         {% endif %}
-        </div>
         {% if not user.is_authenticated %}
         <li> <img class="logo-movil" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow"></li>
         <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
@@ -104,40 +103,27 @@
 
       </ul>
       <a id="movil" href="#" data-target="slide-out"
-        class="btn-floating btn-large waves-effect waves-light sidenav-trigger"><em id="menu-movil" class="material-icons">menu</em></a>
+        class="btn-floating btn-large waves-effect waves-light sidenav-trigger"><em id="menu-movil"
+          class="material-icons">menu</em></a>
     </nav>
   </header>
   <main>
-
-  <div id="myModal" class="modal">
-
- <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
-
-</div>
-
+    {% block sidenav %}
+    {% endblock %}
     {% block content %}
     {% endblock %}
   </main>
 
   <footer class="page-footer">
-          <div class="footer-copyright">
-            <div class="container">
-             &copy;2020 eventshow, Inc. Todos los derechos reservados
-            <a class="right" href="">Privacidad &nbsp</a>
-            <a class="right" href="">Condiciones &nbsp</a>
-            <a class="right" href="{% url 'home' %}">Sobre nosotros &nbsp</a>
-            </div>
-          </div>
-        </footer>
+    <div class="footer-copyright">
+      <div class="container">
+        &copy;2020 eventshow, Inc. Todos los derechos reservados
+        <a class="right" href="">Privacidad &nbsp</a>
+        <a class="right" href="">Condiciones &nbsp</a>
+        <a class="right" href="{% url 'home' %}">Sobre nosotros &nbsp</a>
+      </div>
+    </div>
+  </footer>
 
   {% block javascript %}
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -145,12 +131,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js"
     integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
-
-  <script>
-  $(document).ready(function(){
-    $('.modal').modal();
-  });
-  </script>
 
   <script>
     $(document).ready(function () {
@@ -180,6 +160,12 @@
       $('.sidenav').sidenav();
     });
   </script>
+
+      <script>
+        $(document).ready(function(){
+    $('.modal').modal();
+  });
+      </script>
 
   {% endblock javascript %}
 
