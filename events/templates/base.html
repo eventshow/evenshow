@@ -45,7 +45,9 @@
           <img class="logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+            <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a></li>
+            <li><a id="myBtn" href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+        
           {% if not user.is_authenticated %}
           <li><a href="{% url 'signup' %}">Regístrate</a></li>
           <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
@@ -107,6 +109,21 @@
   </header>
   <main>
 
+  <div id="myModal" class="modal">
+
+ <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+
+</div>
+
     {% block content %}
     {% endblock %}
   </main>
@@ -128,6 +145,12 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js"
     integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
+  <script>
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+  </script>
 
   <script>
     $(document).ready(function () {
