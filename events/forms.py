@@ -200,3 +200,11 @@ class SearchHomeForm(forms.Form):
             raise ValidationError(
                 'La fecha debe ser futura')
         return date
+
+    def clean_location(self):
+        location = self.cleaned_data.get('location')
+        location_join = location.replace(' ', '')
+
+        if not location_join.isalpha() and location:
+            raise ValidationError('Introduzca solo letras y espacios')
+        return location
