@@ -388,7 +388,11 @@ class RateHostView(generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
+        user = selectors.UserSelector(
+        ).event_host(self.kwargs.get('event_pk'))
         context['event_pk'] = self.kwargs.get('event_pk')
+        context['user_img'] = models.Profile.objects.get(
+            user_id=user.id).picture
         context['host_name'] = selectors.UserSelector(
         ).event_host(self.kwargs.get('event_pk'))
         context['event_title'] = models.Event.objects.get(
@@ -447,7 +451,11 @@ class RateAttendeeView(generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)
+        user =models.User.objects.get(
+            id=self.kwargs.get('attendee_pk'))
         context['event_pk'] = self.kwargs.get('event_pk')
+        context['img_user'] = models.Profile.objects.get(
+            user_id=self.kwargs.get('attendee_pk')).picture
         context['attendee_pk'] = self.kwargs.get('attendee_pk')
         context['attendee_name'] = models.User.objects.get(
             id=self.kwargs.get('attendee_pk')).username
