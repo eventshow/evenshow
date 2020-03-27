@@ -55,7 +55,7 @@
             {% if event not in user_rated_events and event.has_finished %}
             {% if not event in enroll_valid %}
 
-            Su solicitud no ha sido aceptada
+                <p class="request-fail">Su solicitud no ha sido aceptada</p>
             {% endif%}
             {% if event in enroll_valid %}
 
@@ -86,11 +86,12 @@
             Ya ha empezado
             {% endif %}
             {% else %}
+            <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Lista de asistentes"> <em
+              id="title-name" class="small material-icons">people</em></button>
             {% if not event.has_started %}
             <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar"> <i
                     id="title-name" class="small material-icons">edit</i></button>
-            <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Lista de asistentes"> <em
-                    id="title-name" class="small material-icons">people</em></button>
+        
             <button type="button" onclick="location.href='{% url 'list_enrollments' event.pk %}'" title="Añadir sistentes"> <em
                     id="title-name" class="small material-icons">group_add</em> </button>
                 <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
