@@ -25,11 +25,22 @@ class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
 
+    def get_context_data(self, **kwargs):
+        profile = models.Profile.objects.get(user_id=self.request.user.id)
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['bio'] = profile.bio == '' or profile.bio == None
+        context['first_name'] = self.request.user.first_name == '' or self.request.user.first_name == None
+        context['last_name'] = self.request.user.last_name == '' or self.request.user.last_name == None
+        context['user_name'] = self.request.user.username
+        context['user_first_name'] = self.request.user.first_name
+        return context
+
     def get_success_url(self):
         request = self.request.POST
         date = request.get('date')
         location = request.get('location')
         start_hour = request.get('start_hour')
+
         return reverse_lazy('event_search_home', kwargs={
             'date': date,
             'location': location,
@@ -199,7 +210,6 @@ class EventEnrolledListView(generic.ListView):
             self.request.user)
         context['role'] = 'huésped'
         context['enroll_valid'] = selectors.EventSelector().event_enrolled_accepted(self.request.user)
-        print(context['enroll_valid'])
         return context
 
     def get_queryset(self):
