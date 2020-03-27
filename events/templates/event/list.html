@@ -54,8 +54,9 @@
           <td>
             {% if event not in user_rated_events and event.has_finished %}
             {% if not event in enroll_valid %}
-            {% endif%}
+
             Su solicitud no ha sido aceptada
+            {% endif%}
             {% if event in enroll_valid %}
 
             <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" title="Puntuar">
