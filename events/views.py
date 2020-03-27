@@ -325,9 +325,9 @@ class EnrollmentListView(generic.ListView):
         event_pk = kwargs.get('pk')
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
-            return super().get(request, *args, **kwargs)
+            return super(EnrollmentListView, self).get(request, *args, **kwargs)
         else:
-            return redirect('events')
+            return redirect('/')
 
     def get_queryset(self):
         return selectors.EnrollmentSelector().on_event(self.kwargs.get('pk'), 'PENDING')
