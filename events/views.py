@@ -30,10 +30,11 @@ class HomeView(generic.FormView):
         date = request.get('date')
         location = request.get('location')
         start_hour = request.get('start_hour')
+
         return reverse_lazy('event_search_home', kwargs={
             'date': date,
             'location': location,
-            'start_hour': start_hour
+            'start_hour': start_hour,
         }
                             )
 
@@ -246,7 +247,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                         self).get_context_data(**kwargs)
         context['length'] = len(self.get_queryset())
         context['location'] = self.kwargs.get('location')
-        
+
         return context
 
     def get_queryset(self):
@@ -265,19 +266,33 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
         return queryset
 
 
-class EventSearchNearbyView(generic.ListView):
+class EventSearchNearbyView(generic.View, MultipleObjectMixin):
     model = models.Event
     template_name = 'event/list_search.html'
     paginate_by = 12
 
-    def get_context_data(self, **kwargs):
+    def post(self, request, *args, **kwargs):
+        latitude = self.request.POST.get('latitude')
+        longitude = self.request.POST.get('longitude')
+        queryset = self.get_queryset()
+        context = {}
+        context['latitude'] = latitude
+        context['longitude'] = longitude
+        context['object_list'] = queryset
+        context['length'] = len(self.get_queryset())
+
+        return render(request, self.template_name, context)
+
+    '''def get_context_data(self, **kwargs):
         context = super(EventSearchNearbyView, self).get_context_data(**kwargs)
         context['length'] = len(self.get_queryset())
-        return context
+        return context'''
 
     def get_queryset(self):
         queryset = super(EventSearchNearbyView, self).get_queryset()
-        queryset = services.EventService().nearby_events_distance(self, 50000)
+        latitude = self.request.POST.get('latitude')
+        longitude = self.request.POST.get('longitude')
+        queryset = services.EventService().nearby_events_distance(self, 50000, latitude, longitude)
         return queryset
 
 

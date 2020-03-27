@@ -84,7 +84,7 @@ class EventService():
 
         return res
 
-    def nearby_events_distance(self, self_view, distance):
+    def nearby_events_distance(self, self_view, distance,latitude,longitude):
         events = Event.objects.filter(start_day__gte=date.today())
 
         events_cleaned = []
@@ -102,7 +102,7 @@ class EventService():
 
         if events_cleaned:
             events_distances_oredered = self.common_method_distance_order(
-                events_cleaned)
+                events_cleaned,latitude,longitude)
 
             for event, eventdistance in events_distances_oredered.items():
                 if eventdistance <= int(distance):
@@ -147,13 +147,11 @@ class EventService():
 
         return results
 
-    def common_method_distance_order(self, events):
+    def common_method_distance_order(self, events,latitude,longitude):
         gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
 
-        geolocation = gmaps.geolocate()
-
-        latitude_user = geolocation['location']['lat']
-        longitude_user = geolocation['location']['lng']
+        latitude_user = latitude
+        longitude_user = longitude
 
         origins = [{"lat": latitude_user, "lng": longitude_user}]
         destinations = ""
