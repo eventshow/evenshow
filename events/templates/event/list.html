@@ -55,7 +55,7 @@
             {% if event not in user_rated_events and event.has_finished %}
             {% if not event in enroll_valid %}
 
-            Su solicitud no ha sido aceptada
+                <p class="request-fail">Su solicitud no ha sido aceptada</p>
             {% endif%}
             {% if event in enroll_valid %}
 

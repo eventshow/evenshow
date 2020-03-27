@@ -295,6 +295,11 @@ color: #979797 !important;
 	color: #979797;
 }
 
+.request-fail{
+	color: black;
+	text-align: center;
+}
+
 
 /* FORM */
 
