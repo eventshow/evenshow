@@ -3,7 +3,7 @@ from datetime import datetime, date
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.timezone import now
@@ -167,15 +167,18 @@ class RegistrationForm(UserCreationForm):
         return email
 
 
-class UserForm(RegistrationForm):
+class UserForm(UserChangeForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(
+        attrs={'placeholder': "email"}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': "nombre"}))
-    last_name = forms.EmailField(required=True, widget=forms.TextInput(
+    last_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': "apellidos"}))
 
     class Meta:
         model = User
-        exclude = ('friend_token', 'birthdate')
+        exclude = ('date_joined', 'last_login', 'is_superuser',
+                   'is_staff', 'is_active', 'date_joined')
 
 
 class ProfileForm(forms.ModelForm):
@@ -195,8 +198,22 @@ class ProfileForm(forms.ModelForm):
         attrs={'placeholder': "https://"}))
 
     class Meta:
-        model = User
-        exclude = ()
+        model = Profile
+        exclude = ('user',)
+
+    def clean_birthdate(self):
+        birthdate = self.cleaned_data.get('birthdate')
+        if birthdate >= now().date():
+            raise ValidationError(
+                'La fecha de cumpleaños debe ser en el pasado')
+        return birthdate
+
+    def save(self, user=None):
+        profile = super(ProfileForm, self).save(commit=False)
+        if user:
+            profile.user = user
+        profile.save()
+        return profile
 
 
 class SearchHomeForm(forms.Form):
