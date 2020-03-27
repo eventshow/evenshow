@@ -53,6 +53,10 @@ class EventSelector:
     def location_date(self, location: str, date: str, ) -> QuerySet:
         return models.Event.objects.filter(location_city__iexact=location, start_day=date)
 
+    def event_enrolled_accepted(self, attendee: User, status='ACCEPTED') -> QuerySet:
+        event_enrolled_accepted = models.Event.objects.filter(
+            event_enrollments__created_by=attendee, event_enrollments__status=status).order_by('title')
+        return event_enrolled_accepted
 
 class RatingSelector:
     def on_user(self, reviewed: User, on='HOST') -> QuerySet:

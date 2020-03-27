@@ -54,6 +54,9 @@ class EnrollmentService:
     def user_is_enrolled(self, event_pk: int, user: User) -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user).exists()
 
+    def user_is_enrolled_and_accepted(self, event_pk: int, user: User, status='ACCEPTED') -> bool:
+        return models.Enrollment.objects.filter(event=event_pk, created_by=user, status=status).exists()
+
 
 class EventService():
     def count(self, event_pk: int) -> int:
@@ -183,6 +186,9 @@ class EventService():
         event = models.Event.objects.get(pk=event_pk)
         return event.has_finished
 
+    def exist_event(self, event_id: int) -> bool:
+        exist = models.Event.objects.filter(id=event_id).exists()
+        return exist
 
 class ProfileService():
     def create(self, user: User, birthdate: date):
@@ -252,3 +258,8 @@ class PaymentService():
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
         return round(res - amount_host)
+
+class UserService:
+    def exist_user(self, user_id: int) -> bool:
+        exist = models.User.objects.filter(id=user_id).exists()
+        return exist

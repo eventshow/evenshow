@@ -1,4 +1,3 @@
-
 @import url(https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
 
 /* GENERAL */
@@ -129,6 +128,15 @@ element.style{
 .img-detail{
 	margin-top: -10px !important;
 	width: 100% !important;
+	height: 852px;
+	object-fit: cover;
+}
+
+.objetfitcover > .img-detail{
+	width: 200px;
+	height: 400px;
+	object-fit: cover;
+	border: 3px solid #ff9daa;
 }
 
 .principal-detail{
@@ -176,7 +184,27 @@ element.style{
 	width: 150px;
 }
 
+.preferences{
+	margin-top: 4% !important;
+}
 
+
+.preferences h2{
+	color: white !important;
+	text-align: center;
+	margin-bottom: 15%;
+}
+
+.preferences a{
+	color: white !important;
+	align-content: center !important;
+	margin-left: 5%;
+	margin-top: 10%;
+}
+
+.preferences a:hover {
+color: #979797 !important;
+}
 
 .rectangle-info {
 	position: absolute;
@@ -191,8 +219,7 @@ element.style{
 }
 
 #host-datail{
-	margin-top: -53%;
-	margin-top: -53%;
+	margin-top: -655px;
 	padding: 30px 30px 30px 30px ;
 
 }
@@ -209,15 +236,16 @@ element.style{
 }
 
 #detail-info{
-	margin-top: -12%;
+	margin-top: -2%;
 
 }
 
 .rectangle-info h2{
-    margin-top: 9%;
-    margin-bottom: -10%;
+	margin-top: 7%;
+    margin-bottom: -8%;
     color: #5D5E5E;
-	text-align: center;
+    text-align: center;
+    font-size: 22px;
 }
 
 .title-detail{
@@ -225,7 +253,7 @@ element.style{
 
 }
 .subtitle-detail{
-	font-size: 26px!important;
+	font-size: 24px!important;
 	font-weight: 500 !important;
 }
 
@@ -248,14 +276,28 @@ element.style{
 	margin-left: 38%;
 }
 
+.separated5{
+	margin-left: 38%;
+}
+
+.separated6{
+	margin-left: 49%;
+}
+
 .button-detail{
 	color: white !important;
 	margin-top: -8% !important;
-	margin-left: 674% !important;
+	margin-left: 521% !important;
+	font-size: 28px;
 }
 
 .button-detail:hover{
-	font-weight: 600;
+	color: #979797;
+}
+
+.request-fail{
+	color: black;
+	text-align: center;
 }
 
 
@@ -439,10 +481,13 @@ element.style{
 	margin-top: 80px;
 	padding-right: 10px;
 	padding-left: 40px;
+		margin-left: 11%;
+
 }
 
 .search{
 	margin-top: 9px !important;
+	margin-right: -14% ;
 }
 
 /* FOOTER */
@@ -452,8 +497,7 @@ element.style{
 }
 
 .footer-copyright a:hover {
-	color: white;
-	font-weight: bold;
+	color:  #979797;
 }
 
 .social-links {
@@ -509,7 +553,7 @@ element.style{
 
 .rating-search{
 	font-weight: bold;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	color: #5D5E5E;
 	font-style: normal;
 }
@@ -521,11 +565,6 @@ font-size: 20px;
 font-weight: 400;
 }
 
-.pagination{
-	text-align: center;
-
-
-}
 
 .price:hover{
 color: white!important;
@@ -535,6 +574,7 @@ color: white!important;
 	height: 40%;
 	width: 70%;
 	border-radius: 15px;
+	margin-left: 17%;
 }
 
 .sep {
@@ -567,13 +607,13 @@ color: white!important;
 
 
 .browser-default{
-	
+
 	width:30% !important;
 	border-radius: 15px;
 	border: 1px solid #b6244d;
 	margin-top:10px;
 }
-  
+
 select {
 	background-color: rgba(255, 255, 255, 0.9) !important;
 	width: 100% !important;
@@ -581,14 +621,13 @@ select {
 	height: 3rem !important;
 }
 
-.container#cuadro {
+#square {
 	width: 800px;
 	margin: auto;
 	max-width: 100%;
 	padding: 2rem 2rem 2rem 2rem;
-	margin-top: 2rem;
+	margin-top: 9% !important;
 	background-color: rgb(255, 255, 255);
-	margin-top: 40px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -597,7 +636,7 @@ select {
 .share-event {
 	width: 490px;
 	height: 49px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -611,7 +650,7 @@ select {
 .share-event-princ{
 	width: 490px;
 	height: 49px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -626,7 +665,7 @@ select {
 
 label {
 	font-weight: bold;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	color: #5d5e5e;
 	font-size: 15px;
 }
@@ -667,7 +706,6 @@ label {
 	padding: 2rem 0rem 2rem 0rem;
 	margin-top: 2rem;
 	background-color: rgb(255, 255, 255);
-	margin-top: 15px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -744,18 +782,17 @@ label {
 
 /* INICIO PARTE MIGUEL- NO TOCAR */
 .title {
-	margin-top: 70px;
-	margin-left: 15px;
+	margin-left: 8%;
+	margin-top: 5%;
 }
 
-.container#cuadro {
+.container#square {
 	width: 600px;
 	margin: auto;
 	max-width: 100%;
 	padding: 1rem 2rem 2rem 3rem;
-	margin-top: 2rem;
+	margin-top: 6%;
 	background-color: rgb(255, 255, 255);
-	margin-top: 40px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -763,15 +800,23 @@ label {
 
 .name-host, #name-host {
 	height: 40px;
-	font-family: Raleway;
+	max-width: 550px;
+	left: auto;
+	font-family: Raleway, sans-serif;
 	font-size: 34px;
 	font-weight: bold;
 	font-stretch: normal;
 	font-style: normal;
 	line-height: normal;
 	letter-spacing: normal;
-	margin-top: 10px;
+	margin-top: 2%;
 	color: #5D5E5E;
+}
+
+#name-host-rate{
+	margin-bottom: 6% !important;
+	width: 500px !important;
+
 }
 
 #name-host-serg {
@@ -791,7 +836,7 @@ label {
 
 .name-host-share {
 	height: 40px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -806,9 +851,11 @@ label {
 }
 
 .title-form {
+	margin-top: 2%;
+	margin-bottom: 1%;
 	width: 250px;
 	height: 18px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 15px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -819,7 +866,7 @@ label {
 }
 
 .table-generic{
-    width: 60%;
+    width: 80%;
 	text-align-last: center;
 	margin:auto;
 }
@@ -838,28 +885,23 @@ table{
 	margin-right: 20px;
 }
 
-.browser-default{
-	
-	width:30%;
-	border-radius: 15px;
-	border: 1px solid #b6244d;
-	margin-top:10px;
-}
-
 #textarea2{
 	border: 1px solid #b6244d;
 	border-radius: 15px;
 	margin-top: 10px;
 }
+
 .pagination{
 	font-size: large;
 	margin-top:10px;
 	margin-bottom: 10px;
-
+	text-align: center;
 }
+
 .btn#yaNo:hover{
 	background-color: #B6244D!important;
 	color:white!important;
+	white-space: normal;
 }
 #title-name{
 	color: #B6244D;
@@ -881,7 +923,7 @@ table{
 #titleThanks {
 	width: 1171px;
 	height: 80px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -893,7 +935,7 @@ table{
   #text2Thanks {
 	width: 1171px;
 	height: 70px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 30px;
 	font-weight: 500;
 	font-stretch: normal;
@@ -905,7 +947,7 @@ table{
   #text3 {
 	width: 513px;
 	height: 40px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 17px;
 	font-weight: 300;
 	font-stretch: normal;
@@ -917,7 +959,7 @@ table{
   #text3 .style1 {
 	color: #cf2a6e;
   }
-  
+
 /* FIN PARTE MIGUEL- NO TOCAR */
 
 /* RESPONSIVE */
@@ -952,4 +994,13 @@ table{
 .separated-create h4{
 	color: #cf2a6e !important;
 
+}
+
+.location-prov{
+	margin-left: 0% !important;
+}
+
+.location-prov input{
+	width: 100% !important;
+	padding-right: 34% !important;
 }

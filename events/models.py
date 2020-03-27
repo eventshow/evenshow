@@ -207,14 +207,6 @@ class Rating(Common):
         verbose_name = 'Rating'
         verbose_name_plural = 'Ratings'
 
-    """ def save(self, *args, **kwargs):
-        # self.full_clean()
-        return super().save(*args, **kwargs) """
-
-    """ def clean(self):
-        if self.created_by == self.reviewed:
-            raise ValidationError('It is not possible to rate yourself') """
-
     def __str__(self):
         return '{0} on {1}'.format(self.score, self.reviewed)
 
