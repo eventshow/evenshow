@@ -198,6 +198,8 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
+        context['enroll_valid'] = selectors.EventSelector().event_enrolled_accepted(self.request.user)
+        print(context['enroll_valid'])
         return context
 
     def get_queryset(self):

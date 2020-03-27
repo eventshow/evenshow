@@ -53,15 +53,22 @@
           {% if role == "huésped" %}
           <td>
             {% if event not in user_rated_events and event.has_finished %}
+            {% if not event in enroll_valid %}
+            {% endif%}
+            Su solicitud no ha sido aceptada
+            {% if event in enroll_valid %}
+
             <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" title="Puntuar">
               <em id="title-name" class="samll material-icons">star</em>
             </button>
+            {% endif%}
             {% elif event in user_rated_events %}
             Ya puntuado
             {% elif not event.has_started%}
             No ha empezado
             {% elif not event.has_finished%}
             No ha terminado
+
             {% endif %}
           </td>
           {% endif %}
