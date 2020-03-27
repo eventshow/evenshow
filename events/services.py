@@ -54,6 +54,9 @@ class EnrollmentService:
     def user_is_enrolled(self, event_pk: int, user: User) -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user).exists()
 
+    def user_is_enrolled_and_accepted(self, event_pk: int, user: User, status='ACCEPTED') -> bool:
+        return models.Enrollment.objects.filter(event=event_pk, created_by=user, status=status).exists()
+
 
 class EventService():
     def count(self, event_pk: int) -> int:
