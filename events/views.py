@@ -241,6 +241,12 @@ class EventUpdateView(generic.UpdateView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento actualizado'
+            body = 'El evento ' + event.title + 'en el que estás inscrito ha sido actualizado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
