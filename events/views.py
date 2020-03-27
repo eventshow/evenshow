@@ -21,6 +21,9 @@ EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
 
+def preferences(request):
+    return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
+
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
