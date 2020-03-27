@@ -13,9 +13,19 @@ from django.utils.timezone import now
 from . import models
 from . import selectors
 from .models import Event
+from django.core.mail import send_mail
 
 User = get_user_model()
 
+class EmailService:
+    def send_email(self, subject:str, body:str, recipient_list:list) -> None:
+        send_mail(
+           subject,
+           body,
+           settings.EMAIL_HOST_USER,
+           recipient_list,
+           fail_silently=False,
+       )
 
 class EnrollmentService:
     def count(self, enrollment_pk: int) -> int:

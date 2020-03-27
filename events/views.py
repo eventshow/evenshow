@@ -169,6 +169,12 @@ class EventDeleteView(generic.DeleteView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento cancelado'
+            body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
