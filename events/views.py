@@ -526,3 +526,12 @@ class SignUpView(generic.CreateView):
         services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
+
+class TransactionListView(generic.ListView):
+    model = models.Transaction
+    template_name = 'payment_list.html'
+
+    def get_queryset(self):
+        queryset = super(TransactionListView, self).get_queryset()
+        queryset = selectors.TransactionSelector().my_transaction(self.request.user)
+        return queryset
