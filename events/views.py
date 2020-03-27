@@ -26,13 +26,15 @@ class HomeView(generic.FormView):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
-        profile = models.Profile.objects.get(user_id=self.request.user.id)
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['bio'] = profile.bio == '' or profile.bio == None
-        context['first_name'] = self.request.user.first_name == '' or self.request.user.first_name == None
-        context['last_name'] = self.request.user.last_name == '' or self.request.user.last_name == None
-        context['user_name'] = self.request.user.username
-        context['user_first_name'] = self.request.user.first_name
+        if not self.request.user.is_anonymous:
+            profile = models.Profile.objects.get(user_id=self.request.user.id)
+            context['bio'] = profile.bio == '' or profile.bio == None
+            context['first_name'] = self.request.user.first_name == '' or self.request.user.first_name == None
+            context['last_name'] = self.request.user.last_name == '' or self.request.user.last_name == None
+            context['user_name'] = self.request.user.username
+            context['user_first_name'] = self.request.user.first_name
+
         return context
 
     def get_success_url(self):
