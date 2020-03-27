@@ -33,9 +33,9 @@ STRIPE_CONNECT_CLIENT_ID = 'ca_GvXb5KbNOFxZC6nccjrcsyVjjj4uWaiN'
 GOOGLE_API_KEY = 'AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://eventshow.herokuapp.com']
 
 
 # Application definition
