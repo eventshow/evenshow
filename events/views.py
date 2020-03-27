@@ -35,7 +35,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour
         }
-        )
+                            )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -198,6 +198,8 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
+        context['enroll_valid'] = selectors.EventSelector().event_enrolled_accepted(self.request.user)
+        print(context['enroll_valid'])
         return context
 
     def get_queryset(self):
@@ -325,9 +327,9 @@ class EnrollmentListView(generic.ListView):
         event_pk = kwargs.get('pk')
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
-            return super().get(request, *args, **kwargs)
+            return super(EnrollmentListView, self).get(request, *args, **kwargs)
         else:
-            return redirect('events')
+            return redirect('/')
 
     def get_queryset(self):
         return selectors.EnrollmentSelector().on_event(self.kwargs.get('pk'), 'PENDING')
@@ -355,7 +357,9 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = self.kwargs.get('pk')
         event_has_started = models.Enrollment.objects.get(
             pk=enrollment_pk).event.has_started
-        return services.EnrollmentService().host_can_update(host, enrollment_pk) and services.EnrollmentService().is_pending(enrollment_pk) and not event_has_started
+        return services.EnrollmentService().host_can_update(host,
+                                                            enrollment_pk) and services.EnrollmentService().is_pending(
+            enrollment_pk) and not event_has_started
 
 
 @method_decorator(login_required, name='dispatch')
@@ -376,7 +380,8 @@ class RateHostView(generic.CreateView):
                                                                                                          event,
                                                                                                          event.created_by)
 
-            is_enrolled_for_this_event = event in selectors.EventSelector().enrolled(self.request.user)
+            is_enrolled_for_this_event = services.EnrollmentService().user_is_enrolled_and_accepted(event.id,
+                                                                                                    created_by)
             auto_rating = self.request.user.id == event.created_by.id
             if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating):
                 return super().get(self, request, args, *kwargs)
@@ -385,7 +390,11 @@ class RateHostView(generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(RateHostView, self).get_context_data(**kwargs)
+        user = selectors.UserSelector(
+        ).event_host(self.kwargs.get('event_pk'))
         context['event_pk'] = self.kwargs.get('event_pk')
+        context['user_img'] = models.Profile.objects.get(
+            user_id=user.id).picture
         context['host_name'] = selectors.UserSelector(
         ).event_host(self.kwargs.get('event_pk'))
         context['event_title'] = models.Event.objects.get(
@@ -430,12 +439,13 @@ class RateAttendeeView(generic.CreateView):
             exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
                                                                                                          event,
                                                                                                          attendee_id)
-            is_owner_of_this_event = selectors.EventSelector().is_owner(
+            is_owner_of_this_event = services.EventService().user_is_owner(
                 created_by, event.id)
-            attendee_enrolled_for_this_event = event in selectors.EventSelector().enrolled(attendee)
+            attendee_enrolled_for_this_event = services.EnrollmentService().user_is_enrolled_and_accepted(event.id,
+                                                                                                          attendee)
             auto_rating = self.request.user.id == attendee.id
             if (
-                not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
+                    not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
                     not auto_rating):
                 return super().get(self, request, args, *kwargs)
             else:
@@ -444,6 +454,8 @@ class RateAttendeeView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)
         context['event_pk'] = self.kwargs.get('event_pk')
+        context['img_user'] = models.Profile.objects.get(
+            user_id=self.kwargs.get('attendee_pk')).picture
         context['attendee_pk'] = self.kwargs.get('attendee_pk')
         context['attendee_name'] = models.User.objects.get(
             id=self.kwargs.get('attendee_pk')).username

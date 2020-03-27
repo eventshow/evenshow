@@ -128,6 +128,15 @@ element.style{
 .img-detail{
 	margin-top: -10px !important;
 	width: 100% !important;
+	height: 852px;
+	object-fit: cover;
+}
+
+.objetfitcover > .img-detail{
+	width: 200px;
+	height: 400px;
+	object-fit: cover;
+	border: 3px solid #ff9daa;
 }
 
 .principal-detail{
@@ -182,7 +191,7 @@ element.style{
 	z-index:1;
 	margin-left: 5%;
 	width: 145px;
-	height: 93px;
+	height: 93px;.sea
 	border-radius: 8px;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 	border: solid 1px #979797;
@@ -190,8 +199,7 @@ element.style{
 }
 
 #host-datail{
-	margin-top: -53%;
-	margin-top: -53%;
+	margin-top: -655px;
 	padding: 30px 30px 30px 30px ;
 
 }
@@ -208,15 +216,16 @@ element.style{
 }
 
 #detail-info{
-	margin-top: -12%;
+	margin-top: -2%;
 
 }
 
 .rectangle-info h2{
-    margin-top: 9%;
-    margin-bottom: -10%;
+	margin-top: 7%;
+    margin-bottom: -8%;
     color: #5D5E5E;
-	text-align: center;
+    text-align: center;
+    font-size: 22px;
 }
 
 .title-detail{
@@ -224,7 +233,7 @@ element.style{
 
 }
 .subtitle-detail{
-	font-size: 26px!important;
+	font-size: 24px!important;
 	font-weight: 500 !important;
 }
 
@@ -247,10 +256,19 @@ element.style{
 	margin-left: 38%;
 }
 
+.separated5{
+	margin-left: 38%;
+}
+
+.separated6{
+	margin-left: 49%;
+}
+
 .button-detail{
 	color: white !important;
 	margin-top: -8% !important;
-	margin-left: 674% !important;
+	margin-left: 521% !important;
+	font-size: 28px;
 }
 
 .button-detail:hover{
@@ -438,10 +456,13 @@ element.style{
 	margin-top: 80px;
 	padding-right: 10px;
 	padding-left: 40px;
+		margin-left: 11%;
+
 }
 
 .search{
 	margin-top: 9px !important;
+	margin-right: -14% ;
 }
 
 /* FOOTER */
@@ -534,6 +555,7 @@ color: white!important;
 	height: 40%;
 	width: 70%;
 	border-radius: 15px;
+	margin-left: 17%;
 }
 
 .sep {
@@ -961,4 +983,13 @@ table{
 .separated-create h4{
 	color: #cf2a6e !important;
 
+}
+
+.location-prov{
+	margin-left: 0% !important;
+}
+
+.location-prov input{
+	width: 100% !important;
+	padding-right: 34% !important;
 }
