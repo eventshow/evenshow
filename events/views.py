@@ -422,7 +422,7 @@ class RateHostView(generic.CreateView):
 
 @method_decorator(login_required, name='dispatch')
 class RateAttendeeView(generic.CreateView):
-    template_name = 'rating/rating_attendee.html'
+    template_name = 'rating/rating_host.html'
     model = models.Rating
     form_class = forms.RatingForm
 
@@ -465,7 +465,7 @@ class RateAttendeeView(generic.CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('list_attendees', kwargs={'event_pk': self.kwargs.get('event_pk')})
+        return reverse_lazy('list_attendees', kwargs={'pk': self.kwargs.get('event_pk')})
 
     def form_valid(self, form):
         rating = form.save(commit=False)
