@@ -12,17 +12,17 @@
         </div>
     </div>
 
-    <div class="col m6 rectangle-info" id="detail-info">
+    <div class="col m6 rectangle-info separated2" id="detail-info">
         <h2 class="title-detail">duración</h2>
         <h2 class="subtitle-detail">{{ duration }}</h2>
     </div>
 
-    <div class="col m6 rectangle-info separated1" id="detail-info">
+    <div class="col m6 rectangle-info separated6" id="detail-info">
         <h2 class="title-detail">aforo</h2>
         <h2 class="subtitle-detail">{{ object.capacity }}</h2>
     </div>
 
-    <div class="col m6 rectangle-info separated2" id="detail-info">
+    <div class="col m6 rectangle-info separated4" id="detail-info">
         <h2 class="title-detail">idioma</h2>
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
 
@@ -32,7 +32,7 @@
             {% if user.is_authenticated %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="500" data-locale="auto"
-                data-label="INSCRIBIRSE">
+                data-label="{{ object.price }}€">
 
                 </script>
             <script>
@@ -46,9 +46,14 @@
         {% endif %}
     </div>
 
-    <div class="col m6 rectangle-info separated4" id="detail-info">
-        <h2 class="title-detail">precio</h2>
-        <h2 class="subtitle-detail">{{ object.price }} €</h2>
+    <div class="col m6 rectangle-info separated1" id="detail-info">
+        <h2 class="title-detail">Hora comienzo</h2>
+        <h2 class="subtitle-detail">{{ object.start_time }}</h2>
+    </div>
+
+  <div class="col m6 rectangle-info" id="detail-info">
+        <h2 class="title-detail">Fecha</h2>
+        <h2 class="subtitle-detail">{{ object.start_day }}</h2>
     </div>
 </div>
 
@@ -110,21 +115,17 @@
             <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
                 <i class="fa fa-star"><i
-                        class="rating-search">&nbsp{{rating.created_by.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
+                        class="rating-search">&nbsp{{rating.score }}</i></i>
             </div>
             <h3 class="comment-detail">{{rating.comment}}</h3>
-            <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score}}</i></i>
         </div>
         {% endfor %}
     </div>
     {% include 'pagination.html' %}
 </div>
 
-{% endblock %}
-
-<style>
+    <style>
     body {
-        background-image: url("{% static 'css/images/cena.jpg'%}");
         background-size: cover;
         display: flex;
         min-height: 100vh;
@@ -137,6 +138,9 @@
 
     .page-footer {
         width: 100%;
-        margin-bottom: 29% !important;
+        margin-top: 30%;
     }
 </style>
+
+{% endblock %}
+
