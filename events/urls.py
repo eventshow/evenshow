@@ -45,4 +45,5 @@ urlpatterns = [
          name='gracias'),
 
     path('preferences', views.preferences, name='preferences'),
+    path('points', views.PointsView.as_view(), name='points'),
 ]

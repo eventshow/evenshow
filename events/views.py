@@ -24,6 +24,19 @@ User = get_user_model()
 def preferences(request):
     return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
 
+@method_decorator(login_required, name='dispatch')
+class PointsView(generic.TemplateView):
+    template_name = 'user/points.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PointsView, self).get_context_data(**kwargs)
+        profile = models.Profile.objects.get(user=self.request.user)
+        points = profile.eventpoints
+        token_des = profile.token
+        context['points'] = points
+        context['token'] = token_des
+        return context
+
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'

@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
 from django.utils.timezone import now
 
-from .models import Category, Event, Rating
+from .models import Category, Event, Rating, Profile
 
 CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
 
@@ -197,3 +197,5 @@ class SearchHomeForm(forms.Form):
             raise ValidationError(
                 'La fecha debe ser futura')
         return date
+
+
