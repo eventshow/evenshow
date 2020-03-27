@@ -410,33 +410,23 @@ class UserUpdateView(generic.UpdateView):
         context = super(UserUpdateView,
                         self).get_context_data(**kwargs)
         if self.request.POST:
-            context['profile'] = forms.ProfileForm(
+            context['profile_form'] = forms.ProfileForm(
                 self.request.POST, instance=self.object.profile)
         else:
-            context['profile'] = forms.ProfileForm(
+            context['profile_form'] = forms.ProfileForm(
                 instance=self.object.profile)
         return context
 
     def get_object(self):
         return self.request.user
 
-    def post(self, request, *args, **kwargs):
-        profile = forms.ProfileForm(request.POST, instance=self.get_object())
+    def form_valid(self, form):
+        profile_form = forms.ProfileForm(
+            self.request.POST, instance=self.get_object().profile)
+        user = form.save()
+        profile_form.save(user)
 
-        # if profile.is_valid():
-
-        return super(UserUpdateView, self).post(request, *args, **kwargs)
-
-    """ def post(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        profile = context['profile']
-        print(kwargs)
-        #self.object = form.save()
-
-        if profile.is_valid():
-            profile.instance = self.object
-            profile.save()
-        return super(UserUpdateView, self).post(request, *args, **kwargs) """
+        return super(UserUpdateView, self).form_valid(form)
 
 
 @method_decorator(login_required, name='dispatch')
