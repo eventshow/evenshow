@@ -541,11 +541,6 @@ font-size: 20px;
 font-weight: 400;
 }
 
-.pagination{
-	text-align: center;
-
-
-}
 
 .price:hover{
 color: white!important;
@@ -866,25 +861,19 @@ table{
 	margin-right: 20px;
 }
 
-.browser-default{
-
-	width:30%;
-	border-radius: 15px;
-	border: 1px solid #b6244d;
-	margin-top:10px;
-}
-
 #textarea2{
 	border: 1px solid #b6244d;
 	border-radius: 15px;
 	margin-top: 10px;
 }
+
 .pagination{
 	font-size: large;
 	margin-top:10px;
 	margin-bottom: 10px;
-
+	text-align: center;
 }
+
 .btn#yaNo:hover{
 	background-color: #B6244D!important;
 	color:white!important;
