@@ -18,7 +18,9 @@ from django.core.mail import send_mail
 User = get_user_model()
 
 class EmailService:
-    def send_email(self, subject:str, body:str, recipient_list:list) -> None:
+    def send_email(self, subject:str, body:str, event_pk:int) -> None:
+        recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+        recipient_list = list(recipient_list_queryset.values_list('email', flat=True))
         send_mail(
            subject,
            body,
