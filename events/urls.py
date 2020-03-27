@@ -45,4 +45,6 @@ urlpatterns = [
          name='gracias'),
 
     path('preferences', views.preferences, name='preferences'),
+
+    path('edit/profile/', TemplateView.as_view(template_name='registration/edit_profile.html'), name='edit_profile'),
 ]

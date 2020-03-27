@@ -1,0 +1,55 @@
+{% extends 'user/preferences.html' %}
+{% block content %}
+
+
+<div class="container">
+    <div class="center-form">
+        <form class="login100-form form-eventshow-create login validate-form" method="POST">
+            {% csrf_token %}
+            <h1>
+                Editar datos
+            </h1>
+            <br>
+            <div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                {{ form.username }}
+                <div class="form-errors">
+                    {{ form.username.errors }}
+                </div>
+            </div>
+            <div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                {{ form.email }}
+                <div class="form-errors">
+                    {{ form.email.errors }}
+                </div>
+            </div>
+            <div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                {{ form.birthdate }}
+                <div class="form-errors">
+                    {{ form.birthdate.errors }}
+                </div>
+            </div>
+            <div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                {{ form.password1 }}
+                <div class="form-errors">
+                    {{ form.password1.errors }}
+                </div>
+            </div>
+            <div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                {{ form.password2 }}
+                <div class="form-errors">
+                    {{ form.password2.errors }}
+                </div>
+            </div>
+            <div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                {{ form.friend_token }}
+                <div class="form-errors">
+                    {{ form.friend_token.errors }}
+                </div>
+            </div>
+            <br>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
