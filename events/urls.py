@@ -36,6 +36,11 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
+    path('profile', views.UserDetailView.as_view(),
+         name='detail_profile'),
+    path('profile/update', views.UserUpdateView.as_view(),
+         name='update_profile'),
+
     path('ratings/new/host/<int:event_pk>',
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',

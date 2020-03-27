@@ -390,6 +390,56 @@ class EnrollmentUpdateView(generic.View):
 
 
 @method_decorator(login_required, name='dispatch')
+class UserDetailView(generic.DetailView):
+    template_name = 'profile/detail.html'
+    model = User
+    success_url = reverse_lazy('detail_profile')
+
+    def get_object(self):
+        return self.request.user
+
+
+@method_decorator(login_required, name='dispatch')
+class UserUpdateView(generic.UpdateView):
+    template_name = 'profile/update.html'
+    model = User
+    form_class = forms.UserForm
+    success_url = reverse_lazy('detail_profile')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView,
+                        self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['profile'] = forms.ProfileForm(
+                self.request.POST, instance=self.object.profile)
+        else:
+            context['profile'] = forms.ProfileForm(
+                instance=self.object.profile)
+        return context
+
+    def get_object(self):
+        return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        profile = forms.ProfileForm(request.POST, instance=self.get_object())
+
+        # if profile.is_valid():
+
+        return super(UserUpdateView, self).post(request, *args, **kwargs)
+
+    """ def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        profile = context['profile']
+        print(kwargs)
+        #self.object = form.save()
+
+        if profile.is_valid():
+            profile.instance = self.object
+            profile.save()
+        return super(UserUpdateView, self).post(request, *args, **kwargs) """
+
+
+@method_decorator(login_required, name='dispatch')
 class RateHostView(generic.CreateView):
     template_name = 'rating/rating_host.html'
     model = models.Rating

@@ -5,9 +5,10 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.exceptions import ValidationError
+from django.forms import inlineformset_factory
 from django.utils.timezone import now
 
-from .models import Category, Event, Rating
+from .models import Category, Event, Profile, Rating
 
 CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
 
@@ -164,6 +165,38 @@ class RegistrationForm(UserCreationForm):
             raise ValidationError('El email ya existe')
 
         return email
+
+
+class UserForm(RegistrationForm):
+    first_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "nombre"}))
+    last_name = forms.EmailField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "apellidos"}))
+
+    class Meta:
+        model = User
+        exclude = ('friend_token', 'birthdate')
+
+
+class ProfileForm(forms.ModelForm):
+    bio = forms.CharField(required=True, widget=forms.Textarea(
+        attrs={'placeholder': "bio"}))
+    birthdate = forms.DateField(
+        required=True,
+        widget=forms.DateInput(
+            format=settings.DATE_INPUT_FORMATS[0],
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=settings.DATE_INPUT_FORMATS
+    )
+    location = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "localidad"}))
+    picture = forms.URLField(required=False, widget=forms.URLInput(
+        attrs={'placeholder': "https://"}))
+
+    class Meta:
+        model = User
+        exclude = ()
 
 
 class SearchHomeForm(forms.Form):
