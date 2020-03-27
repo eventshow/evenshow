@@ -1,0 +1,14 @@
+<form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.username }}
+    {{ form.email }}
+    {{ form.first_name }}
+    {{ form.last_name }}
+    {{ profile.bio }}
+    {{ profile.birthdate }}
+    {{ profile.location }}
+    {{ profile.picture }}
+    <button type="submit">
+        Continúa
+    </button>
+</form>
