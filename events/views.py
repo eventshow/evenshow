@@ -451,8 +451,6 @@ class RateAttendeeView(generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(RateAttendeeView, self).get_context_data(**kwargs)
-        user =models.User.objects.get(
-            id=self.kwargs.get('attendee_pk'))
         context['event_pk'] = self.kwargs.get('event_pk')
         context['img_user'] = models.Profile.objects.get(
             user_id=self.kwargs.get('attendee_pk')).picture
