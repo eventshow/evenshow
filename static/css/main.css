@@ -184,7 +184,27 @@ element.style{
 	width: 150px;
 }
 
+.preferences{
+	margin-top: 4% !important;
+}
 
+
+.preferences h2{
+	color: white !important;
+	text-align: center;
+	margin-bottom: 15%;
+}
+
+.preferences a{
+	color: white !important;
+	align-content: center !important;
+	margin-left: 5%;
+	margin-top: 10%;
+}
+
+.preferences a:hover {
+color: #979797 !important;
+}
 
 .rectangle-info {
 	position: absolute;
@@ -272,7 +292,7 @@ element.style{
 }
 
 .button-detail:hover{
-	font-weight: 600;
+	color: #979797;
 }
 
 
@@ -472,8 +492,7 @@ element.style{
 }
 
 .footer-copyright a:hover {
-	color: white;
-	font-weight: bold;
+	color:  #979797;
 }
 
 .social-links {
