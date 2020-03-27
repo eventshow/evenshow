@@ -211,7 +211,7 @@ color: #979797 !important;
 	z-index:1;
 	margin-left: 5%;
 	width: 145px;
-	height: 93px;.sea
+	height: 93px;
 	border-radius: 8px;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 	border: solid 1px #979797;
@@ -553,7 +553,7 @@ color: #979797 !important;
 
 .rating-search{
 	font-weight: bold;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	color: #5D5E5E;
 	font-style: normal;
 }
@@ -565,11 +565,6 @@ font-size: 20px;
 font-weight: 400;
 }
 
-.pagination{
-	text-align: center;
-
-
-}
 
 .price:hover{
 color: white!important;
@@ -626,14 +621,13 @@ select {
 	height: 3rem !important;
 }
 
-.container#cuadro {
+#square {
 	width: 800px;
 	margin: auto;
 	max-width: 100%;
 	padding: 2rem 2rem 2rem 2rem;
-	margin-top: 2rem;
+	margin-top: 9% !important;
 	background-color: rgb(255, 255, 255);
-	margin-top: 40px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -642,7 +636,7 @@ select {
 .share-event {
 	width: 490px;
 	height: 49px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -656,7 +650,7 @@ select {
 .share-event-princ{
 	width: 490px;
 	height: 49px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -671,7 +665,7 @@ select {
 
 label {
 	font-weight: bold;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	color: #5d5e5e;
 	font-size: 15px;
 }
@@ -712,7 +706,6 @@ label {
 	padding: 2rem 0rem 2rem 0rem;
 	margin-top: 2rem;
 	background-color: rgb(255, 255, 255);
-	margin-top: 15px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -789,18 +782,17 @@ label {
 
 /* INICIO PARTE MIGUEL- NO TOCAR */
 .title {
-	margin-top: 70px;
-	margin-left: 15px;
+	margin-left: 8%;
+	margin-top: 5%;
 }
 
-.container#cuadro {
+.container#square {
 	width: 600px;
 	margin: auto;
 	max-width: 100%;
 	padding: 1rem 2rem 2rem 3rem;
-	margin-top: 2rem;
+	margin-top: 6%;
 	background-color: rgb(255, 255, 255);
-	margin-top: 40px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -808,15 +800,23 @@ label {
 
 .name-host, #name-host {
 	height: 40px;
-	font-family: Raleway;
+	max-width: 550px;
+	left: auto;
+	font-family: Raleway, sans-serif;
 	font-size: 34px;
 	font-weight: bold;
 	font-stretch: normal;
 	font-style: normal;
 	line-height: normal;
 	letter-spacing: normal;
-	margin-top: 10px;
+	margin-top: 2%;
 	color: #5D5E5E;
+}
+
+#name-host-rate{
+	margin-bottom: 6% !important;
+	width: 500px !important;
+
 }
 
 #name-host-serg {
@@ -836,7 +836,7 @@ label {
 
 .name-host-share {
 	height: 40px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -851,9 +851,11 @@ label {
 }
 
 .title-form {
+	margin-top: 2%;
+	margin-bottom: 1%;
 	width: 250px;
 	height: 18px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 15px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -883,25 +885,19 @@ table{
 	margin-right: 20px;
 }
 
-.browser-default{
-
-	width:30%;
-	border-radius: 15px;
-	border: 1px solid #b6244d;
-	margin-top:10px;
-}
-
 #textarea2{
 	border: 1px solid #b6244d;
 	border-radius: 15px;
 	margin-top: 10px;
 }
+
 .pagination{
 	font-size: large;
 	margin-top:10px;
 	margin-bottom: 10px;
-
+	text-align: center;
 }
+
 .btn#yaNo:hover{
 	background-color: #B6244D!important;
 	color:white!important;
@@ -927,7 +923,7 @@ table{
 #titleThanks {
 	width: 1171px;
 	height: 80px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -939,7 +935,7 @@ table{
   #text2Thanks {
 	width: 1171px;
 	height: 70px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 30px;
 	font-weight: 500;
 	font-stretch: normal;
@@ -951,7 +947,7 @@ table{
   #text3 {
 	width: 513px;
 	height: 40px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 17px;
 	font-weight: 300;
 	font-stretch: normal;
