@@ -529,7 +529,7 @@ element.style{
 
 .rating-search{
 	font-weight: bold;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	color: #5D5E5E;
 	font-style: normal;
 }
@@ -617,7 +617,7 @@ select {
 .share-event {
 	width: 490px;
 	height: 49px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -631,7 +631,7 @@ select {
 .share-event-princ{
 	width: 490px;
 	height: 49px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -646,7 +646,7 @@ select {
 
 label {
 	font-weight: bold;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	color: #5d5e5e;
 	font-size: 15px;
 }
@@ -687,7 +687,6 @@ label {
 	padding: 2rem 0rem 2rem 0rem;
 	margin-top: 2rem;
 	background-color: rgb(255, 255, 255);
-	margin-top: 15px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -773,9 +772,8 @@ label {
 	margin: auto;
 	max-width: 100%;
 	padding: 1rem 2rem 2rem 3rem;
-	margin-top: 2rem;
+	margin-top: 6%;
 	background-color: rgb(255, 255, 255);
-	margin-top: 40px;
 	margin-bottom: 150px;
 	border-radius: 15px;
 	border: solid 1px #b6244d;
@@ -783,9 +781,9 @@ label {
 
 .name-host, #name-host {
 	height: 40px;
-	max-width: 500px;
+	max-width: 550px;
 	left: auto;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 34px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -819,7 +817,7 @@ label {
 
 .name-host-share {
 	height: 40px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -838,7 +836,7 @@ label {
 	margin-bottom: 1%;
 	width: 250px;
 	height: 18px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 15px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -912,7 +910,7 @@ table{
 #titleThanks {
 	width: 1171px;
 	height: 80px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 42px;
 	font-weight: bold;
 	font-stretch: normal;
@@ -924,7 +922,7 @@ table{
   #text2Thanks {
 	width: 1171px;
 	height: 70px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 30px;
 	font-weight: 500;
 	font-stretch: normal;
@@ -936,7 +934,7 @@ table{
   #text3 {
 	width: 513px;
 	height: 40px;
-	font-family: Raleway;
+	font-family: Raleway, sans-serif;
 	font-size: 17px;
 	font-weight: 300;
 	font-stretch: normal;
