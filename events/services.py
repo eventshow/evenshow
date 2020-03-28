@@ -7,14 +7,26 @@ from operator import itemgetter
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
 from django.utils.timezone import now
 
 from . import models
 from . import selectors
-from .models import Event
 
 User = get_user_model()
+
+
+class EmailService:
+    def send_email(self, subject: str, body: str, recipient_list: list):
+
+        send_mail(
+            subject,
+            body,
+            settings.EMAIL_HOST_USER,
+            recipient_list,
+            fail_silently=False,
+        )
 
 
 class EnrollmentService:
@@ -22,11 +34,12 @@ class EnrollmentService:
         count = models.Enrollment.objects.filter(pk=enrollment_pk).count()
         return count
 
-    def create(self, event_pk: int, created_by: User):
+    def create(self, event_pk: int, created_by: User) -> models.Enrollment:
         event = models.Event.objects.get(pk=event_pk)
         enrollment = models.Enrollment.objects.create(
             created_by=created_by, event=event)
         enrollment.save()
+        return enrollment
 
     def is_pending(self, enrollment_pk: int) -> bool:
         enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
@@ -89,7 +102,7 @@ class EventService():
         return res
 
     def nearby_events_distance(self, self_view, distance, latitude, longitude):
-        events = Event.objects.filter(start_day__gte=date.today())
+        events = models.Event.objects.filter(start_day__gte=date.today())
 
         events_cleaned = []
         if self_view.request.user.is_authenticated:
@@ -136,7 +149,7 @@ class EventService():
         elif start_hour:
             events = selectors.EventSelector().start_hour(start_hour)
         else:
-            events = Event.objects.filter(start_day__gte=date.today())
+            events = models.Event.objects.filter(start_day__gte=date.today())
 
         results = []
         if self_view.request.user.is_authenticated:
