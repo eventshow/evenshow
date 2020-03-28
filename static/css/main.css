@@ -291,6 +291,44 @@ color: #979797 !important;
 	font-size: 28px;
 }
 
+.warning-young{
+	color: white !important;
+	margin-top: -32% !important;
+	margin-left: 411% !important;
+	background-color: #B6244D;
+	border-radius: 15px;
+	width:  100%;
+	white-space: pre;
+	padding: 25px 324px 25px 13px;
+
+}
+
+.warning-full{
+	color: white !important;
+	margin-top: -32% !important;
+	margin-left: 411% !important;
+	background-color: #B6244D;
+	border-radius: 15px;
+	width:  100%;
+	white-space: pre;
+	padding: 25px 189px 25px 13px;
+
+}
+
+.warning-own{
+	color: white !important;
+	margin-top: -32% !important;
+	margin-left: 411% !important;
+	background-color: #B6244D;
+	border-radius: 15px;
+	width:  100%;
+	white-space: pre;
+	padding: 25px 139px 25px 13px;
+
+}
+
+
+
 .button-detail:hover{
 	color: #979797;
 }
@@ -461,9 +499,9 @@ color: #979797 !important;
 	font-family: Raleway, sans-serif;
 }
 
-.location{
-	margin-top: 35px;
-	margin-left: 7px;
+.location {
+    margin-top: -638px;
+    margin-left: 336px
 }
 
 .form-eventshow select {
@@ -997,7 +1035,14 @@ table{
 	padding-left: 50px;
 }
 
+.location{
+   margin-top: -635px;
+   margin-left: 257px;
+}
 
+#login-a{
+	color: #B7234D !important ;
+}
 
 
 }
