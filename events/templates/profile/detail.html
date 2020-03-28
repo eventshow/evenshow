@@ -1,7 +1,6 @@
 {{object.profile.eventpoints}}
-{{object.profile.avg_attendee_score}}
-{{object.profile.avg_host_score}}
-{{object.profile.eventpoints}}
+{{object.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}
+{{object.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}
 {{object.first_name}}
 {{object.last_name}}
 {{object.profile.birthdate}}

@@ -177,8 +177,7 @@ class UserForm(UserChangeForm):
 
     class Meta:
         model = User
-        exclude = ('date_joined', 'last_login', 'is_superuser',
-                   'is_staff', 'is_active', 'date_joined')
+        fields = ('username', 'email', 'first_name', 'last_name')
 
 
 class ProfileForm(forms.ModelForm):
