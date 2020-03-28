@@ -24,6 +24,7 @@ User = get_user_model()
 def preferences(request):
     return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
 
+
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
@@ -520,19 +521,10 @@ class FeedbackView(generic.FormView):
     form_class = forms.FeedbackForm
     template_name = 'feedback.html'
 
-
     def get_success_url(self):
         request = self.request.POST
 
         subject = 'Feedback for: ' + request['name'] + ', ' + request['email']
-        body = request['comment']
+        body = request['comment'] + '\n' + request['name'] + '\n' + request['email']
         services.EmailService().send_email_feedback(subject, body)
-        return redirect('home')
-
-    '''def form_valid(self, form):
-        print(form.id_name)
-        subject = 'Feedback for: '+form.name+', '+ form.email
-
-        services.EmailService.send_email_feedback(subject, form.comment)
-        return super(FeedbackView, self).form_valid(form)
-'''
+        return reverse_lazy('home')
