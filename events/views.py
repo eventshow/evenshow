@@ -243,6 +243,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
     model = models.Event
     template_name = 'event/list_search.html'
     paginate_by = 12
+    form_class = forms.SearchFilterForm
 
     def get_context_data(self, **kwargs):
         context = super(EventSearchByLocationDateStartHourView,
@@ -272,6 +273,7 @@ class EventSearchNearbyView(generic.ListView):
     model = models.Event
     template_name = 'event/list_search.html'
     paginate_by = 12
+    form_class = forms.SearchFilterForm
 
     def get_context_data(self, **kwargs):
         context = super(EventSearchNearbyView, self).get_context_data(**kwargs)

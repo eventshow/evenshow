@@ -210,14 +210,14 @@ class SearchFilterForm(forms.Form):
         ),
         input_formats=settings.DATE_INPUT_FORMATS
     )
-    '''start_hour = forms.TimeField(
+    start_hour = forms.TimeField(
         required=False,
         widget=forms.TimeInput(
             format='%H:%M',
             attrs={'placeholder': "hh:mm"}
         ),
         input_formats=('%H:%M',)
-    )'''
+    )
 
     max_price = forms.DecimalField(min_value=0.00, decimal_places=2)
 

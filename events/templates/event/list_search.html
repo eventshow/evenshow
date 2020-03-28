@@ -4,22 +4,32 @@
 <div class="row">
     <div class="wrapper wrapper--w1070">
         <div class="card-body">
-            <form class="form-search" method="POST" action="#">
+            <form class="form-search" method="POST" action="">
+                {% csrf_token %}
                 <div class="input-group input--medium">
                     <label class="label">Localización</label>
-                    <input class="input--style-1" type="text" placeholder=""  readonly="true" name="going">
+                    {{ form.location }}
+                    {{ form.location.errors }}
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Fecha</label>
-                    <input class="input--style-1" type="date" name="checkin"   readonly="true" placeholder="" id="input-start">
+                    {{ form.date }}
+                    {{ form.date.errors }}
+                </div>
+                 <div class="input-group input--medium">
+                    <label class="label">Hora</label>
+                    {{ form.start_hour }}
+                    {{ form.start_hour.errors }}
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Mínimo</label>
-                    <input class="input--style-1" type="text" name="checkout"   readonly="true" placeholder="" id="input-end">
+                    {{ form.min_price }}
+                    {{ form.min_price.errors }}
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Máximo</label>
-                    <input class="input--style-1" type="text" name="checkout"  readonly="true" placeholder="" id="input-end">
+                    {{ form.max_price }}
+                    {{ form.max_price.errors }}
                 </div>
                 <button class="btn-submit search" type="submit">Buscar</button>
             </form>
