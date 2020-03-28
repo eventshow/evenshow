@@ -47,7 +47,7 @@ class EnrollmentService:
         event = models.Event.objects.get(pk=event_pk)
         user_is_enrolled = self.user_is_enrolled(
             event_pk, user)
-        user_is_old_enough = event.min_age <= user.profile.age
+        user_is_old_enough = self.user_is_old_enough(event_pk, user)
         user_is_owner = EventService().user_is_owner(user, event_pk)
         return not user_is_enrolled and user_is_old_enough and not user_is_owner
 
@@ -56,6 +56,10 @@ class EnrollmentService:
 
     def user_is_enrolled_and_accepted(self, event_pk: int, user: User, status='ACCEPTED') -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user, status=status).exists()
+
+    def user_is_old_enough(self, event_pk: int, user: User) -> bool:
+        event = models.Event.objects.get(pk=event_pk)
+        return event.min_age <= user.profile.age
 
 
 class EventService():
@@ -84,7 +88,7 @@ class EventService():
 
         return res
 
-    def nearby_events_distance(self, self_view, distance,latitude,longitude):
+    def nearby_events_distance(self, self_view, distance, latitude, longitude):
         events = Event.objects.filter(start_day__gte=date.today())
 
         events_cleaned = []
@@ -102,7 +106,7 @@ class EventService():
 
         if events_cleaned:
             events_distances_oredered = self.common_method_distance_order(
-                events_cleaned,latitude,longitude)
+                events_cleaned, latitude, longitude)
 
             for event, eventdistance in events_distances_oredered.items():
                 if eventdistance <= int(distance):
@@ -147,7 +151,7 @@ class EventService():
 
         return results
 
-    def common_method_distance_order(self, events,latitude,longitude):
+    def common_method_distance_order(self, events, latitude, longitude):
         gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
 
         latitude_user = latitude
@@ -187,6 +191,7 @@ class EventService():
     def exist_event(self, event_id: int) -> bool:
         exist = models.Event.objects.filter(id=event_id).exists()
         return exist
+
 
 class ProfileService():
     def create(self, user: User, birthdate: date):
@@ -256,6 +261,7 @@ class PaymentService():
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
         return round(res - amount_host)
+
 
 class UserService:
     def exist_user(self, user_id: int) -> bool:
