@@ -24,6 +24,7 @@ User = get_user_model()
 def preferences(request):
     return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
 
+
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
@@ -39,7 +40,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour,
         }
-                            )
+        )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -202,7 +203,8 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
-        context['enroll_valid'] = selectors.EventSelector().event_enrolled_accepted(self.request.user)
+        context['enroll_valid'] = selectors.EventSelector(
+        ).event_enrolled_accepted(self.request.user)
         print(context['enroll_valid'])
         return context
 
@@ -290,7 +292,8 @@ class EventSearchNearbyView(generic.View, MultipleObjectMixin):
         queryset = super(EventSearchNearbyView, self).get_queryset()
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
-        queryset = services.EventService().nearby_events_distance(self, 50000, latitude, longitude)
+        queryset = services.EventService().nearby_events_distance(
+            self, 50000, latitude, longitude)
         return queryset
 
 
@@ -360,11 +363,26 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
 
         if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
+            status = request.POST.get('status')
             services.EnrollmentService().update(
-                enrollment_pk, host, request.POST.get('status'))
-            event_pk = models.Enrollment.objects.get(pk=enrollment_pk).event.pk
+                enrollment_pk, host, status)
+            event = models.Enrollment.objects.get(pk=enrollment_pk).event
 
-            return redirect('list_enrollments', event_pk)
+            if status == 'ACCEPTED':
+                status_txt = 'aceptada'
+            else:
+                status_txt = 'rechazada'
+
+            subject = 'Solicitud para {0} {1}'.format(event.title, status_txt)
+            body = 'Tu solicitud en Eventshow para el evento {0} ha sido {1}'.format(
+                event.title, status_txt)
+            recipient = models.Enrollment.objects.get(
+                pk=enrollment_pk).created_by
+
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
+
+            return redirect('list_enrollments', event.pk)
         else:
             return redirect('/')
 
