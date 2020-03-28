@@ -3,7 +3,7 @@ from datetime import datetime, date
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm, UserCreationForm
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.timezone import now
@@ -167,17 +167,17 @@ class RegistrationForm(UserCreationForm):
         return email
 
 
-class UserForm(UserChangeForm):
-    email = forms.EmailField(required=True, widget=forms.EmailInput(
-        attrs={'placeholder': "email"}))
-    first_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': "nombre"}))
-    last_name = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': "apellidos"}))
+class PasswordUpdateForm(PasswordChangeForm):
+    old_password = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "antigua contraseña"}))
+    new_password1 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "nueva contraseña"}))
+    new_password2 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "confirmación nueva contraseña"}))
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        exclude = ()
 
 
 class ProfileForm(forms.ModelForm):
@@ -249,3 +249,16 @@ class SearchHomeForm(forms.Form):
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
+
+
+class UserForm(UserChangeForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(
+        attrs={'placeholder': "email"}))
+    first_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "nombre"}))
+    last_name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "apellidos"}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
