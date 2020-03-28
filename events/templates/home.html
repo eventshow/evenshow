@@ -37,14 +37,6 @@
                             {{ form.location.errors }}
                         </label>
                     </div>
-
-                    <!--div class="col s3">
-                        <label>
-                            <a href="{% url 'event_nearby_search_home' %}"
-                                class="waves-effect waves-light btn-small location "><i
-                                    class="material-icons">location_on</i></a>
-                        </label>
-                    </div-->
                 </div>
                 <div class="row">
                     <div class="col s6">
@@ -64,10 +56,38 @@
                 <button class="waves-effect waves-light btn-large right">Buscar</button>
             </form>
 
+            <form class="" method="POST" action="{% url 'event_nearby_search_home' %}">
+                {% csrf_token %}
+                <input type="hidden" name="longitude">
+                <input type="hidden" name="latitude">
+
+                <button class="waves-effect waves-light btn-small location "><em
+                                    class="material-icons">location_on</em></button>
+            </form>
+
 
         </div>
     </div>
 </div>
+
+<script>
+window.onload = getLocation();
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert ("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+   let lat = position.coords.latitude;
+   let long = position.coords.longitude;
+   $("input[name='latitude']").val(lat);
+   $("input[name='longitude']").val(long);
+}
+</script>
 
 
 {% endblock %}

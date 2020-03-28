@@ -9,9 +9,12 @@ from django.utils.timezone import now
 
 from .models import Category, Event, Rating
 
-CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
+CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
 
 CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
+
+CHOICES_LANGUAGES = (("ESPAÑOL", "Español"), ("INGLES", "Inglés"), ("MANDARIN", "Mandarín"), ("HINDI", "Hindi"),
+                     ("POTUGUES", "Portugués"), ("ARABE", "Árabe"), ("OTROS", "Otros"))
 
 User = get_user_model()
 
@@ -34,10 +37,11 @@ class EventForm(forms.ModelForm):
                                 widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
-    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
-    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
+    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+                                 'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+                               'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-
 
     class Meta:
         model = Event
@@ -55,12 +59,10 @@ class EventForm(forms.ModelForm):
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
-            'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
+            'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
-
-
 
     def clean_capacity(self):
         capacity = self.cleaned_data.get('capacity')
@@ -75,7 +77,7 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El precio no puede ser negativo')
         return price
-    
+
     def clean(self):
         clean_data = self.cleaned_data
         start_day = self.cleaned_data.get('start_day')
@@ -84,23 +86,22 @@ class EventForm(forms.ModelForm):
 
         print(datetime.now().time())
         print(start_time)
-        if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or 
-            (isinstance(start_time, type(time)) and 
-            (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+        if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
+                                                  (isinstance(start_time, type(time)) and
+                                                   (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
-        
-        if not isinstance(start_time, type(time)): 
+        if not isinstance(start_time, type(time)):
             raise ValidationError('Inserte una hora')
         elif isinstance(end_time, type(time)) and (start_time >= end_time):
-                raise ValidationError(
-                    'El evento no puede empezar después de terminar')
+            raise ValidationError(
+                'El evento no puede empezar después de terminar')
         return clean_data
 
     def clean_end_time(self):
         end_time = self.cleaned_data.get('end_time')
-        if not isinstance(end_time, type(time)): 
+        if not isinstance(end_time, type(time)):
             raise ValidationError('Inserte una hora')
         return end_time
 
@@ -164,12 +165,6 @@ class RegistrationForm(UserCreationForm):
 
         return email
 
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
-            raise ValidationError('El usuario ya existe')
-        return username
-
 
 class SearchHomeForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
@@ -197,3 +192,11 @@ class SearchHomeForm(forms.Form):
             raise ValidationError(
                 'La fecha debe ser futura')
         return date
+
+    def clean_location(self):
+        location = self.cleaned_data.get('location')
+        location_join = location.replace(' ', '')
+
+        if not location_join.isalpha() and location:
+            raise ValidationError('Introduzca solo letras y espacios')
+        return location
