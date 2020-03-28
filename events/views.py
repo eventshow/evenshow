@@ -330,7 +330,7 @@ class EnrollmentCreateView(generic.View):
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
-            services.EnrollmentService().create(event_pk, attendee)
+            enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
                 amount=500,
@@ -338,6 +338,14 @@ class EnrollmentCreateView(generic.View):
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
             )
+
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Nueva inscripción a {0}'.format(event.title)
+            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
+                enrollment.created_by.username, event.title)
+            recipient = event.created_by.email
+
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'event/thanks.html', context)
         else:
