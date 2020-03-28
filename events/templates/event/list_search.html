@@ -7,19 +7,22 @@
             <form class="form-search" method="POST" action="#">
                 <div class="input-group input--medium">
                     <label class="label">Localización</label>
-                    <input class="input--style-1" type="text" placeholder=""  readonly="true" name="going">
+                    <input class="input--style-1" type="text" placeholder="" readonly="true" name="going">
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Fecha</label>
-                    <input class="input--style-1" type="date" name="checkin"   readonly="true" placeholder="" id="input-start">
+                    <input class="input--style-1" type="date" name="checkin" readonly="true" placeholder=""
+                        id="input-start">
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Mínimo</label>
-                    <input class="input--style-1" type="text" name="checkout"   readonly="true" placeholder="" id="input-end">
+                    <input class="input--style-1" type="text" name="checkout" readonly="true" placeholder=""
+                        id="input-end">
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Máximo</label>
-                    <input class="input--style-1" type="text" name="checkout"  readonly="true" placeholder="" id="input-end">
+                    <input class="input--style-1" type="text" name="checkout" readonly="true" placeholder=""
+                        id="input-end">
                 </div>
                 <button class="btn-submit search" type="submit">Buscar</button>
             </form>
@@ -88,8 +91,8 @@
         </div>
         <div class="col m6">
             {% if event.picture %}
-            <a href="{% url 'detail_event' event.pk %}"><img class="img-search"
-                    src=" {{ MEDIA_URL }}{{ event.picture }} " alt="event picture"></a>
+            <a href="{% url 'detail_event' event.pk %}"><img class="img-search" src="{{ event.picture }} "
+                    alt="event picture"></a>
             {% else %}
 
 
