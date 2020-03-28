@@ -532,6 +532,6 @@ class TransactionListView(generic.ListView):
     template_name = 'payment_list.html'
 
     def get_queryset(self):
-        queryset = super(TransactionListView, self).get_queryset()
+        super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
