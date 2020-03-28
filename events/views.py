@@ -390,53 +390,19 @@ class EnrollmentUpdateView(generic.View):
 
 
 @method_decorator(login_required, name='dispatch')
-class UserDetailView(generic.DetailView):
-    template_name = 'profile/detail.html'
+class PasswordUpdateView(generic.UpdateView):
+    template_name = 'profile/update_password.html'
     model = User
-    success_url = reverse_lazy('detail_profile')
-
-    def get_object(self):
-        return self.request.user
-
-
-@method_decorator(login_required, name='dispatch')
-class UserUpdateView(generic.UpdateView):
-    template_name = 'profile/update.html'
-    model = User
-    form_class = forms.UserForm
-    profile_form_class = forms.ProfileForm
+    form_class = forms.PasswordUpdateForm
     success_url = reverse_lazy('detail_profile')
 
     def get_context_data(self, **kwargs):
-        context = super(UserUpdateView,
-                        self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['form'] = self.form_class(
-                self.request.POST, instance=self.object)
-            context['profile_form'] = self.profile_form_class(
-                self.request.POST, instance=self.object.profile)
-        else:
-            context['form'] = self.form_class(instance=self.object)
-            context['profile_form'] = self.profile_form_class(
-                instance=self.object.profile)
+        context = super(PasswordUpdateView, self).get_context_data(**kwargs)
+        context['form'] = self.form_class(user=self.object)
         return context
 
     def get_object(self):
         return self.request.user
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.form_class(request.POST, instance=self.object)
-        profile_form = self.profile_form_class(
-            request.POST, instance=self.object.profile)
-
-        if form.is_valid() and profile_form.is_valid():
-            user = form.save()
-            profile_form.save(user)
-            return redirect(self.get_success_url())
-        else:
-            return self.render_to_response(
-                self.get_context_data(form=form, profile_form=profile_form))
 
 
 @method_decorator(login_required, name='dispatch')
@@ -577,6 +543,7 @@ class SignUpView(generic.CreateView):
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
 
+<<<<<<< HEAD
 class TransactionListView(generic.ListView):
     model = models.Transaction
     template_name = 'payment_list.html'
@@ -585,3 +552,54 @@ class TransactionListView(generic.ListView):
         super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
+=======
+
+@method_decorator(login_required, name='dispatch')
+class UserDetailView(generic.DetailView):
+    template_name = 'profile/detail.html'
+    model = User
+    success_url = reverse_lazy('detail_profile')
+
+    def get_object(self):
+        return self.request.user
+
+
+@method_decorator(login_required, name='dispatch')
+class UserUpdateView(generic.UpdateView):
+    template_name = 'profile/update.html'
+    model = User
+    form_class = forms.UserForm
+    profile_form_class = forms.ProfileForm
+    success_url = reverse_lazy('detail_profile')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView,
+                        self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['form'] = self.form_class(
+                self.request.POST, instance=self.object)
+            context['profile_form'] = self.profile_form_class(
+                self.request.POST, instance=self.object.profile)
+        else:
+            context['form'] = self.form_class(instance=self.object)
+            context['profile_form'] = self.profile_form_class(
+                instance=self.object.profile)
+        return context
+
+    def get_object(self):
+        return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.form_class(request.POST, instance=self.object)
+        profile_form = self.profile_form_class(
+            request.POST, instance=self.object.profile)
+
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
+            profile_form.save(user)
+            return redirect(self.get_success_url())
+        else:
+            return self.render_to_response(
+                self.get_context_data(form=form, profile_form=profile_form))
+>>>>>>> dddc524... [feat] Cambio de contraseña en template separado
