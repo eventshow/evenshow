@@ -576,12 +576,9 @@ class UserUpdateView(generic.UpdateView):
         context = super(UserUpdateView,
                         self).get_context_data(**kwargs)
         if self.request.POST:
-            context['form'] = self.form_class(
-                self.request.POST, instance=self.object)
             context['profile_form'] = self.profile_form_class(
                 self.request.POST, instance=self.object.profile)
         else:
-            context['form'] = self.form_class(instance=self.object)
             context['profile_form'] = self.profile_form_class(
                 instance=self.object.profile)
         return context

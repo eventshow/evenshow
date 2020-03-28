@@ -161,10 +161,17 @@ class RegistrationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
+        if not email:
+            raise ValidationError('El email es necesario')
+        elif User.objects.filter(email=email).exists():
             raise ValidationError('El email ya existe')
-
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            raise ValidationError('El usuario es necesario')
+        return username
 
 
 class PasswordUpdateForm(PasswordChangeForm):
@@ -262,3 +269,29 @@ class UserForm(UserChangeForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise ValidationError('El email es necesario')
+        elif User.objects.filter(email=email).exists() and email != self.initial.get('email'):
+            raise ValidationError('El email ya existe')
+        return email
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not first_name:
+            raise ValidationError('El nombre es necesario')
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not last_name:
+            raise ValidationError('El apellido/s es necesario')
+        return last_name
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            raise ValidationError('El usuario es necesario')
+        return username
