@@ -334,6 +334,20 @@ color: #979797 !important;
 	padding-bottom: 15px !important;
 }
 
+.personal-data{
+	width: 100% !important;
+	height: 60px !important;
+	margin-bottom: 30px !important;
+	color: #5D5E5E !important;
+	border: 1px solid #B6244D !important;
+	border-radius: 12px !important;
+	padding-left: 4% !important;
+	margin-left: -2.5% !important;
+	font-family: Raleway, sans-serif;
+	padding-top: 5%;
+}
+
+
 .form-errors-create{
 		font-weight: bold !important;
 		color: red !important;
@@ -407,8 +421,8 @@ color: #979797 !important;
 }
 
 #send-buttons-pw{
-	width: 93%;
-	height: 40%;
+	width: 96%;
+	height: 50%;
 	margin-top: 5% !important;
 	margin-bottom: 65px !important;
 }

@@ -1,0 +1,77 @@
+{% extends 'user/preferences.html' %}
+{% block content %}
+
+
+<div class="container">
+    <div class="title-share">
+        <div class="row">
+            <div class="grid-example col s4 offset-s2">
+                <h3 class="flow-text" id="name-host-serg">Datos personales</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="grid-example col s11 offset-s1">
+            <div class="center-form">
+                    {% csrf_token %}
+                    <div class="container-create" id="edit-profile">
+                        <div class="validate-input" id="create-event">
+                            <!-- {{ form.username }} -->
+                            <label>USUARIO</label>
+                            <div class="personal-data">
+                                <h4>Username</h4>
+                            </div>
+                        </div>
+                        <div class="validate-input" id="create-event">
+                            <label>NOMBRE</label>
+                            <div class="personal-data">
+                                <h4>Nombre</h4>
+                            </div>
+                        </div>
+                        <div class="validate-input" id="create-event">
+                            <label>APELLIDOS</label>
+                            <div class="personal-data">
+                                <h4>Apellidos</h4>
+                            </div>
+                        </div>
+                        <div class="validate-input" id="create-event">
+                            <label>FECHA DE NACIMIENTO</label>
+                            <div class="personal-data">
+                                <h4>dd/mm/yyyy</h4>
+                            </div>
+                        </div>
+                        <div class="validate-input" id="create-event">
+                            <label>EMAIL</label>
+                            <div class="personal-data">
+                                <h4>email@email.com</h4>
+                            </div>
+                        </div>
+                        <div class="validate-input" id="create-event">
+                            <label>SOBRE MÍ</label>
+                            <textarea name="description" readonly>descripcionescripciondescripcion</textarea>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="grid-example col s6">
+                                <a id="send-buttons-pw" type="button" href="{%  url 'edit_profile' %}"
+                                    class="waves-effect waves-light btn-large">Editar perfil</a>
+                            </div>
+                            <div class="grid-example col s6">
+                                <a id="send-buttons-pw" type="button" href="{%  url 'edit_password' %}"
+                                    class="waves-effect waves-light btn-large">Cambiar contraseña</a>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+           
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
