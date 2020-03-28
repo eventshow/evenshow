@@ -17,11 +17,20 @@
       width: 100%;
   }
 </style>
+<ul id="slide-out" class="sidenav sidenav-fixed preferences">
+  <li>
+    <div class="user-view">
+  <li><h2>Panel del control</h2></li>
+    <li><div class="divider"></div></li>
+  <li><h3><a href="#!">Editar datos personales</a></h3></li>
+  <li><h3><a href="#!">Mis recibos</a></h3></li>
+  <li><h3><a href="#!">Referidos</a></h3></li>
+</ul>
 <body>
-  <div class="container">
+  <div class="container" id="panel">
     <div class="title">
       <div class="col s12">
-        <h3 class="name-host">Huéspedes del evento <a id="title-name">{{event_title}}</a></h3>
+        <h3 class="name-host">Mis recibos</h3>
       </div>
     </div>
 
@@ -32,40 +41,32 @@
         <thead>
           <div class="provisional">
             <tr>
-              <th>Puntuar</th>
-              <th>Usuario</th>
-              <th>Nombre</th>
-              <th>Apellidos</th>
+              <th>Descargar</th>
+              <th>Fecha</th>
+              <th>Rol</th>
+              <th>Evento</th>
             </tr>
           </div>
         </thead>
 
-
-        {%for att in object_list %}
         <tbody>
 
           <tr>
             <td>
-              {% if att not in rated_attendees and event_has_finished %}
+              
               <button type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
-                title="Puntuar">
-                <i id="title-name" class="samll material-icons">star</i>
+                title="Descargar">
+                <i id="title-name" class="samll material-icons">file_download</i>
               </button>
-              {% elif att in rated_attendees %}
-              Ya puntuado
-              {% elif not event_has_started%}
-              No ha empezado
-              {% elif not event_has_finished%}
-              No ha terminado
-              {% endif %}
+              
             </td>
-            <td>{{att.username}}</td>
-            <td>{{att.first_name}}</td>
-            <td>{{att.last_name}}</td>
+            <td>12/12/2012</td>
+            <td>Huesped</td>
+            <td>Cata de vino</td>
           </tr>
 
         </tbody>
-        {% endfor %}
+      
       </table>
 
       {% include "pagination.html" %}

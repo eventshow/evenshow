@@ -916,6 +916,10 @@ table{
     border-radius:160px;
     border:10px solid #666;
 }
+#panel{
+	margin-left: 304px;
+}
+
 .provisional{
 	background-color: #B6244D;
 	border-radius: 15px;

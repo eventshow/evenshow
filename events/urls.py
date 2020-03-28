@@ -41,7 +41,9 @@ urlpatterns = [
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
 
-    path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
+    path('panel/recibos', TemplateView.as_view(template_name='user/myReceipts.html'),
+         name='gracias'),
+     path('panel/referidos', TemplateView.as_view(template_name='user/referred.html'),
          name='gracias'),
 
     path('preferences', views.preferences, name='preferences'),

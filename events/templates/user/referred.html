@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  body {
+     
+      background-size: cover;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+  }
+
+  main {
+      flex: 1 0 auto;
+  }
+
+  .page-footer {
+      width: 100%;
+  }
+</style>
+<ul id="slide-out" class="sidenav sidenav-fixed preferences">
+  <li>
+    <div class="user-view">
+  <li><h2>Panel del control</h2></li>
+    <li><div class="divider"></div></li>
+  <li><h3><a href="#!">Editar datos personales</a></h3></li>
+  <li><h3><a href="#!">Mis recibos</a></h3></li>
+  <li><h3><a href="#!">Referidos</a></h3></li>
+</ul>
+<body>
+  <div class="container" id="panel">
+    <div class="title">
+      <div class="col s12">
+        <h3 class="name-host">Referidos</h3>
+      </div>
+    </div>
+    <div class="container" >
+    <div class="title">
+      <div class="col s12">
+        <h3 class="name-host">Mis eventspoints <a id="title-name"> 300</a></h3>
+      </div>
+    </div>
+  </br></br></br></br>
+    <div class="title">
+      <div class="col s12">
+        <h3 class="name-host">¡Comparte este código con tus amigos y ambos obtendréis <a id="title-name"> 50</a> eventspoints!</h3>
+      </div>
+    </div>
+  </br></br></br></br></br></br>
+  <div class="row">
+    
+    <div class="col s6">
+    <div class="title">
+      
+        <h3 class="name-host"><a id="title-name"> 76ad5fq</a></h3>
+      </div>
+    </div>
+    <div class="col s4">
+      <button class="waves-effect waves-light btn">Copiar en portapapeles</button>
+    </div>
+  </div>
+
+    </div>
+</body>
+
+
+{%endblock%}
