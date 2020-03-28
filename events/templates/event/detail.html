@@ -51,7 +51,7 @@
         <h2 class="subtitle-detail">{{ object.start_time }}</h2>
     </div>
 
-  <div class="col m6 rectangle-info" id="detail-info">
+    <div class="col m6 rectangle-info" id="detail-info">
         <h2 class="title-detail">Fecha</h2>
         <h2 class="subtitle-detail">{{ object.start_day }}</h2>
     </div>
@@ -114,8 +114,7 @@
             <img class="img-comment" alt='' src="{{rating.created_by.profile.picture}}">
             <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
-                <i class="fa fa-star"><i
-                        class="rating-search">&nbsp{{rating.score }}</i></i>
+                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score }}</i></i>
             </div>
             <h3 class="comment-detail">{{rating.comment}}</h3>
         </div>
@@ -124,7 +123,7 @@
     {% include 'pagination.html' %}
 </div>
 
-    <style>
+<style>
     body {
         background-size: cover;
         display: flex;
@@ -143,4 +142,3 @@
 </style>
 
 {% endblock %}
-
