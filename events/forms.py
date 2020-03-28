@@ -207,6 +207,13 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         exclude = ('user',)
 
+    def clean_bio(self):
+        bio = self.cleaned_data.get('bio')
+        if not bio and self.initial.get('bio'):
+            raise ValidationError(
+                'Una vez introducida la bio no se puede dejar en blanco')
+        return bio
+
     def clean_birthdate(self):
         birthdate = self.cleaned_data.get('birthdate')
         if birthdate >= now().date():
@@ -277,6 +284,20 @@ class UserForm(UserChangeForm):
         elif User.objects.filter(email=email).exists() and email != self.initial.get('email'):
             raise ValidationError('El email ya existe')
         return email
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not first_name and self.initial.get('first_name'):
+            raise ValidationError(
+                'Una vez introducido el nombre no se puede dejar en blanco')
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not last_name and self.initial.get('last_name'):
+            raise ValidationError(
+                'Una vez introducido/s los apellido/s no se pueden dejar en blanco')
+        return last_name
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
