@@ -13,6 +13,9 @@ CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
 
 CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
+CHOICES_LANGUAGES = (("ESPAÑOL", "Español"), ("INGLES", "Inglés"), ("MANDARIN", "Mandarín"), ("HINDI", "Hindi"), 
+                    ("POTUGUES", "Portugués"), ("ARABE", "Árabe"), ("OTROS", "Otros"))
+
 User = get_user_model()
 
 time = datetime.now().time()
@@ -55,7 +58,7 @@ class EventForm(forms.ModelForm):
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
-            'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
+            'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
