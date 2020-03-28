@@ -59,7 +59,7 @@
             </ul>
           </li>
           <li>
-            <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{% static 'img/avatar.png' %}"
+            <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{{ user.profile.picture }}"
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
               <li><a href="{% url 'preferences' %}">Panel de control</a></li>
