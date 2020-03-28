@@ -436,9 +436,9 @@ element.style{
 	font-family: Raleway, sans-serif;
 }
 
-.location{
-	margin-top: 35px;
-	margin-left: 7px;
+.location {
+    margin-top: -638px;
+    margin-left: 336px
 }
 
 .form-eventshow select {
@@ -965,6 +965,11 @@ table{
 	margin-top: 150px;
 	padding-right: 50px;
 	padding-left: 50px;
+}
+
+.location{
+   margin-top: -635px;
+   margin-left: 257px;
 }
 
 
