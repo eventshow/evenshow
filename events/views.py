@@ -283,11 +283,6 @@ class EventSearchNearbyView(generic.View, MultipleObjectMixin):
 
         return render(request, self.template_name, context)
 
-    '''def get_context_data(self, **kwargs):
-        context = super(EventSearchNearbyView, self).get_context_data(**kwargs)
-        context['length'] = len(self.get_queryset())
-        return context'''
-
     def get_queryset(self):
         queryset = super(EventSearchNearbyView, self).get_queryset()
         latitude = self.request.POST.get('latitude')
