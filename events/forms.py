@@ -197,3 +197,44 @@ class SearchHomeForm(forms.Form):
             raise ValidationError(
                 'La fecha debe ser futura')
         return date
+
+
+class SearchFilterForm(forms.Form):
+    location = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "Localidad"}))
+    date = forms.DateField(
+        required=False,
+        widget=forms.DateInput(
+            format=settings.DATE_INPUT_FORMATS[0],
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=settings.DATE_INPUT_FORMATS
+    )
+    '''start_hour = forms.TimeField(
+        required=False,
+        widget=forms.TimeInput(
+            format='%H:%M',
+            attrs={'placeholder': "hh:mm"}
+        ),
+        input_formats=('%H:%M',)
+    )'''
+
+    max_price = forms.DecimalField(min_value=0.00, decimal_places=2)
+
+    min_price = forms.DecimalField(min_value=0.00, decimal_places=2)
+
+    def clean_date(self):
+        date = self.cleaned_data.get('date')
+        if date and date < now().date():
+            raise ValidationError(
+                'La fecha debe ser futura')
+        return date
+
+    def clean_price(self):
+        min_price = self.cleaned_data.get('min_price')
+        max_price = self.cleaned_data.get('max_price')
+        if min_price >= max_price:
+            raise ValidationError(
+                'El precio mínimo no puede ser mayor o igual que el precio máximo')
+        return min_price, max_price
+
