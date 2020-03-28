@@ -24,6 +24,7 @@ User = get_user_model()
 def preferences(request):
     return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
 
+
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
@@ -39,7 +40,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour,
         }
-                            )
+        )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -111,13 +112,22 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         user_can_enroll = True
 
         if user.is_authenticated:
-            user_can_enroll = services.EnrollmentService().user_can_enroll(
-                event.pk, user)
+            context['user_is_enrolled'] = services.EnrollmentService(
+            ).user_is_enrolled(event.pk, user)
+            context['user_is_old_enough'] = services.EnrollmentService(
+            ).user_is_old_enough(event.pk, user)
+            context['user_is_owner'] = services.EventService(
+            ).user_is_owner(user, event.pk)
+
+            user_can_enroll = not context.get('user_is_enrolled') and context.get(
+                'user_is_old_enough') and not context.get('user_is_owner')
 
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
         context['gmaps_key'] = settings.GOOGLE_API_KEY
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        context['event_is_full'] = event_is_full
+
         context['user_can_enroll'] = not event_is_full and user_can_enroll
 
         return context
@@ -202,7 +212,8 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
-        context['enroll_valid'] = selectors.EventSelector().event_enrolled_accepted(self.request.user)
+        context['enroll_valid'] = selectors.EventSelector(
+        ).event_enrolled_accepted(self.request.user)
         print(context['enroll_valid'])
         return context
 
@@ -290,7 +301,8 @@ class EventSearchNearbyView(generic.View, MultipleObjectMixin):
         queryset = super(EventSearchNearbyView, self).get_queryset()
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
-        queryset = services.EventService().nearby_events_distance(self, 50000, latitude, longitude)
+        queryset = services.EventService().nearby_events_distance(
+            self, 50000, latitude, longitude)
         return queryset
 
 
