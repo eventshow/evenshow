@@ -318,6 +318,15 @@ color: #979797 !important;
 	border: 1px solid #B6244D;
 	padding: 25px 40px 70px; 
 }
+.form-eventshow-password {
+	background: #FFF;
+	width: 85%;
+	max-width: 800px;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 25px 40px 70px; 
+	padding-bottom: 5%;
+}
 
 #edit-profile{
 	padding-left: 5% !important;
@@ -350,6 +359,14 @@ color: #979797 !important;
 	padding-bottom: -5% !important;
 }
 
+
+.container-password {
+	background: #FFF;
+	margin-top: 4%;
+	margin-left: 10%;
+	margin-bottom: 7%;
+	padding-bottom: -5% !important;
+}
 .event-lang{
 	margin-top: 3.5%;
 }
@@ -382,6 +399,17 @@ color: #979797 !important;
 }
 
 #send-buttons{
+	margin-bottom: 65px !important;
+}
+
+#send-buttons-conf{
+	margin-bottom: 3% !important;
+}
+
+#send-buttons-pw{
+	width: 93%;
+	height: 40%;
+	margin-top: 5% !important;
 	margin-bottom: 65px !important;
 }
 
@@ -426,6 +454,12 @@ color: #979797 !important;
 	margin-left: 35px !important;
 	margin-bottom: 2% !important;
 	padding-bottom: 2% !important;
+}
+
+#edit-password{
+	margin-top: 5% !important;
+	padding-right: 10% !important;
+	
 }
 
 
@@ -849,6 +883,8 @@ label {
 	margin-top: 10px;
 	margin-bottom: 4%;
 	color: #5D5E5E;
+	max-width: 400px;
+	width: auto;
 }
 
 
