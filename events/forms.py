@@ -13,8 +13,8 @@ CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
 
 CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
-CHOICES_LANGUAGES = (("ESPAÑOL", "Español"), ("INGLES", "Inglés"), ("MANDARIN", "Mandarín"), ("HINDI", "Hindi"), 
-                    ("POTUGUES", "Portugués"), ("ARABE", "Árabe"), ("OTROS", "Otros"))
+CHOICES_LANGUAGES = (("ESPAÑOL", "Español"), ("INGLES", "Inglés"), ("MANDARIN", "Mandarín"), ("HINDI", "Hindi"),
+                     ("POTUGUES", "Portugués"), ("ARABE", "Árabe"), ("OTROS", "Otros"))
 
 User = get_user_model()
 
@@ -37,10 +37,11 @@ class EventForm(forms.ModelForm):
                                 widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
-    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
-    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
+    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+                                 'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+                               'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-
 
     class Meta:
         model = Event
@@ -63,8 +64,6 @@ class EventForm(forms.ModelForm):
             'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
 
-
-
     def clean_capacity(self):
         capacity = self.cleaned_data.get('capacity')
         if capacity < 1:
@@ -78,7 +77,7 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El precio no puede ser negativo')
         return price
-    
+
     def clean(self):
         clean_data = self.cleaned_data
         start_day = self.cleaned_data.get('start_day')
@@ -87,23 +86,22 @@ class EventForm(forms.ModelForm):
 
         print(datetime.now().time())
         print(start_time)
-        if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or 
-            (isinstance(start_time, type(time)) and 
-            (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+        if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
+                                                  (isinstance(start_time, type(time)) and
+                                                   (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
-        
-        if not isinstance(start_time, type(time)): 
+        if not isinstance(start_time, type(time)):
             raise ValidationError('Inserte una hora')
         elif isinstance(end_time, type(time)) and (start_time >= end_time):
-                raise ValidationError(
-                    'El evento no puede empezar después de terminar')
+            raise ValidationError(
+                'El evento no puede empezar después de terminar')
         return clean_data
 
     def clean_end_time(self):
         end_time = self.cleaned_data.get('end_time')
-        if not isinstance(end_time, type(time)): 
+        if not isinstance(end_time, type(time)):
             raise ValidationError('Inserte una hora')
         return end_time
 
@@ -166,12 +164,6 @@ class RegistrationForm(UserCreationForm):
             raise ValidationError('El email ya existe')
 
         return email
-
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
-            raise ValidationError('El usuario ya existe')
-        return username
 
 
 class SearchHomeForm(forms.Form):
