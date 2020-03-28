@@ -9,7 +9,7 @@ from django.utils.timezone import now
 
 from .models import Category, Event, Rating
 
-CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
+CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
 
 CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
 
