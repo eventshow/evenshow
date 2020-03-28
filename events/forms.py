@@ -38,9 +38,9 @@ class EventForm(forms.ModelForm):
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
     start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
-                                 'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+        'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
     end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
-                               'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
+        'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
 
     class Meta:
@@ -61,7 +61,8 @@ class EventForm(forms.ModelForm):
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
+            'extra_info': forms.TextInput(
+                attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
 
     def clean_capacity(self):
@@ -88,7 +89,8 @@ class EventForm(forms.ModelForm):
         print(start_time)
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
                                                   (isinstance(start_time, type(time)) and
-                                                   (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+                                                   (
+                                                           start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
@@ -200,3 +202,14 @@ class SearchHomeForm(forms.Form):
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
+
+
+class FeedbackForm(forms.Form):
+    comment = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "comentario"}))
+
+    email = forms.EmailField(required=True, widget=forms.EmailInput(
+        attrs={'placeholder': "email"}))
+
+    name = forms.CharField(required=True, widget=forms.TextInput(
+        attrs={'placeholder': "nombre"}))

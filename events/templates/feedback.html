@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+            <form class="form-eventshow" method="POST" action="{% url 'feedback' %}">
+{% csrf_token %}
+                    <br><br><br>
+                    {{form.name}}
+                    <br>
+                    {{form.email}}
+
+                    <br>
+                    {{form.comment}}
+                    <br>
+
+                 <button class="waves-effect waves-light btn-large right">enviar</button>
+                </form>
+
+
+{% endblock %}

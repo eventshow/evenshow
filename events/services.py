@@ -1,20 +1,42 @@
-import googlemaps
-import pytz
-
 from collections import OrderedDict
-from datetime import date, datetime, time
+from datetime import date, datetime
 from operator import itemgetter
 
+import googlemaps
+import pytz
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
-from django.utils.timezone import now
+from django.core.mail import send_mail
 
 from . import models
 from . import selectors
 from .models import Event
 
 User = get_user_model()
+
+
+class EmailService:
+    def send_email(self, subject: str, body: str, event_pk: int) -> None:
+        recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+        recipient_list = list(recipient_list_queryset.values_list('email', flat=True))
+        send_mail(
+            subject,
+            body,
+            settings.EMAIL_HOST_USER,
+            recipient_list,
+            fail_silently=False,
+        )
+
+    def send_email_feedback(self, subject: str, body: str) -> None:
+        list = [settings.EMAIL_HOST_USER]
+        send_mail(
+            subject,
+            body,
+            settings.EMAIL_HOST_USER,
+            list,
+            fail_silently=False,
+        )
 
 
 class EnrollmentService:
@@ -84,7 +106,7 @@ class EventService():
 
         return res
 
-    def nearby_events_distance(self, self_view, distance,latitude,longitude):
+    def nearby_events_distance(self, self_view, distance, latitude, longitude):
         events = Event.objects.filter(start_day__gte=date.today())
 
         events_cleaned = []
@@ -102,7 +124,7 @@ class EventService():
 
         if events_cleaned:
             events_distances_oredered = self.common_method_distance_order(
-                events_cleaned,latitude,longitude)
+                events_cleaned, latitude, longitude)
 
             for event, eventdistance in events_distances_oredered.items():
                 if eventdistance <= int(distance):
@@ -147,7 +169,7 @@ class EventService():
 
         return results
 
-    def common_method_distance_order(self, events,latitude,longitude):
+    def common_method_distance_order(self, events, latitude, longitude):
         gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
 
         latitude_user = latitude
@@ -187,6 +209,7 @@ class EventService():
     def exist_event(self, event_id: int) -> bool:
         exist = models.Event.objects.filter(id=event_id).exists()
         return exist
+
 
 class ProfileService():
     def create(self, user: User, birthdate: date):
@@ -256,6 +279,7 @@ class PaymentService():
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
         return round(res - amount_host)
+
 
 class UserService:
     def exist_user(self, user_id: int) -> bool:

@@ -45,4 +45,6 @@ urlpatterns = [
          name='gracias'),
 
     path('preferences', views.preferences, name='preferences'),
+
+    path('feedback', views.FeedbackView.as_view(), name='feedback'),
 ]

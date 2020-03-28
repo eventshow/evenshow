@@ -514,3 +514,25 @@ class SignUpView(generic.CreateView):
         services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
+
+
+class FeedbackView(generic.FormView):
+    form_class = forms.FeedbackForm
+    template_name = 'feedback.html'
+
+
+    def get_success_url(self):
+        request = self.request.POST
+
+        subject = 'Feedback for: ' + request['name'] + ', ' + request['email']
+        body = request['comment']
+        services.EmailService().send_email_feedback(subject, body)
+        return redirect('home')
+
+    '''def form_valid(self, form):
+        print(form.id_name)
+        subject = 'Feedback for: '+form.name+', '+ form.email
+
+        services.EmailService.send_email_feedback(subject, form.comment)
+        return super(FeedbackView, self).form_valid(form)
+'''
