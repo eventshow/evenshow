@@ -188,7 +188,7 @@ class PasswordUpdateForm(PasswordChangeForm):
 
 
 class ProfileForm(forms.ModelForm):
-    bio = forms.CharField(required=True, widget=forms.Textarea(
+    bio = forms.CharField(required=False, widget=forms.Textarea(
         attrs={'placeholder': "bio"}))
     birthdate = forms.DateField(
         required=True,
@@ -261,9 +261,9 @@ class SearchHomeForm(forms.Form):
 class UserForm(UserChangeForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(
         attrs={'placeholder': "email"}))
-    first_name = forms.CharField(required=True, widget=forms.TextInput(
+    first_name = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "nombre"}))
-    last_name = forms.CharField(required=True, widget=forms.TextInput(
+    last_name = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "apellidos"}))
 
     class Meta:
@@ -277,18 +277,6 @@ class UserForm(UserChangeForm):
         elif User.objects.filter(email=email).exists() and email != self.initial.get('email'):
             raise ValidationError('El email ya existe')
         return email
-
-    def clean_first_name(self):
-        first_name = self.cleaned_data.get('first_name')
-        if not first_name:
-            raise ValidationError('El nombre es necesario')
-        return first_name
-
-    def clean_last_name(self):
-        last_name = self.cleaned_data.get('last_name')
-        if not last_name:
-            raise ValidationError('El apellido/s es necesario')
-        return last_name
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
