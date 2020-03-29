@@ -23,6 +23,16 @@
     }
 </style>
 
+    {% if form.errors %}
+
+        <style>
+        .location{
+            margin-top: -152%;
+        }
+        </style>
+
+    {% endif %}
+
 <div class="container">
     <div class="row">
         <div class="col s6 form-home">
@@ -33,22 +43,28 @@
                 <div class="row">
                     <div class="col s9 location-prov">
                         <label>UBICACIÓN
+                            <div class="form-errors">
                             {{ form.location }}
                             {{ form.location.errors }}
+                            </div>
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s6">
                         <label>FECHA
+                            <div class="form-errors">
                             {{ form.date }}
                             {{ form.date.errors }}
+                            </div>
                         </label>
                     </div>
                     <div class="col s6">
                         <label>HORA
+                            <div class="form-errors">
                             {{ form.start_hour }}
                             {{ form.start_hour.errors }}
+                            </div>
                         </label>
                     </div>
                 </div>
