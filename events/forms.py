@@ -137,7 +137,7 @@ class RegistrationForm(UserCreationForm):
         attrs={'placeholder': "contraseña"}))
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "confirmación contraseña"}))
-    friend_token = forms.CharField(required=False, max_length=8, widget=forms.TextInput(
+    friend_token = forms.CharField(required=False, max_length=9, widget=forms.TextInput(
         attrs={'placeholder': "código amigo"}))
 
     class Meta:

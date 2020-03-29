@@ -206,8 +206,9 @@ class EventService():
 
 
 class ProfileService():
-    def create(self, user: User, birthdate: date):
-        profile = models.Profile.objects.create(user=user, birthdate=birthdate)
+    def create(self, user: User, birthdate: date, points: int):
+        profile = models.Profile.objects.create(
+            user=user, birthdate=birthdate, eventpoints=points)
         profile.save()
 
 
@@ -254,9 +255,7 @@ class RatingService:
 
 
 class PaymentService():
-
-    def application_fee_amount(self, amount_host: int) -> int:
-
+    def fee(self, amount_host: int) -> int:
         res = 0
         const_stripe = 25
         var_stripe = 1.029
@@ -276,6 +275,21 @@ class PaymentService():
 
 
 class UserService:
+    def add_bonus(self, user: User, price: int):
+        points = (float(price) *
+                  settings.EVENTPOINT_BONUS) // settings.EVENTPOINT_VALUE
+        user.profile.eventpoints += points
+        user.profile.save()
+
+    def add_eventpoints(self, token: str) -> int:
+        points = 0
+        user = selectors.UserSelector().with_token(token)
+        if user:
+            points = settings.EVENTPOINTS
+            user.profile.eventpoints += points
+            user.profile.save()
+        return points
+
     def exist_user(self, user_id: int) -> bool:
         exist = models.User.objects.filter(id=user_id).exists()
         return exist

@@ -26,7 +26,6 @@ def get_sentinel_user():
 
 
 class Profile(models.Model):
-    EVENTPOINT_VALUE = 0.005
     PROFILE_IMAGE_FILES = [
         'https://i.imgur.com/DHM869r.png',
         'https://i.imgur.com/nPuyNCw.png',

@@ -380,6 +380,8 @@ class EnrollmentCreateView(generic.View):
             )
 
             event = models.Event.objects.get(pk=event_pk)
+            services.UserService().add_bonus(attendee, event.price)
+
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
                 enrollment.created_by.username, event.title)
@@ -601,7 +603,9 @@ class SignUpView(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         birthdate = form.cleaned_data.get('birthdate')
-        services.ProfileService().create(user, birthdate)
+        friend_token = form.cleaned_data.get('friend_token')
+        points = services.UserService().add_eventpoints(friend_token)
+        services.ProfileService().create(user, birthdate, points)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
 

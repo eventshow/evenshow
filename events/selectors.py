@@ -82,6 +82,9 @@ class UserSelector:
     def rated_on_event(self, event_pk: int) -> QuerySet:
         return User.objects.filter(reviewed_ratings__event=event_pk)
 
+    def with_token(self, token: str) -> User:
+        return User.objects.filter(profile__token=token).first()
+
 
 class TransactionSelector:
     def my_transaction(self, user: User) -> QuerySet:
