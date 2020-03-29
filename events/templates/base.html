@@ -69,8 +69,9 @@
             <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{{ user.profile.picture }}"
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
-              <li><a href="{% url 'detail_profile' %}">{{ user.username }}</a></li>
-                <li><a href="{% url 'receipts' %}">Panel de control</a></li>
+              
+              <li><a href="{% url 'personal_data' %}"> {{ user.username }} </a></li>
+                <li><a href="{% url 'personal_data' %}">Panel de control</a></li>
               <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
           </li>
@@ -88,6 +89,7 @@
               alt="Avatar" class="avatar"></a></li>
         <li><a href="{% url 'detail_profile' %}">{{ user.username }}</a></li>
                                 <li><a href="{% url 'receipts' %}">Panel de control</a></li>
+
 
         <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
         {% endif %}

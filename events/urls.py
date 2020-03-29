@@ -54,6 +54,12 @@ urlpatterns = [
     path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
 
+
+     path('profile/', TemplateView.as_view(template_name='profile/personal_data.html'), name='personal_data'),
+
+    path('edit/profile/', TemplateView.as_view(template_name='profile/edit_profile.html'), name='edit_profile'),
+
+    path('edit/password/', TemplateView.as_view(template_name='profile/edit_password.html'), name='edit_password'),
     path('bills', TemplateView.as_view(template_name='user/bills.html'),
          name='bills'),
     path('referred', TemplateView.as_view(template_name='user/referred.html'),
@@ -62,6 +68,9 @@ urlpatterns = [
 
     path('not_impl', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
+
+    path('404_not_found', TemplateView.as_view(template_name='404.html'),
+         name='404_not_found'),
 
 ]
 

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+​{% load static %}
+{% block content %}
+​<style>
+  body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+  }
+
+  .visible{
+      background-color: white;
+      border-radius: 15px ;
+      padding-right: 20%;
+  }
+
+  main {
+      flex: 1 0 auto;
+  }
+
+  .page-footer {
+      width: 100%;
+  }
+</style>
+
+    <img alt="" src="{%  static 'css/images/404.png'%}">
+
+
+
+​
+{% endblock %}

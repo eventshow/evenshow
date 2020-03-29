@@ -22,8 +22,29 @@ EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
 
+
+def not_impl(request):
+    return render(request, 'not_impl.html', {'STATIC_URL': settings.STATIC_URL})
+
+def error_not_found(request):
+    return render(request, '404.html', {'STATIC_URL': settings.STATIC_URL})
+
+@method_decorator(login_required, name='dispatch')
+class PointsView(generic.TemplateView):
+    template_name = 'user/points.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PointsView, self).get_context_data(**kwargs)
+        profile = models.Profile.objects.get(user=self.request.user)
+        points = profile.eventpoints
+        token_des = profile.token
+        context['points'] = points
+        context['token'] = token_des
+        return context
+
 def handler_404(request, exception):
     return page_not_found(request, exception, template_name='not_impl.html')
+
 
 
 class HomeView(generic.FormView):
