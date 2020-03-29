@@ -103,6 +103,7 @@
 
 #nav {
 	background-color: #B7234D;
+	z-index: -1 !important;
 }
 
 .sh-eventshow{
@@ -204,22 +205,37 @@ element.style{
 	width: 150px;
 }
 
-.preferences{
-	margin-top: 4% !important;
-}
-
-
-.preferences h2{
+.control-panel{
+	z-index: -100 !important;
 	color: white !important;
-	text-align: center;
-	margin-bottom: 15%;
+    text-align: center;
+    margin-bottom: 12%;
 }
+
+.control-panel h2{
+	margin-top: 22%;
+	margin-bottom: 10%;
+}
+
+.preferences{
+	color: white !important;
+	margin-top: 11%;
+	border: none;
+}
+
+
+.preferences h3{
+	z-index: 100 !important;
+}
+
 
 .preferences a{
 	color: white !important;
 	align-content: center !important;
 	margin-left: 5%;
 	margin-top: 10%;
+	z-index: 100 !important;
+
 }
 
 .preferences a:hover {

@@ -21,20 +21,17 @@
   }
 </style>
 
-<ul id="slide-out" class="sidenav sidenav-fixed preferences">
+<ul id="slide-out" class="sidenav sidenav-fixed control-panel  ">
   <li>
     <div class="user-view">
   <li>
-    <h2><a href="{% url 'detail_profile' %}">Panel del control</a></h2>
+    <h2>Panel del control</h2>
   </li>
+</ul>
+
+<ul id="slide-out" class="sidenav sidenav-fixed preferences">
   <li>
-    <div class="divider"></div>
-  </li>
-  <li>
-    <h3><a href="{% url 'update_profile' %}">Editar datos personales</a></h3>
-  </li>
-  <li>
-    <h3><a href="{% url 'update_password' %}">Cambiar contraseña</a></h3>
+    <h3><a href="{% url 'detail_profile' %}">Datos personales</a></h3>
   </li>
   <li>
     <h3><a href="{% url 'receipts' %}">Mis recibos</a></h3>
@@ -44,17 +41,6 @@
   </li>
 </ul>
 
-{{object.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}
-{{object.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}
-{{object.first_name}}
-{{object.last_name}}
-{{object.profile.birthdate}}
-{{object.profile.picture}}
-{{object.username}}
-{{object.email}}
-{{object.profile.token}}
-{{object.profile.bio}}
-{{object.profile.location}}
 
 {% endblock %}
 
