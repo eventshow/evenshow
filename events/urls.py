@@ -59,9 +59,9 @@ urlpatterns = [
     path('referred', TemplateView.as_view(template_name='user/referred.html'),
          name='referred'),
 
-    path('profile/eventpoints', views.PointsView.as_view(), name='points'),
 
     path('not_impl', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
 
 ]
+

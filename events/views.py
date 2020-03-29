@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
+from django.views.defaults import page_not_found
 from django.views.generic.list import MultipleObjectMixin
 
 from . import forms
@@ -21,21 +22,8 @@ EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
 
-def not_impl(request):
-    return render(request, 'not_impl.html', {'STATIC_URL': settings.STATIC_URL})
-
-@method_decorator(login_required, name='dispatch')
-class PointsView(generic.TemplateView):
-    template_name = 'user/points.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(PointsView, self).get_context_data(**kwargs)
-        profile = models.Profile.objects.get(user=self.request.user)
-        points = profile.eventpoints
-        token_des = profile.token
-        context['points'] = points
-        context['token'] = token_des
-        return context
+def handler_404(request, exception):
+    return page_not_found(request, exception, template_name='not_impl.html')
 
 
 class HomeView(generic.FormView):
@@ -188,7 +176,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -262,7 +250,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -361,7 +349,7 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=500,
+                amount=event.price*100,
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
@@ -373,7 +361,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            # services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'event/thanks.html', context)
         else:
@@ -424,8 +412,7 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            services.EmailService().send_email(
-                subject, body, [recipient.email])
+            # services.EmailService().send_email(subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
