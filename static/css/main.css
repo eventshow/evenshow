@@ -793,6 +793,7 @@ label {
 	bottom: 10%; 
 	width: 800px;
 	height: 10px;
+	margin-left: -2% !important;
 	}
 
 .container#square {
@@ -821,6 +822,24 @@ label {
 	margin-top: 2%;
 	color: #5D5E5E;
 }
+
+#name-ref {
+	height: 40px;
+	max-width: 550px;
+	left: auto;
+	font-family: Raleway, sans-serif;
+	font-size: 34px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	margin-top: 2%;
+	color: #5D5E5E;
+	margin-left: -10%;
+}
+
+
 #copy{
 	font-size: 11px;
     font-weight: bold;
