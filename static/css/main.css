@@ -786,6 +786,15 @@ label {
 	margin-top: 5%;
 }
 
+#eventpoint{
+	font-style: italic;
+	font-family: Raleway, sans-serif;
+	position: absolute; 
+	bottom: 10%; 
+	width: 800px;
+	height: 10px;
+	}
+
 .container#square {
 	width: 600px;
 	margin: auto;
@@ -938,7 +947,7 @@ table{
     border:10px solid #666;
 }
 #panel{
-	margin-left: 304px;
+	margin-left: 353px;
 }
 
 .provisional{
