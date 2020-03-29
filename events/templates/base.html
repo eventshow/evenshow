@@ -70,7 +70,7 @@
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
               <!-- <li><a href="{% url 'detail_profile' %}">Panel de control</a></li> -->
-              <li><a href="{% url 'detail_profile' %}"">{{ user_name }}</a></li>
+              <li><a href="{% url 'detail_profile' %}"">{{ user.username }}</a></li>
               <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
           </li>
@@ -86,8 +86,8 @@
 
         <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img src="{{ user.profile.picture }}"
               alt="Avatar" class="avatar"></a></li>
-        <li><a href="#!">Preferencias</a></li>
-        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+        <li><a href="{% url 'detail_profile' %}"">{{ user.username }}</a></li>
+        <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
         {% endif %}
         {% if not user.is_authenticated %}
         <li> <img class="logo-movil" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow"></li>
