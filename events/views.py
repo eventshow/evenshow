@@ -24,10 +24,34 @@ User = get_user_model()
 def preferences(request):
     return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
 
+@method_decorator(login_required, name='dispatch')
+class PointsView(generic.TemplateView):
+    template_name = 'user/points.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PointsView, self).get_context_data(**kwargs)
+        profile = models.Profile.objects.get(user=self.request.user)
+        points = profile.eventpoints
+        token_des = profile.token
+        context['points'] = points
+        context['token'] = token_des
+        return context
+
 
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        if not self.request.user.is_anonymous:
+            profile = models.Profile.objects.get(user_id=self.request.user.id)
+            context['bio'] = not profile.bio
+            context['first_name'] = not self.request.user.first_name
+            context['last_name'] = not self.request.user.last_name
+            context['user_name'] = self.request.user.username
+            context['user_first_name'] = self.request.user.first_name
+        return context
 
     def get_success_url(self):
         request = self.request.POST
@@ -90,7 +114,7 @@ class AttendeePaymentView(generic.View):
 class EventDetailView(generic.DetailView, MultipleObjectMixin):
     model = models.Event
     template_name = 'event/detail.html'
-    paginate_by = 5
+    paginate_by = 3
 
     def get(self, request, *args, **kwargs):
         if services.EventService().count(kwargs.get('pk')):
@@ -169,6 +193,13 @@ class EventDeleteView(generic.DeleteView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento cancelado'
+            body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(
+                recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -212,9 +243,9 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
+
         context['enroll_valid'] = selectors.EventSelector(
         ).event_enrolled_accepted(self.request.user)
-        print(context['enroll_valid'])
         return context
 
     def get_queryset(self):
@@ -235,6 +266,14 @@ class EventUpdateView(generic.UpdateView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
+            event_db = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento actualizado'
+            body = 'El evento ' + event_db.title + \
+                'en el que estás inscrito ha sido actualizado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(
+                recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -330,7 +369,7 @@ class EnrollmentCreateView(generic.View):
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
-            services.EnrollmentService().create(event_pk, attendee)
+            enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
                 amount=500,
@@ -338,6 +377,14 @@ class EnrollmentCreateView(generic.View):
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
             )
+
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Nueva inscripción a {0}'.format(event.title)
+            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
+                enrollment.created_by.username, event.title)
+            recipient = event.created_by.email
+
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'event/thanks.html', context)
         else:
@@ -372,11 +419,26 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
 
         if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
+            status = request.POST.get('status')
             services.EnrollmentService().update(
-                enrollment_pk, host, request.POST.get('status'))
-            event_pk = models.Enrollment.objects.get(pk=enrollment_pk).event.pk
+                enrollment_pk, host, status)
+            event = models.Enrollment.objects.get(pk=enrollment_pk).event
 
-            return redirect('list_enrollments', event_pk)
+            if status == 'ACCEPTED':
+                status_txt = 'aceptada'
+            else:
+                status_txt = 'rechazada'
+
+            subject = 'Solicitud para {0} {1}'.format(event.title, status_txt)
+            body = 'Tu solicitud en Eventshow para el evento {0} ha sido {1}'.format(
+                event.title, status_txt)
+            recipient = models.Enrollment.objects.get(
+                pk=enrollment_pk).created_by
+
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
+
+            return redirect('list_enrollments', event.pk)
         else:
             return redirect('/')
 
@@ -387,6 +449,22 @@ class EnrollmentUpdateView(generic.View):
         return services.EnrollmentService().host_can_update(host,
                                                             enrollment_pk) and services.EnrollmentService().is_pending(
             enrollment_pk) and not event_has_started
+
+
+@method_decorator(login_required, name='dispatch')
+class PasswordUpdateView(generic.UpdateView):
+    template_name = 'profile/update_password.html'
+    model = User
+    form_class = forms.PasswordUpdateForm
+    success_url = reverse_lazy('detail_profile')
+
+    def get_context_data(self, **kwargs):
+        context = super(PasswordUpdateView, self).get_context_data(**kwargs)
+        context['form'] = self.form_class(user=self.object)
+        return context
+
+    def get_object(self):
+        return self.request.user
 
 
 @method_decorator(login_required, name='dispatch')
@@ -526,3 +604,60 @@ class SignUpView(generic.CreateView):
         services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
+
+
+class TransactionListView(generic.ListView):
+    model = models.Transaction
+    template_name = 'payment_list.html'
+
+    def get_queryset(self):
+        super(TransactionListView, self).get_queryset()
+        queryset = selectors.TransactionSelector().my_transaction(self.request.user)
+        return queryset
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDetailView(generic.DetailView):
+    template_name = 'profile/detail.html'
+    model = User
+    success_url = reverse_lazy('detail_profile')
+
+    def get_object(self):
+        return self.request.user
+
+
+@method_decorator(login_required, name='dispatch')
+class UserUpdateView(generic.UpdateView):
+    template_name = 'profile/update.html'
+    model = User
+    form_class = forms.UserForm
+    profile_form_class = forms.ProfileForm
+    success_url = reverse_lazy('detail_profile')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView,
+                        self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['profile_form'] = self.profile_form_class(
+                self.request.POST, instance=self.object.profile)
+        else:
+            context['profile_form'] = self.profile_form_class(
+                instance=self.object.profile)
+        return context
+
+    def get_object(self):
+        return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.form_class(request.POST, instance=self.object)
+        profile_form = self.profile_form_class(
+            request.POST, instance=self.object.profile)
+
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
+            profile_form.save(user)
+            return redirect(self.get_success_url())
+        else:
+            return self.render_to_response(
+                self.get_context_data(form=form, profile_form=profile_form))
