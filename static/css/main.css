@@ -356,20 +356,38 @@ color: #979797 !important;
 	border: 1px solid #B6244D;
 	padding: 25px 40px 70px; 
 }
+
+.form-eventshow-edit {
+	background: #FFF;
+	width: 85%;
+	margin-top: 3%;
+	max-width: 800px;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 25px 40px 70px; 
+	align-items: center;
+	align-content: center;
+	margin-left: 25%;
+}
+
 .form-eventshow-password {
 	background: #FFF;
 	width: 85%;
 	max-width: 800px;
 	border-radius: 15px;
-	border: 1px solid #B6244D;
+	border: 1px solid #FFF;
 	padding: 25px 40px 70px; 
 	padding-bottom: 5%;
+	align-items: center;
+	align-content: center;
+	margin-left: 25%;
 }
 
 #edit-profile{
 	padding-left: 5% !important;
 	padding-right: 10% !important;
-	padding-bottom: 15px !important;
+	padding-bottom: 3% !important;
+	padding-top: 7% !important;
 }
 
 .personal-data{
@@ -400,8 +418,8 @@ color: #979797 !important;
 
 .container-create {
 	background: #FFF;
-	margin-top: 4%;
-	margin-left: 10%;
+	margin-top: 3%;
+	margin-left: 25%;
 	margin-bottom: 7%;
 	width: 90%;
 	max-width: 600px;
@@ -414,8 +432,7 @@ color: #979797 !important;
 
 .container-password {
 	background: #FFF;
-	margin-top: 4%;
-	margin-left: 10%;
+	margin-top: 2%;
 	margin-bottom: 7%;
 	padding-bottom: -5% !important;
 }
@@ -454,16 +471,36 @@ color: #979797 !important;
 	margin-bottom: 65px !important;
 }
 
+#send-buttons-data{
+	margin-bottom: 3% !important;
+	margin-left: 55% !important;
+	margin-top: 93% !important;
+}
+
 #send-buttons-conf{
 	margin-bottom: 3% !important;
 }
 
 #send-buttons-pw{
-	width: 96%;
-	height: 50%;
-	margin-top: 5% !important;
+	width: 93%;
+	height: 40%;
+	margin-left:30%;
+	margin-right: 5%;
+	margin-top: -8% !important;
 	margin-bottom: 65px !important;
+	text-align: center !important;
 }
+
+#send-buttons-pw-conf{
+	width: 100%;
+	height: 40%;
+	margin-left: 60%;
+	margin-top: -8% !important;
+	padding-bottom: 10%;
+	margin-bottom: 65px !important;
+	align-content: center;
+}
+
 
 #del-left{
 	margin-top: 25%;
@@ -509,11 +546,25 @@ color: #979797 !important;
 }
 
 #edit-password{
-	margin-top: 5% !important;
-	padding-right: 10% !important;
+	margin-top: 3% !important;
+	padding-right: 20% !important;
+
 	
 }
 
+.description{
+	width: 105% !important;
+	height: auto;
+	margin-bottom: 5% !important;
+	color: #5D5E5E !important;
+	border: 1px solid #FFF !important;
+	border-radius: 12px !important;
+	padding-left: 4% !important;
+	margin-left: -2.5% !important;
+	font-family: Raleway, sans-serif;
+	font-size: 115% !important;
+	
+}
 
 
 #create-event input{
@@ -530,10 +581,10 @@ color: #979797 !important;
 
 #create-event textarea{
 	width: 105% !important;
-	height: 160px !important;
-	margin-bottom: 30px !important;
+	height: auto;
 	color: #5D5E5E !important;
-	border: 1px solid #B6244D !important;
+	margin-bottom: -25% !important;
+	border: 1px solid #B6244D;
 	border-radius: 12px !important;
 	padding-left: 4% !important;
 	margin-left: -2.5% !important;
@@ -826,6 +877,11 @@ label {
 	margin-left: -9%;
 	margin-bottom: 2%;
 }
+.title-share-edit {
+	margin-top: 5%;
+	margin-left: -3%;
+	margin-bottom: 2%;
+}
 
 #title-delete{
 	max-width: 1149px;
@@ -926,7 +982,7 @@ label {
 #name-host-serg {
 	height: 40px;
 	font-family: Raleway, sans-serif;
-	font-size: 34px;
+	font-size: 32px;
 	font-weight: bold;
 	font-stretch: normal;
 	font-style: normal;
@@ -935,7 +991,7 @@ label {
 	margin-top: 10px;
 	margin-bottom: 4%;
 	color: #5D5E5E;
-	max-width: 400px;
+	max-width: 420px;
 	width: auto;
 }
 

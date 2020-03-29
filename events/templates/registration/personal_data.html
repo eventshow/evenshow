@@ -3,10 +3,10 @@
 
 
 <div class="container">
-    <div class="title-share">
+    <div class="title-share-edit">
         <div class="row">
             <div class="grid-example col s4 offset-s2">
-                <h3 class="flow-text" id="name-host-serg">Datos personales</h3>
+                <h1 class="flow-text" id="name-host-serg">Datos personales</h1>
             </div>
         </div>
     </div>
@@ -16,59 +16,84 @@
     <div class="row">
         <div class="grid-example col s11 offset-s1">
             <div class="center-form">
-                    {% csrf_token %}
-                    <div class="container-create" id="edit-profile">
-                        <div class="validate-input" id="create-event">
-                            <!-- {{ form.username }} -->
-                            <label>USUARIO</label>
-                            <div class="personal-data">
-                                <h4>Username</h4>
+                {% csrf_token %}
+                <div class="container-create" id="edit-profile">
+                    <div class="row">
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <!-- {{ form.username }} -->
+                                <label>USUARIO</label>
+
+                                <h4 style="margin-top:3%;" class="description">Username</h4>
+
                             </div>
                         </div>
-                        <div class="validate-input" id="create-event">
-                            <label>NOMBRE</label>
-                            <div class="personal-data">
-                                <h4>Nombre</h4>
-                            </div>
-                        </div>
-                        <div class="validate-input" id="create-event">
-                            <label>APELLIDOS</label>
-                            <div class="personal-data">
-                                <h4>Apellidos</h4>
-                            </div>
-                        </div>
-                        <div class="validate-input" id="create-event">
-                            <label>FECHA DE NACIMIENTO</label>
-                            <div class="personal-data">
-                                <h4>dd/mm/yyyy</h4>
-                            </div>
-                        </div>
-                        <div class="validate-input" id="create-event">
-                            <label>EMAIL</label>
-                            <div class="personal-data">
-                                <h4>email@email.com</h4>
-                            </div>
-                        </div>
-                        <div class="validate-input" id="create-event">
-                            <label>SOBRE MÍ</label>
-                            <textarea name="description" readonly>descripcionescripciondescripcion</textarea>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="grid-example col s6">
-                                <a id="send-buttons-pw" type="button" href="{%  url 'edit_profile' %}"
-                                    class="waves-effect waves-light btn-large">Editar perfil</a>
-                            </div>
-                            <div class="grid-example col s6">
-                                <a id="send-buttons-pw" type="button" href="{%  url 'edit_password' %}"
-                                    class="waves-effect waves-light btn-large">Cambiar contraseña</a>
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+
+                                <label>EMAIL</label>
+
+                                <h4 style="margin-top:3%;" class="description">email@email.com</h4>
+
+                            
+                                
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <label>NOMBRE</label>
+                                <h4 style="margin-top:3%;" class="description">Nombre</h4>
+
+
+                            </div>
+                        </div>
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <label>APELLIDOS</label>
+                                <h4 style="margin-top:3%;" class="description">Apellidos</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="grid-example col s12">
+                            <div class="validate-input" id="create-event">
+                                
+                                <label>FECHA DE NACIMIENTO</label>
+                                <h4 style="margin-top:3%;" class="description">dd/mm/yyyy</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="grid-example col s12">
+                            <div class="validate-input" id="create-event">
+                                <label>SOBRE MÍ</label>
+                                <textarea readonly class="description">descripcionescripciondescripciondescripcionescripciondescripciondescripcionescripciondescripciondescripcionescripciondescripciondescripcione
+                            </textarea>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="grid-example col s6">
+                            <a  id="send-buttons-pw" type="button" href="{%  url 'edit_profile' %}"
+                                class="waves-effect waves-light btn-large">Editar perfil</a>
+                        </div>
+                        <div class="grid-example col s6">
+                            <a id="send-buttons-pw-conf" type="button" href="{%  url 'edit_password' %}"
+                                class="waves-effect waves-light btn-large">Cambiar contraseña</a>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
-           
+
         </div>
 
     </div>

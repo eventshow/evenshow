@@ -3,7 +3,7 @@
 
 
 <div class="container">
-    <div class="title-share">
+    <div class="title-share-edit">
         <div class="row">
             <div class="grid-example col s4 offset-s2">
                 <h3 class="flow-text" id="name-host-serg">Editar datos</h3>
@@ -16,65 +16,92 @@
     <div class="row">
         <div class="grid-example col s11 offset-s1">
             <div class="center-form">
-                <form class="form-eventshow-create" id="edit-profile" method="POST">
+                <form class="form-eventshow-edit" id="edit-profile" method="POST">
                     {% csrf_token %}
-                    <h3 class="flow-text" id="name-host-serg">
-                        Datos de la cuenta
-                    </h3>
 
-                    <div class="container-create" id="edit-profile">
-                        <div class="validate-input" id="create-event">
-                            <!-- {{ form.username }} -->
-                            <label>USUARIO</label>
-                            <input type="text" placeholder="username" />
-                            <div class="form-errors">
-                                {{ form.username.errors }}
+                    <div class="row">
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <!-- {{ form.username }} -->
+                                <label>USUARIO</label>
+                                <input type="text" placeholder="username" />
+                                <div class="form-errors">
+                                    {{ form.username.errors }}
+                                </div>
                             </div>
                         </div>
-                        <div class="validate-input" id="create-event">
-                            <label>NOMBRE</label>
-                            <input type="text" placeholder="nombre" />
-                            <div class="form-errors">
-                                {{ form.name.errors }}
+
+
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <label>EMAIL</label>
+                                <input type="email" placeholder="nombre@host.com" />
+                                <div class="form-errors">
+                                    {{ form.email.errors }}
+                                </div>
                             </div>
                         </div>
-                        <div class="validate-input" id="create-event">
-                            <label>APELLIDOS</label>
-                            <input type="text" placeholder="apellidos" />
-                            <div class="form-errors">
-                                {{ form.surname.errors }}
+
+
+                    </div>
+                    <div class="row">
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <!-- {{ form.username }} -->
+                                <label>NOMBRE</label>
+                                <input type="text" placeholder="nombre" />
+                                <div class="form-errors">
+                                    {{ form.name.errors }}
+                                </div>
                             </div>
                         </div>
-                        <div class="validate-input" id="create-event">
-                            <label>FECHA DE NACIMIENTO</label>
-                            <input type="date" placeholder="dd/mm/yyyy" />
-                            <div class="form-errors">
-                                {{ form.birthdate.errors }}
+
+
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <label>APELLIDOS</label>
+                                <input type="text" placeholder="apellidos" />
+                                <div class="form-errors">
+                                    {{ form.surname.errors }}
+                                </div>
                             </div>
                         </div>
-                        <div class="validate-input" id="create-event">
-                            <label>EMAIL</label>
-                            <input type="email" placeholder="nombre@host.com" />
-                            <div class="form-errors">
-                                {{ form.email.errors }}
-                            </div>
-                        </div>
-                        <div class="validate-input" id="create-event">
-                            <label>SOBRE MÍ</label>
-                            <textarea name="description"></textarea>
-                            <div class="form-errors">
-                                {{ form.description.errors }}
-                            </div>
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="grid-example col s3 offset-s8">
-                                    <button id="send-buttons" type="submit"
-                                        class="waves-effect waves-light btn-large">Enviar</button>
+
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="grid-example col s12">
+                            <div class="validate-input" id="create-event">
+                                <label>FECHA DE NACIMIENTO</label>
+                                <input type="date" placeholder="dd/mm/yyyy" />
+                                <div class="form-errors">
+                                    {{ form.birthdate.errors }}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="grid-example col s12">
+                            <div class="validate-input" id="create-event">
+                                <label>SOBRE MÍ</label>
+                                <textarea name="description"></textarea>
+                                <div class="form-errors">
+                                    {{ form.description.errors }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                        <div class="row">
+                            <div class="grid-example col s3 offset-s8">
+                                <button id="send-buttons-data" type="submit"
+                                    class="waves-effect waves-light btn-large">Enviar</button>
+                            </div>
+                        </div>
+
+
 
             </div>
         </div>
