@@ -52,10 +52,8 @@ urlpatterns = [
     path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
 
-    path('preferences', views.preferences, name='preferences'),
-
-    path('panel/recibos', TemplateView.as_view(template_name='user/receipts.html'),
-         name='receipts'),
-    path('panel/referidos', TemplateView.as_view(template_name='user/referred.html'),
+    path('bills', TemplateView.as_view(template_name='user/bills.html'),
+         name='bills'),
+    path('referred', TemplateView.as_view(template_name='user/referred.html'),
          name='referred'),
 ]

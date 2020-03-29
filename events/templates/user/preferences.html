@@ -21,15 +21,18 @@
     }
 </style>
 
-  <ul id="slide-out" class="sidenav sidenav-fixed preferences">
+  <ul id="slide-out" class="sidenav sidenav-fixed control-panel  ">
         <li>
           <div class="user-view">
         <li><h2>Panel del control</h2></li>
-          <li><div class="divider"></div></li>
-        <li><h3><a href="#!">Editar datos personales</a></h3></li>
-        <li><h3><a href="panel/recibos">Mis recibos</a></h3></li>
-        <li><h3><a href="panel/referidos">Referidos</a></h3></li>
       </ul>
+
+    <ul id="slide-out" class="sidenav sidenav-fixed preferences">
+     <li><h3><a href="">Datos personales</a></h3></li>
+        <li><h3><a href="{% url 'bills' %}">Mis recibos</a></h3></li>
+        <li><h3><a href="{% url 'referred' %}">Referidos</a></h3></li>
+    </ul>
+
 
 {% endblock %}
 
