@@ -112,13 +112,22 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         user_can_enroll = True
 
         if user.is_authenticated:
-            user_can_enroll = services.EnrollmentService().user_can_enroll(
-                event.pk, user)
+            context['user_is_enrolled'] = services.EnrollmentService(
+            ).user_is_enrolled(event.pk, user)
+            context['user_is_old_enough'] = services.EnrollmentService(
+            ).user_is_old_enough(event.pk, user)
+            context['user_is_owner'] = services.EventService(
+            ).user_is_owner(user, event.pk)
+
+            user_can_enroll = not context.get('user_is_enrolled') and context.get(
+                'user_is_old_enough') and not context.get('user_is_owner')
 
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
         context['gmaps_key'] = settings.GOOGLE_API_KEY
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        context['event_is_full'] = event_is_full
+
         context['user_can_enroll'] = not event_is_full and user_can_enroll
 
         return context
@@ -321,7 +330,7 @@ class EnrollmentCreateView(generic.View):
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
-            services.EnrollmentService().create(event_pk, attendee)
+            enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
                 amount=500,
@@ -329,6 +338,14 @@ class EnrollmentCreateView(generic.View):
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
             )
+
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Nueva inscripción a {0}'.format(event.title)
+            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
+                enrollment.created_by.username, event.title)
+            recipient = event.created_by.email
+
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'event/thanks.html', context)
         else:
@@ -393,6 +410,22 @@ class EnrollmentUpdateView(generic.View):
         return services.EnrollmentService().host_can_update(host,
                                                             enrollment_pk) and services.EnrollmentService().is_pending(
             enrollment_pk) and not event_has_started
+
+
+@method_decorator(login_required, name='dispatch')
+class PasswordUpdateView(generic.UpdateView):
+    template_name = 'profile/update_password.html'
+    model = User
+    form_class = forms.PasswordUpdateForm
+    success_url = reverse_lazy('detail_profile')
+
+    def get_context_data(self, **kwargs):
+        context = super(PasswordUpdateView, self).get_context_data(**kwargs)
+        context['form'] = self.form_class(user=self.object)
+        return context
+
+    def get_object(self):
+        return self.request.user
 
 
 @method_decorator(login_required, name='dispatch')
@@ -532,3 +565,61 @@ class SignUpView(generic.CreateView):
         services.ProfileService().create(user, birthdate)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
+
+
+class TransactionListView(generic.ListView):
+    model = models.Transaction
+    template_name = 'payment_list.html'
+
+    def get_queryset(self):
+        super(TransactionListView, self).get_queryset()
+        queryset = selectors.TransactionSelector().my_transaction(self.request.user)
+        return queryset
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDetailView(generic.DetailView):
+    template_name = 'profile/detail.html'
+    model = User
+    success_url = reverse_lazy('detail_profile')
+
+    def get_object(self):
+        return self.request.user
+
+
+@method_decorator(login_required, name='dispatch')
+class UserUpdateView(generic.UpdateView):
+    template_name = 'profile/update.html'
+    model = User
+    form_class = forms.UserForm
+    profile_form_class = forms.ProfileForm
+    success_url = reverse_lazy('detail_profile')
+
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView,
+                        self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['profile_form'] = self.profile_form_class(
+                self.request.POST, instance=self.object.profile)
+        else:
+            context['profile_form'] = self.profile_form_class(
+                instance=self.object.profile)
+        return context
+
+    def get_object(self):
+        return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.form_class(request.POST, instance=self.object)
+        profile_form = self.profile_form_class(
+            request.POST, instance=self.object.profile)
+
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
+            profile_form.save(user)
+            return redirect(self.get_success_url())
+        else:
+            return self.render_to_response(
+                self.get_context_data(form=form, profile_form=profile_form))
+

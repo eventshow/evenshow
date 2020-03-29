@@ -3,11 +3,12 @@ from datetime import datetime, date
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm, UserCreationForm
 from django.core.exceptions import ValidationError
+from django.forms import inlineformset_factory
 from django.utils.timezone import now
 
-from .models import Category, Event, Rating
+from .models import Category, Event, Profile, Rating
 
 CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
 
@@ -160,10 +161,72 @@ class RegistrationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
+        if not email:
+            raise ValidationError('El email es necesario')
+        elif User.objects.filter(email=email).exists():
             raise ValidationError('El email ya existe')
-
         return email
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            raise ValidationError('El usuario es necesario')
+        return username
+
+
+class PasswordUpdateForm(PasswordChangeForm):
+    old_password = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "antigua contraseña"}))
+    new_password1 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "nueva contraseña"}))
+    new_password2 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "confirmación nueva contraseña"}))
+
+    class Meta:
+        model = User
+        exclude = ()
+
+
+class ProfileForm(forms.ModelForm):
+    bio = forms.CharField(required=False, widget=forms.Textarea(
+        attrs={'placeholder': "bio"}))
+    birthdate = forms.DateField(
+        required=True,
+        widget=forms.DateInput(
+            format=settings.DATE_INPUT_FORMATS[0],
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=settings.DATE_INPUT_FORMATS
+    )
+    location = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "localidad"}))
+    picture = forms.URLField(required=False, widget=forms.URLInput(
+        attrs={'placeholder': "https://"}))
+
+    class Meta:
+        model = Profile
+        exclude = ('user',)
+
+    def clean_bio(self):
+        bio = self.cleaned_data.get('bio')
+        if not bio and self.initial.get('bio'):
+            raise ValidationError(
+                'Una vez introducida la bio no se puede dejar en blanco')
+        return bio
+
+    def clean_birthdate(self):
+        birthdate = self.cleaned_data.get('birthdate')
+        if birthdate >= now().date():
+            raise ValidationError(
+                'La fecha de cumpleaños debe ser en el pasado')
+        return birthdate
+
+    def save(self, user=None):
+        profile = super(ProfileForm, self).save(commit=False)
+        if user:
+            profile.user = user
+        profile.save()
+        return profile
 
 
 class SearchHomeForm(forms.Form):
@@ -200,3 +263,44 @@ class SearchHomeForm(forms.Form):
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
+
+
+class UserForm(UserChangeForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(
+        attrs={'placeholder': "email"}))
+    first_name = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "nombre"}))
+    last_name = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "apellidos"}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise ValidationError('El email es necesario')
+        elif User.objects.filter(email=email).exists() and email != self.initial.get('email'):
+            raise ValidationError('El email ya existe')
+        return email
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not first_name and self.initial.get('first_name'):
+            raise ValidationError(
+                'Una vez introducido el nombre no se puede dejar en blanco')
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not last_name and self.initial.get('last_name'):
+            raise ValidationError(
+                'Una vez introducido/s los apellido/s no se pueden dejar en blanco')
+        return last_name
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            raise ValidationError('El usuario es necesario')
+        return username

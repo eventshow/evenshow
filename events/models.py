@@ -1,4 +1,5 @@
 import pytz
+import random
 import uuid
 
 from datetime import datetime, date
@@ -26,13 +27,28 @@ def get_sentinel_user():
 
 class Profile(models.Model):
     EVENTPOINT_VALUE = 0.005
+    PROFILE_IMAGE_FILES = [
+        'https://i.imgur.com/DHM869r.png',
+        'https://i.imgur.com/nPuyNCw.png',
+        'https://i.imgur.com/zcvvJuz.png',
+        'https://i.imgur.com/JoIFIzC.png',
+        'https://i.imgur.com/q5WVAgm.png',
+        'https://i.imgur.com/L8OjFOg.png',
+        'https://i.imgur.com/V0Vx876.png',
+        'https://i.imgur.com/yejzBet.png',
+        'https://i.imgur.com/Gcw4VIN.png',
+        'https://i.imgur.com/Kt7wGfh.png',
+        'https://i.imgur.com/bq3Bb34.png',
+        'https://i.imgur.com/smMeZJA.png',
+    ]
     TOKEN_LENGTH = 8
 
     user = models.OneToOneField(
         User, related_name="profile", on_delete=models.CASCADE)
     location = models.CharField(
         'Location', max_length=250, blank=True, null=True)
-    picture = models.URLField('Picture url', blank=True, null=True)
+    picture = models.URLField(
+        'Picture url', blank=True, null=True, default=random.choice(PROFILE_IMAGE_FILES))
     birthdate = models.DateField('Birthdate')
     token = models.CharField('Personal token', max_length=8, editable=False)
     eventpoints = models.PositiveIntegerField(

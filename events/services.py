@@ -13,7 +13,6 @@ from django.utils.timezone import now
 
 from . import models
 from . import selectors
-from .models import Event
 
 User = get_user_model()
 
@@ -34,11 +33,12 @@ class EnrollmentService:
         count = models.Enrollment.objects.filter(pk=enrollment_pk).count()
         return count
 
-    def create(self, event_pk: int, created_by: User):
+    def create(self, event_pk: int, created_by: User) -> models.Enrollment:
         event = models.Event.objects.get(pk=event_pk)
         enrollment = models.Enrollment.objects.create(
             created_by=created_by, event=event)
         enrollment.save()
+        return enrollment
 
     def is_pending(self, enrollment_pk: int) -> bool:
         enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
@@ -59,7 +59,7 @@ class EnrollmentService:
         event = models.Event.objects.get(pk=event_pk)
         user_is_enrolled = self.user_is_enrolled(
             event_pk, user)
-        user_is_old_enough = event.min_age <= user.profile.age
+        user_is_old_enough = self.user_is_old_enough(event_pk, user)
         user_is_owner = EventService().user_is_owner(user, event_pk)
         return not user_is_enrolled and user_is_old_enough and not user_is_owner
 
@@ -68,6 +68,10 @@ class EnrollmentService:
 
     def user_is_enrolled_and_accepted(self, event_pk: int, user: User, status='ACCEPTED') -> bool:
         return models.Enrollment.objects.filter(event=event_pk, created_by=user, status=status).exists()
+
+    def user_is_old_enough(self, event_pk: int, user: User) -> bool:
+        event = models.Event.objects.get(pk=event_pk)
+        return event.min_age <= user.profile.age
 
 
 class EventService():
@@ -97,8 +101,7 @@ class EventService():
         return res
 
     def nearby_events_distance(self, self_view, distance, latitude, longitude):
-        events = Event.objects.filter(start_day__gte=date.today())
-
+        events = models.Event.objects.filter(start_day__gte=date.today())
         events_cleaned = []
         if self_view.request.user.is_authenticated:
             for event in events:
@@ -144,7 +147,7 @@ class EventService():
         elif start_hour:
             events = selectors.EventSelector().start_hour(start_hour)
         else:
-            events = Event.objects.filter(start_day__gte=date.today())
+            events = models.Event.objects.filter(start_day__gte=date.today())
 
         results = []
         if self_view.request.user.is_authenticated:
