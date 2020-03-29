@@ -543,7 +543,7 @@ class SignUpView(generic.CreateView):
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
 
-<<<<<<< HEAD
+
 class TransactionListView(generic.ListView):
     model = models.Transaction
     template_name = 'payment_list.html'
@@ -552,7 +552,7 @@ class TransactionListView(generic.ListView):
         super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
-=======
+
 
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(generic.DetailView):
@@ -599,4 +599,4 @@ class UserUpdateView(generic.UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
->>>>>>> dddc524... [feat] Cambio de contraseña en template separado
+
