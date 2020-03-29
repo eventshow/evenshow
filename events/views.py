@@ -407,6 +407,13 @@ class EnrollmentDeleteView(generic.View):
             if event and enrollment and not event.has_started:
                 enrollment.delete()
 
+                subject = 'Asistencia a {0} cancelada'.format(event.title)
+                body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
+                    self.request.user.username, event.title)
+                recipient = event.created_by.email
+
+                # services.EmailService().send_email(subject, body, [recipient])
+
                 return redirect('enrolled_events')
             else:
                 return redirect('/')
