@@ -25,28 +25,35 @@
     <div class="col m6 rectangle-info separated4" id="detail-info">
         <h2 class="title-detail">idioma</h2>
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
-        {% if user.is_authenticated and user_is_owner %}
+        {% if user.is_authenticated %}
+        {% if user_is_owner %}
         <h3 class="warning-own" href="">Propietario</h3>
-        {% elif user.is_authenticated and not user_is_old_enough %}
+        {% elif not user_is_old_enough %}
         <h3 class="warning-young">No tienes la edad suficiente</h3>
-        {% elif user.is_authenticated and event_is_full %}
-        <h3 class="warning-full" href="">Aforo Completo</h3>
-        {% elif user.is_authenticated and user_can_enroll and not event.has_started %}
+        {% elif event_is_full %}
+        <h3 class="warning-full" href="">Aforo completo</h3>
+        {% elif event.has_started %}
+        <h3 class="warning-full" href="">Ya ha empezado</h3>
+        {% elif event.has_finished %}
+        <h3 class="warning-full" href="">Ya ha terminado</h3>
+        {% elif user_is_enrolled %}
+        <h3 class="warning-full" href="">Ya estás inscrito</h3>
+        {% elif user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{% widthratio object.price 1 100 %}" data-locale="es" data-currency="eur"
+                data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
                 data-label="{{ object.price }}€">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
-            {% else %}
-            <a class="waves-effect waves-light btn-large button-detail" id="enroll"
-                href="{% url 'login' %}">INSCRIBIRSE</a>
             {% endif %}
         </form>
+        {% else %}
+        <a class="waves-effect waves-light btn-large button-detail" id="enroll" href="{% url 'login' %}">INSCRIBIRSE</a>
+        {% endif %}
     </div>
     <div class="col m6 rectangle-info separated1" id="detail-info">
         <h2 class="title-detail">Hora comienzo</h2>
