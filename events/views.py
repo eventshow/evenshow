@@ -238,7 +238,6 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
-
         context['enroll_valid'] = selectors.EventSelector(
         ).event_enrolled_accepted(self.request.user)
         return context
@@ -391,6 +390,27 @@ class EnrollmentCreateView(generic.View):
 
             return render(request, 'enrollment/thanks.html', context)
         else:
+            return redirect('/')
+
+
+class EnrollmentDeleteView(generic.View):
+    model = models.Enrollment
+    template_name = 'enrollment/list.html'
+
+    def post(self, request, *args, **kwargs):
+        try:
+            enrollment = selectors.EnrollmentSelector(
+            ).user_on_event(self.request.user, kwargs.get('event_pk'))
+            enrollment_pk = enrollment.pk
+            event = models.Enrollment.objects.get(pk=enrollment_pk).event
+
+            if event and enrollment and not event.has_started:
+                enrollment.delete()
+
+                return redirect('enrolled_events')
+            else:
+                return redirect('/')
+        except:
             return redirect('/')
 
 

@@ -70,7 +70,11 @@
           <td>
             {% if role == "huésped" %}
             {% if not event.has_started %}
-            <i class="waves-effect waves-light btn" id="yaNo">Ya no quiero ir</i>
+            <form action="{% url 'delete_enrollment' event.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="waves-effect waves-light btn" title="Ya no quiero ir" name="ya_no"
+                id="yaNo">Ya no quiero ir</button>
+            </form>
             {% elif event.has_finished %}
             Ya ha acabado
             {% elif event.has_started %}
