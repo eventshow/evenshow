@@ -29,6 +29,17 @@ class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        if not self.request.user.is_anonymous:
+            profile = models.Profile.objects.get(user_id=self.request.user.id)
+            context['bio'] = not profile.bio
+            context['first_name'] = not self.request.user.first_name
+            context['last_name'] = not self.request.user.last_name
+            context['user_name'] = self.request.user.username
+            context['user_first_name'] = self.request.user.first_name
+        return context
+
     def get_success_url(self):
         request = self.request.POST
         date = request.get('date')
@@ -40,7 +51,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour,
         }
-        )
+                            )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -216,9 +227,8 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
-        context['enroll_valid'] = selectors.EventSelector(
-        ).event_enrolled_accepted(self.request.user)
-        print(context['enroll_valid'])
+
+        context['enroll_valid'] = selectors.EventSelector().event_enrolled_accepted(self.request.user)
         return context
 
     def get_queryset(self):
