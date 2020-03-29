@@ -307,8 +307,15 @@ color: #979797 !important;
 .button-detail{
 	color: white !important;
 	margin-top: -8% !important;
-	margin-left: 376% !important;
+	margin-left: 370% !important;
 	font-size: 28px;
+}
+
+.button-detail-auth {
+    color: white !important;
+    margin-top: -8% !important;
+    margin-left: 432% !important;
+    font-size: 28px;
 }
 
 .warning-young{
