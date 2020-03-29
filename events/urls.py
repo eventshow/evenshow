@@ -12,6 +12,8 @@ urlpatterns = [
 
     path('enrollments/thanks', TemplateView.as_view(template_name='enrollment/thanks.html'),
          name='thanks'),
+    path('enrollments/<int:event_pk>/delete',
+         views.EnrollmentDeleteView.as_view(), name='delete_enrollment'),
     path('enrollments/<int:pk>/update',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),
 
