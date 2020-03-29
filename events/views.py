@@ -21,8 +21,8 @@ EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
 
-def preferences(request):
-    return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
+def not_impl(request):
+    return render(request, 'not_impl.html', {'STATIC_URL': settings.STATIC_URL})
 
 @method_decorator(login_required, name='dispatch')
 class PointsView(generic.TemplateView):
