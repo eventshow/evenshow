@@ -53,4 +53,9 @@ urlpatterns = [
          name='gracias'),
 
     path('preferences', views.preferences, name='preferences'),
+
+    path('panel/recibos', TemplateView.as_view(template_name='user/receipts.html'),
+         name='receipts'),
+    path('panel/referidos', TemplateView.as_view(template_name='user/referred.html'),
+         name='referred'),
 ]
