@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<img class="img-detail" src="{{object.picture}}">
+
+    {% if user.is_authenticated %}
+        <img class="img-detail-auth" src="{{object.picture}}">
+       {% else %}
+         <img class="img-detail" src="{{object.picture}}">
+    {% endif %}
 
 <div class="principal-detail">
-    <div class="col m6 rectangle-info" id="host-datail">
+    <div class="col m6 rectangle-info" id="host-detail">
         <img class="img-host" alt='anfitrion' src="{{object.created_by.profile.picture}}">
         <div class="col m5 host-rating">
             <i class="fa fa-star"><i
@@ -27,39 +32,29 @@
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
 
 
-    {% if user_is_owner %}
-                  <h3 class="warning-own" href="">Propietario</h3>
-
-         {% elif user_is_old_enough %}
+          {% if user.is_authenticated and user_is_owner %}
+              <h3 class="warning-own" href="">Propietario</h3>
+         {% elif user.is_authenticated and not user_is_old_enough %}
          <h3 class="warning-young">No tienes la edad suficiente</h3>
-         {% elif event_is_full %}
+         {% elif user.is_authenticated and event_is_full %}
         <h3 class="warning-full" href="">Aforo Completo</h3>
 
-        {% elif user_can_enroll and not event.has_started %}
+        {% elif user.is_authenticated and user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
-            {% if user.is_authenticated %}
-            {% if event_is_full %}
-            <a class="waves-effect waves-light btn-large button-detail" href="">Aforo Completo</a>
-            {% elif user_is_old_enough %}
-            <a class="waves-effect waves-light btn-large button-detail" href="">No tienes la edad suficiente</a>
-            {% elif user_is_owner %}
-            <a class="waves-effect waves-light btn-large button-detail" href="">Eres el propietario del evento</a>
-
-   {% endif %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="500" data-locale="auto"
                 data-label="{{ object.price }}€">
                 </script>
             <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail");
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
             {% else %}
             <a class="waves-effect waves-light btn-large button-detail" id="enroll"
                 href="{% url 'login' %}">INSCRIBIRSE</a>
             {% endif %}
         </form>
-        {% endif %}
+
     </div>
 
     <div class="col m6 rectangle-info separated1" id="detail-info">
@@ -69,7 +64,7 @@
 
     <div class="col m6 rectangle-info" id="detail-info">
         <h2 class="title-detail">Fecha</h2>
-        <h2 class="subtitle-detail">{{ object.start_day }}</h2>
+        <h2 class="subtitle-detail">{{ object.start_day| date:"d M, Y" }}</h2>
     </div>
 </div>
 
@@ -83,7 +78,7 @@
     <hr>
 </div>
 
-<div class="section-detail">
+<div class="section-detail2">
     <div class="col-3 title-section">
         <h1 class="title-section">Información extra</h1>
     </div>
@@ -93,7 +88,7 @@
     <hr>
 </div>
 
-<div class="section-detail">
+<div class="section-detail3">
     <div class="col-3 title-section">
         <h1 class="title-section">Anfitrión</h1>
     </div>
@@ -153,7 +148,7 @@
 
     .page-footer {
         width: 100%;
-        margin-top: 30%;
+        margin-top: 25%;
     }
 </style>
 

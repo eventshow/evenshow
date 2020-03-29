@@ -90,7 +90,7 @@ class AttendeePaymentView(generic.View):
 class EventDetailView(generic.DetailView, MultipleObjectMixin):
     model = models.Event
     template_name = 'event/detail.html'
-    paginate_by = 5
+    paginate_by = 3
 
     def get(self, request, *args, **kwargs):
         if services.EventService().count(kwargs.get('pk')):
@@ -338,7 +338,7 @@ class EnrollmentCreateView(generic.View):
         context = {'event_title': models.Event.objects.get(pk=event_pk)}
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
-            services.EnrollmentService().create(event_pk, attendee)
+            enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
                 amount=500,
@@ -346,6 +346,14 @@ class EnrollmentCreateView(generic.View):
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
             )
+
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Nueva inscripción a {0}'.format(event.title)
+            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
+                enrollment.created_by.username, event.title)
+            recipient = event.created_by.email
+
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'event/thanks.html', context)
         else:
@@ -380,11 +388,26 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
 
         if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
+            status = request.POST.get('status')
             services.EnrollmentService().update(
-                enrollment_pk, host, request.POST.get('status'))
-            event_pk = models.Enrollment.objects.get(pk=enrollment_pk).event.pk
+                enrollment_pk, host, status)
+            event = models.Enrollment.objects.get(pk=enrollment_pk).event
 
-            return redirect('list_enrollments', event_pk)
+            if status == 'ACCEPTED':
+                status_txt = 'aceptada'
+            else:
+                status_txt = 'rechazada'
+
+            subject = 'Solicitud para {0} {1}'.format(event.title, status_txt)
+            body = 'Tu solicitud en Eventshow para el evento {0} ha sido {1}'.format(
+                event.title, status_txt)
+            recipient = models.Enrollment.objects.get(
+                pk=enrollment_pk).created_by
+
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
+
+            return redirect('list_enrollments', event.pk)
         else:
             return redirect('/')
 
