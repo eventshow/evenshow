@@ -17,17 +17,6 @@ from . import selectors
 
 User = get_user_model()
 
-class EmailService:
-    def send_email(self, subject:str, body:str, event_pk:int) -> None:
-        recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
-        recipient_list = list(recipient_list_queryset.values_list('email', flat=True))
-        send_mail(
-           subject,
-           body,
-           settings.EMAIL_HOST_USER,
-           recipient_list,
-           fail_silently=False,
-       )
 
 class EmailService:
     def send_email(self, subject: str, body: str, recipient_list: list):

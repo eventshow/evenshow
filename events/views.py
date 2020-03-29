@@ -51,7 +51,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour,
         }
-                            )
+        )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -183,7 +183,10 @@ class EventDeleteView(generic.DeleteView):
             event = models.Event.objects.get(pk=event_pk)
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
-            services.EmailService().send_email(subject, body, event_pk)
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(
+                recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -228,7 +231,8 @@ class EventEnrolledListView(generic.ListView):
             self.request.user)
         context['role'] = 'huésped'
 
-        context['enroll_valid'] = selectors.EventSelector().event_enrolled_accepted(self.request.user)
+        context['enroll_valid'] = selectors.EventSelector(
+        ).event_enrolled_accepted(self.request.user)
         return context
 
     def get_queryset(self):
@@ -251,8 +255,12 @@ class EventUpdateView(generic.UpdateView):
             event = form.save(commit=False)
             event_db = models.Event.objects.get(pk=event_pk)
             subject = 'Evento actualizado'
-            body = 'El evento ' + event_db.title + 'en el que estás inscrito ha sido actualizado'
-            services.EmailService().send_email(subject, body, event_pk)
+            body = 'El evento ' + event_db.title + \
+                'en el que estás inscrito ha sido actualizado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(
+                recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -640,4 +648,3 @@ class UserUpdateView(generic.UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
-
