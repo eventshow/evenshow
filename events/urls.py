@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path, re_path
 from django.views.generic.base import TemplateView
 
@@ -38,7 +39,8 @@ urlpatterns = [
 
     path('profile', views.UserDetailView.as_view(),
          name='detail_profile'),
-    path('profile/referred', views.PointsView.as_view(), name='referred'),
+    path('profile/referred',
+         login_required(TemplateView.as_view(template_name='profile/referred.html')), name='referred'),
     path('profile/receipts', views.TransactionListView.as_view(),
          name='receipts'),
     path('profile/update', views.UserUpdateView.as_view(),

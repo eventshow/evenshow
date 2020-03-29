@@ -21,38 +21,10 @@ EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
 
-def preferences(request):
-    return render(request, 'profile/preferences.html', {'STATIC_URL': settings.STATIC_URL})
-
-
-@method_decorator(login_required, name='dispatch')
-class PointsView(generic.TemplateView):
-    template_name = 'profile/referred.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(PointsView, self).get_context_data(**kwargs)
-        profile = models.Profile.objects.get(user=self.request.user)
-        points = profile.eventpoints
-        token_des = profile.token
-        context['points'] = points
-        context['token'] = token_des
-        return context
-
 
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        if not self.request.user.is_anonymous:
-            profile = models.Profile.objects.get(user_id=self.request.user.id)
-            context['bio'] = not profile.bio
-            context['first_name'] = not self.request.user.first_name
-            context['last_name'] = not self.request.user.last_name
-            context['user_name'] = self.request.user.username
-            context['user_first_name'] = self.request.user.first_name
-        return context
 
     def get_success_url(self):
         request = self.request.POST
