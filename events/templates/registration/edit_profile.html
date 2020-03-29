@@ -1,4 +1,4 @@
-{% extends 'user/preferences.html' %}
+{% extends 'profile/preferences.html' %}
 {% block content %}
 
 
@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="grid-example col s6">
                             <div class="validate-input" id="create-event">
-                                <!-- {{ form.username }} -->
+                                 {{ form.username }}
                                 <label>USUARIO</label>
                                 <input type="text" placeholder="username" />
                                 <div class="form-errors">
@@ -101,11 +101,9 @@
                             </div>
                         </div>
 
-
-
+        </form>
             </div>
         </div>
-        </form>
     </div>
 </div>
 

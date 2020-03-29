@@ -54,7 +54,6 @@ urlpatterns = [
     path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
 
-    path('preferences', views.preferences, name='preferences'),
 
      path('profile/', TemplateView.as_view(template_name='registration/personal_data.html'), name='personal_data'),
 

@@ -411,6 +411,7 @@ color: #979797 !important;
 	align-items: center;
 	align-content: center;
 	margin-left: 25%;
+	margin-bottom: 15%;
 }
 
 .form-eventshow-password {
@@ -424,7 +425,14 @@ color: #979797 !important;
 	align-items: center;
 	align-content: center;
 	margin-left: 25%;
+	margin-bottom: 7%;
 }
+
+.profile-but{
+	    margin-top: 17%;
+    margin-bottom: -6%;
+}
+
 
 #edit-profile{
 	padding-left: 5% !important;
@@ -607,6 +615,10 @@ color: #979797 !important;
 	font-family: Raleway, sans-serif;
 	font-size: 115% !important;
 	
+}
+
+.block{
+	margin-right: 30%;
 }
 
 
