@@ -14,15 +14,15 @@
 
     <div class="table-generic">
 
-      <table cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
+      <table summary=""  class="responsive-table" id="myTable">
 
         <thead>
           <div class="provisional">
             <tr>
-              <th>Descargar</th>
-              <th>Fecha</th>
-              <th>Rol</th>
-              <th>Evento</th>
+              <th id="">Descargar</th>
+              <th id="">Fecha</th>
+              <th id="">Rol</th>
+              <th id="">Evento</th>
             </tr>
           </div>
         </thead>
@@ -34,7 +34,7 @@
               
               <button type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
                 title="Descargar">
-                <i id="title-name" class="samll material-icons">file_download</i>
+                <em id="title-name" class="samll material-icons">file_download</em>
               </button>
               
             </td>
