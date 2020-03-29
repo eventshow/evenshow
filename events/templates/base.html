@@ -45,11 +45,11 @@
           <img class="logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          {% if first_name or last_name or bio %}
-           <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
-       {% else %}
-            <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
-       {% endif %}
+          {% if not user.first_name or not user.last_name or not user.profile.bio %}
+          <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
+          {% else %}
+          <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+          {% endif %}
 
 
           {% if not user.is_authenticated %}
@@ -69,9 +69,9 @@
             <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{{ user.profile.picture }}"
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
-                <li><a>{{ user_name }}</a></li>
-              <li><a href="{% url 'bills' %}">Panel de control</a></li>
-              <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+              <!-- <li><a href="{% url 'detail_profile' %}">Panel de control</a></li> -->
+              <li><a href="{% url 'detail_profile' %}"">{{ user.username }}</a></li>
+              <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
           </li>
           {% endif %}
@@ -84,10 +84,10 @@
           <div class="user-view">
             {% if  user.is_authenticated %}
 
-        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img
-              src="{% static 'img/avatar.png' %}" alt="Avatar" class="avatar"></a></li>
-        <li><a href="#!">Preferencias</a></li>
-        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img src="{{ user.profile.picture }}"
+              alt="Avatar" class="avatar"></a></li>
+        <li><a href="{% url 'detail_profile' %}"">{{ user.username }}</a></li>
+        <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
         {% endif %}
         {% if not user.is_authenticated %}
         <li> <img class="logo-movil" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow"></li>
@@ -119,15 +119,16 @@
     {% block content %}
     {% endblock %}
 
-  <div id="modal1" class="modal modal-evetshow">
-    <div class="modal-content">
-      <h3 class="modal-title">Necesitamos saber de ti</h3><br>
-      <h4>Para ofrecer una experiencia debes acceder al Panel de control y tener rellenos los siguientes datos de tu perfil: "Nombre", "Apellidos" y "Biografía"</h4>
+    <div id="modal1" class="modal modal-evetshow">
+      <div class="modal-content">
+        <h3 class="modal-title">Necesitamos saber de ti</h3><br>
+        <h4>Para ofrecer una experiencia debes acceder al Panel de control y tener rellenos los siguientes datos de tu
+          perfil: "Nombre", "Apellidos" y "Bio"</h4>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn">OK!</a>
+      </div>
     </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn">OK!</a>
-    </div>
-  </div>
   </main>
 
   <footer class="page-footer">
@@ -177,11 +178,11 @@
     });
   </script>
 
-      <script>
-        $(document).ready(function(){
-    $('.modal').modal();
-  });
-      </script>
+  <script>
+    $(document).ready(function () {
+      $('.modal').modal();
+    });
+  </script>
 
   {% endblock javascript %}
 

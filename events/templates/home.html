@@ -39,7 +39,7 @@
 
             <form class="form-eventshow" method="POST" action="{% url 'home' %}">
                 {% csrf_token %}
-                <h3 class="">Encuentra y reserva experiencias únicas {{ user_name }}</h3>
+                <h3 class="">Encuentra y reserva experiencias únicas {{ user.username }}</h3>
                 <div class="row">
                     <div class="col s9 location-prov">
                         <label>UBICACIÓN
@@ -78,7 +78,7 @@
                 <input type="hidden" name="latitude">
 
                 <button class="waves-effect waves-light btn-small location "><i
-                                    class="location-em material-icons ">location_on</i></button>
+                        class="location-em material-icons ">location_on</i></button>
             </form>
 
 
@@ -87,22 +87,22 @@
 </div>
 
 <script>
-window.onload = getLocation();
+    window.onload = getLocation();
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    alert ("Geolocation is not supported by this browser.");
-  }
-}
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
 
-function showPosition(position) {
-   let lat = position.coords.latitude;
-   let long = position.coords.longitude;
-   $("input[name='latitude']").val(lat);
-   $("input[name='longitude']").val(long);
-}
+    function showPosition(position) {
+        let lat = position.coords.latitude;
+        let long = position.coords.longitude;
+        $("input[name='latitude']").val(lat);
+        $("input[name='longitude']").val(long);
+    }
 </script>
 
 
