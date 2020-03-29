@@ -199,7 +199,7 @@ class SearchHomeForm(forms.Form):
         return date
 
 
-class SearchFilterForm(forms.Form):
+class SearchFilterForm(forms.ModelForm):
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "Localidad"}))
     date = forms.DateField(
@@ -219,9 +219,18 @@ class SearchFilterForm(forms.Form):
         input_formats=('%H:%M',)
     )
 
-    max_price = forms.DecimalField(min_value=0.00, decimal_places=2)
+    max_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    min_price = forms.DecimalField(min_value=0.00, decimal_places=2)
+    min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
+
+    class Meta:
+        model = Event
+        fields = (
+            'location',
+            'date',
+            'min_price',
+            'max_price'
+        )
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
@@ -230,10 +239,11 @@ class SearchFilterForm(forms.Form):
                 'La fecha debe ser futura')
         return date
 
-    def clean_price(self):
+
+    def clean(self):
         min_price = self.cleaned_data.get('min_price')
         max_price = self.cleaned_data.get('max_price')
-        if min_price >= max_price:
+        if min_price and max_price and min_price >= max_price:
             raise ValidationError(
                 'El precio mínimo no puede ser mayor o igual que el precio máximo')
         return min_price, max_price

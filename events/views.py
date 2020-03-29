@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 import stripe
 from django.conf import settings
@@ -8,12 +8,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
+from django.views.generic.edit import FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin
 
 from . import forms
 from . import models
 from . import selectors
 from . import services
+from .models import Event
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -23,6 +25,7 @@ User = get_user_model()
 
 def preferences(request):
     return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
+
 
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
@@ -239,7 +242,7 @@ class EventUpdateView(generic.UpdateView):
             return redirect('/')
 
 
-class EventSearchByLocationDateStartHourView(generic.ListView):
+class EventSearchByLocationDateStartHourView(generic.ListView, FormMixin):
     model = models.Event
     template_name = 'event/list_search.html'
     paginate_by = 12
@@ -250,7 +253,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
                         self).get_context_data(**kwargs)
         context['length'] = len(self.get_queryset())
         context['location'] = self.kwargs.get('location')
-        
+
         return context
 
     def get_queryset(self):
@@ -264,12 +267,108 @@ class EventSearchByLocationDateStartHourView(generic.ListView):
             date = es_date
         location = self.kwargs.get('location')
         start_hour = self.kwargs.get('start_hour')
-        queryset = services.EventService().events_filter_home(
-            self, location, date, start_hour)
+        max_price = None
+        min_price = None
+        queryset = services.EventService().events_filter_search(
+            self, location, date, start_hour, min_price, max_price)
         return queryset
 
+class EventFilterView(generic.ListView, ModelFormMixin):
+    model = models.Event
+    form_class = forms.SearchFilterForm
+    template_name = 'event/list_search.html'
+    paginate_by = 12
 
-class EventSearchNearbyView(generic.ListView):
+    def get(self, request, *args, **kwargs):
+        self.form = self.get_form(self.form_class)
+        # Explicitly states what get to call:
+        return super(EventFilterView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        # When the form is submitted, it will enter here
+        self.object = None
+        self.form = self.get_form(self.form_class)
+
+        if self.form.is_valid():
+            self.object = self.form.save()
+            # Here ou may consider creating a new instance of form_class(),
+            # so that the form will come clean.
+
+        # Whether the form validates or not, the view will be rendered by get()
+        return self.get(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        # Just include the form
+        context = super(EventFilterView, self).get_context_data(*args, **kwargs)
+        context['form'] = self.form
+        context['length'] = len(self.get_queryset())
+        context['location'] = self.request.POST.get('location')
+        return context
+
+    def get_queryset(self):
+        if self.form.is_valid():
+            es_date = self.request.POST.get('date')
+            if es_date and es_date != '':
+                new_date = datetime.strptime(
+                    es_date, '%d/%m/%Y').strftime('%Y-%m-%d')
+            else:
+                new_date = es_date
+            location = self.request.POST.get('location')
+            start_hour = self.request.POST.get('start_hour')
+            min_price = self.request.POST.get('min_price')
+            max_price = self.request.POST.get('max_price')
+
+            queryset = services.EventService().events_filter_search(
+                    self, location, new_date, start_hour, min_price, max_price)
+        else:
+            queryset = []
+
+        return queryset
+
+'''class EventFilterView(generic.ListView, generic.FormView):
+    model = models.Event
+    template_name = 'event/list_search.html'
+    paginate_by = 12
+    form_class = forms.SearchFilterForm
+
+    def post(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        context = {}
+        context['object_list'] = queryset
+        context['length'] = len(self.get_queryset())
+        context['location'] = self.request.POST.get('location')
+        context['form'] = self.form_class
+
+        return render(request, self.template_name, context)
+
+    def get_context_data(self, **kwargs):
+        context = super(EventFilterView,
+                        self).get_context_data(**kwargs)
+        context['length'] = len(self.get_queryset())
+        context['location'] = self.kwargs.get('location')
+
+        return context
+
+    def get_queryset(self):
+        queryset = super(
+            EventFilterView, self).get_queryset()
+        es_date = self.request.POST.get('date')
+        if es_date and es_date != '':
+            date = datetime.strptime(
+                es_date, '%d/%m/%Y').strftime('%Y-%m-%d')
+        else:
+            date = es_date
+        location = self.request.POST.get('location')
+        start_hour = self.request.POST.get('start_hour')
+        min_price = self.request.POST.get('min_price')
+        max_price = self.request.POST.get('max_price')
+
+        queryset = services.EventService().events_filter_search(
+            self, location, date, start_hour, min_price, max_price)
+        return queryset'''
+
+
+class EventSearchNearbyView(generic.ListView, FormMixin):
     model = models.Event
     template_name = 'event/list_search.html'
     paginate_by = 12

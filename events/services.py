@@ -112,7 +112,7 @@ class EventService():
 
         return result
 
-    def events_filter_home(self, self_view, location, event_date, start_hour):
+    '''def events_filter_home(self, self_view, location, event_date, start_hour):
         if location and event_date and start_hour:
             events = selectors.EventSelector().location_date_start_hour(
                 location, event_date, start_hour)
@@ -131,6 +131,86 @@ class EventService():
             events = selectors.EventSelector().date(event_date)
         elif start_hour:
             events = selectors.EventSelector().start_hour(start_hour)
+        else:
+            events = Event.objects.filter(start_day__gte=date.today())
+
+        results = []
+        if self_view.request.user.is_authenticated:
+            for event in events:
+                if self_view.request.user not in selectors.UserSelector().event_attendees(
+                        event.pk) and event.has_started is False:
+                    results.append(event)
+        else:
+            for event in events:
+                if event.has_started is False:
+                    results.append(event)
+
+        return results'''
+
+    def events_filter_search(self, self_view, location, event_date, start_hour, min_price, max_price):
+        if location and event_date and start_hour and min_price and max_price:  # 5
+            events = selectors.EventSelector().location_date_start_hour_min_max(location, event_date, start_hour,
+                                                                                min_price, max_price)
+        elif location and event_date and start_hour and min_price:  # 4
+            events = selectors.EventSelector().location_date_start_hour_min(location, event_date, start_hour, min_price)
+        elif location and event_date and start_hour and max_price:  # 4
+            events = selectors.EventSelector().location_date_start_hour_max(location, event_date, start_hour, max_price)
+        elif location and event_date and min_price and max_price:  # 4
+            events = selectors.EventSelector().location_date_min_max(location, event_date, min_price, max_price)
+        elif location and start_hour and min_price and max_price:  # 4
+            events = selectors.EventSelector().location_start_hour_min_max(location, start_hour, min_price, max_price)
+        elif event_date and start_hour and min_price and max_price:  # 4
+            events = selectors.EventSelector().date_start_hour_min_max(event_date, start_hour, min_price, max_price)
+        elif location and event_date and start_hour:  # 3
+            events = selectors.EventSelector().location_date_start_hour(location, event_date, start_hour)
+        elif location and event_date and min_price:  # 3
+            events = selectors.EventSelector().location_date_min(location, event_date, min_price)
+        elif location and event_date and max_price:  # 3
+            events = selectors.EventSelector().location_date_max(location, event_date, max_price)
+        elif location and start_hour and min_price:  # 3
+            events = selectors.EventSelector().location_start_hour_min(location, start_hour, min_price)
+        elif location and start_hour and max_price:  # 3
+            events = selectors.EventSelector().location_start_hour_max(location, start_hour, max_price)
+        elif location and min_price and max_price:  # 3
+            events = selectors.EventSelector().location_min_max(location, min_price, max_price)
+        elif event_date and start_hour and min_price:  # 3
+            events = selectors.EventSelector().date_start_hour_min(event_date, start_hour, min_price)
+        elif event_date and start_hour and max_price:  # 3
+            events = selectors.EventSelector().date_start_hour_max(event_date, start_hour, max_price)
+        elif start_hour and min_price and max_price:  # 3
+            events = selectors.EventSelector().start_hour_min_max(start_hour, min_price, max_price)
+        elif event_date and min_price and max_price:  # 3
+            events = selectors.EventSelector().date_min_max(event_date, min_price, max_price)
+        elif location and event_date:  # 2
+            events = selectors.EventSelector().location_date(location, event_date)
+        elif location and start_hour:  # 2
+            events = selectors.EventSelector().location_start_hour(location, start_hour)
+        elif location and min_price:  # 2
+            events = selectors.EventSelector().location_min(location, min_price)
+        elif location and max_price:  # 2
+            events = selectors.EventSelector().location_max(location, max_price)
+        elif event_date and start_hour:  # 2
+            events = selectors.EventSelector().date_start_hour(event_date, start_hour)
+        elif event_date and min_price:  # 2
+            events = selectors.EventSelector().date_min(event_date, min_price)
+        elif event_date and max_price:  # 2
+            events = selectors.EventSelector().date_max(event_date, max_price)
+        elif start_hour and min_price:  # 2
+            events = selectors.EventSelector().start_hour_min(start_hour, min_price)
+        elif start_hour and max_price:  # 2
+            events = selectors.EventSelector().start_hour_max(start_hour, max_price)
+        elif min_price and max_price:  # 2
+            events = selectors.EventSelector().min_max(min_price, max_price)
+        elif location:  # 1
+            events = selectors.EventSelector().location(location)
+        elif event_date:  # 1
+            events = selectors.EventSelector().date(event_date)
+        elif start_hour:  # 1
+            events = selectors.EventSelector().start_hour(start_hour)
+        elif min_price:  # 1
+            events = selectors.EventSelector().min(min_price)
+        elif max_price:  # 1
+            events = selectors.EventSelector().max(max_price)
         else:
             events = Event.objects.filter(start_day__gte=date.today())
 
@@ -189,6 +269,7 @@ class EventService():
     def exist_event(self, event_id: int) -> bool:
         exist = models.Event.objects.filter(id=event_id).exists()
         return exist
+
 
 class ProfileService():
     def create(self, user: User, birthdate: date):
@@ -258,6 +339,7 @@ class PaymentService():
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
         return round(res - amount_host)
+
 
 class UserService:
     def exist_user(self, user_id: int) -> bool:

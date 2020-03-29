@@ -18,6 +18,8 @@ urlpatterns = [
          name='hosted_events'),
     re_path(r'^events/(?P<date>\d{1,2}/\d{1,2}/\d{4})?/(?P<location>[a-zA-ZÀ-ÖØ-öø-ÿ\s]*)?/(?P<start_hour>\d{1,2}:\d{1,2})?$',
             views.EventSearchByLocationDateStartHourView.as_view(), name='event_search_home'),
+    path('events/filter/',
+         views.EventFilterView.as_view(), name='event_filter_search'),
     path('events/nearby/',
          views.EventSearchNearbyView.as_view(), name='event_nearby_search_home'),
     path('events/create', views.EventCreateView.as_view(),
