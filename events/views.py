@@ -22,12 +22,13 @@ EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
 
+def handler_404(request, exception):
+    return page_not_found(request, exception, template_name='404.html')
+
 
 def not_impl(request):
     return render(request, 'not_impl.html', {'STATIC_URL': settings.STATIC_URL})
 
-def error_not_found(request):
-    return render(request, '404.html', {'STATIC_URL': settings.STATIC_URL})
 
 @method_decorator(login_required, name='dispatch')
 class PointsView(generic.TemplateView):
@@ -41,10 +42,6 @@ class PointsView(generic.TemplateView):
         context['points'] = points
         context['token'] = token_des
         return context
-
-def handler_404(request, exception):
-    return page_not_found(request, exception, template_name='not_impl.html')
-
 
 
 class HomeView(generic.FormView):
@@ -345,7 +342,7 @@ class EventSearchNearbyView(generic.View, MultipleObjectMixin):
             queryset = services.EventService().nearby_events_distance(
                 self, 50000, latitude, longitude)
         else:
-            queryset=[]
+            queryset = []
         return queryset
 
 
