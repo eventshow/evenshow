@@ -53,6 +53,8 @@ urlpatterns = [
          name='gracias'),
 
     path('preferences', views.preferences, name='preferences'),
+    path('profile/eventpoints', views.PointsView.as_view(), name='points'),
+
 
     path('panel/recibos', TemplateView.as_view(template_name='user/receipts.html'),
          name='receipts'),

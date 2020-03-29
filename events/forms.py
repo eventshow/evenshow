@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.timezone import now
 
+
 from .models import Category, Event, Profile, Rating
 
 CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
