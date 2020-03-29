@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
+from django.views.defaults import page_not_found
 from django.views.generic.list import MultipleObjectMixin
 
 from . import forms
@@ -19,6 +20,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
+
 
 
 def not_impl(request):
@@ -39,6 +41,10 @@ class PointsView(generic.TemplateView):
         context['points'] = points
         context['token'] = token_des
         return context
+
+def handler_404(request, exception):
+    return page_not_found(request, exception, template_name='not_impl.html')
+
 
 
 class HomeView(generic.FormView):
@@ -191,7 +197,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -265,7 +271,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -326,14 +332,20 @@ class EventSearchNearbyView(generic.View, MultipleObjectMixin):
         context['object_list'] = queryset
         context['length'] = len(self.get_queryset())
 
+        if not queryset:
+            context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
+
         return render(request, self.template_name, context)
 
     def get_queryset(self):
         queryset = super(EventSearchNearbyView, self).get_queryset()
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
-        queryset = services.EventService().nearby_events_distance(
-            self, 50000, latitude, longitude)
+        if latitude and longitude:
+            queryset = services.EventService().nearby_events_distance(
+                self, 50000, latitude, longitude)
+        else:
+            queryset=[]
         return queryset
 
 
@@ -364,7 +376,7 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=500,
+                amount=event.price*100,
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
@@ -376,7 +388,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            # services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'event/thanks.html', context)
         else:
@@ -427,8 +439,7 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            services.EmailService().send_email(
-                subject, body, [recipient.email])
+            # services.EmailService().send_email(subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:

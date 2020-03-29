@@ -2,11 +2,11 @@
 {% block content %}
 {% load static %}
 
-    {% if user.is_authenticated %}
-        <img class="img-detail-auth" src="{{object.picture}}">
-       {% else %}
-         <img class="img-detail" src="{{object.picture}}">
-    {% endif %}
+{% if user.is_authenticated %}
+<img class="img-detail-auth" src="{{object.picture}}">
+{% else %}
+<img class="img-detail" src="{{object.picture}}">
+{% endif %}
 
 <div class="principal-detail">
     <div class="col m6 rectangle-info" id="host-detail">
@@ -32,18 +32,19 @@
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
 
 
-          {% if user.is_authenticated and user_is_owner %}
-              <h3 class="warning-own" href="">Propietario</h3>
-         {% elif user.is_authenticated and not user_is_old_enough %}
-         <h3 class="warning-young">No tienes la edad suficiente</h3>
-         {% elif user.is_authenticated and event_is_full %}
+        {% if user.is_authenticated and user_is_owner %}
+        <h3 class="warning-own" href="">Propietario</h3>
+        {% elif user.is_authenticated and not user_is_old_enough %}
+        <h3 class="warning-young">No tienes la edad suficiente</h3>
+        {% elif user.is_authenticated and event_is_full %}
         <h3 class="warning-full" href="">Aforo Completo</h3>
 
         {% elif user.is_authenticated and user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="500" data-locale="auto"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada"
+                data-amount="{% widthratio object.price 1 100 %}" data-locale="es" data-currency="eur"
                 data-label="{{ object.price }}€">
                 </script>
             <script>
