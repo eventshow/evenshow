@@ -420,9 +420,9 @@ class EnrollmentUpdateView(generic.View):
     def post(self, request, *args, **kwargs):
         host = self.request.user
         enrollment_pk = kwargs.get('pk')
+        status = request.POST.get('status')
 
-        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
-            status = request.POST.get('status')
+        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (status == 'ACCEPTED' or status == 'REJECTED'):
             services.EnrollmentService().update(
                 enrollment_pk, host, status)
             event = models.Enrollment.objects.get(pk=enrollment_pk).event
