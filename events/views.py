@@ -21,8 +21,8 @@ EVENT_SUCCESS_URL = reverse_lazy('hosted_events')
 User = get_user_model()
 
 
-def preferences(request):
-    return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
+def not_impl(request):
+    return render(request, 'not_impl.html', {'STATIC_URL': settings.STATIC_URL})
 
 @method_decorator(login_required, name='dispatch')
 class PointsView(generic.TemplateView):
@@ -41,17 +41,6 @@ class PointsView(generic.TemplateView):
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        if not self.request.user.is_anonymous:
-            profile = models.Profile.objects.get(user_id=self.request.user.id)
-            context['bio'] = not profile.bio
-            context['first_name'] = not self.request.user.first_name
-            context['last_name'] = not self.request.user.last_name
-            context['user_name'] = self.request.user.username
-            context['user_first_name'] = self.request.user.first_name
-        return context
 
     def get_success_url(self):
         request = self.request.POST
@@ -199,7 +188,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            services.EmailService().send_email(subject, body, recipient_list)
+            #services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -273,7 +262,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            services.EmailService().send_email(subject, body, recipient_list)
+            #services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -608,7 +597,8 @@ class SignUpView(generic.CreateView):
 
 class TransactionListView(generic.ListView):
     model = models.Transaction
-    template_name = 'payment_list.html'
+    template_name = 'profile/receipts.html'
+    paginate_by = 5
 
     def get_queryset(self):
         super(TransactionListView, self).get_queryset()
@@ -618,7 +608,7 @@ class TransactionListView(generic.ListView):
 
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(generic.DetailView):
-    template_name = 'profile/detail.html'
+    template_name = 'profile/preferences.html'
     model = User
     success_url = reverse_lazy('detail_profile')
 

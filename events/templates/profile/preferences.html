@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidenav %}
+
+<style>
+  body {
+    background-size: cover;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  .page-footer {
+    width: 100%;
+    z-index: 1000 !important;
+  }
+</style>
+
+<ul id="slide-out" class="sidenav sidenav-fixed control-panel  ">
+  <li>
+    <div class="user-view">
+  <li>
+    <h2>Panel del control</h2>
+  </li>
+</ul>
+
+<ul id="slide-out" class="sidenav sidenav-fixed preferences">
+  <li>
+    <h3><a href="{% url 'detail_profile' %}">Datos personales</a></h3>
+  </li>
+  <li>
+    <h3><a href="{% url 'receipts' %}">Mis recibos</a></h3>
+  </li>
+  <li>
+    <h3><a href="{% url 'referred' %}">Referidos</a></h3>
+  </li>
+</ul>
+
+
+{% endblock %}
+
+{% block content %}
+{%  endblock %}
