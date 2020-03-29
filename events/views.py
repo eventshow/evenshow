@@ -301,7 +301,7 @@ class EventSearchByLocationDateStartHourView(generic.ListView, FormMixin):
             self, location, date, start_hour, min_price, max_price)
         return queryset
 
-class EventFilterView(generic.ListView, generic.FormView):
+class EventFilterView(generic.ListView, generic.FormView,MultipleObjectMixin):
     model = models.Event
     template_name = 'event/list_search.html'
     paginate_by = 12
@@ -310,7 +310,8 @@ class EventFilterView(generic.ListView, generic.FormView):
     def post(self, request, *args, **kwargs):
         self.form = self.get_form(self.form_class)
         queryset = self.get_queryset()
-        context = {}
+
+        context = self.get_context_data()
         context['object_list'] = queryset
         context['length'] = len(self.get_queryset())
         context['location'] = self.request.POST.get('location')
@@ -318,9 +319,11 @@ class EventFilterView(generic.ListView, generic.FormView):
 
         return render(request, self.template_name, context)
 
+
     def get_context_data(self, **kwargs):
-        context = super(EventFilterView,
-                        self).get_context_data(**kwargs)
+        object_list=self.get_queryset()
+        context = super(EventFilterView, self).get_context_data(
+            object_list=object_list, **kwargs)
         context['length'] = len(self.get_queryset())
         context['location'] = self.kwargs.get('location')
         context['form'] = self.form

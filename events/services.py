@@ -128,40 +128,6 @@ class EventService():
 
         return result
 
-    '''def events_filter_home(self, self_view, location, event_date, start_hour):
-        if location and event_date and start_hour:
-            events = selectors.EventSelector().location_date_start_hour(
-                location, event_date, start_hour)
-        elif location and event_date:
-            events = selectors.EventSelector().location_date(
-                location, event_date)
-        elif location and start_hour:
-            events = selectors.EventSelector().location_start_hour(
-                location, start_hour)
-        elif event_date and start_hour:
-            events = selectors.EventSelector().date_start_hour(
-                event_date, start_hour)
-        elif location:
-            events = selectors.EventSelector().location(location)
-        elif event_date:
-            events = selectors.EventSelector().date(event_date)
-        elif start_hour:
-            events = selectors.EventSelector().start_hour(start_hour)
-        else:
-            events = models.Event.objects.filter(start_day__gte=date.today())
-
-        results = []
-        if self_view.request.user.is_authenticated:
-            for event in events:
-                if self_view.request.user not in selectors.UserSelector().event_attendees(
-                        event.pk) and event.has_started is False:
-                    results.append(event)
-        else:
-            for event in events:
-                if event.has_started is False:
-                    results.append(event)
-
-        return results'''
 
     def events_filter_search(self, self_view, location, event_date, start_hour, min_price, max_price):
         if location and event_date and start_hour and min_price and max_price:  # 5
@@ -228,7 +194,7 @@ class EventService():
         elif max_price:  # 1
             events = selectors.EventSelector().max(max_price)
         else:
-            events = Event.objects.filter(start_day__gte=date.today())
+            events = models.Event.objects.filter(start_day__gte=date.today())
 
         results = []
         if self_view.request.user.is_authenticated:
