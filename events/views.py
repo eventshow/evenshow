@@ -169,6 +169,10 @@ class EventDeleteView(generic.DeleteView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento cancelado'
+            body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
+            services.EmailService().send_email(subject, body, event_pk)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -235,6 +239,10 @@ class EventUpdateView(generic.UpdateView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
+            event_db = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento actualizado'
+            body = 'El evento ' + event_db.title + 'en el que estás inscrito ha sido actualizado'
+            services.EmailService().send_email(subject, body, event_pk)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:

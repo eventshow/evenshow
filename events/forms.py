@@ -85,8 +85,6 @@ class EventForm(forms.ModelForm):
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
 
-        print(datetime.now().time())
-        print(start_time)
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
                                                   (isinstance(start_time, type(time)) and
                                                    (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
