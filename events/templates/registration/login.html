@@ -11,11 +11,15 @@
 				</h1>
 				<br>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                    <div class="form-errors">
 					{{form.username}}
+                    </div>
 				</div>
 
 				<div class="validate-input" data-validate="Password is required">
+                    <div class="form-errors">
 					{{form.password}}
+                    </div>
 				</div>
 
 				<div class="form-errors">
@@ -39,7 +43,7 @@
 
 				<div class="txt1"><br>
 
-					¿Aún no te has registrado? Hazlo <a href="{% url 'signup' %}">aquí</a>!
+					¿Aún no te has registrado? Hazlo <a id="login-a" href="{% url 'signup' %}">aquí</a>!
 				</div>
 
 			</form>

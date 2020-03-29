@@ -15,7 +15,8 @@ body, html {
 a {
     font-family: Raleway, sans-serif;
 	line-height: 1.7;
-	color: #666666;
+	color: #B7234D;
+    font-weight: 500;
 	margin: 0px;
 	transition: all 0.4s;
 	-webkit-transition: all 0.4s;

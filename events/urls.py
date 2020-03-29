@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path, re_path
 from django.views.generic.base import TemplateView
 
@@ -16,11 +17,11 @@ urlpatterns = [
          views.EventEnrolledListView.as_view(), name='enrolled_events'),
     path('events/hosted', views.EventHostedListView.as_view(),
          name='hosted_events'),
-    re_path(r'^events/(?P<date>\d{1,2}/\d{1,2}/\d{4})?/(?P<location>[a-zA-ZÀ-ÖØ-öø-ÿ\s]*)?/(?P<start_hour>\d{1,2}:\d{1,2})?$',
+    re_path(r'^events/(?P<date>\d{1,2}/\d{1,2}/\d{4})?/(?P<location>.*)?/(?P<start_hour>\d{1,2}:\d{1,2})?$',
             views.EventSearchByLocationDateStartHourView.as_view(), name='event_search_home'),
     path('events/filter/',
          views.EventFilterView.as_view(), name='event_filter_search'),
-    path('events/nearby/',
+    path('events/nearby',
          views.EventSearchNearbyView.as_view(), name='event_nearby_search_home'),
     path('events/create', views.EventCreateView.as_view(),
          name='create_event'),
@@ -38,6 +39,15 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
+    path('profile', views.UserDetailView.as_view(),
+         name='detail_profile'),
+    path('profile/referred',
+         login_required(TemplateView.as_view(template_name='profile/referred.html')), name='referred'),
+    path('profile/receipts', views.TransactionListView.as_view(),
+         name='receipts'),
+    path('profile/update', views.UserUpdateView.as_view(),
+         name='update_profile'),
+
     path('ratings/new/host/<int:event_pk>',
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
@@ -46,5 +56,14 @@ urlpatterns = [
     path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
 
-    path('preferences', views.preferences, name='preferences'),
+    path('bills', TemplateView.as_view(template_name='user/bills.html'),
+         name='bills'),
+    path('referred', TemplateView.as_view(template_name='user/referred.html'),
+         name='referred'),
+
+
+    path('not_impl', TemplateView.as_view(template_name='not_impl.html'),
+         name='not_impl'),
+
 ]
+

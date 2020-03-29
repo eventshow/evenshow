@@ -161,3 +161,10 @@ class UserSelector:
 
     def rated_on_event(self, event_pk: int) -> QuerySet:
         return User.objects.filter(reviewed_ratings__event=event_pk)
+
+
+class TransactionSelector:
+    def my_transaction(self, user: User) -> QuerySet:
+        transaction_list = models.Transaction.objects.filter(
+            created_by=user).order_by('amount')
+        return transaction_list

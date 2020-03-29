@@ -40,7 +40,7 @@
 <div class="container">
     <div class="row text-left">
         <div class="col l6 ">
-            <h1 class="title-search">{{ location }}</h1>
+            <h1 class="title-search">{% if location %} {{ location }} {% endif %}</h1>
             <h3 class="title-search"> {{ length }} resultados</h3>
         </div>
     </div>
@@ -99,8 +99,8 @@
         </div>
         <div class="col m6">
             {% if event.picture %}
-            <a href="{% url 'detail_event' event.pk %}"><img class="img-search"
-                    src=" {{ MEDIA_URL }}{{ event.picture }} " alt="event picture"></a>
+            <a href="{% url 'detail_event' event.pk %}"><img class="img-search" src="{{ event.picture }} "
+                    alt="event picture"></a>
             {% else %}
 
 
