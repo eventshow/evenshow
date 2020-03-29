@@ -373,7 +373,7 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=event.price*100,
+                amount=int(event.price*100),
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
@@ -387,7 +387,7 @@ class EnrollmentCreateView(generic.View):
 
             # services.EmailService().send_email(subject, body, [recipient])
 
-            return render(request, 'event/thanks.html', context)
+            return render(request, 'enrollment/thanks.html', context)
         else:
             return redirect('/')
 
