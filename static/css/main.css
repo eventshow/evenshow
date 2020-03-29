@@ -534,12 +534,14 @@ color: #979797 !important;
 
 #send-buttons-pw{
 	width: 93%;
-	height: 40%;
-	margin-left:30%;
-	margin-right: 5%;
-	margin-top: 10%;
-	margin-bottom: 65px !important;
-	text-align: center !important;
+    height: 40%;
+    margin-left: 30%;
+    margin-right: 5%;
+    margin-top: 10%;
+    margin-bottom: 65px !important;
+    text-align: center !important;
+    font-size: 18px;
+    padding-top: 10px;
 }
 
 #send-buttons-pw-conf{
@@ -550,6 +552,8 @@ color: #979797 !important;
 	padding-bottom: 10%;
 	margin-bottom: 65px !important;
 	align-content: center;
+	font-size: 18px;
+    padding-top: 10px;
 }
 
 
