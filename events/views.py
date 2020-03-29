@@ -380,11 +380,26 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
 
         if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
+            status = request.POST.get('status')
             services.EnrollmentService().update(
-                enrollment_pk, host, request.POST.get('status'))
-            event_pk = models.Enrollment.objects.get(pk=enrollment_pk).event.pk
+                enrollment_pk, host, status)
+            event = models.Enrollment.objects.get(pk=enrollment_pk).event
 
-            return redirect('list_enrollments', event_pk)
+            if status == 'ACCEPTED':
+                status_txt = 'aceptada'
+            else:
+                status_txt = 'rechazada'
+
+            subject = 'Solicitud para {0} {1}'.format(event.title, status_txt)
+            body = 'Tu solicitud en Eventshow para el evento {0} ha sido {1}'.format(
+                event.title, status_txt)
+            recipient = models.Enrollment.objects.get(
+                pk=enrollment_pk).created_by
+
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
+
+            return redirect('list_enrollments', event.pk)
         else:
             return redirect('/')
 
