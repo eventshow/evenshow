@@ -199,7 +199,7 @@ class SearchHomeForm(forms.Form):
         return date
 
 
-class SearchFilterForm(forms.ModelForm):
+class SearchFilterForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "Localidad"}))
     date = forms.DateField(
@@ -223,14 +223,6 @@ class SearchFilterForm(forms.ModelForm):
 
     min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    class Meta:
-        model = Event
-        fields = (
-            'location',
-            'date',
-            'min_price',
-            'max_price'
-        )
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
