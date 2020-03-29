@@ -266,7 +266,7 @@ class SearchHomeForm(forms.Form):
 
 class UserForm(UserChangeForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(
-        attrs={'placeholder': "email"}))
+        attrs={'placeholder': "email@email.com"}))
     first_name = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "nombre"}))
     last_name = forms.CharField(required=False, widget=forms.TextInput(

@@ -1,35 +1,30 @@
 {%extends 'base.html' %}
-
 {% block content %}
 <style>
   body {
 
-      background-size: cover;
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
+    background-size: cover;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
   }
 
   main {
-      flex: 1 0 auto;
+    flex: 1 0 auto;
   }
 
   .page-footer {
-      width: 100%;
+    width: 100%;
   }
 </style>
 <div class="container">
-
   <div class="titulo">
     <div class="col s12">
       <h3 class="name-host">Experiencias siendo {{role}}</h3>
     </div>
   </div>
-
   <div class="table-generic">
-
     <table summary="" cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
-
       <thead>
         <tr>
           {% if role == "huésped" %}
@@ -48,17 +43,14 @@
       </thead>
       {% for event in object_list %}
       <tbody>
-
         <tr>
           {% if role == "huésped" %}
           <td>
             {% if event not in user_rated_events and event.has_finished %}
             {% if not event in enroll_valid %}
-
-                <p class="request-fail">Su solicitud no ha sido aceptada</p>
+            <p class="request-fail">Su solicitud no ha sido aceptada</p>
             {% endif%}
             {% if event in enroll_valid %}
-
             <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" title="Puntuar">
               <em id="title-name" class="samll material-icons">star</em>
             </button>
@@ -69,7 +61,6 @@
             No ha empezado
             {% elif not event.has_finished%}
             No ha terminado
-
             {% endif %}
           </td>
           {% endif %}
@@ -86,18 +77,17 @@
             Ya ha empezado
             {% endif %}
             {% else %}
-            <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'" title="Lista de asistentes"> <em
-              id="title-name" class="small material-icons">people</em></button>
+            <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'"
+              title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
             {% if not event.has_started %}
             <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar"> <i
-                    id="title-name" class="small material-icons">edit</i></button>
-        
-            <button type="button" onclick="location.href='{% url 'list_enrollments' event.pk %}'" title="Añadir sistentes"> <em
-                    id="title-name" class="small material-icons">group_add</em> </button>
-                <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
+                id="title-name" class="small material-icons">edit</i></button>
+            <button type="button" onclick="location.href='{% url 'list_enrollments' event.pk %}'"
+              title="Añadir sistentes"> <em id="title-name" class="small material-icons">group_add</em> </button>
+            <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
               <i id="title-name" class="small material-icons">delete</i></button>
             {% endif %}
-          {% endif %}
+            {% endif %}
           </td>
         </tr>
       </tbody>
@@ -106,6 +96,4 @@
     {% include "pagination.html" %}
   </div>
 </div>
-
-
 {% endblock %}

@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-
 {% if user.is_authenticated %}
 <img class="img-detail-auth" src="{{object.picture}}">
 {% else %}
 <img class="img-detail" src="{{object.picture}}">
 {% endif %}
-
 <div class="principal-detail">
     <div class="col m6 rectangle-info" id="host-detail">
         <img class="img-host" alt='anfitrion' src="{{object.created_by.profile.picture}}">
@@ -16,29 +14,23 @@
                     class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
         </div>
     </div>
-
     <div class="col m6 rectangle-info separated2" id="detail-info">
         <h2 class="title-detail">duración</h2>
         <h2 class="subtitle-detail">{{ duration }}</h2>
     </div>
-
     <div class="col m6 rectangle-info separated6" id="detail-info">
         <h2 class="title-detail">aforo</h2>
         <h2 class="subtitle-detail">{{ object.capacity }}</h2>
     </div>
-
     <div class="col m6 rectangle-info separated4" id="detail-info">
         <h2 class="title-detail">idioma</h2>
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
-
-
         {% if user.is_authenticated and user_is_owner %}
         <h3 class="warning-own" href="">Propietario</h3>
         {% elif user.is_authenticated and not user_is_old_enough %}
         <h3 class="warning-young">No tienes la edad suficiente</h3>
         {% elif user.is_authenticated and event_is_full %}
         <h3 class="warning-full" href="">Aforo Completo</h3>
-
         {% elif user.is_authenticated and user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
@@ -55,20 +47,16 @@
                 href="{% url 'login' %}">INSCRIBIRSE</a>
             {% endif %}
         </form>
-
     </div>
-
     <div class="col m6 rectangle-info separated1" id="detail-info">
         <h2 class="title-detail">Hora comienzo</h2>
         <h2 class="subtitle-detail">{{ object.start_time }}</h2>
     </div>
-
     <div class="col m6 rectangle-info" id="detail-info">
         <h2 class="title-detail">Fecha</h2>
         <h2 class="subtitle-detail">{{ object.start_day| date:"d M, Y" }}</h2>
     </div>
 </div>
-
 <div class="section-detail">
     <div class="col-3 title-section">
         <h1 class="title-section">Descripción</h1>
@@ -78,7 +66,6 @@
     </div>
     <hr>
 </div>
-
 <div class="section-detail2">
     <div class="col-3 title-section">
         <h1 class="title-section">Información extra</h1>
@@ -88,12 +75,10 @@
     </div>
     <hr>
 </div>
-
 <div class="section-detail3">
     <div class="col-3 title-section">
         <h1 class="title-section">Anfitrión</h1>
     </div>
-
     <div class="col-9 title-section pos">
         <h3 class="name-host-detail">{{object.created_by.first_name}} {{object.created_by.last_name}}</h3>
         <h3 class="host-bio">{{object.created_by.profile.bio}}</h3>
@@ -104,7 +89,6 @@
         </div>
     </div>
     <hr>
-
     <div class="col-9 title-section pos">
         <h1 class="title-section">Dirección</h1>
 
@@ -134,7 +118,6 @@
     </div>
     {% include 'pagination.html' %}
 </div>
-
 <style>
     body {
         background-size: cover;
@@ -152,5 +135,4 @@
         margin-top: 25%;
     }
 </style>
-
 {% endblock %}

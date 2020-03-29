@@ -618,16 +618,6 @@ class TransactionListView(generic.ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-class UserDetailView(generic.DetailView):
-    template_name = 'profile/preferences.html'
-    model = User
-    success_url = reverse_lazy('detail_profile')
-
-    def get_object(self):
-        return self.request.user
-
-
-@method_decorator(login_required, name='dispatch')
 class UserUpdateView(generic.UpdateView):
     template_name = 'profile/update.html'
     model = User

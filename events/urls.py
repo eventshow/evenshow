@@ -37,7 +37,7 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
-    path('profile', views.UserDetailView.as_view(),
+    path('profile', login_required(TemplateView.as_view(template_name='profile/detail.html')),
          name='detail_profile'),
     path('profile/referred',
          login_required(TemplateView.as_view(template_name='profile/referred.html')), name='referred'),
@@ -53,20 +53,6 @@ urlpatterns = [
 
     path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
          name='gracias'),
-
-
-    path('profile/', TemplateView.as_view(template_name='profile/personal_data.html'),
-         name='personal_data'),
-
-    path('edit/profile/', TemplateView.as_view(template_name='profile/edit_profile.html'),
-         name='edit_profile'),
-
-    path('edit/password/', TemplateView.as_view(
-        template_name='profile/edit_password.html'), name='edit_password'),
-    path('bills', TemplateView.as_view(template_name='user/bills.html'),
-         name='bills'),
-    path('referred', TemplateView.as_view(template_name='user/referred.html'),
-         name='referred'),
 
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
