@@ -824,6 +824,16 @@ label {
 	margin-top: 5%;
 }
 
+#eventpoint{
+	font-style: italic;
+	font-family: Raleway, sans-serif;
+	position: absolute; 
+	bottom: 10%; 
+	width: 800px;
+	height: 10px;
+	margin-left: -2% !important;
+	}
+
 .container#square {
 	width: 600px;
 	margin: auto;
@@ -851,6 +861,45 @@ label {
 	color: #5D5E5E;
 }
 
+#name-ref {
+	height: 40px;
+	max-width: 550px;
+	left: auto;
+	font-family: Raleway, sans-serif;
+	font-size: 34px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	margin-top: 2%;
+	color: #5D5E5E;
+	margin-left: -10%;
+}
+
+
+#copy{
+	font-size: 11px;
+    font-weight: bold;
+    color: white;
+    width: 113px;
+    height: 53px;
+    line-height: 1.5;
+   }
+.name-host-ref {
+	height: 40px;
+	max-width: 663px;
+	left: auto;
+	font-family: Raleway, sans-serif;
+	font-size: 34px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	margin-top: 2%;
+	color: #5D5E5E;
+}
 #name-host-rate{
 	margin-bottom: 6% !important;
 	width: 500px !important;
@@ -941,7 +990,7 @@ table{
 	color:white!important;
 	white-space: normal;
 }
-#title-name{
+#title-name, #copiar{
 	color: #B6244D;
 }
 
@@ -954,6 +1003,10 @@ table{
     border-radius:160px;
     border:10px solid #666;
 }
+#panel{
+	margin-left: 353px;
+}
+
 .provisional{
 	background-color: #B6244D;
 	border-radius: 15px;
