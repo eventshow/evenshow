@@ -3,15 +3,19 @@ from datetime import datetime, date
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm, UserCreationForm
 from django.core.exceptions import ValidationError
+from django.forms import inlineformset_factory
 from django.utils.timezone import now
 
-from .models import Category, Event, Rating
+from .models import Category, Event, Profile, Rating
 
-CHOICES_YES_NO = ((0, "No"), (1, "Sí"))
+CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
 
 CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
+
+CHOICES_LANGUAGES = (("ESPAÑOL", "Español"), ("INGLES", "Inglés"), ("MANDARIN", "Mandarín"), ("HINDI", "Hindi"),
+                     ("POTUGUES", "Portugués"), ("ARABE", "Árabe"), ("OTROS", "Otros"))
 
 User = get_user_model()
 
@@ -34,10 +38,11 @@ class EventForm(forms.ModelForm):
                                 widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
-    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
-    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
+    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+                                 'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+                               'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-
 
     class Meta:
         model = Event
@@ -55,12 +60,10 @@ class EventForm(forms.ModelForm):
             'location_street': forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
             'location_number': forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
-            'lang': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'español', 'name': 'lang'}),
+            'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
-
-
 
     def clean_capacity(self):
         capacity = self.cleaned_data.get('capacity')
@@ -75,7 +78,7 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El precio no puede ser negativo')
         return price
-    
+
     def clean(self):
         clean_data = self.cleaned_data
         start_day = self.cleaned_data.get('start_day')
@@ -84,23 +87,22 @@ class EventForm(forms.ModelForm):
 
         print(datetime.now().time())
         print(start_time)
-        if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or 
-            (isinstance(start_time, type(time)) and 
-            (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+        if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
+                                                  (isinstance(start_time, type(time)) and
+                                                   (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
-        
-        if not isinstance(start_time, type(time)): 
+        if not isinstance(start_time, type(time)):
             raise ValidationError('Inserte una hora')
         elif isinstance(end_time, type(time)) and (start_time >= end_time):
-                raise ValidationError(
-                    'El evento no puede empezar después de terminar')
+            raise ValidationError(
+                'El evento no puede empezar después de terminar')
         return clean_data
 
     def clean_end_time(self):
         end_time = self.cleaned_data.get('end_time')
-        if not isinstance(end_time, type(time)): 
+        if not isinstance(end_time, type(time)):
             raise ValidationError('Inserte una hora')
         return end_time
 
@@ -159,16 +161,72 @@ class RegistrationForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exists():
+        if not email:
+            raise ValidationError('El email es necesario')
+        elif User.objects.filter(email=email).exists():
             raise ValidationError('El email ya existe')
-
         return email
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
-            raise ValidationError('El usuario ya existe')
+        if not username:
+            raise ValidationError('El usuario es necesario')
         return username
+
+
+class PasswordUpdateForm(PasswordChangeForm):
+    old_password = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "antigua contraseña"}))
+    new_password1 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "nueva contraseña"}))
+    new_password2 = forms.CharField(required=True, widget=forms.PasswordInput(
+        attrs={'placeholder': "confirmación nueva contraseña"}))
+
+    class Meta:
+        model = User
+        exclude = ()
+
+
+class ProfileForm(forms.ModelForm):
+    bio = forms.CharField(required=False, widget=forms.Textarea(
+        attrs={'placeholder': "bio"}))
+    birthdate = forms.DateField(
+        required=True,
+        widget=forms.DateInput(
+            format=settings.DATE_INPUT_FORMATS[0],
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=settings.DATE_INPUT_FORMATS
+    )
+    location = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "localidad"}))
+    picture = forms.URLField(required=False, widget=forms.URLInput(
+        attrs={'placeholder': "https://"}))
+
+    class Meta:
+        model = Profile
+        exclude = ('user',)
+
+    def clean_bio(self):
+        bio = self.cleaned_data.get('bio')
+        if not bio and self.initial.get('bio'):
+            raise ValidationError(
+                'Una vez introducida la bio no se puede dejar en blanco')
+        return bio
+
+    def clean_birthdate(self):
+        birthdate = self.cleaned_data.get('birthdate')
+        if birthdate >= now().date():
+            raise ValidationError(
+                'La fecha de cumpleaños debe ser en el pasado')
+        return birthdate
+
+    def save(self, user=None):
+        profile = super(ProfileForm, self).save(commit=False)
+        if user:
+            profile.user = user
+        profile.save()
+        return profile
 
 
 class SearchHomeForm(forms.Form):
@@ -197,3 +255,52 @@ class SearchHomeForm(forms.Form):
             raise ValidationError(
                 'La fecha debe ser futura')
         return date
+
+    def clean_location(self):
+        location = self.cleaned_data.get('location')
+        location_join = location.replace(' ', '')
+
+        if not location_join.isalpha() and location:
+            raise ValidationError('Introduzca solo letras y espacios')
+        return location
+
+
+class UserForm(UserChangeForm):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(
+        attrs={'placeholder': "email"}))
+    first_name = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "nombre"}))
+    last_name = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "apellidos"}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise ValidationError('El email es necesario')
+        elif User.objects.filter(email=email).exists() and email != self.initial.get('email'):
+            raise ValidationError('El email ya existe')
+        return email
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if not first_name and self.initial.get('first_name'):
+            raise ValidationError(
+                'Una vez introducido el nombre no se puede dejar en blanco')
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if not last_name and self.initial.get('last_name'):
+            raise ValidationError(
+                'Una vez introducido/s los apellido/s no se pueden dejar en blanco')
+        return last_name
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if not username:
+            raise ValidationError('El usuario es necesario')
+        return username

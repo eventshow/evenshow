@@ -26,14 +26,30 @@
         <h2 class="title-detail">idioma</h2>
         <h2 class="subtitle-detail">{{ object.lang }}</h2>
 
-        {% if user_can_enroll and not event.has_started %}
+
+    {% if user_is_owner %}
+                  <h3 class="warning-own" href="">Propietario</h3>
+
+         {% elif user_is_old_enough %}
+         <h3 class="warning-young">No tienes la edad suficiente</h3>
+         {% elif event_is_full %}
+        <h3 class="warning-full" href="">Aforo Completo</h3>
+
+        {% elif user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
             {% if user.is_authenticated %}
+            {% if event_is_full %}
+            <a class="waves-effect waves-light btn-large button-detail" href="">Aforo Completo</a>
+            {% elif user_is_old_enough %}
+            <a class="waves-effect waves-light btn-large button-detail" href="">No tienes la edad suficiente</a>
+            {% elif user_is_owner %}
+            <a class="waves-effect waves-light btn-large button-detail" href="">Eres el propietario del evento</a>
+
+   {% endif %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="500" data-locale="auto"
                 data-label="{{ object.price }}€">
-
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail");
@@ -51,7 +67,7 @@
         <h2 class="subtitle-detail">{{ object.start_time }}</h2>
     </div>
 
-  <div class="col m6 rectangle-info" id="detail-info">
+    <div class="col m6 rectangle-info" id="detail-info">
         <h2 class="title-detail">Fecha</h2>
         <h2 class="subtitle-detail">{{ object.start_day }}</h2>
     </div>
@@ -114,8 +130,7 @@
             <img class="img-comment" alt='' src="{{rating.created_by.profile.picture}}">
             <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
-                <i class="fa fa-star"><i
-                        class="rating-search">&nbsp{{rating.score }}</i></i>
+                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score }}</i></i>
             </div>
             <h3 class="comment-detail">{{rating.comment}}</h3>
         </div>
@@ -124,7 +139,7 @@
     {% include 'pagination.html' %}
 </div>
 
-    <style>
+<style>
     body {
         background-size: cover;
         display: flex;
@@ -143,4 +158,3 @@
 </style>
 
 {% endblock %}
-
