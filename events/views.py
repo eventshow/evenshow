@@ -90,7 +90,7 @@ class AttendeePaymentView(generic.View):
 class EventDetailView(generic.DetailView, MultipleObjectMixin):
     model = models.Event
     template_name = 'event/detail.html'
-    paginate_by = 5
+    paginate_by = 3
 
     def get(self, request, *args, **kwargs):
         if services.EventService().count(kwargs.get('pk')):
