@@ -1037,6 +1037,16 @@ table{
 	color: #B6244D;
 }
 
+.modal-evetshow{
+	border-radius: 15px !important;
+}
+
+.modal-title{
+	color: #B6244D;
+	font-weight:600;
+}
+
+
 .material-icons.color{
 	color: #B6244D;
 }

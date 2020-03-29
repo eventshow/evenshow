@@ -45,8 +45,15 @@
           <img class="logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+          {% if first_name or last_name or bio %}
+           <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
+       {% else %}
+            <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+       {% endif %}
+
+
           {% if not user.is_authenticated %}
+
           <li><a href="{% url 'signup' %}">Regístrate</a></li>
           <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
           {% endif %}
@@ -81,7 +88,6 @@
         <li><a href="#!">Preferencias</a></li>
         <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
         {% endif %}
-        </div>
         {% if not user.is_authenticated %}
         <li> <img class="logo-movil" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow"></li>
         <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
@@ -111,6 +117,16 @@
     {% endblock %}
     {% block content %}
     {% endblock %}
+
+  <div id="modal1" class="modal modal-evetshow">
+    <div class="modal-content">
+      <h3 class="modal-title">Necesitamos saber de ti</h3><br>
+      <h4>Para ofrecer una experiencia debes acceder al Panel de control y tener rellenos los siguientes datos de tu perfil: "Nombre", "Apellidos" y "Biografía"</h4>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn">OK!</a>
+    </div>
+  </div>
   </main>
 
   <footer class="page-footer">
@@ -159,6 +175,12 @@
       $('.sidenav').sidenav();
     });
   </script>
+
+      <script>
+        $(document).ready(function(){
+    $('.modal').modal();
+  });
+      </script>
 
   {% endblock javascript %}
 

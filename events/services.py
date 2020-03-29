@@ -14,12 +14,12 @@ from django.utils.timezone import now
 from . import models
 from . import selectors
 
+
 User = get_user_model()
 
 
 class EmailService:
     def send_email(self, subject: str, body: str, recipient_list: list):
-
         send_mail(
             subject,
             body,
@@ -103,7 +103,6 @@ class EventService():
 
     def nearby_events_distance(self, self_view, distance, latitude, longitude):
         events = models.Event.objects.filter(start_day__gte=date.today())
-
         events_cleaned = []
         if self_view.request.user.is_authenticated:
             for event in events:

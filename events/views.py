@@ -24,10 +24,34 @@ User = get_user_model()
 def preferences(request):
     return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
 
+@method_decorator(login_required, name='dispatch')
+class PointsView(generic.TemplateView):
+    template_name = 'user/points.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PointsView, self).get_context_data(**kwargs)
+        profile = models.Profile.objects.get(user=self.request.user)
+        points = profile.eventpoints
+        token_des = profile.token
+        context['points'] = points
+        context['token'] = token_des
+        return context
+
 
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        if not self.request.user.is_anonymous:
+            profile = models.Profile.objects.get(user_id=self.request.user.id)
+            context['bio'] = not profile.bio
+            context['first_name'] = not self.request.user.first_name
+            context['last_name'] = not self.request.user.last_name
+            context['user_name'] = self.request.user.username
+            context['user_first_name'] = self.request.user.first_name
+        return context
 
     def get_success_url(self):
         request = self.request.POST
@@ -169,6 +193,13 @@ class EventDeleteView(generic.DeleteView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
+            event = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento cancelado'
+            body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(
+                recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -212,9 +243,9 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
+
         context['enroll_valid'] = selectors.EventSelector(
         ).event_enrolled_accepted(self.request.user)
-        print(context['enroll_valid'])
         return context
 
     def get_queryset(self):
@@ -235,6 +266,14 @@ class EventUpdateView(generic.UpdateView):
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
+            event_db = models.Event.objects.get(pk=event_pk)
+            subject = 'Evento actualizado'
+            body = 'El evento ' + event_db.title + \
+                'en el que estás inscrito ha sido actualizado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(
+                recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -380,11 +419,26 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
 
         if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
+            status = request.POST.get('status')
             services.EnrollmentService().update(
-                enrollment_pk, host, request.POST.get('status'))
-            event_pk = models.Enrollment.objects.get(pk=enrollment_pk).event.pk
+                enrollment_pk, host, status)
+            event = models.Enrollment.objects.get(pk=enrollment_pk).event
 
-            return redirect('list_enrollments', event_pk)
+            if status == 'ACCEPTED':
+                status_txt = 'aceptada'
+            else:
+                status_txt = 'rechazada'
+
+            subject = 'Solicitud para {0} {1}'.format(event.title, status_txt)
+            body = 'Tu solicitud en Eventshow para el evento {0} ha sido {1}'.format(
+                event.title, status_txt)
+            recipient = models.Enrollment.objects.get(
+                pk=enrollment_pk).created_by
+
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
+
+            return redirect('list_enrollments', event.pk)
         else:
             return redirect('/')
 
@@ -607,4 +661,3 @@ class UserUpdateView(generic.UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
-
