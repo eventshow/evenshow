@@ -311,14 +311,20 @@ class EventSearchNearbyView(generic.View, MultipleObjectMixin):
         context['object_list'] = queryset
         context['length'] = len(self.get_queryset())
 
+        if not queryset:
+            context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
+
         return render(request, self.template_name, context)
 
     def get_queryset(self):
         queryset = super(EventSearchNearbyView, self).get_queryset()
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
-        queryset = services.EventService().nearby_events_distance(
-            self, 50000, latitude, longitude)
+        if latitude and longitude:
+            queryset = services.EventService().nearby_events_distance(
+                self, 50000, latitude, longitude)
+        else:
+            queryset=[]
         return queryset
 
 
