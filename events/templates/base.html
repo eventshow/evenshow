@@ -59,7 +59,7 @@
             </ul>
           </li>
           <li>
-            <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{% static 'img/avatar.png' %}"
+            <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{{ user.profile.picture }}"
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
               <li><a href="{% url 'preferences' %}">Panel de control</a></li>
@@ -133,9 +133,9 @@
 
   <script>
     $(document).ready(function () {
-
-      // Initialize materialize data picker
-      $('.datepicker').datepicker({ 'format': 'dd/mm/yyyy' });
+      $('.datepicker').datepicker({
+        'format': 'dd/mm/yyyy'
+      });
       $('select').formSelect();
 
     });
