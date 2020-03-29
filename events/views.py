@@ -24,6 +24,9 @@ User = get_user_model()
 def not_impl(request):
     return render(request, 'not_impl.html', {'STATIC_URL': settings.STATIC_URL})
 
+def error_not_found(request):
+    return render(request, '404.html', {'STATIC_URL': settings.STATIC_URL})
+
 @method_decorator(login_required, name='dispatch')
 class PointsView(generic.TemplateView):
     template_name = 'user/points.html'

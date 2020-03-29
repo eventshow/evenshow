@@ -70,4 +70,7 @@ urlpatterns = [
     path('not_impl', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
 
+    path('404_not_found', TemplateView.as_view(template_name='404.html'),
+         name='404_not_found'),
+
 ]
