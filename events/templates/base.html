@@ -45,7 +45,7 @@
           <img class="logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-       {% if first_name and last_name and bio %}
+          {% if first_name or last_name or bio %}
            <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
        {% else %}
             <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>

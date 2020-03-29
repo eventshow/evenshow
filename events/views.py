@@ -34,7 +34,7 @@ class HomeView(generic.FormView):
         if not self.request.user.is_anonymous:
             profile = models.Profile.objects.get(user_id=self.request.user.id)
             context['bio'] = not profile.bio
-            context['first_name'] =  not self.request.user.first_name
+            context['first_name'] = not self.request.user.first_name
             context['last_name'] = not self.request.user.last_name
             context['user_name'] = self.request.user.username
             context['user_first_name'] = self.request.user.first_name
@@ -51,7 +51,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour,
         }
-        )
+                            )
 
 
 @method_decorator(login_required, name='dispatch')
