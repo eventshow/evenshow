@@ -1,0 +1,53 @@
+{% extends 'profile/preferences.html' %}
+{% block content %}
+
+<div class="container" id="panel">
+  <div class="title">
+    <div class="col s12">
+      <h3 id="name-ref">Referidos</h3>
+    </div>
+  </div>
+  <div class="container">
+    <div class="title">
+      <div class="col s12">
+        <h3 class="name-host">Mis eventpoints <a id="title-name">{{ points }}</a></h3>
+      </div>
+    </div>
+    </br></br></br></br>
+    <div class="title">
+      <div class="col s12">
+        <h3 class="name-host-ref">¡Comparte este código con tus amigos y ambos obtendréis <a id="title-name"> 50</a>
+          eventspoints!</h3>
+      </div>
+    </div>
+    </br></br></br></br></br></br>
+    <div class="row">
+      <div class="col s3"></div>
+      <div class="col s2">
+        <div class="title">
+
+          <h3 class="name-host-ref"><a id="copiar"> {{token}}</a></h3>
+        </div>
+      </div>
+      <div class="col s1"></div>
+      <div class="col s2">
+        <button class="waves-effect waves-light btn" id="copy" onclick="copiarAlPortapapeles('copiar')">Copiar en
+          portapapeles</button>
+      </div>
+      <div class="col s3"></div>
+    </div>
+  </div>
+
+  <p id="eventpoint">*Un eventpoint corresponde a 0.005 €</p>
+
+  <script type="text/javascript">
+    function copiarAlPortapapeles(id_elemento) {
+      var aux = document.createElement("input");
+      aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
+      document.body.appendChild(aux);
+      aux.select();
+      document.execCommand("copy");
+      document.body.removeChild(aux);
+    }
+  </script>
+  {%endblock%}

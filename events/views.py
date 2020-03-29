@@ -22,11 +22,12 @@ User = get_user_model()
 
 
 def preferences(request):
-    return render(request, 'user/preferences.html', {'STATIC_URL': settings.STATIC_URL})
+    return render(request, 'profile/preferences.html', {'STATIC_URL': settings.STATIC_URL})
+
 
 @method_decorator(login_required, name='dispatch')
 class PointsView(generic.TemplateView):
-    template_name = 'user/points.html'
+    template_name = 'profile/referred.html'
 
     def get_context_data(self, **kwargs):
         context = super(PointsView, self).get_context_data(**kwargs)
@@ -608,7 +609,8 @@ class SignUpView(generic.CreateView):
 
 class TransactionListView(generic.ListView):
     model = models.Transaction
-    template_name = 'payment_list.html'
+    template_name = 'profile/receipts.html'
+    paginate_by = 5
 
     def get_queryset(self):
         super(TransactionListView, self).get_queryset()
@@ -618,7 +620,7 @@ class TransactionListView(generic.ListView):
 
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(generic.DetailView):
-    template_name = 'profile/detail.html'
+    template_name = 'profile/preferences.html'
     model = User
     success_url = reverse_lazy('detail_profile')
 
