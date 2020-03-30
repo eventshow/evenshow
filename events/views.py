@@ -28,7 +28,6 @@ def handler_404(request, exception):
     return page_not_found(request, exception, template_name='not_impl.html')
 
 
-
 class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
@@ -44,7 +43,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour,
         }
-        )
+                            )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -249,7 +248,7 @@ class EventUpdateView(generic.UpdateView):
             event_db = models.Event.objects.get(pk=event_pk)
             subject = 'Evento actualizado'
             body = 'El evento ' + event_db.title + \
-                'en el que estás inscrito ha sido actualizado'
+                   'en el que estás inscrito ha sido actualizado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
@@ -301,52 +300,46 @@ class EventSearchByLocationDateStartHourView(generic.ListView, FormMixin):
             self, location, date, start_hour, min_price, max_price)
         return queryset
 
-class EventFilterView(generic.ListView, generic.FormView,MultipleObjectMixin):
+
+class EventFilterView(generic.ListView, generic.FormView, MultipleObjectMixin):
     model = models.Event
     template_name = 'event/list_search.html'
     paginate_by = 12
     form_class = forms.SearchFilterForm
 
+    def get(self, request, *args, **kwargs):
+        self.form = self.get_form(self.form_class)
+        return generic.ListView.get(self, request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         self.form = self.get_form(self.form_class)
-        queryset = self.get_queryset()
 
-        context = self.get_context_data()
-        context['object_list'] = queryset
-        context['length'] = len(self.get_queryset())
-        context['location'] = self.request.POST.get('location')
-        context['form'] = self.form
+        if self.form.is_valid():
+            queryset = self.get_queryset()
+        else:
+            queryset = []
 
-        return render(request, self.template_name, context)
-
-
-    def get_context_data(self, **kwargs):
-        object_list=self.get_queryset()
         context = super(EventFilterView, self).get_context_data(
-            object_list=object_list, **kwargs)
+            object_list=queryset, **kwargs)
         context['length'] = len(self.get_queryset())
         context['location'] = self.kwargs.get('location')
         context['form'] = self.form
-
-        return context
+        # Whether the form validates or not, the view will be rendered by get()
+        return self.get(request, *args, **kwargs)
 
     def get_queryset(self):
-        if self.form.is_valid():
-            es_date = self.request.POST.get('date')
-            if es_date and es_date != '':
-                date = datetime.strptime(
-                    es_date, '%d/%m/%Y').strftime('%Y-%m-%d')
-            else:
-                date = es_date
-            location = self.request.POST.get('location')
-            start_hour = self.request.POST.get('start_hour')
-            min_price = self.request.POST.get('min_price')
-            max_price = self.request.POST.get('max_price')
-
-            queryset = services.EventService().events_filter_search(
-                self, location, date, start_hour, min_price, max_price)
+        es_date = self.request.POST.get('date')
+        if es_date and es_date != '':
+            date = datetime.strptime(es_date, '%d/%m/%Y').strftime('%Y-%m-%d')
         else:
-            queryset=[]
+            date = es_date
+
+        location = self.request.POST.get('location')
+        start_hour = self.request.POST.get('start_hour')
+        min_price = self.request.POST.get('min_price')
+        max_price = self.request.POST.get('max_price')
+
+        queryset = services.EventService().events_filter_search(self, location, date, start_hour, min_price, max_price)
 
         return queryset
 
@@ -368,7 +361,8 @@ class EventSearchNearbyView(generic.ListView, FormMixin):
         context['length'] = len(self.get_queryset())
 
         if not queryset:
-            context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
+            context[
+                'location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
 
         return render(request, self.template_name, context)
 
@@ -380,7 +374,7 @@ class EventSearchNearbyView(generic.ListView, FormMixin):
             queryset = services.EventService().nearby_events_distance(
                 self, 50000, latitude, longitude)
         else:
-            queryset=[]
+            queryset = []
         return queryset
 
 
@@ -411,7 +405,7 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=event.price*100,
+                amount=event.price * 100,
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
