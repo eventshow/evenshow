@@ -3,25 +3,33 @@
 <div class="row">
     <div class="wrapper wrapper--w1070">
         <div class="card-body">
-            <form class="form-search" method="POST" action="#">
+            <form class="form-search" method="POST" action="{% url 'event_filter' %}">
+                {% csrf_token %}
                 <div class="input-group input--medium">
                     <label class="label">Localización</label>
-                    <input class="input--style-1" type="text" placeholder="" readonly="true" name="going">
+                    {{ form.location }}
+                    {{ form.location.errors }}
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Fecha</label>
-                    <input class="input--style-1" type="date" name="checkin" readonly="true" placeholder=""
-                        id="input-start">
+                    {{ form.date }}
+                    {{ form.date.errors }}
+                </div>
+                <div class="input-group input--medium">
+                    <label class="label">Hora</label>
+                    {{ form.start_hour }}
+                    {{ form.start_hour.errors }}
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Mínimo</label>
-                    <input class="input--style-1" type="text" name="checkout" readonly="true" placeholder=""
-                        id="input-end">
+                    {{ form.min_price }}
+                    {{ form.min_price.errors }}
+                    {{ form.non_field_errors }}
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Máximo</label>
-                    <input class="input--style-1" type="text" name="checkout" readonly="true" placeholder=""
-                        id="input-end">
+                    {{ form.max_price }}
+                    {{ form.max_price.errors }}
                 </div>
                 <button class="btn-submit search" type="submit">Buscar</button>
             </form>
@@ -32,34 +40,29 @@
     <div class="row text-left">
         <div class="col l6 ">
             <h1 class="title-search">{% if location %} {{ location }} {% endif %}</h1>
-            <h3 class="title-search"> {{ length }} resultados</h3>
+            <h3 class="title-search">{{object_list|length}} resultados</h3>
         </div>
     </div>
-    <div class="row">
+
+    <!-- <div class="row">
+        <form method="POST" action="{% url 'event_filter' %}">
+        {% csrf_token %}
+        {% for category in categories %}
         <div class="col">
             <button class="btn-category">
-                <h3 class="title-search">Categoría 1</h3>
-                <h3 class="title-search">XX resultados</h3>
-            </button>
-            <button class="btn-category">
-                <h3 class="title-search">Categoría 2</h3>
-                <h3 class="title-search">XX resultados</h3>
-            </button>
-            <button class="btn-category">
-                <h3 class="title-search">Categoría 3</h3>
-                <h3 class="title-search">XX resultados</h3>
-            </button>
-            <button class="btn-category">
-                <h3 class="title-search">Categoría 4</h3>
-                <h3 class="title-search">XX resultados</h3>
+                <h3 class="title-search">{{category.0}}</h3>
+                <h3 class="title-search">Resultados {{category.1}}</h3>
             </button>
         </div>
+        {% endfor %}
+           </form>
+    </div> -->
+</div>
+<div class="row text-left">
+    <div class="col l6">
+        <h1 class="title-search">Todos los resultados</h1>
     </div>
-    <div class="row text-left">
-        <div class="col l6">
-            <h1 class="title-search">Todos los resultados</h1>
-        </div>
-    </div>
+</div>
 </div>
 <div class="container">
     {% for event in object_list %}

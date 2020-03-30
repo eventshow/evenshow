@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.utils.timezone import now
 
 from . import models
@@ -128,40 +129,15 @@ class EventService():
 
         return result
 
-    def events_filter_home(self, self_view, location, event_date, start_hour):
-        if location and event_date and start_hour:
-            events = selectors.EventSelector().location_date_start_hour(
-                location, event_date, start_hour)
-        elif location and event_date:
-            events = selectors.EventSelector().location_date(
-                location, event_date)
-        elif location and start_hour:
-            events = selectors.EventSelector().location_start_hour(
-                location, start_hour)
-        elif event_date and start_hour:
-            events = selectors.EventSelector().date_start_hour(
-                event_date, start_hour)
-        elif location:
-            events = selectors.EventSelector().location(location)
-        elif event_date:
-            events = selectors.EventSelector().date(event_date)
-        elif start_hour:
-            events = selectors.EventSelector().start_hour(start_hour)
+    def events_filter_search(self, user, **kwargs):
+        if user.is_authenticated:
+            events = models.Event.objects.filter(
+                ~Q(event_enrollments__created_by=user), Q(start_day__gte=date.today()))
         else:
             events = models.Event.objects.filter(start_day__gte=date.today())
+        filters = {key: val for key, val in kwargs.items() if val}
 
-        results = []
-        if self_view.request.user.is_authenticated:
-            for event in events:
-                if self_view.request.user not in selectors.UserSelector().event_attendees(
-                        event.pk) and event.has_started is False:
-                    results.append(event)
-        else:
-            for event in events:
-                if event.has_started is False:
-                    results.append(event)
-
-        return results
+        return events.filter(**filters)
 
     def common_method_distance_order(self, events, latitude, longitude):
         gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)

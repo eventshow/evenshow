@@ -261,7 +261,7 @@ class SearchHomeForm(forms.Form):
             raise ValidationError(
                 'La fecha debe ser futura')
         return date
-
+      
     def clean_location(self):
         location = self.cleaned_data.get('location')
         location_join = location.replace(' ', '')
@@ -269,6 +269,48 @@ class SearchHomeForm(forms.Form):
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
+
+
+class SearchFilterForm(forms.Form):
+    location = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': "Localidad"}))
+    date = forms.DateField(
+        required=False,
+        widget=forms.DateInput(
+            format=settings.DATE_INPUT_FORMATS[0],
+            attrs={'placeholder': "dd/mm/aaaa"}
+        ),
+        input_formats=settings.DATE_INPUT_FORMATS
+    )
+    start_hour = forms.TimeField(
+        required=False,
+        widget=forms.TimeInput(
+            format='%H:%M',
+            attrs={'placeholder': "hh:mm"}
+        ),
+        input_formats=('%H:%M',)
+    )
+
+    max_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
+
+    min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
+
+
+    def clean_date(self):
+        date = self.cleaned_data.get('date')
+        if date and date < now().date():
+            raise ValidationError(
+                'La fecha debe ser futura')
+        return date
+
+
+    def clean(self):
+        min_price = self.cleaned_data.get('min_price')
+        max_price = self.cleaned_data.get('max_price')
+        if min_price and max_price and min_price >= max_price:
+            raise ValidationError(
+                'El precio mínimo no puede ser mayor o igual que el precio máximo')
+        return min_price, max_price
 
 
 class UserForm(UserChangeForm):
@@ -310,3 +352,4 @@ class UserForm(UserChangeForm):
         if not username:
             raise ValidationError('El usuario es necesario')
         return username
+
