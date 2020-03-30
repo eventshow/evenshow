@@ -17,10 +17,10 @@
         <div class="grid-example col s11 offset-s1">
             <div class="center-form">
                 <div class="container-create" id="edit-profile">
-                     <div class="row">
-                         <div class="grid-example col s6">
+                    <div class="row">
+                        <div class="grid-example col s6">
                             <div class="validate-input" id="">
-                                <img style="margin-top:3%;"  src="{{ user.profile.picture }}" class="img-profile-detail">
+                                <img style="margin-top:3%;" src="{{ user.profile.picture }}" class="img-profile-detail">
                             </div>
                         </div>
                     </div>
@@ -67,16 +67,18 @@
                             <div class="validate-input" id="create-event">
                                 <label>PUNTUACIÓN COMO ANFITRIÓN</label>
                                 <div class="user-rat">
-                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score }}</i></i>
-            </div>
+                                    <i class="fa fa-star"><i
+                                            class="rating-search">&nbsp{{user.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a"}}</i></i>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-example col s6">
                             <div class="validate-input" id="create-event">
                                 <label>PUNTUACIÓN COMO HUÉSPED</label>
                                 <div class="user-rat">
-                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score }}</i></i>
-            </div>
+                                    <i class="fa fa-star"><i
+                                            class="rating-search">&nbsp{{user.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a"}}</i></i>
+                                </div>
                             </div>
                         </div>
                     </div>
