@@ -521,7 +521,11 @@ color: #979797 !important;
 #send-buttons{
 	margin-bottom: 65px !important;
 }
-
+.img-profile-detail{
+	height: 100px;
+	margin-left: 68%;
+	margin-top: -10% !important;
+}
 #send-buttons-data{
 	margin-bottom: 3% !important;
 	margin-left: 55% !important;
