@@ -40,17 +40,21 @@
 
   <header>
     <nav id="nav">
-      <div class="nav-wrapper">
+      <div class="nav-wrapper sep-home">
         <a href="{% url 'home' %}" class="brand-logo">
           <img class="logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          {% if not user.first_name or not user.last_name or not user.profile.bio %}
+        	
+        {%if user.is_authenticated %}
+          {% if not user.first_name or not user.last_name or  not user.profile.bio %}
           <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
           {% else %}
           <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
           {% endif %}
-
+		{% else %}
+		<li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+        {% endif %}
 
           {% if not user.is_authenticated %}
 
@@ -69,8 +73,9 @@
             <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{{ user.profile.picture }}"
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
-              <li><a href="{% url 'detail_profile' %}">{{ user.username }}</a></li>
-                <li><a href="{% url 'receipts' %}">Panel de control</a></li>
+
+              <li><a href="{% url 'detail_profile' %}"> {{ user.username }} </a></li>
+              <li><a href="{% url 'detail_profile' %}">Panel de control</a></li>
               <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
           </li>
@@ -87,7 +92,8 @@
         <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img src="{{ user.profile.picture }}"
               alt="Avatar" class="avatar"></a></li>
         <li><a href="{% url 'detail_profile' %}">{{ user.username }}</a></li>
-                                <li><a href="{% url 'receipts' %}">Panel de control</a></li>
+        <li><a href="{% url 'receipts' %}">Panel de control</a></li>
+
 
         <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
         {% endif %}
@@ -137,9 +143,9 @@
     <div class="footer-copyright">
       <div class="container">
         &copy;2020 eventshow, Inc. Todos los derechos reservados
-        <a class="right" href="not_implemented">Privacidad &nbsp</a>
-        <a class="right" href="not_implemented">Condiciones &nbsp</a>
-        <a class="right" href="not_implemented">Sobre nosotros &nbsp</a>
+        <a class="right" href="{% url 'not_impl' %}">Privacidad &nbsp</a>
+        <a class="right" href="{% url 'not_impl' %}">Condiciones &nbsp</a>
+        <a class="right" href="{% url 'not_impl' %}">Sobre nosotros &nbsp</a>
       </div>
     </div>
   </footer>

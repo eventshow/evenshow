@@ -26,7 +26,11 @@ User = get_user_model()
 
 
 def handler_404(request, exception):
-    return page_not_found(request, exception, template_name='not_impl.html')
+    return page_not_found(request, exception, template_name='404.html')
+
+
+def not_impl(request):
+    return render(request, 'not_impl.html', {'STATIC_URL': settings.STATIC_URL})
 
 
 class HomeView(generic.FormView):
@@ -182,7 +186,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            # services.EmailService().send_email(subject, body, recipient_list)
+            services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -226,7 +230,6 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
-
         context['enroll_valid'] = selectors.EventSelector(
         ).event_enrolled_accepted(self.request.user)
         return context
@@ -256,7 +259,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            # services.EmailService().send_email(subject, body, recipient_list)
+            services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -391,22 +394,52 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=event.price * 100,
+                amount=int(event.price*100),
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
             )
 
             event = models.Event.objects.get(pk=event_pk)
+            services.UserService().add_bonus(attendee, event.price)
+
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            # services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
-            return render(request, 'event/thanks.html', context)
+            return render(request, 'enrollment/thanks.html', context)
         else:
+            return redirect('/')
+
+
+class EnrollmentDeleteView(generic.View):
+    model = models.Enrollment
+    template_name = 'enrollment/list.html'
+
+    def post(self, request, *args, **kwargs):
+        try:
+            enrollment = selectors.EnrollmentSelector(
+            ).user_on_event(self.request.user, kwargs.get('event_pk'))
+            enrollment_pk = enrollment.pk
+            event = models.Enrollment.objects.get(pk=enrollment_pk).event
+
+            if event and enrollment and not event.has_started:
+                enrollment.delete()
+
+                subject = 'Asistencia a {0} cancelada'.format(event.title)
+                body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
+                    self.request.user.username, event.title)
+                recipient = event.created_by.email
+
+                # services.EmailService().send_email(subject, body, [recipient])
+
+                return redirect('enrolled_events')
+            else:
+                return redirect('/')
+        except:
             return redirect('/')
 
 
@@ -436,9 +469,9 @@ class EnrollmentUpdateView(generic.View):
     def post(self, request, *args, **kwargs):
         host = self.request.user
         enrollment_pk = kwargs.get('pk')
+        status = request.POST.get('status')
 
-        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host):
-            status = request.POST.get('status')
+        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (status == 'ACCEPTED' or status == 'REJECTED'):
             services.EnrollmentService().update(
                 enrollment_pk, host, status)
             event = models.Enrollment.objects.get(pk=enrollment_pk).event
@@ -454,7 +487,8 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            # services.EmailService().send_email(subject, body, [recipient.email])
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
@@ -619,11 +653,14 @@ class SignUpView(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         birthdate = form.cleaned_data.get('birthdate')
-        services.ProfileService().create(user, birthdate)
+        friend_token = form.cleaned_data.get('friend_token')
+        points = services.UserService().add_eventpoints(friend_token)
+        services.ProfileService().create(user, birthdate, points)
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
 
 
+@method_decorator(login_required, name='dispatch')
 class TransactionListView(generic.ListView):
     model = models.Transaction
     template_name = 'profile/receipts.html'
@@ -633,16 +670,6 @@ class TransactionListView(generic.ListView):
         super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
-
-
-@method_decorator(login_required, name='dispatch')
-class UserDetailView(generic.DetailView):
-    template_name = 'profile/preferences.html'
-    model = User
-    success_url = reverse_lazy('detail_profile')
-
-    def get_object(self):
-        return self.request.user
 
 
 @method_decorator(login_required, name='dispatch')

@@ -2,43 +2,39 @@
 ​{% load static %}
 {% block content %}
 ​<style>
-  body {
-      background-image: url("{% static 'css/images/not_impl.png'%}") ;
-      background-size: cover;
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-  }
+    body {
+        background-image: url("{% static 'css/images/not_impl.png'%}");
+        background-size: cover;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
 
-  .visible{
-      background-color: white;
-      border-radius: 15px ;
-      padding-right: 20%;
-  }
+    .visible {
+        background-color: white;
+        border-radius: 15px;
+        padding-right: 20%;
+    }
 
-  main {
-      flex: 1 0 auto;
-  }
+    main {
+        flex: 1 0 auto;
+    }
 
-  .page-footer {
-      width: 100%;
-  }
+    .page-footer {
+        width: 100%;
+    }
 </style>
-        <div class="container">
-            <div class="title">
+<div class="container">
+    <div class="title">
 
-              <div class="col s12 visible">
+        <div class="col s12 visible">
 
-                <a id="titleThanks" class="flow-text">UPS! Esto es algo embarazoso... </a>
-                              <a id="text2Thanks" class="flow-text" >Esta funcionalidad aún no está implementada</a>
-
-            </div>
-
-    </div>
+            <a id="titleThanks" class="flow-text">UPS! Esto es algo embarazoso... </a>
+            <a id="text2Thanks" class="flow-text">Esta funcionalidad aún no está implementada</a>
 
         </div>
 
+    </div>
 
-
-​
+</div>​
 {% endblock %}

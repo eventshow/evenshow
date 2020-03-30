@@ -1,5 +1,4 @@
 {%extends 'base.html' %}
-
 {% block content %}
 <style>
   body {
@@ -17,7 +16,6 @@
     width: 100%;
   }
 </style>
-
 <div class="container">
   <div class="titulo">
     <div class="col s12">
@@ -25,9 +23,7 @@
     </div>
   </div>
   <div class="table-generic">
-
     <table class="responsive-table" id="myTable" description="myTable">
-
       <thead>
         <tr>
           <th id="">Puntuación</th>
@@ -37,10 +33,8 @@
           <th id="">Acciones</th>
         </tr>
       </thead>
-
       {% for enrollment in object_list %}
       <tbody>
-
         <td>
           <em class="fa fa-star"> <em
               class="rating-search">&nbsp{{enrollment.created_by.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a"}}</em></em>

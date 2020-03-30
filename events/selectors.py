@@ -12,6 +12,9 @@ class EnrollmentSelector:
     def on_event(self, event_pk: int, status: str) -> QuerySet:
         return models.Enrollment.objects.filter(event__pk=event_pk, status=status)
 
+    def user_on_event(self, user: User, event_pk: int) -> models.Enrollment:
+        return models.Enrollment.objects.filter(event__pk=event_pk, created_by=user).first()
+
 
 class EventSelector:
     def hosted(self, host: User) -> QuerySet:
@@ -138,6 +141,7 @@ class EventSelector:
         return models.Event.objects.filter(price__lte=max_price)
 
 
+
 class RatingSelector:
     def on_user(self, reviewed: User, on='HOST') -> QuerySet:
         return models.Rating.objects.filter(reviewed=reviewed, on=on)
@@ -161,6 +165,9 @@ class UserSelector:
 
     def rated_on_event(self, event_pk: int) -> QuerySet:
         return User.objects.filter(reviewed_ratings__event=event_pk)
+
+    def with_token(self, token: str) -> User:
+        return User.objects.filter(profile__token=token).first()
 
 
 class TransactionSelector:
