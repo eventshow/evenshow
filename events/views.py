@@ -304,26 +304,38 @@ class EventSearchByLocationDateStartHourView(generic.ListView, FormMixin):
 class EventFilterView(generic.ListView, generic.FormView, MultipleObjectMixin):
     model = models.Event
     template_name = 'event/list_search.html'
-    paginate_by = 12
+    paginate_by = 2
     form_class = forms.SearchFilterForm
 
     def get(self, request, *args, **kwargs):
         self.form = self.get_form(self.form_class)
-        return generic.ListView.get(self, request, *args, **kwargs)
+        print("Foooooooooooooorm")
+        print(self.form)
+        self.object_list = self.queryset
+        print(self.object_list)
+        #Prueba
+        if self.object_list is None:
+            self.object_list=self.get_queryset()
+            print("objectlist")
+            print(self.object_list)
+        #
+        context = super(EventFilterView, self).get_context_data(
+            object_list=self.object_list, **kwargs)
+        context['length'] = len(self.object_list)
+        context['location'] = self.kwargs.get('location')
+        context['form'] = self.form
+        return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         self.form = self.get_form(self.form_class)
 
         if self.form.is_valid():
-            queryset = self.get_queryset()
+            print("VALIDOOOOOOOOOOOOO")
+            self.queryset = self.get_queryset()
         else:
-            queryset = []
-
-        context = super(EventFilterView, self).get_context_data(
-            object_list=queryset, **kwargs)
-        context['length'] = len(self.get_queryset())
-        context['location'] = self.kwargs.get('location')
-        context['form'] = self.form
+            print("NO Validooooooooooooooooooo")
+            self.queryset = []
+        print("PASAAAAAAAAAAAA")
         # Whether the form validates or not, the view will be rendered by get()
         return self.get(request, *args, **kwargs)
 
