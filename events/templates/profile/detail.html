@@ -46,10 +46,28 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="grid-example col s12">
+                        <div class="grid-example col 12">
                             <div class="validate-input" id="create-event">
                                 <label>FECHA DE NACIMIENTO</label>
                                 <h4 style="margin-top:3%;" class="description">{{user.profile.birthdate}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <label>PUNTUACIÓN COMO ANFITRIÓN</label>
+                                <div class="user-rat">
+                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score }}</i></i>
+            </div>
+                            </div>
+                        </div>
+                        <div class="grid-example col s6">
+                            <div class="validate-input" id="create-event">
+                                <label>PUNTUACIÓN COMO HUÉSPED</label>
+                                <div class="user-rat">
+                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score }}</i></i>
+            </div>
                             </div>
                         </div>
                     </div>
