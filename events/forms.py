@@ -137,7 +137,7 @@ class RegistrationForm(UserCreationForm):
         attrs={'placeholder': "contraseña"}))
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "confirmación contraseña"}))
-    friend_token = forms.CharField(required=False, max_length=8, widget=forms.TextInput(
+    friend_token = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "código amigo"}))
 
     class Meta:
@@ -165,6 +165,13 @@ class RegistrationForm(UserCreationForm):
         elif User.objects.filter(email=email).exists():
             raise ValidationError('El email ya existe')
         return email
+
+    def clean_friend_token(self):
+        friend_token = self.cleaned_data.get('friend_token')
+        refered = Profile.objects.filter(token=friend_token).exists()
+        if friend_token and not refered:
+            raise ValidationError('El código introducido no existe')
+        return friend_token
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -308,7 +315,7 @@ class SearchFilterForm(forms.Form):
 
 class UserForm(UserChangeForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(
-        attrs={'placeholder': "email"}))
+        attrs={'placeholder': "email@email.com"}))
     first_name = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "nombre"}))
     last_name = forms.CharField(required=False, widget=forms.TextInput(

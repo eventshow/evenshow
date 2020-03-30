@@ -1,17 +1,13 @@
 {% extends 'profile/preferences.html' %}
 {% block content %}
-
 <div class="container" id="panel">
   <div class="title">
     <div class="col s12">
       <h3 id="name-ref">Mis recibos</h3>
     </div>
   </div>
-
   <div class="table-generic">
-
     <table class="responsive-table" id="myTable">
-
       <thead>
         <div class="provisional">
           <tr>
@@ -25,7 +21,6 @@
           </tr>
         </div>
       </thead>
-
       <tbody>
         {% for transaction in object_list %}
         <tr>
@@ -44,14 +39,8 @@
         </tr>
         {% endfor %}
       </tbody>
-
     </table>
-
     {% include "pagination.html" %}
-
   </div>
 </div>
-
-
-
 {%endblock%}

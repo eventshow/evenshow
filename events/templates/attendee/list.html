@@ -2,21 +2,21 @@
 {% block content %}
 <style>
   body {
-     
-      background-size: cover;
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
+    background-size: cover;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
   }
 
   main {
-      flex: 1 0 auto;
+    flex: 1 0 auto;
   }
 
   .page-footer {
-      width: 100%;
+    width: 100%;
   }
 </style>
+
 <body>
   <div class="container">
     <div class="title">
@@ -24,11 +24,8 @@
         <h3 class="name-host">Huéspedes del evento <a id="title-name">{{event_title}}</a></h3>
       </div>
     </div>
-
     <div class="table-generic">
-
       <table cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
-
         <thead>
           <div class="provisional">
             <tr>
@@ -39,11 +36,8 @@
             </tr>
           </div>
         </thead>
-
-
         {%for att in object_list %}
         <tbody>
-
           <tr>
             <td>
               {% if att not in rated_attendees and event_has_finished %}
@@ -63,17 +57,11 @@
             <td>{{att.first_name}}</td>
             <td>{{att.last_name}}</td>
           </tr>
-
         </tbody>
         {% endfor %}
       </table>
-
       {% include "pagination.html" %}
-
     </div>
   </div>
-
 </body>
-
-
 {%endblock%}
