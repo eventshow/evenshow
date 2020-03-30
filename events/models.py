@@ -74,7 +74,8 @@ class Profile(models.Model):
         return self.eventpoints * self.EVENTPOINT_VALUE
 
     def save(self, *args, **kwargs):
-        self.token = get_random_string(length=self.TOKEN_LENGTH).upper()
+        if not self.pk:
+            self.token = get_random_string(length=self.TOKEN_LENGTH).upper()
         super(Profile, self).save(*args, **kwargs)
 
     class Meta:
