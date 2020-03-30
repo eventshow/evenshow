@@ -186,7 +186,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            services.EmailService().send_email(subject, body, recipient_list)
+            #services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -259,7 +259,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            services.EmailService().send_email(subject, body, recipient_list)
+            #services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -410,7 +410,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            #services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -489,8 +489,8 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            services.EmailService().send_email(
-                subject, body, [recipient.email])
+            #services.EmailService().send_email(
+                #subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
