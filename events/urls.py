@@ -17,10 +17,10 @@ urlpatterns = [
          views.EventEnrolledListView.as_view(), name='enrolled_events'),
     path('events/hosted', views.EventHostedListView.as_view(),
          name='hosted_events'),
-    re_path(r'^events/(?P<date>\d{1,2}/\d{1,2}/\d{4})?/(?P<location>.*)?/(?P<start_hour>\d{1,2}:\d{1,2})?$',
-            views.EventSearchByLocationDateStartHourView.as_view(), name='event_search_home'),
-    path('events/filter/',
-         views.EventFilterView.as_view(), name='event_filter_search'),
+    path('events/filter', views.EventFilterFormView.as_view(), name='event_filter'),
+    re_path(r'^events/(?P<date>\d{1,2}/\d{1,2}/\d{4})?/(?P<location>.*)?/(?P<start_hour>\d{1,2}:\d{1,2})?/(?P<min_price>\d+(.\d{1,2})?)?/(?P<max_price>\d+(.\d{1,2})?)?/(?P<category>.*)?$',
+            views.EventFilterListView.as_view(), name='list_event_filter'),
+
     path('events/nearby',
          views.EventSearchNearbyView.as_view(), name='event_nearby_search_home'),
     path('events/create', views.EventCreateView.as_view(),
@@ -66,4 +66,3 @@ urlpatterns = [
          name='not_impl'),
 
 ]
-

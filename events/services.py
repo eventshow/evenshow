@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.utils.timezone import now
 
 from . import models
@@ -128,86 +129,15 @@ class EventService():
 
         return result
 
-
-    def events_filter_search(self, self_view, location, event_date, start_hour, min_price, max_price):
-        if location and event_date and start_hour and min_price and max_price:  # 5
-            events = selectors.EventSelector().location_date_start_hour_min_max(location, event_date, start_hour,
-                                                                                min_price, max_price)
-        elif location and event_date and start_hour and min_price:  # 4
-            events = selectors.EventSelector().location_date_start_hour_min(location, event_date, start_hour, min_price)
-        elif location and event_date and start_hour and max_price:  # 4
-            events = selectors.EventSelector().location_date_start_hour_max(location, event_date, start_hour, max_price)
-        elif location and event_date and min_price and max_price:  # 4
-            events = selectors.EventSelector().location_date_min_max(location, event_date, min_price, max_price)
-        elif location and start_hour and min_price and max_price:  # 4
-            events = selectors.EventSelector().location_start_hour_min_max(location, start_hour, min_price, max_price)
-        elif event_date and start_hour and min_price and max_price:  # 4
-            events = selectors.EventSelector().date_start_hour_min_max(event_date, start_hour, min_price, max_price)
-        elif location and event_date and start_hour:  # 3
-            events = selectors.EventSelector().location_date_start_hour(location, event_date, start_hour)
-        elif location and event_date and min_price:  # 3
-            events = selectors.EventSelector().location_date_min(location, event_date, min_price)
-        elif location and event_date and max_price:  # 3
-            events = selectors.EventSelector().location_date_max(location, event_date, max_price)
-        elif location and start_hour and min_price:  # 3
-            events = selectors.EventSelector().location_start_hour_min(location, start_hour, min_price)
-        elif location and start_hour and max_price:  # 3
-            events = selectors.EventSelector().location_start_hour_max(location, start_hour, max_price)
-        elif location and min_price and max_price:  # 3
-            events = selectors.EventSelector().location_min_max(location, min_price, max_price)
-        elif event_date and start_hour and min_price:  # 3
-            events = selectors.EventSelector().date_start_hour_min(event_date, start_hour, min_price)
-        elif event_date and start_hour and max_price:  # 3
-            events = selectors.EventSelector().date_start_hour_max(event_date, start_hour, max_price)
-        elif start_hour and min_price and max_price:  # 3
-            events = selectors.EventSelector().start_hour_min_max(start_hour, min_price, max_price)
-        elif event_date and min_price and max_price:  # 3
-            events = selectors.EventSelector().date_min_max(event_date, min_price, max_price)
-        elif location and event_date:  # 2
-            events = selectors.EventSelector().location_date(location, event_date)
-        elif location and start_hour:  # 2
-            events = selectors.EventSelector().location_start_hour(location, start_hour)
-        elif location and min_price:  # 2
-            events = selectors.EventSelector().location_min(location, min_price)
-        elif location and max_price:  # 2
-            events = selectors.EventSelector().location_max(location, max_price)
-        elif event_date and start_hour:  # 2
-            events = selectors.EventSelector().date_start_hour(event_date, start_hour)
-        elif event_date and min_price:  # 2
-            events = selectors.EventSelector().date_min(event_date, min_price)
-        elif event_date and max_price:  # 2
-            events = selectors.EventSelector().date_max(event_date, max_price)
-        elif start_hour and min_price:  # 2
-            events = selectors.EventSelector().start_hour_min(start_hour, min_price)
-        elif start_hour and max_price:  # 2
-            events = selectors.EventSelector().start_hour_max(start_hour, max_price)
-        elif min_price and max_price:  # 2
-            events = selectors.EventSelector().min_max(min_price, max_price)
-        elif location:  # 1
-            events = selectors.EventSelector().location(location)
-        elif event_date:  # 1
-            events = selectors.EventSelector().date(event_date)
-        elif start_hour:  # 1
-            events = selectors.EventSelector().start_hour(start_hour)
-        elif min_price:  # 1
-            events = selectors.EventSelector().min(min_price)
-        elif max_price:  # 1
-            events = selectors.EventSelector().max(max_price)
+    def events_filter_search(self, user, **kwargs):
+        if user.is_authenticated:
+            events = models.Event.objects.filter(
+                ~Q(event_enrollments__created_by=user), Q(start_day__gte=date.today()))
         else:
             events = models.Event.objects.filter(start_day__gte=date.today())
+        filters = {key: val for key, val in kwargs.items() if val}
 
-        results = []
-        if self_view.request.user.is_authenticated:
-            for event in events:
-                if self_view.request.user not in selectors.UserSelector().event_attendees(
-                        event.pk) and event.has_started is False:
-                    results.append(event)
-        else:
-            for event in events:
-                if event.has_started is False:
-                    results.append(event)
-
-        return results
+        return events.filter(**filters)
 
     def common_method_distance_order(self, events, latitude, longitude):
         gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
