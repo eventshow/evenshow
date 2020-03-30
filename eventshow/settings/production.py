@@ -32,6 +32,10 @@ STRIPE_CONNECT_CLIENT_ID = 'ca_GvXb5KbNOFxZC6nccjrcsyVjjj4uWaiN'
 # Google Maps
 GOOGLE_API_KEY = 'AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ'
 
+EVENTPOINT_VALUE = 0.005
+EVENTPOINT_BONUS = 0.05
+EVENTPOINTS = 50
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 

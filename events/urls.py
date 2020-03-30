@@ -10,6 +10,10 @@ urlpatterns = [
 
     path('auth/signup/', views.SignUpView.as_view(), name='signup'),
 
+    path('enrollments/thanks', TemplateView.as_view(template_name='enrollment/thanks.html'),
+         name='thanks'),
+    path('enrollments/<int:event_pk>/delete',
+         views.EnrollmentDeleteView.as_view(), name='delete_enrollment'),
     path('enrollments/<int:pk>/update',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),
 
@@ -39,7 +43,7 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
-    path('profile', views.UserDetailView.as_view(),
+    path('profile', login_required(TemplateView.as_view(template_name='profile/detail.html')),
          name='detail_profile'),
     path('profile/referred',
          login_required(TemplateView.as_view(template_name='profile/referred.html')), name='referred'),
@@ -53,16 +57,6 @@ urlpatterns = [
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
 
-    path('vista/gracias', TemplateView.as_view(template_name='event/thanks.html'),
-         name='gracias'),
-
-    path('bills', TemplateView.as_view(template_name='user/bills.html'),
-         name='bills'),
-    path('referred', TemplateView.as_view(template_name='user/referred.html'),
-         name='referred'),
-
-
-    path('not_impl', TemplateView.as_view(template_name='not_impl.html'),
+    path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
-
 ]

@@ -29,9 +29,9 @@ a:focus {
 }
 
 a:hover {
-	text-decoration: none;
-  color: #B6244D;
+  text-decoration: none;
 }
+
 
 #button-search:hover{
   font-weight: bold !important;

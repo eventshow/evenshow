@@ -1,9 +1,6 @@
 {%extends 'base.html'%}
 {% load static %}
-
-
 {% block content %}
-
 {% if request.get_full_path == '/events/create' %}
 <div class="container">
   <div class="title-share">
@@ -12,8 +9,6 @@
     </div>
   </div>
 </div>
-
-
 <div class="container">
   <div class="center-form">
     <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
@@ -31,7 +26,6 @@
           </div>
         </div>
       </div>
-
       <div class="container">
         <div class="center-form">
           <form class="form-eventshow-create" id="create-event" method="post"
@@ -43,11 +37,7 @@
               </div>
             </div>
             {% endif %}
-
             <div class="row">
-
-
-
               <div id="test1">
                 <h4 class="flow-text separated-create" id="">¿Cómo será?</h4><br>
                 <div class="container-create">
@@ -60,7 +50,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="grid-example col s12">
                       <label>TÍTULO</label>
@@ -70,7 +59,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="row">
                     <div class="grid-example col s12">
                       <label>DESCRIPCIÓN</label>
@@ -102,7 +90,6 @@
                   </div>
                 </div>
               </div>
-
               <div id="test2">
                 <h4 class="flow-text separated-create" id="">¿Cuándo será?</h4><br>
                 <div class="container-create">
@@ -145,13 +132,9 @@
                         {{ form.end_time.errors }}
                       </div>
                     </div>
-
                   </div>
-
                 </div>
               </div>
-
-
               <div id="test3">
                 <h4 class="flow-text separated-create" id="">Extra</h4><br>
                 <div class="container-create">
@@ -194,7 +177,6 @@
                     </div>
                   </div>
                   {{ form.extra_info.errors }}
-
                 </div>
               </div>
               <div class="container">
@@ -203,17 +185,12 @@
                     <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
                   </div>
                 </div>
-
-
               </div>
-
             </div>
-                  <div class="form-errors-create">
-      {{ form.non_field_errors }}
-    </div>
+            <div class="form-errors-create">
+              {{ form.non_field_errors }}
+            </div>
           </form>
         </div>
       </div>
-
-
       {% endblock %}

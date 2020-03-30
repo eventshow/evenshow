@@ -1,5 +1,4 @@
 {%extends 'base.html'%}
-
 {% block content %}
 <div class="row">
     <div class="wrapper wrapper--w1070">
@@ -44,7 +43,6 @@
             <h3 class="title-search">{{object_list|length}} resultados</h3>
         </div>
     </div>
-
     <div class="row">
         <!--  <form method="POST" action="{% url 'event_filter' %}"> -->
         {% csrf_token %}
@@ -59,16 +57,13 @@
         <!--    </form> -->
     </div>
 </div>
-
 <div class="row text-left">
     <div class="col l6">
         <h1 class="title-search">Todos los resultados</h1>
     </div>
 </div>
 </div>
-
 <div class="container">
-
     {% for event in object_list %}
     <hr>
     <div class="row event">
@@ -95,17 +90,11 @@
                     alt="event picture"></a>
             {% else %}
 
-
             {% endif %}
-
         </div>
     </div>
-
     {% endfor %}
     <hr>
     {% include 'pagination.html' %}
 </div>
-
-
-
 {% endblock %}
