@@ -272,7 +272,7 @@ color: #979797 !important;
 }
 
 #detail-info{
-	margin-top: 0%;
+	margin-top: -2%;
 
 }
 
@@ -324,6 +324,18 @@ color: #979797 !important;
 	margin-left: 60%;
 }
 
+
+.sep-title{
+	color: #B6244D;
+	margin-top: -68% !important;
+    margin-left: 0%;
+    font-size: 54px;
+    background-color: white;
+    border-radius: 9px;
+    padding-right: 289px;
+    padding-left: 11px;
+    padding-top: 24px;
+}
 .button-detail{
 	color: white !important;
 	margin-top: -8% !important;
