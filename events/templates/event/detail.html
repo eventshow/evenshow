@@ -14,6 +14,9 @@
                     class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
         </div>
     </div>
+<div class="col m6 rectangle-info " id="detail-info">
+        <h1 class="sep-title">{{object.title}}</h1>
+    </div>
     <div class="col m6 rectangle-info separated2" id="detail-info">
         <h2 class="title-detail">duración</h2>
         <h2 class="subtitle-detail">{{ duration }}</h2>
@@ -21,6 +24,11 @@
     <div class="col m6 rectangle-info separated6" id="detail-info">
         <h2 class="title-detail">aforo</h2>
         <h2 class="subtitle-detail">{{ object.capacity }}</h2>
+    </div>
+
+ <div class="col m6 rectangle-info separated7" id="detail-info">
+        <h2 class="title-detail">edad mín.</h2>
+        <h2 class="subtitle-detail">{{ object.min_age }}</h2>
     </div>
     <div class="col m6 rectangle-info separated4" id="detail-info">
         <h2 class="title-detail">idioma</h2>
@@ -117,7 +125,7 @@
             <img class="img-comment" alt='' src="{{rating.created_by.profile.picture}}">
             <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
-                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score }}</i></i>
+                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score}}</i></i>
             </div>
             <h3 class="comment-detail">{{rating.comment}}</h3>
         </div>

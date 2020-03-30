@@ -72,7 +72,7 @@
 	width: 55px;
 	height: 55px;
 	border-radius: 50%;
-	margin-top: -20%;
+	margin-top: -25%;
 }
 
 #avatar-movil{
@@ -104,6 +104,15 @@
 #nav {
 	background-color: #B7234D;
 	z-index: -1 !important;
+
+}
+
+.sep-home{
+	margin-right: 2%;
+}
+
+.sep-home li{
+	margin-top: 1%;
 }
 
 .sh-eventshow{
@@ -272,7 +281,7 @@ color: #979797 !important;
 }
 
 #detail-info{
-	margin-top: 0%;
+	margin-top: -2%;
 
 }
 
@@ -320,6 +329,22 @@ color: #979797 !important;
 	margin-left: 49%;
 }
 
+.separated7{
+	margin-left: 60%;
+}
+
+
+.sep-title{
+	color: #B6244D;
+	margin-top: -68% !important;
+    margin-left: 0%;
+    font-size: 54px;
+    background-color: white;
+    border-radius: 9px;
+    padding-right: 289px;
+    padding-left: 11px;
+    padding-top: 24px;
+}
 .button-detail{
 	color: white !important;
 	margin-top: -8% !important;
@@ -521,7 +546,11 @@ color: #979797 !important;
 #send-buttons{
 	margin-bottom: 65px !important;
 }
-
+.img-profile-detail{
+	height: 100px;
+	margin-left: 68%;
+	margin-top: -10% !important;
+}
 #send-buttons-data{
 	margin-bottom: 3% !important;
 	margin-left: 55% !important;
