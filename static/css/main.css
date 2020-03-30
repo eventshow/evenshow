@@ -72,7 +72,7 @@
 	width: 55px;
 	height: 55px;
 	border-radius: 50%;
-	margin-top: -20%;
+	margin-top: -25%;
 }
 
 #avatar-movil{
@@ -104,6 +104,15 @@
 #nav {
 	background-color: #B7234D;
 	z-index: -1 !important;
+
+}
+
+.sep-home{
+	margin-right: 2%;
+}
+
+.sep-home li{
+	margin-top: 1%;
 }
 
 .sh-eventshow{
