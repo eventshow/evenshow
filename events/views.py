@@ -342,10 +342,12 @@ class EventSearchNearbyView(generic.ListView):
     def post(self, request, *args, **kwargs):
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
+        queryset = self.get_queryset()
         context = {}
         context['latitude'] = latitude
         context['longitude'] = longitude
         context['form'] = self.form_class
+        context['object_list'] = queryset
 
         if not queryset:
             context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
