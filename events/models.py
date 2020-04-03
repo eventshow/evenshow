@@ -12,7 +12,6 @@ from django.db.models import Avg
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 
-
 from core.models import Common
 
 # Create your models here.
@@ -57,7 +56,8 @@ class Profile(models.Model):
     @property
     def age(self):
         today = date.today()
-        return today.year - self.birthdate.year - ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+        return today.year - self.birthdate.year - (
+                    (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
 
     @property
     def avg_attendee_score(self):
@@ -247,3 +247,16 @@ class Transaction(Common):
 
     def __str__(self):
         return str(self.id)
+
+
+class Message(Common):
+    title = models.CharField('Title', max_length=250)
+    description = models.TextField('Description')
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
+
+    def __str__(self):
+        return str(self.title)
