@@ -92,8 +92,42 @@ class AttendeePaymentView(generic.View):
         if services.EventService().count(kwargs.get('pk')):
             pk = self.kwargs.get('pk')
             event = models.Event.objects.get(pk=pk)
-            payment = event.price
-            return render(request, self.template_name, {'payment': payment})
+
+            if event.has_finished:
+                attende_list = selectors.UserSelector().event_attendees(pk)
+
+                for attendee in attende_list:
+
+                    transaction = models.Transaction.objects.filter(created_by=attendee, event=event).first()
+
+                    if transaction is not None:
+
+                        is_paid_for = transaction.is_paid_for
+
+                        if not is_paid_for:
+
+                            try:
+                                fee = services.PaymentService().fee(transaction.amount)
+                                attendee_amount = fee + transaction.amount
+
+                                services.PaymentService().charge(attendee_amount, transaction.customer_id, fee, transaction.recipient)
+
+                                transaction.is_paid_for = True
+                                transaction.save()
+
+                                services.UserService().add_bonus(transaction.created_by, transaction.amount)
+
+                            except stripe.error.StripeError as e:
+                                pass
+                        
+                        else:
+                            
+                            return render(request, self.template_name, {'is_paid_for': True})
+                    
+                return render(request, self.template_name, {'is_paid_for': False})
+
+            else:
+                return render(request, self.template_name, {'finished': False})
         else:
             return redirect('/')
 
