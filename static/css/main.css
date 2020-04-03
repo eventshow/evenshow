@@ -1038,6 +1038,10 @@ label {
 	border: solid 1px #b6244d;
 }
 
+#margin_place{
+	margin-top: 85px;
+}
+
 .name-host,
 #name-host {
 	height: 40px;
