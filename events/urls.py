@@ -59,4 +59,6 @@ urlpatterns = [
 
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
+
+    path('profile/pdf_download', views.DownloadPDF.as_view(), name='pdf_download')
 ]

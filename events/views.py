@@ -1,23 +1,26 @@
-from django.db.models import Count
-from datetime import date, datetime
+from datetime import datetime
+from io import BytesIO
 
 import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views import generic
-from django.views.generic.edit import FormMixin, ModelFormMixin
-from django.views.generic.list import MultipleObjectMixin
 from django.views.defaults import page_not_found
+from django.views.generic.list import MultipleObjectMixin
+from xhtml2pdf import pisa
 
 from . import forms
 from . import models
 from . import selectors
 from . import services
-from .models import Event
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -51,7 +54,7 @@ class HomeView(generic.FormView):
             'location': location,
             'start_hour': start_hour,
         }
-        )
+                            )
 
 
 @method_decorator(login_required, name='dispatch')
@@ -186,7 +189,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -259,7 +262,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -296,7 +299,7 @@ class EventFilterFormView(generic.FormView):
             'min_price': min_price,
             'max_price': max_price
         }
-        )
+                            )
 
 
 class EventFilterListView(generic.ListView):
@@ -353,7 +356,8 @@ class EventSearchNearbyView(generic.ListView):
         context['object_list'] = queryset
 
         if not queryset:
-            context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
+            context[
+                'location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
 
         return render(request, self.template_name, context)
 
@@ -396,7 +400,7 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=int(event.price*100),
+                amount=int(event.price * 100),
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
@@ -410,7 +414,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            #services.EmailService().send_email(subject, body, [recipient])
+            # services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -473,7 +477,8 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
         status = request.POST.get('status')
 
-        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (status == 'ACCEPTED' or status == 'REJECTED'):
+        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (
+                status == 'ACCEPTED' or status == 'REJECTED'):
             services.EnrollmentService().update(
                 enrollment_pk, host, status)
             event = models.Enrollment.objects.get(pk=enrollment_pk).event
@@ -489,8 +494,8 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            #services.EmailService().send_email(
-                #subject, body, [recipient.email])
+            # services.EmailService().send_email(
+            # subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
@@ -709,3 +714,36 @@ class UserUpdateView(generic.UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
+
+
+class DownloadPDF(View):
+
+    def render_to_pdf(self, template_src, context_dict={}):
+        template = get_template(template_src)
+        html = template.render(context_dict)
+        result = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return None
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+
+        data = {
+            "name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "date_join": user.date_joined,
+            "zipcode": "98663",
+
+            "phone": "555-555-2345",
+            "website": "dennisivy.com",
+        }
+        pdf = self.render_to_pdf('profile/pdf.html', data)
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Invoice_%s.pdf" % ("12341231")
+        content = "attachment; filename='%s'" % (filename)
+        response['Content-Disposition'] = content
+        return response
