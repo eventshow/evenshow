@@ -715,7 +715,7 @@ class UserUpdateView(generic.UpdateView):
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
 
-
+@method_decorator(login_required, name='dispatch')
 class DownloadPDF(View):
 
     def render_to_pdf(self, template_src, context_dict={}):
