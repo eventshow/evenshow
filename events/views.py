@@ -729,16 +729,25 @@ class DownloadPDF(View):
 
     def get(self, request, *args, **kwargs):
         user = request.user
-
+        profile = user.profile
+        events = selectors.EventSelector().hosted(user)
+        enrollments = models.Enrollment.objects.filter(created_by=user)
+        ratings = models.Rating.objects.filter(created_by=user)
         data = {
             "name": user.first_name,
             "last_name": user.last_name,
             "email": user.email,
             "date_join": user.date_joined,
-            "zipcode": "98663",
+            "location": profile.location,
 
-            "phone": "555-555-2345",
-            "website": "dennisivy.com",
+            "picture": profile.picture,
+            "birthdate": profile.birthdate,
+            "token": profile.token,
+            "eventpoints": profile.eventpoints,
+            "bio": profile.bio,
+            "events": events,
+            "enrollments": enrollments,
+            "ratings": ratings,
         }
         pdf = self.render_to_pdf('profile/pdf.html', data)
 

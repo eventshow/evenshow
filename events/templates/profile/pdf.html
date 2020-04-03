@@ -1,83 +1,94 @@
 <head>
-<style>
+    <style>
     @page {
         size: a4 portrait;
-        @frame header_frame {           /* Static Frame */
-            -pdf-frame-content: header_content;
-            left: 50pt; width: 512pt; top: 50pt; height: 40pt;
-        }
-        @frame content_frame {          /* Content Frame */
-            left: 50pt; width: 512pt; top: 90pt; height: 632pt;
-        }
-        @frame footer_frame {           /* Another static Frame */
-            -pdf-frame-content: footer_content;
-            left: 50pt; width: 512pt; top: 772pt; height: 20pt;
-        }
+
     }
-</style>
+
+
+
+
+    </style>
 </head>
 
 <body>
-    <!-- Content for Static Frame 'header_frame' -->
-    <div id="header_content">
-    	<h3>{{name}}</h3>
-        <h3>{{last_name}}</h3>
+<br>
+<h2>Datos de usuario</h2>
+<hr>
+<h3>{{name}} {{last_name}}</h3>
+<h3>fecha de registro: {{date_join}}</h3>
+<h3>email: {{email}}</h3>
+<br>
 
-    </div>
 
-    <!-- Content for Static Frame 'footer_frame' -->
-    <div id="footer_content">(c) - page <pdf:pagenumber>
-        of <pdf:pagecount>
-    </div>
 
-    <!-- HTML Content -->
-    <table>
-    		<tr>
-    			<td>{{date_join}}</td>
+<hr>
+<h2>Perfil</h2>
 
-    		</tr>
-    		<tr>
+<hr>
+<h3>localización: {{location}}</h3>
+<h3>foto: {{picture}}</h3>
+<h3>fecha de nacimiento: {{birhtdate}}</h3>
+<h3>token: {{token}}</h3>
+<h3>eventpoints: {{eventpoints}}</h3>
+<h3>biografía: {{bio}}</h3>
 
-    			<td>{{email}}</td>
-    		</tr>
+<br>
+<hr>
+<h2>Eventos</h2>
+{% for event in events %}
 
-    </table>
+<hr>
+<h3>titulo: {{event.title}}</h3>
+<h3>descripción: {{event.description}}</h3>
+<h3>foto: {{event.picture}}</h3>
+<h3>ciudad: {{event.location_city}}</h3>
+<h3>calle: {{event.location_street}}</h3>
+<h3>número: {{event.location_number}}</h3>
+<h3>día de comienzo: {{event.start_day}}</h3>
+<h3>hora de comienzo: {{event.start_time}}</h3>
+<h3>hora de finalización: {{event.end_time}}</h3>
+<h3>precio: {{event.price}}</h3>
+<h3>capacidad: {{event.capacity}}</h3>
+<h3>edad mínima: {{event.min_age}}</h3>
+<h3>idioma: {{event.lang}}</h3>
+<h3>mascotas: {{event.pets}}</h3>
+<h3>aparcamiento cercano: {{event.parking_nearby}}</h3>
+<h3>información extra: {{event.extra_info}}</h3>
+<h3>creado por: {{event.created_by}}</h3>
 
-    <hr>
+{% empty %}
+<h3>No hay eventos</h3>
+{% endfor %}
 
-    <table>
-    	<tr>
+<br>
+<hr>
 
-    		<th>Product</th>
-    		<th>Price</th>
-    		<th>Quantity</th>
-    		<th>Total</th>
-    	</tr>
-    	<tr>
+<h2>Solicitudes de evento</h2>
+{% for enrollment in enrollments %}
+<hr>
+<h3>creado por: {{enrollment.created_by}}</h3>
+<h3>evento: {{enrollment.event}}</h3>
+<h3>estado: {{enrollment.status}}</h3>
+{% empty %}
+<h3>No hay solicitudes</h3>
+{% endfor %}
+<br>
+<hr>
+<h2>Puntuaciones</h2>
+{% for rating in ratings %}
+<hr>
+<h3>creado por: {{rating.created_by}}</h3>
+<h3>evento: {{rating.event}}</h3>
+<h3>usuario puntuado: {{rating.reviewed}}</h3>
+<h3>puntuación: {{rating.score}}</h3>
+<h3>comentario: {{rating.comment}}</h3>
+<h3>sobre un: {{rating.on}}</h3>
 
-    		<td>Hosting Plan</td>
-    		<td>$7.99</td>
-    		<td>2</td>
-    		<td>$15.98</td>
-    	</tr>
-    	<tr>
+{% empty %}
+<h3>No hay puntuaciones</h3>
+{% endfor %}
 
-    		<td>consultation </td>
-    		<td>$225</td>
-    		<td>1</td>
-    		<td>$225</td>
-    	</tr>
-    	<tr>
 
-    		<td>Service Hours</td>
-    		<td>$189</td>
-    		<td>45.7</td>
-    		<td>$8637.30</td>
-    	</tr>
-    </table>
-
-    <hr>
-
-    <p><strong>Total: $8878.28</strong></p>
 </body>
 </html>
