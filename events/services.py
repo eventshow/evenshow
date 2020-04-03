@@ -14,7 +14,7 @@ from django.utils.timezone import now
 
 from . import models
 from . import selectors
-
+from .models import Message
 
 User = get_user_model()
 
@@ -269,3 +269,10 @@ class UserService:
     def exist_user(self, user_id: int) -> bool:
         exist = models.User.objects.filter(id=user_id).exists()
         return exist
+
+class MessageService:
+    def last_message(self):
+        message=None
+        if models.Message.objects.all():
+            message = selectors.MessageSelector().last_message()
+        return message

@@ -254,9 +254,10 @@ class Message(Common):
     description = models.TextField('Description')
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['created_at']
         verbose_name = 'Message'
         verbose_name_plural = 'Messages'
+        get_latest_by='created_at'
 
     def __str__(self):
         return str(self.title)

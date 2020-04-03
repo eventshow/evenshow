@@ -37,6 +37,17 @@ class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
 
+    def render_to_response(self, context, **response_kwargs):
+        context['message'] = services.MessageService().last_message()
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+        )
+
     def get_success_url(self):
         request = self.request.POST
         date = request.get('date')
