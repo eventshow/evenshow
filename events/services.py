@@ -1,5 +1,6 @@
 import googlemaps
 import pytz
+import stripe
 
 from collections import OrderedDict
 from datetime import date, datetime, time
@@ -248,6 +249,36 @@ class PaymentService():
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
         return round(res - amount_host)
+
+    def charge(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
+
+        stripe.Charge.create(
+                amount=amount,
+                currency='eur',
+                customer=customer_id,
+                description='A event payment',
+                application_fee_amount = application_fee_amount,
+                destination={
+                    'account': host.profile.stripe_user_id,
+                }
+            )
+
+    def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User) -> None:
+        
+        transcation = models.Transaction.objects.create(amount = amount, created_by=created_by, recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False)
+
+    def get_or_create_customer(self, email:str, source:str) -> stripe.Customer:
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        connected_customers = stripe.Customer.list()
+        for customer in connected_customers:
+            if customer.email == email:
+                print(f'{email} found')
+                return customer
+        print(f'{email} created')
+        return stripe.Customer.create(
+            email = email,
+            source = source
+    )
 
 
 class UserService:
