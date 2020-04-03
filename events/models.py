@@ -9,6 +9,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 
@@ -19,6 +21,19 @@ from core.models import Common
 
 
 User = get_user_model()
+
+
+@receiver(pre_delete, sender=User, dispatch_uid='user_delete_signal')
+def change_location_on_user_deletion(sender, instance, using, **kwargs):
+    Event.objects.filter(created_by=instance).update(
+        location_city='No disponible',
+        location_street='No disponible',
+        location_number=0
+    )
+
+
+def get_default_category():
+    return Categry.objects.get_or_create(name='Evento')[0]
 
 
 def get_sentinel_user():
@@ -122,9 +137,9 @@ class Event(Common):
         'Extra info for the attendee', blank=True, null=True)
 
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='host_events', default='')
+        User, on_delete=models.SET(get_sentinel_user), related_name='host_events', default='')
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, related_name='category_events', null=True)
+        Category, on_delete=models.SET(get_default_category), related_name='category_events')
 
     class Meta:
         indexes = [models.Index(

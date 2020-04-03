@@ -14,7 +14,7 @@
                     class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
         </div>
     </div>
-<div class="col m6 rectangle-info " id="detail-info">
+    <div class="col m6 rectangle-info " id="detail-info">
         <h1 class="sep-title">{{object.title}}</h1>
     </div>
     <div class="col m6 rectangle-info separated2" id="detail-info">
@@ -25,8 +25,7 @@
         <h2 class="title-detail">aforo</h2>
         <h2 class="subtitle-detail">{{ object.capacity }}</h2>
     </div>
-
- <div class="col m6 rectangle-info separated7" id="detail-info">
+    <div class="col m6 rectangle-info separated7" id="detail-info">
         <h2 class="title-detail">edad mín.</h2>
         <h2 class="subtitle-detail">{{ object.min_age }}</h2>
     </div>
@@ -57,8 +56,10 @@
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
-            {% endif %}
         </form>
+        {% endif %}
+        {% elif event.created_by.username == 'deleted' %}
+        <h3 class="warning-full" href="">No disponible</h3>
         {% else %}
         <a class="waves-effect waves-light btn-large button-detail" id="enroll" href="{% url 'login' %}">INSCRIBIRSE</a>
         {% endif %}
