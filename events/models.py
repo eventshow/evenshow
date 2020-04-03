@@ -24,7 +24,7 @@ User = get_user_model()
 
 
 @receiver(pre_delete, sender=User, dispatch_uid='user_delete_signal')
-def change_location_on_user_deletion(sender, instance, using, **kwargs):
+def change_events_location_on_user_deletion(sender, instance, using, **kwargs):
     Event.objects.filter(created_by=instance).update(
         location_city='No disponible',
         location_street='No disponible',
@@ -33,11 +33,14 @@ def change_location_on_user_deletion(sender, instance, using, **kwargs):
 
 
 def get_default_category():
-    return Categry.objects.get_or_create(name='Evento')[0]
+    return Category.objects.get_or_create(name='Evento')[0]
 
 
 def get_sentinel_user():
-    return User.objects.get_or_create(username='deleted')[0]
+    user = User.objects.get_or_create(username='deleted')[0]
+    Profile.objects.get_or_create(
+        user=user, picture='https://i.imgur.com/rvCgR1E.png', birthdate='1970-01-01')
+    return user
 
 
 class Profile(models.Model):
@@ -227,7 +230,7 @@ class Rating(Common):
     on = models.CharField('On', max_length=8, choices=ON_CHOICES)
 
     event = models.ForeignKey(
-        Event, on_delete=models.CASCADE, related_name='ratings')
+        Event, on_delete=models.SET_NULL, related_name='ratings', null=True)
     created_by = models.ForeignKey(
         User, on_delete=models.SET(get_sentinel_user), related_name='reviewer_ratings')
     reviewed = models.ForeignKey(
