@@ -475,7 +475,27 @@ element.style {
 	margin-right: 7.5%;
 }
 
+.center-form-create {
+	margin-top: 10% !important;
+	margin-left: 15% !important;
+	margin-right: 15% !important;
+}
+
 .container-create {
+	background: #FFF;
+	margin-top: 3%;
+	margin-left: 7.5%;
+	margin-right: 7.5%;
+	margin-bottom: 7%;
+	width: 90%;
+	max-width: 600px;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 5% 5% 5% 5%;
+	padding-bottom: -5% !important;
+}
+
+.container-edit {
 	background: #FFF;
 	margin-top: 3%;
 	margin-left: 25%;
