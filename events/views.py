@@ -1,12 +1,15 @@
+import stripe
+import requests
+
 from django.db.models import Count
 from datetime import date, datetime
 
-import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic.edit import FormMixin, ModelFormMixin
@@ -18,6 +21,9 @@ from . import models
 from . import selectors
 from . import services
 from .models import Event
+
+
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -695,6 +701,48 @@ class SignUpView(generic.CreateView):
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
 
+@method_decorator(login_required, name='dispatch')
+class StripeAuthorizeCallbackView(generic.View):
+
+    def get(self, request):
+        code = request.GET.get('code')
+        if code:
+            data = {
+                'client_secret': settings.STRIPE_SECRET_KEY,
+                'grant_type': 'authorization_code',
+                'client_id': settings.STRIPE_CONNECT_CLIENT_ID,
+                'code': code
+            }
+            url = 'https://connect.stripe.com/oauth/token'
+            resp = requests.post(url, params=data)
+            
+            stripe_user_id = resp.json()['stripe_user_id']
+            stripe_access_token = resp.json()['access_token']
+            user = User.objects.filter(pk=self.request.user.id).first()
+            profile = user.profile
+            profile.stripe_access_token = stripe_access_token
+            profile.stripe_user_id = stripe_user_id
+            profile.save()
+            user.save()
+        url = reverse('home')
+        response = redirect(url)
+        return response
+
+@method_decorator(login_required, name='dispatch')        
+class StripeAuthorizeView(generic.View):
+
+    def get(self, request):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('login'))
+        url = 'https://connect.stripe.com/oauth/authorize'
+        params = {
+            'response_type': 'code',
+            'scope': 'read_write',
+            'client_id': settings.STRIPE_CONNECT_CLIENT_ID,
+            'redirect_uri': f'http://localhost:8000/oauth/callback'
+        }
+        url = f'{url}?{urllib.parse.urlencode(params)}'
+        return redirect(url)
 
 @method_decorator(login_required, name='dispatch')
 class TransactionListView(generic.ListView):
