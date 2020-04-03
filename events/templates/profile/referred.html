@@ -8,7 +8,7 @@
   </div>
   <div class="container">
     <div class="title">
-      <div class="col s12">
+      <div class="col s12 ">
         <h3 class="name-host">Mis eventpoints <a id="title-name">{{ user.profile.eventpoints }}</a></h3>
       </div>
     </div>
@@ -35,8 +35,10 @@
       <div class="col s3"></div>
     </div>
   </div>
+</div>
   <p id="eventpoint">*Un eventpoint corresponde a 0.005 €</p>
-  <script type="text/javascript">
+
+    <script type="text/javascript">
     function copiarAlPortapapeles(id_elemento) {
       var aux = document.createElement("input");
       aux.setAttribute("value", document.getElementById(id_elemento).innerHTML);
@@ -45,5 +47,6 @@
       document.execCommand("copy");
       document.body.removeChild(aux);
     }
-  </script>
-  {%endblock%}
+    </script>
+
+{%endblock%}
