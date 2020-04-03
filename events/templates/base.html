@@ -22,14 +22,6 @@
   <link rel="stylesheet" href="{% static 'css/login/main.css'%}" />
 
 
-  <script>
-    $(document).ready(function () {
-      $('select').material_select();
-    });
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
   <meta charset="UTF-8">
@@ -157,6 +149,55 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js"
     integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+
+  <script src="{% static 'js/materialize.js' %}"></script>
+  <script src="{% static 'js/materialize.min.js' %}"></script>
+
+  <script>
+    M.AutoInit();
+  </script>
+
+  <script>
+    window.onload = getLocation();
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        let lat = position.coords.latitude;
+        let long = position.coords.longitude;
+        $("input[name='latitude']").val(lat);
+        $("input[name='longitude']").val(long);
+    }
+</script>
+
+  <script>
+
+   document.addEventListener('DOMContentLoaded', function() {
+       var options = {
+           data: {
+               "HTML":null,
+               "CSS":null,
+           }
+       }
+    var elems = document.querySelectorAll('.autocomplete');
+    var instances = M.Autocomplete.init(elems, options);
+  });
+
+
+  </script>
+
+      <script>
+    $(document).ready(function () {
+      $('select').material_select();
+    });
+    </script>
 
   <script>
     $('.dropdown-trigger').dropdown();
@@ -173,6 +214,9 @@
       $('.modal').modal();
     });
   </script>
+
+
+
 
   {% endblock javascript %}
 
