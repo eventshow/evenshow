@@ -279,7 +279,6 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
         }
 
         if status == 'ACCEPTED':
-            seed_transaction(enroller, host, updated_at, price)
             ac += 1
             if enroller not in attendees:
                 attendees.append(enroller)
@@ -336,23 +335,6 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
                 'fields': fields
             }
             INITIAL_DATA.append(rating)
-
-
-def seed_transaction(transmitter, recipient, created_at, amount):
-    fields = {
-        'amount': amount + 1.15,
-        'concept': 'Eventshow: asistencia a evento',
-        'created_at': created_at + TIMEZONE,
-        'updated_at': created_at + TIMEZONE,
-        'created_by': transmitter,
-        'recipient': recipient,
-    }
-    transaction = {
-        'model': 'events.Transaction',
-        'fields': fields
-    }
-
-    INITIAL_DATA.append(transaction)
 
 
 def random_time(start, end):
