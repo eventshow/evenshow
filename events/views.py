@@ -752,7 +752,7 @@ class DownloadPDF(View):
         pdf = self.render_to_pdf('profile/pdf.html', data)
 
         response = HttpResponse(pdf, content_type='application/pdf')
-        filename = "Invoice_%s.pdf" % ("12341231")
-        content = "attachment; filename='%s'" % (filename)
+        filename = 'datos de usuario.pdf'
+        content = "attachment; filename=%s" % (filename)
         response['Content-Disposition'] = content
         return response
