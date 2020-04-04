@@ -2,12 +2,30 @@
 {% load static %}
 {% block content %}
 
+<style>
+  body {
+    background-size: cover;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  .page-footer {
+    width: 100%;
+    z-index: 1000 !important;
+  }
+</style>
+
 <ul id="slide-out" class="sidenav sidenav-fixed control-panel  ">
   <li>
     <div class="user-view">
   <li>
     {% if request.get_full_path == '/events/create' %}
-    <h2>Crea una experiencia</h2>
+    <h2 class="sidebar-create">Ofrece una experiencia</h2>
     {% else %}
     <h2>{{event.title}}</h2>
     {% endif %}

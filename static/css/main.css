@@ -408,6 +408,11 @@ element.style {
 	border-radius: 15px;
 	border: 1px solid #B6244D;
 	padding: 25px 40px 70px;
+	margin-bottom: 15% !important;
+}
+
+.sidebar-create{
+	font-size: 25px;
 }
 
 .form-eventshow-edit {
@@ -547,7 +552,7 @@ element.style {
 }
 
 #send-buttons {
-	margin-bottom: 65px !important;
+	margin-bottom: 30% !important;
 }
 
 .img-profile-detail {
@@ -681,6 +686,7 @@ p.description {
 	padding-left: 4% !important;
 	margin-left: -2.5% !important;
 	font-family: Raleway, sans-serif;
+	font-size: 17px !important;
 }
 
 .form-eventshow h3 {
