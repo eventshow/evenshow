@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django.urls import reverse
@@ -30,6 +30,9 @@ def change_events_location_on_user_deletion(sender, instance, using, **kwargs):
         location_street='No disponible',
         location_number=0
     )
+    now = datetime.now()
+    Event.objects.filter(Q(created_by=instance) & (Q(start_day__gte=now.date(
+    ), start_time__gte=now.time()) | Q(start_day__gte=now.date()))).delete()
 
 
 def get_default_category():

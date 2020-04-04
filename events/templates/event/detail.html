@@ -45,6 +45,8 @@
         <h3 class="warning-full" href="">Ya ha terminado</h3>
         {% elif user_is_enrolled %}
         <h3 class="warning-full" href="">Ya estás inscrito</h3>
+        {% elif event.created_by.username == 'deleted' %}
+        <h3 class="warning-full" href="">No disponible</h3>
         {% elif user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
