@@ -84,7 +84,7 @@
             <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'"
               title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
             <button type="button" onclick="location.href='{% url 'attendee_payment' event.pk %}'" title="Cobrar">
-              <i id="title-name" class="small material-icons">attach_money</i></button>
+              <em id="title-name" class="small material-icons">attach_money</em></button>
             {% if not event.has_started %}
             <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar"> <i
                 id="title-name" class="small material-icons">edit</i></button>
