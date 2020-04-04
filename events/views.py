@@ -39,6 +39,7 @@ class HomeView(generic.FormView):
 
     def render_to_response(self, context, **response_kwargs):
         context['message'] = services.MessageService().last_message()
+        context['locations']=services.EventService().locations()
         response_kwargs.setdefault('content_type', self.content_type)
         return self.response_class(
             request=self.request,
@@ -320,6 +321,7 @@ class EventFilterListView(generic.ListView):
         context = super(EventFilterListView,
                         self).get_context_data(**kwargs)
         context['location'] = self.kwargs.get('location')
+        context['locations'] = services.EventService().locations()
         context['form'] = self.form_class(
             self.request.session.get('form_values'))
         context['categories'] = set(list(context.get(

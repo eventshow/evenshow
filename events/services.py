@@ -180,6 +180,10 @@ class EventService():
         exist = models.Event.objects.filter(id=event_id).exists()
         return exist
 
+    def locations(self):
+        locations = models.Event.objects.values_list('location_city', flat=True).order_by('location_city').distinct('location_city')
+        return locations
+
 
 class ProfileService():
     def create(self, user: User, birthdate: date, points: int):
@@ -270,9 +274,10 @@ class UserService:
         exist = models.User.objects.filter(id=user_id).exists()
         return exist
 
+
 class MessageService:
     def last_message(self):
-        message=None
+        message = None
         if models.Message.objects.all():
             message = selectors.MessageSelector().last_message()
         return message
