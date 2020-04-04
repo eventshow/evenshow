@@ -32,10 +32,10 @@
           </td>
           <td>{{transaction.id}}</td>
           <td>{{transaction.created_at}}</td>
-          <td><strong>{{transaction.concept}}</strong></td>
+          <td>{{transaction.concept}}</td>
           <td>{{transaction.amount|floatformat:1}}€</td>
-          <td><strong>{{transaction.created_by.username}}</strong></td>
-          <td><strong>{{transaction.recipient.username}}</strong></td>
+          <td>{{transaction.created_by.username}}</td>
+          <td>{{transaction.recipient.username}}</td>
         </tr>
         {% endfor %}
       </tbody>
