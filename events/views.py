@@ -1,5 +1,6 @@
 import stripe
 import requests
+import urllib
 
 from django.db.models import Count
 from datetime import date, datetime
@@ -21,9 +22,6 @@ from . import models
 from . import selectors
 from . import services
 from .models import Event
-
-
-
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -99,7 +97,7 @@ class AttendeePaymentView(generic.View):
             pk = self.kwargs.get('pk')
             event = models.Event.objects.get(pk=pk)
             if self.request.user.profile.stripe_access_token is None and self.request.user.profile.stripe_user_id is None:
-                redirect('authorize')
+                return redirect('authorize')
             else:
                 if event.has_finished:
                     attende_list = selectors.UserSelector().event_attendees(pk)
@@ -132,7 +130,7 @@ class AttendeePaymentView(generic.View):
                                 
                                 return render(request, self.template_name, {'is_paid_for': True})
                         
-                    return render(request, self.template_name, {'is_paid_for': False})
+                    return redirect('hosted_events')
 
                 else:
                     return render(request, self.template_name, {'finished': False})
@@ -721,7 +719,7 @@ class StripeAuthorizeCallbackView(generic.View):
             profile.stripe_user_id = stripe_user_id
             profile.save()
             user.save()
-        url = reverse('home')
+        url = reverse('hosted_events')
         response = redirect(url)
         return response
 
