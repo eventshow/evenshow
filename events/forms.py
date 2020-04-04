@@ -51,7 +51,7 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
             'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),

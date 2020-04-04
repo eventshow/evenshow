@@ -224,6 +224,20 @@
       </div>
 
       <script>
+        var max_chars = 100;
+
+        $('#title').keydown(function (e) {
+          if ($(this).val().length >= max_chars) {
+            $(this).val($(this).val().substr(0, max_chars));
+          }
+        });
+
+        $('#title').keyup(function (e) {
+          if ($(this).val().length >= max_chars) {
+            $(this).val($(this).val().substr(0, max_chars));
+          }
+        });
+
         function showClickA() {
           document.getElementById("test1").style.display = "block";
           document.getElementById("test2").style.display = "none";
@@ -239,5 +253,8 @@
           document.getElementById("test2").style.display = "none";
           document.getElementById("test3").style.display = "block";
         }
+      </script>
+      <script type="text/javascript">
+        showClickA();
       </script>
       {% endblock %}
