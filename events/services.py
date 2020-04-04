@@ -278,7 +278,7 @@ class PaymentService():
             source = source
     )
 
-    def have_creditcard(self, email:str) -> bool:
+    def is_customer(self, email:str) -> bool:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         connected_customers = stripe.Customer.list()
         for customer in connected_customers:

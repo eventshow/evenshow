@@ -58,6 +58,8 @@
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
+            {% else %}
+                <button type="submit" class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€</button>
             {% endif %}
             {% endif %}
         </form>

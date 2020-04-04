@@ -170,7 +170,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             context['user_is_owner'] = services.EventService(
             ).user_is_owner(user, event.pk)
 
-            context['have_creditcard'] = services.PaymentService().have_creditcard(user.email)
+            context['have_creditcard'] = services.PaymentService().is_customer(user.email)
 
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
@@ -439,7 +439,10 @@ class EnrollmentCreateView(generic.View):
 
             event = models.Event.objects.get(pk=event_pk)
 
-            customer = services.PaymentService().get_or_create_customer(request.user.email, request.POST['stripeToken'])
+            if not services.PaymentService().is_customer(attendee.email):
+                customer = services.PaymentService().get_or_create_customer(request.user.email, request.POST['stripeToken'])
+            else:
+                customer = services.PaymentService().get_or_create_customer(request.user.email, None)
             services.PaymentService().save_transaction(event.price*100, customer.id, event, attendee, event.created_by)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
