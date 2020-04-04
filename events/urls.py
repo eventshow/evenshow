@@ -61,4 +61,7 @@ urlpatterns = [
          name='not_impl'),
 
     path('profile/pdf_download', views.DownloadPDF.as_view(), name='pdf_download')
+
+     path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
+         name='grac'),
 ]
