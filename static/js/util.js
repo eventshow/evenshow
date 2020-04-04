@@ -35,30 +35,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //Select
 
- $(document).ready(function () {
-      $('select').material_select();
-    });
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
-    var instances = M.material_select.init(elems, options);
+ $(document).ready(function(){
+    $('select').formSelect();
   });
 
 
 //Dropdown
-
-    $('.dropdown-trigger').dropdown();
-
-//Sidenav No va
+ $(document).ready(function() {
+     $('.dropdown-trigger').dropdown();
+ });
+//Sidenav
 
     $(document).ready(function () {
       $('.sidenav').sidenav();
     });
 
-
-//Modal No va
+//Modal
 
   $(document).ready(function () {
       $('.modal').modal();
     });
+
