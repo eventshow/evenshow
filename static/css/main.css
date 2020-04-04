@@ -4,7 +4,15 @@
 
 .title-search {
 	color: #5D5E5E !important;
+	margin-left: 14%;
 }
+
+.title-search-result {
+	color: #5D5E5E !important;
+	margin-left: -2%;
+	margin-top: 6%;
+}
+
 
 .title-category {
 	font-weight: 500;
@@ -52,6 +60,10 @@
 	margin-left: 47%;
 	margin-top: 1%;
 	font-size: 18px;
+}
+
+.hr-sep{
+	margin-bottom: 3%;
 }
 
 .user-comment {
@@ -255,6 +267,16 @@ element.style {
 	background-color: #ffffff;
 }
 
+.rectangle-info-title {
+	position: absolute;
+	z-index: 1;
+	margin-left: 5%;
+	height: 93px;
+	border-radius: 8px;
+	margin-top: -8%;
+
+}
+
 #host-detail {
 	margin-top: -569px;
 	padding: 30px 30px 30px 30px;
@@ -324,21 +346,24 @@ element.style {
 
 .sep-title {
 	color: #B6244D;
-	margin-top: -68% !important;
-	margin-left: 0%;
 	font-size: 54px;
-	background-color: white;
 	border-radius: 9px;
-	padding-right: 289px;
-	padding-left: 11px;
-	padding-top: 24px;
+	text-align: left;
+	background-color: white;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
+
 
 .button-detail {
 	color: white !important;
 	margin-top: -8% !important;
 	margin-left: 370% !important;
 	font-size: 28px;
+}
+.button-enrolls{
+
+	margin-right: 3%;
+
 }
 
 .button-detail-auth {
@@ -570,6 +595,34 @@ element.style {
 	padding-top: 13px;
 }
 
+#send-buttons-pw-conf2 {
+	width: 100%;
+	height: 40%;
+	margin-left: 26.5%;
+	margin-top: 10%;
+	padding-bottom: 10%;
+	margin-bottom: 58px !important;
+	align-content: center;
+	font-size: 18px;
+	padding-top: 13px;
+}
+
+#send-buttons-pw-conf3 {
+	width: 100%;
+	height: 40%;
+	margin-left: 60.5%;
+	margin-top: 10%;
+	padding-bottom: 10%;
+	margin-bottom: 58px !important;
+	align-content: center;
+	font-size: 18px;
+	padding-top: 13px;
+}
+
+.conf-sep{
+	margin-top: -14%;
+}
+
 #del-left {
 	margin-top: 25%;
 }
@@ -705,14 +758,14 @@ p.description {
 
 .form-search {
 	margin-top: 80px;
-	padding-right: 10px;
-	padding-left: 40px;
-	margin-left: 11%;
+	margin-right: -34%;
+	margin-left: -7%;
+
 }
 
 .search {
 	margin-top: 9px !important;
-	margin-right: -14%;
+	margin-right: 17%;
 }
 
 
@@ -1217,6 +1270,17 @@ table {
 	height: 300px;
 	border-radius: 160px;
 	border: 10px solid #666;
+}
+
+.delete-data{
+	margin-top: -6%;
+	margin-left: -40%;
+
+}
+
+.download-activity{
+	    margin-top: -10%;
+    margin-left: -11.5%;
 }
 
 #panel {
