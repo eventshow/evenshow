@@ -90,7 +90,6 @@ class AttendeeListView(generic.ListView):
 
 
 class AttendeePaymentView(generic.View):
-    template_name = 'main/payment.html'
 
     def get(self, request, *args, **kwargs):
         if services.EventService().count(kwargs.get('pk')):
@@ -128,12 +127,12 @@ class AttendeePaymentView(generic.View):
                             
                             else:
                                 
-                                return render(request, self.template_name, {'is_paid_for': True})
+                                return redirect('/')
                         
                     return redirect('hosted_events')
 
                 else:
-                    return render(request, self.template_name, {'finished': False})
+                    return redirect('/')
         else:
             return redirect('/')
 
