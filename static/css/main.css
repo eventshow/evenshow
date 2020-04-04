@@ -1014,8 +1014,11 @@ label {
 .title {
 	margin-left: 8%;
 	margin-top: 5%;
+	
 }
-
+.margin-title{
+	margin-top: 77px;
+}
 #eventpoint {
 	font-style: italic;
 	font-family: Raleway, sans-serif;
@@ -1025,6 +1028,7 @@ label {
 	height: 10px;
 	margin-left: -2% !important;
 }
+
 
 .container#square {
 	width: 600px;
@@ -1225,7 +1229,6 @@ table {
 }
 
 #titleThanks {
-	width: 1171px;
 	height: 80px;
 	font-family: Raleway, sans-serif;
 	font-size: 42px;
@@ -1235,6 +1238,7 @@ table {
 	line-height: normal;
 	letter-spacing: normal;
 	color: #5d5e5e;
+	
 }
 
 #text2Thanks {
