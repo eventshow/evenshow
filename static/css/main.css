@@ -658,7 +658,7 @@ element.style {
 }
 
 #delete-btn {
-	font-weight: bold;
+	font-weight: bolder;
 	font-size: 20px;
 	text-align: center;
 	width: 127px;
@@ -669,13 +669,42 @@ element.style {
 }
 
 #delete-btn-a {
-	width: 127px;
-	height: 62px;
+	width: 128px;
+	height: 63px;
 	font-weight: bold;
 	text-align: center;
-	padding-top: 3px;
+	padding-top: 4px;
 	font-size: 20px;
 	margin-top: 88px !important;
+	margin-left: 12% !important;
+	position: relative !important;
+	display: block !important;
+}
+
+.delete-buttons-big-title {
+	margin-top: 3%;
+	align-content: center;
+}
+
+#delete-btn-big {
+	font-weight: bolder;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 63px;
+	margin-top: 82px!important;
+	position: relative !important;
+	display: block !important;
+}
+
+#delete-btn-a-big {
+	width: 127px;
+	height: 63px;
+	font-weight: bold;
+	text-align: center;
+	font-size: 20px;
+	padding-top: 3px !important;
+	margin-top: 78px !important;
 	margin-left: 12% !important;
 	position: relative !important;
 	display: block !important;
