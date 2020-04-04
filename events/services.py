@@ -272,13 +272,22 @@ class PaymentService():
         connected_customers = stripe.Customer.list()
         for customer in connected_customers:
             if customer.email == email:
-                print(f'{email} found')
                 return customer
-        print(f'{email} created')
         return stripe.Customer.create(
             email = email,
             source = source
     )
+
+    def have_creditcard(self, email:str) -> bool:
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        connected_customers = stripe.Customer.list()
+        for customer in connected_customers:
+            if customer.email == email:
+                return True
+        
+        return False
+                
+        
 
 
 class UserService:

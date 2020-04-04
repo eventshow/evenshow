@@ -170,6 +170,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             context['user_is_owner'] = services.EventService(
             ).user_is_owner(user, event.pk)
 
+            context['have_creditcard'] = services.PaymentService().have_creditcard(user.email)
+
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
 
