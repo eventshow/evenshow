@@ -523,7 +523,7 @@ class PasswordUpdateView(generic.UpdateView):
 
 @method_decorator(login_required, name='dispatch')
 class RateHostView(generic.CreateView):
-    template_name = 'rating/rating_host.html'
+    template_name = 'rating/rating.html'
     model = models.Rating
     form_class = forms.RatingForm
     success_url = '/events/enrolled'
@@ -581,7 +581,7 @@ class RateHostView(generic.CreateView):
 
 @method_decorator(login_required, name='dispatch')
 class RateAttendeeView(generic.CreateView):
-    template_name = 'rating/rating_host.html'
+    template_name = 'rating/rating.html'
     model = models.Rating
     form_class = forms.RatingForm
 
