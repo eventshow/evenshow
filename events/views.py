@@ -105,7 +105,7 @@ class AttendeePaymentView(generic.View):
 
                         transaction = models.Transaction.objects.filter(created_by=attendee, event=event).first()
 
-                        if transaction is not None:
+                        if transaction:
 
                             is_paid_for = transaction.is_paid_for
 
