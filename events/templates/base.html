@@ -117,6 +117,7 @@
     {% block sidenav %}
     {% endblock %}
     {% block content %}
+
     {% endblock %}
 
     <div id="modal1" class="modal modal-evetshow">
@@ -153,6 +154,24 @@
   <script src="{% static 'js/materialize.js' %}"></script>
   <script src="{% static 'js/materialize.min.js' %}"></script>
   <script src="{% static 'js/util.js' %}"></script>
+
+      <script>//Autocompletado
+
+document.addEventListener('DOMContentLoaded', function() {
+       var options = {
+           data: {
+               "HTML":null,
+               "CSS":null,
+    {% for l in locations %}
+            "{{ l }}":null,
+    {% endfor %}
+
+           }
+       }
+    var elems = document.querySelectorAll('.autocomplete');
+    var instances = M.Autocomplete.init(elems, options);
+  });
+</script>
 
 
   {% endblock javascript %}

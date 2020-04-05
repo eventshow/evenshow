@@ -1,17 +1,4 @@
 
-//Autocompletado
-
-document.addEventListener('DOMContentLoaded', function() {
-       var options = {
-           data: {
-               "HTML":null,
-               "CSS":null,
-           }
-       }
-    var elems = document.querySelectorAll('.autocomplete');
-    var instances = M.Autocomplete.init(elems, options);
-  });
-
 
 //Geolocalizacion
 
