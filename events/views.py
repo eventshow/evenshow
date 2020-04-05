@@ -606,7 +606,7 @@ class RateAttendeeView(generic.CreateView):
             auto_rating = self.request.user.id == attendee.id
             if (
                     not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
-                    not auto_rating):
+                    not auto_rating) and attendee.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -641,7 +641,7 @@ class RateAttendeeView(generic.CreateView):
         rating.event = event
         rating.on = 'ATTENDEE'
 
-        if services.RatingService().is_valid_rating(rating, event, created_by):
+        if services.RatingService().is_valid_rating(rating, event, created_by) and reviewed.usename != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:
