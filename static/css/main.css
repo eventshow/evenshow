@@ -1240,6 +1240,14 @@ table {
 	margin-bottom: 10px;
 	text-align: center;
 }
+#yaNo {
+    font-size: 14px;
+ font-weight: 500;
+ color: white;
+ width: 113px;
+ height: 53px;
+ line-height: 1.5;
+}
 
 .btn#yaNo:hover {
 	background-color: #B6244D!important;
@@ -1354,7 +1362,31 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
-
+	.table-generic{
+		width:100%;
+		text-align-last: left;
+	}
+	.title{
+		margin-bottom:120px;
+	}
+	.container#square{
+		margin-top:54% !important;
+	}
+	.name-host{
+		margin-top:31%;
+		margin-bottom: 15px;
+	}
+	.margin-title {
+		margin-top: 14px;
+	}
+	#text2Thanks{
+		width: 300px;
+	}
+	#text3{
+		width: 300px;
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
 }
 
 /* PIXEL 2 */

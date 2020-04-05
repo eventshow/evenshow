@@ -59,4 +59,7 @@ urlpatterns = [
 
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
+     
+     path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
+         name='gra'),
 ]

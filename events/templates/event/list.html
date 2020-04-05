@@ -41,8 +41,9 @@
           {% endif %}
         </tr>
       </thead>
-      {% for event in object_list %}
       <tbody>
+      {% for event in object_list %}
+      
         <tr>
           {% if role == "huésped" %}
           <td>
@@ -94,8 +95,9 @@
             {% endif %}
           </td>
         </tr>
-      </tbody>
+      
       {% endfor %}
+    </tbody>
     </table>
     {% include "pagination.html" %}
   </div>
