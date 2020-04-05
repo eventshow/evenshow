@@ -53,8 +53,8 @@ class Profile(models.Model):
     eventpoints = models.PositiveIntegerField(
         'Eventpoints', default=0, editable=False)
     bio = models.TextField('Bio', blank=True, null=True)
-    stripe_access_token = models.CharField('stripe_access_token', max_length=250, blank=True, null=True, editable=True)
-    stripe_user_id = models.CharField('stripe_user_id', max_length=250, blank=True, null=True, editable=True)
+    stripe_access_token = models.CharField('stripe_access_token', max_length=250, blank=True, null=True, editable=False)
+    stripe_user_id = models.CharField('stripe_user_id', max_length=250, blank=True, null=True, editable=False)
 
     @property
     def age(self):
