@@ -538,6 +538,22 @@ element.style {
 	padding-bottom: -5% !important;
 }
 
+.container-home {
+	background: #FFF;
+    margin-top: 3%;
+    margin-left: -56%;
+    margin-right: -13%;
+    border-radius: 15px;
+    border: 1px solid #B6244D;
+    padding: 4% 4% 4% 4%;
+    font-size: 18px;
+}
+
+.container-home h2{
+	font-weight: 600;
+	color: #B6244D;
+}
+
 .container-password {
 	background: #FFF;
 	margin-top: 2%;
