@@ -37,6 +37,18 @@ class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
 
+    def render_to_response(self, context, **response_kwargs):
+        context['message'] = services.MessageService().last_message()
+        context['locations']=services.EventService().locations()
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+        )
+
     def get_success_url(self):
         request = self.request.POST
         date = request.get('date')
@@ -308,7 +320,9 @@ class EventFilterListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(EventFilterListView,
                         self).get_context_data(**kwargs)
+        context['locations'] = services.EventService().locations()
         context['location'] = self.kwargs['location_city__icontains']
+
         context['form'] = self.form_class(
             self.request.session.get('form_values'))
         context['categories'] = set(list(context.get(

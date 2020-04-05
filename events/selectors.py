@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q, QuerySet
 
 from . import models
+from .models import Message
 
 User = get_user_model()
 
@@ -175,3 +176,7 @@ class TransactionSelector:
         transaction_list = models.Transaction.objects.filter(
             created_by=user).order_by('amount')
         return transaction_list
+
+class MessageSelector:
+    def last_message(self) -> Message:
+        return models.Message.objects.latest()
