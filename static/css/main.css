@@ -433,6 +433,11 @@ element.style {
 	border-radius: 15px;
 	border: 1px solid #B6244D;
 	padding: 25px 40px 70px;
+	margin-bottom: 15% !important;
+}
+
+.sidebar-create{
+	font-size: 25px;
 }
 
 .form-eventshow-edit {
@@ -500,7 +505,27 @@ element.style {
 	margin-right: 7.5%;
 }
 
+.center-form-create {
+	margin-top: 10% !important;
+	margin-left: 35% !important;
+
+}
+
 .container-create {
+	background: #FFF;
+	margin-top: 3%;
+	margin-left: 7.5%;
+	margin-right: 7.5%;
+	margin-bottom: 7%;
+	width: 90%;
+	max-width: 600px;
+	border-radius: 15px;
+	border: 1px solid #B6244D;
+	padding: 5% 5% 5% 5%;
+	padding-bottom: -5% !important;
+}
+
+.container-edit {
 	background: #FFF;
 	margin-top: 3%;
 	margin-left: 25%;
@@ -552,7 +577,7 @@ element.style {
 }
 
 #send-buttons {
-	margin-bottom: 65px !important;
+	margin-bottom: 30% !important;
 }
 
 .img-profile-detail {
@@ -633,7 +658,7 @@ element.style {
 }
 
 #delete-btn {
-	font-weight: bold;
+	font-weight: bolder;
 	font-size: 20px;
 	text-align: center;
 	width: 127px;
@@ -644,11 +669,11 @@ element.style {
 }
 
 #delete-btn-a {
-	width: 127px;
-	height: 62px;
+	width: 128px;
+	height: 63px;
 	font-weight: bold;
 	text-align: center;
-	padding-top: 3px;
+	padding-top: 4px;
 	font-size: 20px;
 	margin-top: 88px !important;
 	margin-left: 12% !important;
@@ -656,9 +681,38 @@ element.style {
 	display: block !important;
 }
 
+.delete-buttons-big-title {
+	margin-top: 3%;
+	align-content: center;
+}
+
+#delete-btn-big {
+	font-weight: bolder;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 63px;
+	margin-top: 82px!important;
+	position: relative !important;
+	display: block !important;
+}
+
+#delete-btn-a-big {
+	width: 127px;
+	height: 63px;
+	font-weight: bold;
+	text-align: center;
+	font-size: 20px;
+	padding-top: 3px !important;
+	margin-top: 78px !important;
+	margin-left: 12% !important;
+	position: relative !important;
+	display: block !important;
+}
+
 #create-event {
 	margin-left: 35px !important;
-	margin-bottom: 2% !important;
+	margin-bottom: 14% !important;
 	padding-bottom: 2% !important;
 }
 
@@ -714,6 +768,7 @@ p.description {
 	padding-left: 4% !important;
 	margin-left: -2.5% !important;
 	font-family: Raleway, sans-serif;
+	font-size: 17px !important;
 }
 
 .form-eventshow h3 {
