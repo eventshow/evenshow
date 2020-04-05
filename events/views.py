@@ -541,8 +541,9 @@ class RateHostView(generic.CreateView):
 
             is_enrolled_for_this_event = services.EnrollmentService().user_is_enrolled_and_accepted(event.id,
                                                                                                     created_by)
-            auto_rating = self.request.user.id == event.created_by.id
-            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating):
+            host = event.created_by
+            auto_rating = self.request.user.id == host.id
+            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating) and host.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -572,7 +573,7 @@ class RateHostView(generic.CreateView):
         rating.reviewed = host
         rating.event = event
         rating.on = 'HOST'
-        if services.RatingService().is_valid_rating(rating, event, created_by):
+        if services.RatingService().is_valid_rating(rating, event, created_by) and host.username != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:

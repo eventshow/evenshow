@@ -50,10 +50,12 @@
             {% if not event in enroll_valid %}
             <p class="request-fail">Su solicitud no ha sido aceptada</p>
             {% endif%}
-            {% if event in enroll_valid %}
+            {% if event in enroll_valid and event.created_by.username != 'deleted' %}
             <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" title="Puntuar">
               <em id="title-name" class="samll material-icons">star</em>
             </button>
+            {% else %}
+            <p class="request-fail">No disponible</p>
             {% endif%}
             {% elif event in user_rated_events %}
             Ya puntuado
