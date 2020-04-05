@@ -5,7 +5,7 @@
         <div class="card-body">
             <form class="form-search" method="POST" action="{% url 'event_filter' %}">
                 {% csrf_token %}
-                <div class="input-group input--medium">
+                <div class=" input-group input--medium ">
                     <label class="label">Localización</label>
                     {{ form.location }}
                     {{ form.location.errors }}

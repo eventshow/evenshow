@@ -237,7 +237,7 @@ class ProfileForm(forms.ModelForm):
 
 class SearchHomeForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad"}))
+        attrs={'placeholder': "Localidad",'class': "input-field autocomplete ", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
@@ -273,7 +273,7 @@ class SearchHomeForm(forms.Form):
 
 class SearchFilterForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad"}))
+        attrs={'placeholder': "Localidad",'class': "autocomplete input-field", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(

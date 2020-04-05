@@ -813,8 +813,8 @@ p.description {
 
 .form-search {
 	    margin-top: 80px;
-    margin-right: -64%;
-    margin-left: 9%;
+    margin-right: -35%;
+    margin-left: -6%;
 
 }
 
@@ -1396,11 +1396,16 @@ table {
 
 .location-prov {
 	margin-left: 0% !important;
+	margin-top: 7%;
 }
 
 .location-prov input {
 	width: 100% !important;
 	padding-right: 34% !important;
+}
+
+.ul-top{
+	margin-top: 10% !important;
 }
 
 
