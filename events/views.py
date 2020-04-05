@@ -91,7 +91,7 @@ class AttendeeListView(generic.ListView):
 
 class AttendeePaymentView(generic.View):
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         if services.EventService().count(kwargs.get('pk')):
             pk = self.kwargs.get('pk')
             event = models.Event.objects.get(pk=pk)

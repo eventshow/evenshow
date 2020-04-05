@@ -83,8 +83,13 @@
             {% else %}
             <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'"
               title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
-            <button type="button" onclick="location.href='{% url 'attendee_payment' event.pk %}'" title="Cobrar">
-              <em id="title-name" class="small material-icons">attach_money</em></button>
+            <form action="{% url 'attendee_payment' event.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" title="Cobrar">
+                <em id="title-name" class="small material-icons">attach_money</em>
+              </button>
+            </form>
+            
             {% if not event.has_started %}
             <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar"> <i
                 id="title-name" class="small material-icons">edit</i></button>
