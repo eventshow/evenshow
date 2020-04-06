@@ -46,10 +46,10 @@
           {% if not enrollment.event.has_started %}
           <form action="{% url 'update_enrollment' enrollment.pk %}" method="POST">
             {% csrf_token %}
-            <button type="submit" class="waves-effect waves-light btn button-search  left" title="Aceptar" name="status"
+            <button type="submit" class="waves-effect waves-light btn button-enrolls" title="Aceptar" name="status"
               value="ACCEPTED">Aceptar
             </button>
-            <button type="submit" class="waves-effect waves-light btn button-search  right" title="Rechazar"
+            <button type="submit" class="waves-effect waves-light btn button-enrolls" title="Rechazar"
               name="status" value="REJECTED">Rechazar
             </button>
           </form>

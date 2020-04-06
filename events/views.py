@@ -37,6 +37,18 @@ class HomeView(generic.FormView):
     form_class = forms.SearchHomeForm
     template_name = 'home.html'
 
+    def render_to_response(self, context, **response_kwargs):
+        context['message'] = services.MessageService().last_message()
+        context['locations'] = services.EventService().locations()
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+        )
+
     def get_success_url(self):
         request = self.request.POST
         date = request.get('date')
@@ -308,7 +320,9 @@ class EventFilterListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(EventFilterListView,
                         self).get_context_data(**kwargs)
-        context['location'] = self.kwargs.get('location')
+        context['locations'] = services.EventService().locations()
+        context['location'] = self.kwargs['location_city__icontains']
+
         context['form'] = self.form_class(
             self.request.session.get('form_values'))
         context['categories'] = set(list(context.get(
@@ -325,7 +339,8 @@ class EventFilterListView(generic.ListView):
             self.kwargs['start_day'] = datetime.strptime(
                 date, '%d/%m/%Y').strftime('%Y-%m-%d')
 
-        self.kwargs['location_city'] = self.kwargs.pop('location', None)
+        self.kwargs['location_city__icontains'] = self.kwargs.pop(
+            'location', None)
         self.kwargs['start_time__gte'] = self.kwargs.pop('start_hour', None)
         self.kwargs['price__gte'] = self.kwargs.pop('min_price', None)
         self.kwargs['price__lte'] = self.kwargs.pop('max_price', None)
@@ -411,7 +426,6 @@ class EnrollmentCreateView(generic.View):
             recipient = event.created_by.email
 
             # services.EmailService().send_email(subject, body, [recipient])
-
             return render(request, 'enrollment/thanks.html', context)
         else:
             return redirect('/')
@@ -523,7 +537,7 @@ class PasswordUpdateView(generic.UpdateView):
 
 @method_decorator(login_required, name='dispatch')
 class RateHostView(generic.CreateView):
-    template_name = 'rating/rating_host.html'
+    template_name = 'rating/rating.html'
     model = models.Rating
     form_class = forms.RatingForm
     success_url = '/events/enrolled'
@@ -582,7 +596,7 @@ class RateHostView(generic.CreateView):
 
 @method_decorator(login_required, name='dispatch')
 class RateAttendeeView(generic.CreateView):
-    template_name = 'rating/rating_host.html'
+    template_name = 'rating/rating.html'
     model = models.Rating
     form_class = forms.RatingForm
 
