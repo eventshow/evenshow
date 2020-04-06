@@ -39,8 +39,8 @@
 <div class="container">
     <div class="row text-left">
         <div class="col l6 ">
-            <h1 class="title-search-result">{{ location }}</h1>
-            <h3 class="title-search-result">{{page_obj.paginator.count}} resultados</h3>
+            <h1 class="title-search">{% if location %} {{ location }} {% endif %}</h1>
+            <h3 class="title-search">{{page_obj.end_index}} de {{page_obj.paginator.count}} resultados</h3>
         </div>
     </div>
 </div>

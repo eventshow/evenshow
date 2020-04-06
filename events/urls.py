@@ -45,6 +45,7 @@ urlpatterns = [
 
     path('profile', login_required(TemplateView.as_view(template_name='profile/detail.html')),
          name='detail_profile'),
+    path('profile/delete', views.UserDeleteView.as_view(), name='delete_profile'),
     path('profile/referred',
          login_required(TemplateView.as_view(template_name='profile/referred.html')), name='referred'),
     path('profile/receipts', views.TransactionListView.as_view(),

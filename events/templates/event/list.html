@@ -55,6 +55,8 @@
             <button type="button" onclick="location.href='{% url 'create_rating_host' object.pk %}'" title="Puntuar">
               <em id="title-name" class="samll material-icons">star</em>
             </button>
+            {% else %}
+            <p class="request-fail">No disponible</p>
             {% endif%}
             {% elif object.event in user_rated_events %}
             <p class="request-fail">Ya puntuado</p>
