@@ -51,7 +51,7 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
             'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
@@ -237,7 +237,7 @@ class ProfileForm(forms.ModelForm):
 
 class SearchHomeForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad"}))
+        attrs={'placeholder': "Localidad",'class': "input-field autocomplete ", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
@@ -273,7 +273,7 @@ class SearchHomeForm(forms.Form):
 
 class SearchFilterForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad"}))
+        attrs={'placeholder': "Localidad",'class': "autocomplete input-field", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
