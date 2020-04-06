@@ -39,7 +39,7 @@ class HomeView(generic.FormView):
 
     def render_to_response(self, context, **response_kwargs):
         context['message'] = services.MessageService().last_message()
-        context['locations']=services.EventService().locations()
+        context['locations'] = services.EventService().locations()
         response_kwargs.setdefault('content_type', self.content_type)
         return self.response_class(
             request=self.request,
@@ -233,7 +233,7 @@ class EventHostedListView(generic.ListView):
 
 @method_decorator(login_required, name='dispatch')
 class EventEnrolledListView(generic.ListView):
-    model = models.Event
+    model = models.Enrollment
     template_name = 'event/list.html'
     paginate_by = 5
 
@@ -242,13 +242,11 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
-        context['enroll_valid'] = selectors.EventSelector(
-        ).event_enrolled_accepted(self.request.user)
         return context
 
     def get_queryset(self):
         queryset = super(EventEnrolledListView, self).get_queryset()
-        queryset = selectors.EventSelector().enrolled(self.request.user)
+        queryset = selectors.EnrollmentSelector().created_by(self.request.user)
         return queryset
 
 
@@ -339,7 +337,8 @@ class EventFilterListView(generic.ListView):
             self.kwargs['start_day'] = datetime.strptime(
                 date, '%d/%m/%Y').strftime('%Y-%m-%d')
 
-        self.kwargs['location_city__icontains'] = self.kwargs.pop('location', None)
+        self.kwargs['location_city__icontains'] = self.kwargs.pop(
+            'location', None)
         self.kwargs['start_time__gte'] = self.kwargs.pop('start_hour', None)
         self.kwargs['price__gte'] = self.kwargs.pop('min_price', None)
         self.kwargs['price__lte'] = self.kwargs.pop('max_price', None)
@@ -437,12 +436,10 @@ class EnrollmentDeleteView(generic.View):
 
     def post(self, request, *args, **kwargs):
         try:
-            enrollment = selectors.EnrollmentSelector(
-            ).user_on_event(self.request.user, kwargs.get('event_pk'))
-            enrollment_pk = enrollment.pk
-            event = models.Enrollment.objects.get(pk=enrollment_pk).event
+            enrollment = models.Enrollment.objects.get(pk=kwargs.get('pk'))
+            event = enrollment.event
 
-            if event and enrollment and not event.has_started:
+            if enrollment and not event.has_started:
                 enrollment.delete()
 
                 subject = 'Asistencia a {0} cancelada'.format(event.title)
@@ -503,8 +500,8 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            #services.EmailService().send_email(
-                #subject, body, [recipient.email])
+            # services.EmailService().send_email(
+            # subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
