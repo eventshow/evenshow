@@ -423,7 +423,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            #services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
