@@ -6,7 +6,7 @@ from django.db.models import Count
 from datetime import date, datetime
 
 from django.conf import settings
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -100,7 +100,7 @@ class AttendeePaymentView(generic.View):
             else:
                 if event.has_finished:
                     attende_list = selectors.UserSelector().event_attendees(pk)
-
+                
                     for attendee in attende_list:
 
                         transaction = models.Transaction.objects.filter(created_by=attendee, event=event).first()
@@ -116,7 +116,7 @@ class AttendeePaymentView(generic.View):
                                     attendee_amount = fee + transaction.amount
 
                                     services.PaymentService().charge(attendee_amount, transaction.customer_id, fee, transaction.recipient)
-
+                                    
                                     transaction.is_paid_for = True
                                     transaction.save()
 
@@ -717,7 +717,10 @@ class StripeAuthorizeCallbackView(generic.View):
             
             stripe_user_id = resp.json()['stripe_user_id']
             stripe_access_token = resp.json()['access_token']
-            user = User.objects.filter(pk=self.request.user.id).first()
+            usuario=request.session['usuario']
+            logout(request)
+            user = User.objects.filter(pk=usuario).first()
+            login(request, user)
             profile = user.profile
             profile.stripe_access_token = stripe_access_token
             profile.stripe_user_id = stripe_user_id
@@ -733,6 +736,7 @@ class StripeAuthorizeView(generic.View):
     def get(self, request):
         if not self.request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
+        request.session['usuario']=request.user.id
         url = 'https://connect.stripe.com/oauth/authorize'
         params = {
             'response_type': 'code',
