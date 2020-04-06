@@ -78,7 +78,7 @@ class Profile(models.Model):
     def age(self):
         today = date.today()
         return today.year - self.birthdate.year - (
-                    (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+            (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
 
     @property
     def avg_attendee_score(self):
@@ -220,6 +220,18 @@ class Enrollment(Common):
     def __str__(self):
         return self.created_by.username + ' on ' + self.event.title + ', status ' + self.status
 
+    @property
+    def is_accepted(self):
+        return self.status == 'ACCEPTED'
+
+    @property
+    def is_pending(self):
+        return self.status == 'PENDING'
+
+    @property
+    def is_rejected(self):
+        return self.status == 'REJECTED'
+
 
 class Rating(Common):
     ON_CHOICES = (
@@ -278,7 +290,7 @@ class Message(Common):
         ordering = ['created_at']
         verbose_name = 'Message'
         verbose_name_plural = 'Messages'
-        get_latest_by='created_at'
+        get_latest_by = 'created_at'
 
     def __str__(self):
         return str(self.title)

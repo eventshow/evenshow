@@ -233,7 +233,7 @@ class EventHostedListView(generic.ListView):
 
 @method_decorator(login_required, name='dispatch')
 class EventEnrolledListView(generic.ListView):
-    model = models.Event
+    model = models.Enrollment
     template_name = 'event/list.html'
     paginate_by = 5
 
@@ -242,13 +242,11 @@ class EventEnrolledListView(generic.ListView):
         context['user_rated_events'] = selectors.EventSelector().rated_by_user(
             self.request.user)
         context['role'] = 'huésped'
-        context['enroll_valid'] = selectors.EventSelector(
-        ).event_enrolled_accepted(self.request.user)
         return context
 
     def get_queryset(self):
         queryset = super(EventEnrolledListView, self).get_queryset()
-        queryset = selectors.EventSelector().enrolled(self.request.user)
+        queryset = selectors.EnrollmentSelector().created_by(self.request.user)
         return queryset
 
 
@@ -437,12 +435,10 @@ class EnrollmentDeleteView(generic.View):
 
     def post(self, request, *args, **kwargs):
         try:
-            enrollment = selectors.EnrollmentSelector(
-            ).user_on_event(self.request.user, kwargs.get('event_pk'))
-            enrollment_pk = enrollment.pk
-            event = models.Enrollment.objects.get(pk=enrollment_pk).event
+            enrollment = models.Enrollment.objects.get(pk=kwargs.get('pk'))
+            event = enrollment.event
 
-            if event and enrollment and not event.has_started:
+            if enrollment and not event.has_started:
                 enrollment.delete()
 
                 subject = 'Asistencia a {0} cancelada'.format(event.title)

@@ -29,6 +29,7 @@
         <tr>
           {% if role == "huésped" %}
           <th id="">Puntuar</th>
+          <th id="">Estado de solicitud</th>
           <th id="">Título</th>
           <th id="">Fecha</th>
           <th id="">Dirección</th>
@@ -41,60 +42,76 @@
           {% endif %}
         </tr>
       </thead>
-      {% for event in object_list %}
+      {% for object in object_list %}
       <tbody>
         <tr>
           {% if role == "huésped" %}
           <td>
-            {% if event not in user_rated_events and event.has_finished %}
-            {% if not event in enroll_valid %}
+            {% if object.event.has_finished %}
+            {% if not object.is_accepted %}
             <p class="request-fail">Su solicitud no ha sido aceptada</p>
             {% endif%}
-            {% if event in enroll_valid and event.created_by.username != 'deleted' %}
-            <button type="button" onclick="location.href='{% url 'create_rating_host' event.pk %}'" title="Puntuar">
+            {% if object.is_accepted %}
+            <button type="button" onclick="location.href='{% url 'create_rating_host' object.pk %}'" title="Puntuar">
               <em id="title-name" class="samll material-icons">star</em>
             </button>
             {% else %}
             <p class="request-fail">No disponible</p>
             {% endif%}
-            {% elif event in user_rated_events %}
-            Ya puntuado
-            {% elif not event.has_started%}
-            No ha empezado
-            {% elif not event.has_finished%}
-            No ha terminado
+            {% elif object.event in user_rated_events %}
+            <p class="request-fail">Ya puntuado</p>
+            {% elif not object.event.has_started%}
+            <p class="request-fail">No ha empezado</p>
+            {% elif not object.event.has_finished%}
+            <p class="request-fail">No ha terminado</p>
             {% endif %}
           </td>
-          {% endif %}
-          <td><strong><a href="{% url 'detail_event' event.pk %}">{{event.title}}</a></strong></td>
-          <td>{{event.start_day}}</td>
-          <td> {{event.location_city}}, {{event.location_street}}, {{event.location_number}}</td>
           <td>
-            {% if role == "huésped" %}
-            {% if not event.has_started %}
-            <form action="{% url 'delete_enrollment' event.pk %}" method="POST">
+            <p class="request-fail">
+              {% if object.is_accepted %}
+              Aceptada
+              {% elif object.is_pending %}
+              Pendiente
+              {% elif object.is_rejected %}
+              Rechazada
+              {% endif %}
+            </p>
+          </td>
+          <td><strong><a href="{% url 'detail_event' object.pk %}">{{object.event.title}}</a></strong></td>
+          <td>{{object.event.start_day}}</td>
+          <td>{{object.event.location_city}}, {{object.event.location_street}}, {{object.event.location_number}}</td>
+          <td>
+            {% if not object.event.has_started and not object.is_rejected %}
+            <form action="{% url 'delete_enrollment' object.pk %}" method="POST">
               {% csrf_token %}
               <button type="submit" class="waves-effect waves-light btn" title="Ya no quiero ir" name="ya_no"
                 id="yaNo">Ya no quiero ir</button>
             </form>
-            {% elif event.has_finished %}
-            Ya ha acabado
-            {% elif event.has_started %}
-            Ya ha empezado
-            {% endif %}
-            {% else %}
-            <button type="button" onclick="location.href='{% url 'list_attendees' event.pk %}'"
-              title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
-            {% if not event.has_started %}
-            <button type="button" onclick="location.href='{% url 'update_event' event.pk %}'" title="Editar"> <i
-                id="title-name" class="small material-icons">edit</i></button>
-            <button type="button" onclick="location.href='{% url 'list_enrollments' event.pk %}'"
-              title="Añadir sistentes"> <em id="title-name" class="small material-icons">group_add</em> </button>
-            <button type="button" onclick="location.href='{% url 'delete_event' event.pk %}'" title="Eliminar">
-              <i id="title-name" class="small material-icons">delete</i></button>
-            {% endif %}
+            {% elif object.event.has_finished %}
+            <p class="request-fail">Ya ha acabado</p>
+            {% elif object.event.has_started %}
+            <p class="request-fail">Ya ha empezado</p>
+            {% elif object.is_rejected %}
+            <p class="request-fail">Solicitud rechazada</p>
             {% endif %}
           </td>
+          {% else %}
+          <td><strong><a href="{% url 'detail_event' object.pk %}">{{object.title}}</a></strong></td>
+          <td>{{object.start_day}}</td>
+          <td>{{object.location_city}}, {{object.location_street}}, {{object.location_number}}</td>
+          <td>
+            <button type="button" onclick="location.href='{% url 'list_attendees' object.pk %}'"
+              title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
+            {% if not object.has_started %}
+            <button type="button" onclick="location.href='{% url 'update_event' object.pk %}'" title="Editar"> <em
+                id="title-name" class="small material-icons">edit</em></button>
+            <button type="button" onclick="location.href='{% url 'list_enrollments' object.pk %}'"
+              title="Añadir sistentes"> <em id="title-name" class="small material-icons">group_add</em> </button>
+            <button type="button" onclick="location.href='{% url 'delete_event' object.pk %}'" title="Eliminar">
+              <em id="title-name" class="small material-icons">delete</em></button>
+            {% endif %}
+          </td>
+          {% endif %}
         </tr>
       </tbody>
       {% endfor %}
