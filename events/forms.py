@@ -1,3 +1,5 @@
+import re
+
 from datetime import datetime, date
 
 from django import forms
@@ -51,7 +53,7 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id': 'title'}),
             'description': forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'placeholder': 'https://'}),
             'capacity': forms.NumberInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
@@ -242,7 +244,7 @@ class ProfileForm(forms.ModelForm):
 
 class SearchHomeForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad",'class': "input-field autocomplete ", 'id': "autocomplete-input"}))
+        attrs={'placeholder': "Localidad", 'class': "input-field autocomplete ", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
@@ -270,7 +272,6 @@ class SearchHomeForm(forms.Form):
     def clean_location(self):
         location = self.cleaned_data.get('location')
         location_join = location.replace(' ', '')
-
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
@@ -278,7 +279,7 @@ class SearchHomeForm(forms.Form):
 
 class SearchFilterForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad",'class': "autocomplete input-field", 'id': "autocomplete-input"}))
+        attrs={'placeholder': "Localidad", 'class': "autocomplete input-field", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
@@ -309,13 +310,20 @@ class SearchFilterForm(forms.Form):
                 'La fecha debe ser futura')
         return date
 
+    def clean_location(self):
+        location = self.cleaned_data.get('location')
+        location_join = location.replace(' ', '')
+        if not location_join.isalpha() and location:
+            raise ValidationError('Introduzca solo letras y espacios')
+        return location
+
     def clean(self):
         min_price = self.cleaned_data.get('min_price')
         max_price = self.cleaned_data.get('max_price')
         if min_price and max_price and min_price >= max_price:
             raise ValidationError(
                 'El precio mínimo no puede ser mayor o igual que el precio máximo')
-        return min_price, max_price
+        return self.cleaned_data
 
 
 class UserForm(UserChangeForm):

@@ -5,7 +5,7 @@ import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic
@@ -17,7 +17,6 @@ from . import forms
 from . import models
 from . import selectors
 from . import services
-from .models import Event
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -49,21 +48,23 @@ class HomeView(generic.FormView):
             **response_kwargs
         )
 
-    def get_success_url(self):
-        request = self.request.POST
-        date = request.get('date')
-        location = request.get('location')
-        start_hour = request.get('start_hour')
+    def form_valid(self, form):
+        data = form.cleaned_data
+
+        kwargs = {}
+        kwargs['date'] = data.pop('date', None) or None
+        kwargs['location'] = data.pop('location', None) or None
+        kwargs['start_hour'] = data.pop('start_hour', None) or None
 
         if self.request.session.get('form_values'):
             del self.request.session['form_values']
 
-        return reverse_lazy('list_event_filter', kwargs={
-            'date': date,
-            'location': location,
-            'start_hour': start_hour,
-        }
-        )
+        kwargs = {key: val for key, val in kwargs.items() if val}
+
+        if kwargs:
+            return redirect(reverse('list_event_filter', kwargs=kwargs))
+        else:
+            return redirect('list_event_filter')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -290,23 +291,24 @@ class EventFilterFormView(generic.FormView):
     form_class = forms.SearchFilterForm
     template_name = 'event/list_search.html'
 
-    def get_success_url(self):
-        request = self.request.POST
-        date = request.get('date')
-        location = request.get('location')
-        start_hour = request.get('start_hour')
-        min_price = request.get('min_price')
-        max_price = request.get('max_price')
-        self.request.session['form_values'] = request
+    def form_valid(self, form):
+        data = form.cleaned_data
 
-        return reverse_lazy('list_event_filter', kwargs={
-            'date': date,
-            'location': location,
-            'start_hour': start_hour,
-            'min_price': min_price,
-            'max_price': max_price
-        }
-        )
+        kwargs = {}
+        kwargs['date'] = data.pop('date', None) or None
+        kwargs['location'] = data.pop('location', None) or None
+        kwargs['start_hour'] = data.pop('start_hour', None) or None
+        kwargs['min_price'] = data.pop('min_price', None) or None
+        kwargs['max_price'] = data.pop('max_price', None) or None
+        self.request.session['form_values'] = self.request.POST
+
+        kwargs = {key: val for key, val in kwargs.items() if val}
+
+        return redirect(reverse('list_event_filter', kwargs=kwargs))
+
+    def form_invalid(self, form):
+        self.request.session['form_values'] = self.request.POST
+        return redirect('list_event_filter')
 
 
 class EventFilterListView(generic.ListView):
@@ -331,17 +333,14 @@ class EventFilterListView(generic.ListView):
     def get_queryset(self):
         queryset = super(
             EventFilterListView, self).get_queryset()
-        self.kwargs['start_day'] = self.kwargs.pop('date', None)
-        date = self.kwargs['start_day']
-        if date:
-            self.kwargs['start_day'] = datetime.strptime(
-                date, '%d/%m/%Y').strftime('%Y-%m-%d')
 
+        self.kwargs['start_day'] = self.kwargs.pop('date', None) or None
         self.kwargs['location_city__icontains'] = self.kwargs.pop(
-            'location', None)
-        self.kwargs['start_time__gte'] = self.kwargs.pop('start_hour', None)
-        self.kwargs['price__gte'] = self.kwargs.pop('min_price', None)
-        self.kwargs['price__lte'] = self.kwargs.pop('max_price', None)
+            'location', None) or None
+        self.kwargs['start_time__gte'] = self.kwargs.pop(
+            'start_hour', None) or None
+        self.kwargs['price__gte'] = self.kwargs.pop('min_price', None) or None
+        self.kwargs['price__lte'] = self.kwargs.pop('max_price', None) or None
 
         queryset = services.EventService().events_filter_search(
             self.request.user, **self.kwargs)
