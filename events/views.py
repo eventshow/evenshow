@@ -718,7 +718,11 @@ class StripeAuthorizeCallbackView(generic.View):
             stripe_user_id = resp.json()['stripe_user_id']
             stripe_access_token = resp.json()['access_token']
             usuario=request.session['usuario']
-            logout(request)
+            try:
+                logout(request)
+            except ValueError:
+                pass
+            
             user = User.objects.filter(pk=usuario).first()
             login(request, user)
             profile = user.profile
