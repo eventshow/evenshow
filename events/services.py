@@ -181,7 +181,8 @@ class EventService():
         return exist
 
     def locations(self):
-        locations = models.Event.objects.values_list('location_city', flat=True).order_by('location_city').distinct('location_city')
+        locations = models.Event.objects.values_list(
+            'location_city', flat=True).order_by('location_city').distinct('location_city')
         return locations
 
 
