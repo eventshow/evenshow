@@ -198,7 +198,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -271,7 +271,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -425,8 +425,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
-
+            # services.EmailService().send_email(subject, body, [recipient])
             return render(request, 'enrollment/thanks.html', context)
         else:
             return redirect('/')
@@ -556,8 +555,9 @@ class RateHostView(generic.CreateView):
 
             is_enrolled_for_this_event = services.EnrollmentService().user_is_enrolled_and_accepted(event.id,
                                                                                                     created_by)
-            auto_rating = self.request.user.id == event.created_by.id
-            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating):
+            host = event.created_by
+            auto_rating = self.request.user.id == host.id
+            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating) and host.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -587,7 +587,7 @@ class RateHostView(generic.CreateView):
         rating.reviewed = host
         rating.event = event
         rating.on = 'HOST'
-        if services.RatingService().is_valid_rating(rating, event, created_by):
+        if services.RatingService().is_valid_rating(rating, event, created_by) and host.username != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:
@@ -620,7 +620,7 @@ class RateAttendeeView(generic.CreateView):
             auto_rating = self.request.user.id == attendee.id
             if (
                     not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
-                    not auto_rating):
+                    not auto_rating) and attendee.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -655,7 +655,7 @@ class RateAttendeeView(generic.CreateView):
         rating.event = event
         rating.on = 'ATTENDEE'
 
-        if services.RatingService().is_valid_rating(rating, event, created_by):
+        if services.RatingService().is_valid_rating(rating, event, created_by) and reviewed.usename != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:
@@ -687,6 +687,19 @@ class TransactionListView(generic.ListView):
         super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDeleteView(generic.DeleteView):
+    template_name = 'profile/user_confirm_delete.html'
+    model = User
+
+    def delete(self, request, *args, **kwargs):
+        self.get_object().delete()
+        return redirect('home')
+
+    def get_object(self):
+        return self.request.user
 
 
 @method_decorator(login_required, name='dispatch')
