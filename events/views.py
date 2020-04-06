@@ -440,11 +440,14 @@ class EnrollmentDeleteView(generic.View):
             event = enrollment.event
 
             if enrollment and not event.has_started:
+                user = self.request.user
+                if (datetime.now() - enrollment.created_at).days > 3:
+                    selectors.TransactionSelector().user_on_event(user, event).delete()
                 enrollment.delete()
 
                 subject = 'Asistencia a {0} cancelada'.format(event.title)
                 body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
-                    self.request.user.username, event.title)
+                    user.username, event.title)
                 recipient = event.created_by.email
 
                 # services.EmailService().send_email(subject, body, [recipient])
