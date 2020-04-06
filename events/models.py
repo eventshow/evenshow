@@ -33,8 +33,6 @@ def change_events_location_on_user_deletion(sender, instance, using, **kwargs):
     now = datetime.now()
     Event.objects.filter(Q(created_by=instance) & (Q(start_day__gte=now.date(
     ), start_time__gte=now.time()) | Q(start_day__gte=now.date()))).delete()
-    Enrollment.objects.filter(Q(created_by=instance) & (Q(event__start_day__gte=now.date(
-    ), event__start_time__gte=now.time()) | Q(event__start_day__gte=now.date()))).delete()
 
 
 def get_default_category():
@@ -210,7 +208,7 @@ class Enrollment(Common):
                               choices=STATUS_CHOICES, default='PENDING')
 
     created_by = models.ForeignKey(
-        User, on_delete=models.SET(get_sentinel_user), related_name='attendee_enrollments')
+        User, on_delete=models.CASCADE, related_name='attendee_enrollments')
     event = models.ForeignKey(
         Event, on_delete=models.CASCADE, related_name='event_enrollments')
 
