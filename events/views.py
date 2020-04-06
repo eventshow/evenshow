@@ -39,7 +39,7 @@ class HomeView(generic.FormView):
 
     def render_to_response(self, context, **response_kwargs):
         context['message'] = services.MessageService().last_message()
-        context['locations']=services.EventService().locations()
+        context['locations'] = services.EventService().locations()
         response_kwargs.setdefault('content_type', self.content_type)
         return self.response_class(
             request=self.request,
@@ -339,7 +339,8 @@ class EventFilterListView(generic.ListView):
             self.kwargs['start_day'] = datetime.strptime(
                 date, '%d/%m/%Y').strftime('%Y-%m-%d')
 
-        self.kwargs['location_city__icontains'] = self.kwargs.pop('location', None)
+        self.kwargs['location_city__icontains'] = self.kwargs.pop(
+            'location', None)
         self.kwargs['start_time__gte'] = self.kwargs.pop('start_hour', None)
         self.kwargs['price__gte'] = self.kwargs.pop('min_price', None)
         self.kwargs['price__lte'] = self.kwargs.pop('max_price', None)
@@ -424,7 +425,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            #services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -503,8 +504,8 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            #services.EmailService().send_email(
-                #subject, body, [recipient.email])
+            # services.EmailService().send_email(
+            # subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
