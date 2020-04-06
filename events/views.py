@@ -733,6 +733,7 @@ class DownloadPDF(View):
         events = selectors.EventSelector().hosted(user)
         enrollments = models.Enrollment.objects.filter(created_by=user)
         ratings = models.Rating.objects.filter(created_by=user)
+        transactions = models.Transaction.objects.filter(created_by=user)
         data = {
             "name": user.first_name,
             "last_name": user.last_name,
@@ -748,6 +749,8 @@ class DownloadPDF(View):
             "events": events,
             "enrollments": enrollments,
             "ratings": ratings,
+            "transactions": transactions,
+
         }
         pdf = self.render_to_pdf('profile/pdf.html', data)
 

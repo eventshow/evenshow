@@ -90,6 +90,18 @@
 <h3>No hay puntuaciones</h3>
 {% endfor %}
 
+<br>
+<hr>
+<h2>Transacciones</h2>
+{% for transaction in transactions %}
+<hr>
+<h3>creado por: {{transaction.created_by}}</h3>
+<h3>concepto: {{transaction.concept}}</h3>
+<h3>receptor: {{transaction.recipient}}</h3>
+<h3>cuantía (en euros): {{transaction.amount}}</h3>
 
+{% empty %}
+<h3>No hay transacciones</h3>
+{% endfor %}
 </body>
 </html>
