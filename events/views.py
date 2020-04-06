@@ -61,10 +61,7 @@ class HomeView(generic.FormView):
 
         kwargs = {key: val for key, val in kwargs.items() if val}
 
-        if kwargs:
-            return redirect(reverse('list_event_filter', kwargs=kwargs))
-        else:
-            return redirect('list_event_filter')
+        return redirect(reverse('list_event_filter', kwargs=kwargs))
 
 
 @method_decorator(login_required, name='dispatch')

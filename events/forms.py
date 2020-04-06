@@ -1,5 +1,3 @@
-import re
-
 from datetime import datetime, date
 
 from django import forms
