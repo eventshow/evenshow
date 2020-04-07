@@ -2,7 +2,7 @@ import googlemaps
 import pytz
 
 from collections import OrderedDict
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from operator import itemgetter
 
 from django.conf import settings
@@ -184,6 +184,11 @@ class EventService():
         locations = models.Event.objects.values_list(
             'location_city', flat=True).order_by('location_city').distinct('location_city')
         return locations
+
+    def can_update(self, event_pk):
+        event = models.Event.objects.get(pk=event_pk)
+
+        return datetime.now().date() < (event.start_day - timedelta(days=3))
 
 
 class ProfileService():
