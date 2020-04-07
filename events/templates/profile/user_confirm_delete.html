@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="confirm-delete">
-    <form class="form-eventshow-confirm-delete" action="" method="post">
+    <form class="form-eventshow-confirm-delete" action="{% url 'delete_profile' %}" method="post">
         {% csrf_token %}
         <div class="row">
-            <div class="col s12" id="delete-title">
+            <div class="grid-example col s12" id="delete-title">
                 <span class="flow-text">
-                    <h1 id="title-delete">¿Estás seguro de que quieres eliminar el evento <strong id="title-del-event">
-                            {{object.title}}</strong>?</h1>
+                    <h1 id="title-delete">¿Estás seguro de que quieres eliminar tu cuenta? Revisa nuestros términos y
+                        condiciones antes para saber qué información se eliminará. Además, deber tener en cuenta los
+                        eventos
+                        que aún tienes publicados como afintrión, ya que al eliminar tu cuenta se cancelarán y esto
+                        puede
+                        conllevar costes extras<strong id="title-del-event">
+                    </h1>
                 </span>
             </div>
         </div>
         <div class="container">
             <div class="row">
-                {% if object.title|length <= 50 %}
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-conf">
                         <div class="right">
@@ -26,26 +30,10 @@
                     <div class="delete-buttons-conf">
                         <div class="left">
                             <a id="delete-btn-a" class="waves-effect waves-light btn-large btn-block"
-                                href="{% url 'hosted_events'%}">No</a>
+                                href="{% url 'detail_profile'%}">No</a>
                         </div>
                     </div>
                 </div>
-                {% else %}
-
-                <div class="grid-example col s4 offset-s2">
-                    <div class="delete-buttons-big-title">
-                        <div class="right">
-                            <button id="delete-btn-big" class="waves-effect waves-light btn-large btn-block"
-                                type="submit">Sí</button>
-                             <div class="left">
-                            <a id="delete-btn-a-big" class="waves-effect waves-light btn-large btn-block"
-                                href="{% url 'hosted_events'%}">No</a>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-                {% endif %}
             </div>
         </div>
     </form>

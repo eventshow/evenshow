@@ -4,11 +4,15 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q, QuerySet
 
 from . import models
+from .models import Message
 
 User = get_user_model()
 
 
 class EnrollmentSelector:
+    def created_by(self, user: User) -> QuerySet:
+        return models.Enrollment.objects.filter(created_by=user)
+
     def on_event(self, event_pk: int, status: str) -> QuerySet:
         return models.Enrollment.objects.filter(event__pk=event_pk, status=status)
 
@@ -39,107 +43,6 @@ class EventSelector:
         event_enrolled_accepted = models.Event.objects.filter(
             event_enrollments__created_by=attendee, event_enrollments__status=status).order_by('title')
         return event_enrolled_accepted
-
-    #Filter search
-
-    def location_date_start_hour_min_max(self, location: str, event_date: str, start_hour: time, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=event_date,
-                                           start_time__gte=start_hour, price__gte=min_price, price__lte=max_price)
-
-    def location_date_start_hour_min(self, location: str, event_date: str, start_hour:time, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=event_date,
-                                           start_time__gte=start_hour, price__gte=min_price)
-
-    def location_date_start_hour_max(self, location: str, event_date: str, start_hour: time, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=event_date,
-                                           start_time__gte=start_hour, price__lte=max_price)
-
-    def location_date_min_max(self, location: str, event_date: str, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=event_date, price__gte=min_price, price__lte=max_price)
-
-    def location_start_hour_min_max(self, location: str, start_hour: time, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location,
-                                           start_time__gte=start_hour, price__gte=min_price, price__lte=max_price)
-
-    def date_start_hour_min_max(self, event_date: str, start_hour: time, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_day=event_date,
-                                           start_time__gte=start_hour, price__gte=min_price, price__lte=max_price)
-
-    def location_date_start_hour(self, location: str, date: str, start_hour: time) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=date, start_time__gte=start_hour)
-
-    def location_date_min(self, location: str, event_date: str, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=event_date, price__gte=min_price)
-
-    def location_date_max(self, location: str, event_date: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=event_date, price__lte=max_price)
-
-    def location_start_hour_min(self, location: str, start_hour: time, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_time__gte=start_hour, price__gte=min_price)
-
-    def location_start_hour_max(self, location: str, start_hour: time, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_time__gte=start_hour, price__lte=max_price)
-
-    def location_min_max(self, location: str, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, price__gte=min_price, price__lte=max_price)
-
-    def date_start_hour_min(self, event_date: str, start_hour: time, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_day=event_date, start_time__gte=start_hour, price__gte=min_price)
-
-    def date_start_hour_max(self, event_date: str, start_hour: time, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_day=event_date, start_time__gte=start_hour, price__lte=max_price)
-
-    def start_hour_min_max(self, start_hour: time, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_time__gte=start_hour, price__gte=min_price, price__lte=max_price)
-
-    def date_min_max(self, event_date: str, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter( start_day=event_date, price__gte=min_price, price__lte=max_price)
-
-    def location_start_hour(self, location: str, start_hour: time) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_time__gte=start_hour)
-
-    def date_start_hour(self, date: str, start_hour: time) -> QuerySet:
-        return models.Event.objects.filter(start_day=date, start_time__gte=start_hour)
-
-    def location_date(self, location: str, date: str, ) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, start_day=date)
-
-    def location_min(self, location: str, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, price__gte=min_price)
-
-    def location_max(self, location: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location, price__lte=max_price)
-
-    def date_min(self, event_date: str, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_day=event_date, price__gte=min_price)
-
-    def date_max(self, event_date: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_day=event_date, price__lte=max_price)
-
-    def start_hour_min(self, start_hour: time, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_time__gte=start_hour, price__gte=min_price)
-
-    def start_hour_max(self, start_hour: time, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(start_time__gte=start_hour, price__lte=max_price)
-
-    def min_max(self, min_price: str, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(price__gte=min_price, price__lte=max_price)
-
-    def location(self, location: str) -> QuerySet:
-        return models.Event.objects.filter(location_city__iexact=location)
-
-    def date(self, date: str) -> QuerySet:
-        return models.Event.objects.filter(start_day=date)
-
-    def start_hour(self, start_hour: time) -> QuerySet:
-        return models.Event.objects.filter(start_time__gte=start_hour)
-
-    def min(self, min_price: str) -> QuerySet:
-        return models.Event.objects.filter(price__gte=min_price)
-
-    def max(self, max_price: str) -> QuerySet:
-        return models.Event.objects.filter(price__lte=max_price)
-
 
 
 class RatingSelector:
@@ -175,3 +78,8 @@ class TransactionSelector:
         transaction_list = models.Transaction.objects.filter(
             created_by=user).order_by('amount')
         return transaction_list
+
+
+class MessageSelector:
+    def last_message(self) -> Message:
+        return models.Message.objects.latest()
