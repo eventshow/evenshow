@@ -22,7 +22,7 @@ urlpatterns = [
     path('events/hosted', views.EventHostedListView.as_view(),
          name='hosted_events'),
     path('events/filter', views.EventFilterFormView.as_view(), name='event_filter'),
-    re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?$',
+    re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?(?:c(?P<category>\d*)/)?$',
             views.EventFilterListView.as_view(), name='list_event_filter'),
 
     path('events/nearby',

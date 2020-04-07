@@ -297,6 +297,7 @@ class EventFilterFormView(generic.FormView):
         kwargs['start_hour'] = data.pop('start_hour', None) or None
         kwargs['min_price'] = data.pop('min_price', None) or None
         kwargs['max_price'] = data.pop('max_price', None) or None
+        kwargs['category'] = self.request.POST.get('category', None) or None
         self.request.session['form_values'] = self.request.POST
 
         kwargs = {key: val for key, val in kwargs.items() if val}
@@ -319,18 +320,16 @@ class EventFilterListView(generic.ListView):
                         self).get_context_data(**kwargs)
         context['locations'] = services.EventService().locations()
         context['location'] = self.kwargs['location_city__icontains']
+        context['category'] = models.Category.objects.filter(
+            pk=self.kwargs.get('category')).values_list('name', flat=True).first()
 
         context['form'] = self.form_class(
             self.request.session.get('form_values'))
-        context['categories'] = set(list(context.get(
-            'object_list').annotate(total=Count('category')).values_list('category__name', 'total')))
-
+        context['categories'] = context.get(
+            'paginator').object_list.values('category__name', 'category').annotate(total=Count('category')).order_by('total')
         return context
 
     def get_queryset(self):
-        queryset = super(
-            EventFilterListView, self).get_queryset()
-
         self.kwargs['start_day'] = self.kwargs.pop('date', None) or None
         self.kwargs['location_city__icontains'] = self.kwargs.pop(
             'location', None) or None
@@ -338,6 +337,7 @@ class EventFilterListView(generic.ListView):
             'start_hour', None) or None
         self.kwargs['price__gte'] = self.kwargs.pop('min_price', None) or None
         self.kwargs['price__lte'] = self.kwargs.pop('max_price', None) or None
+        self.kwargs['category'] = self.kwargs.pop('category', None) or None
 
         queryset = services.EventService().events_filter_search(
             self.request.user, **self.kwargs)
@@ -351,6 +351,13 @@ class EventSearchNearbyView(generic.ListView):
     paginate_by = 12
     form_class = forms.SearchFilterForm
 
+    def get_context_data(self, **kwargs):
+        context = super(EventSearchNearbyView,
+                        self).get_context_data(**kwargs)
+        context['categories'] = context.get(
+            'paginator').object_list.values('category__name', 'category').annotate(total=Count('category')).order_by('total')
+        return context
+
     def post(self, request, *args, **kwargs):
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
@@ -359,22 +366,22 @@ class EventSearchNearbyView(generic.ListView):
         context['latitude'] = latitude
         context['longitude'] = longitude
         context['form'] = self.form_class
-        context['object_list'] = queryset
 
-        if not queryset:
+        if not self.get_context_data().get('paginator'):
             context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
 
         return render(request, self.template_name, context)
 
     def get_queryset(self):
         queryset = super(EventSearchNearbyView, self).get_queryset()
-        latitude = self.request.POST.get('latitude')
-        longitude = self.request.POST.get('longitude')
+        latitude = 37.382640  # self.request.POST.get('latitude')
+        longitude = -5.996300  # self.request.POST.get('longitude')
         if latitude and longitude:
             queryset = services.EventService().nearby_events_distance(
-                self, 50000, latitude, longitude)
+                self.request.user, 50000, latitude, longitude)
         else:
             queryset = []
+
         return queryset
 
 

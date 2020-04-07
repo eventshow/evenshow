@@ -102,42 +102,36 @@ class EventService():
 
         return res
 
-    def nearby_events_distance(self, self_view, distance, latitude, longitude):
-        events = models.Event.objects.filter(start_day__gte=date.today())
-        events_cleaned = []
-        if self_view.request.user.is_authenticated:
-            for event in events:
-                if self_view.request.user not in selectors.UserSelector().event_attendees(
-                        event.pk) and event.has_started is False:
-                    events_cleaned.append(event)
-        else:
-            for event in events:
-                if event.has_started is False:
-                    events_cleaned.append(event)
-
+    def nearby_events_distance(self, user, distance, latitude, longitude):
+        now = datetime.now()
+        events = self.base_search_events(user)[:20]
         result = []
 
-        if events_cleaned:
-            events_distances_oredered = self.common_method_distance_order(
-                events_cleaned, latitude, longitude)
+        events_distances_oredered = self.common_method_distance_order(
+            events, latitude, longitude)
 
-            for event, eventdistance in events_distances_oredered.items():
-                if eventdistance <= int(distance):
-                    result.append(event)
-                else:
-                    break
+        for event, eventdistance in events_distances_oredered.items():
+            if eventdistance <= int(distance):
+                result.append(event.id)
+            else:
+                break
+        return models.Event.objects.filter(pk__in=result)
 
-        return result
+    def events_filter_search(self, user: User, **kwargs):
+        now = datetime.now()
+        events = self.base_search_events(user)
+        filters = {key: val for key, val in kwargs.items() if val}
+        return events.filter(**filters)
 
-    def events_filter_search(self, user, **kwargs):
+    def base_search_events(self, user: User):
+        now = datetime.now()
         if user.is_authenticated:
             events = models.Event.objects.filter(
-                ~Q(event_enrollments__created_by=user), Q(start_day__gte=date.today()))
+                ~Q(event_enrollments__created_by=user) & (Q(start_day__gte=now.date(), start_time__gte=now.time()) | Q(start_day__gte=now.date())))
         else:
-            events = models.Event.objects.filter(start_day__gte=date.today())
-        filters = {key: val for key, val in kwargs.items() if val}
-
-        return events.filter(**filters)
+            events = models.Event.objects.filter(Q(start_day__gte=now.date(
+            ), start_time__gte=now.time()) | Q(start_day__gte=now.date()))
+        return events
 
     def common_method_distance_order(self, events, latitude, longitude):
         gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
