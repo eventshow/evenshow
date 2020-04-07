@@ -68,7 +68,6 @@ class HomeView(generic.FormView):
         return redirect(reverse('list_event_filter', kwargs=kwargs))
 
 
-
 @method_decorator(login_required, name='dispatch')
 class AttendeeListView(generic.ListView):
     model = User
@@ -557,6 +556,11 @@ class RateHostView(generic.CreateView):
                                                                                                     created_by)
             host = event.created_by
             auto_rating = self.request.user.id == host.id
+
+            print(exist_already_rating)
+            print(is_enrolled_for_this_event)
+            print(auto_rating)
+
             if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating) and host.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
@@ -737,6 +741,7 @@ class UserUpdateView(generic.UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
+
 
 @method_decorator(login_required, name='dispatch')
 class DownloadPDF(View):
