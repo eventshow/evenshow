@@ -243,6 +243,16 @@ class EventDeleteView(generic.DeleteView):
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
             event = models.Event.objects.get(pk=event_pk)
+
+            if not event.can_delete:
+                try:
+                    amount_host=services.PaymentService.fee(event.amount)
+                    services.PaymentService().charge(amount_host, request.POST['stripeToken'])
+                    
+                except stripe.error.StripeError:
+                    redirect('not_impl')
+
+
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
