@@ -237,6 +237,12 @@ class EventDeleteView(generic.DeleteView):
     model = models.Event
     success_url = EVENT_SUCCESS_URL
 
+    def get_context_data(self, **kwargs):
+    
+        context = super(EventDeleteView, self).get_context_data(**kwargs)
+        context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        return context
+
     def delete(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
@@ -246,8 +252,9 @@ class EventDeleteView(generic.DeleteView):
 
             if not event.can_delete:
                 try:
-                    amount_host=services.PaymentService.fee(event.amount)
-                    services.PaymentService().charge(amount_host, request.POST['stripeToken'])
+                    attendees = selectors.UserSelector().event_attendees(event_pk).count()
+                    amount_host=services.PaymentService().fee(round(event.price*100))
+                    services.PaymentService().charge(round(amount_host*attendees), request.POST['stripeToken'])
                     
                 except stripe.error.StripeError:
                     redirect('not_impl')

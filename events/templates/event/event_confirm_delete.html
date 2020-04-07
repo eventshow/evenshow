@@ -21,13 +21,14 @@
                                 <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
                                     type="submit">Sí</button>
                             {% else %}
-                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                                    data-key="{{ stripe_key }}" data-description="Comprar entrada"
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="{{ stripe_key }}" data-description="Pagar penalización"
                                     data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
-                                    data-label="{{ object.price }}€">
+                                    data-label="Sí">
                                 </script>
                                 <script>
                                     document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large btn-block");
+                                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("id", "delete-btn");
                                 </script>
                             {% endif%}
                         </div>
