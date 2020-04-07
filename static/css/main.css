@@ -1648,14 +1648,14 @@ table {
 	margin-left: 0%;
 }
 .map-detail iframe{
-		 width:278px;
+	width:278px;
 	height:146px;
 	frameborder:0;
 	border:0;
 	allowfullscreen:"";
 	aria-hidden:false;
 	margin: 3%;
-                tabindex:"0";
+    tabindex:"0";
 
 }
 
