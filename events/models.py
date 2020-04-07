@@ -2,7 +2,7 @@ import pytz
 import random
 import uuid
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -188,6 +188,11 @@ class Event(Common):
     def g_location(self):
         aux = ','.join([self.location_street, self.location_city])
         return '+'.join([str(self.location_number), aux])
+
+    @property
+    def can_update(self):
+
+        return datetime.now().date() < (self.start_day - timedelta(days=4))
 
     def save(self, *args, **kwargs):
         self.full_clean()
