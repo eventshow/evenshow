@@ -40,7 +40,7 @@
         <tbody>
           <tr>
             <td>
-              {% if att not in rated_attendees and event_has_finished %}
+              {% if att not in rated_attendees and event_has_finished and att.username != 'deleted' %}
               <button type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
                 title="Puntuar">
                 <i id="title-name" class="samll material-icons">star</i>
@@ -51,6 +51,8 @@
               No ha empezado
               {% elif not event_has_finished%}
               No ha terminado
+              {% elif att.username != 'deleted' %}
+              No disponible
               {% endif %}
             </td>
             <td>{{att.username}}</td>

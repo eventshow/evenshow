@@ -10,6 +10,9 @@ User = get_user_model()
 
 
 class EnrollmentSelector:
+    def created_by(self, user: User) -> QuerySet:
+        return models.Enrollment.objects.filter(created_by=user)
+
     def on_event(self, event_pk: int, status: str) -> QuerySet:
         return models.Enrollment.objects.filter(event__pk=event_pk, status=status)
 
