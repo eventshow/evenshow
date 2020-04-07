@@ -486,7 +486,7 @@ class EnrollmentDeleteView(generic.View):
         event = enrollment.event
         if enrollment and not event.has_started:
             user = self.request.user
-            if (event.start_day - date.today()).days > 3:
+            if (enrollment.is_accepted and (event.start_day - date.today()).days > 3) or not enrollment.is_accepted:
                 selectors.TransactionSelector().user_on_event(user, event).delete()
             enrollment.delete()
 
