@@ -188,7 +188,7 @@ class EventService():
     def can_update(self, event_pk):
         event = models.Event.objects.get(pk=event_pk)
 
-        return datetime.now().date() < (event.start_day - timedelta(days=3))
+        return datetime.now().date() < (event.start_day - timedelta(days=4))
 
 
 class ProfileService():
