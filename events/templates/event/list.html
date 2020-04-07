@@ -61,8 +61,8 @@
             </button>
             {% endif %}
             {% elif object.event in user_rated_events %}
-            <em id="title-name" class="samll material-icons">star<em
-                class="rating-search">{% user_on_event user object.event %}</em></em>
+            {% user_on_event user object.event as rating %}
+            <em id="title-name" class="samll material-icons">star<em class="rating-search">{{rating.score}}</em></em>
             {% endif%}
             {% elif not object.event.has_started%}
             <p class="request-fail">No ha empezado</p>
@@ -113,7 +113,7 @@
                 <em id="title-name" class="small material-icons">attach_money</em>
               </button>
             </form>
-            
+
             {% if not object.has_started %}
             <button type="button" onclick="location.href='{% url 'update_event' object.pk %}'" title="Editar"> <em
                 id="title-name" class="small material-icons">edit</em></button>
