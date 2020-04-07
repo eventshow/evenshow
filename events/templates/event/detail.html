@@ -70,7 +70,7 @@
         <h2 class="title-detail">Hora comienzo</h2>
         <h2 class="subtitle-detail">{{ object.start_time }}</h2>
     </div>
-    <div class="col m6 rectangle-info" id="detail-info">
+    <div class="col m6 rectangle-info date-res" id="detail-info">
         <h2 class="title-detail">Fecha</h2>
         <h2 class="subtitle-detail">{{ object.start_day| date:"d M, Y" }}</h2>
     </div>
@@ -98,7 +98,7 @@
         <h1 class="title-section">Anfitrión</h1>
     </div>
     <div class="col-9 title-section pos">
-        <h3 class="name-host-detail">{{object.created_by.first_name}} {{object.created_by.last_name}}</h3>
+        <h3 class="name-host-detail" id="name-res">{{object.created_by.first_name}} {{object.created_by.last_name}}</h3>
         {% if event.created_by.username != 'deleted' %}
         <h3 class="host-bio">{{object.created_by.profile.bio}}</h3>
         {% endif %}
@@ -117,8 +117,7 @@
         <div class="col-md-7 map-detail">
             <br>
             <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"
-                width="838" height="346" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
-                tabindex="0"></iframe>
+               ></iframe>
             <br>
         </div>
     </div>
@@ -156,5 +155,15 @@
         width: 100%;
         margin-top: 25%;
     }
+@media only screen and (min-width: 320px) and (max-width: 568px) {
+
+     .page-footer {
+        width: 100%;
+        margin-top: 308%;
+    }
+}
+
+
+
 </style>
 {% endblock %}
