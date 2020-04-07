@@ -17,8 +17,19 @@
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-conf">
                         <div class="right">
-                            <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
-                                type="submit">Sí</button>
+                            {% if object.can_delete %}
+                                <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
+                                    type="submit">Sí</button>
+                            {% else %}
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                                    data-key="{{ stripe_key }}" data-description="Comprar entrada"
+                                    data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                                    data-label="{{ object.price }}€">
+                                </script>
+                                <script>
+                                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large btn-block");
+                                </script>
+                            {% endif%}
                         </div>
                     </div>
                 </div>
