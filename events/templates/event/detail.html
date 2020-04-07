@@ -59,12 +59,10 @@
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
-
             {% else %}
-                <button type="submit" class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€</button>
+            <button type="submit"
+                class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€</button>
             {% endif %}
-            {% endif %}
-
         </form>
         {% endif %}
         {% elif event.created_by.username == 'deleted' %}
@@ -123,8 +121,7 @@
         </h3>
         <div class="col-md-7 map-detail">
             <br>
-            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"
-               ></iframe>
+            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
             <br>
         </div>
     </div>
@@ -162,15 +159,13 @@
         width: 100%;
         margin-top: 25%;
     }
-@media only screen and (min-width: 320px) and (max-width: 568px) {
 
-     .page-footer {
-        width: 100%;
-        margin-top: 308%;
+    @media only screen and (min-width: 320px) and (max-width: 568px) {
+
+        .page-footer {
+            width: 100%;
+            margin-top: 308%;
+        }
     }
-}
-
-
-
 </style>
 {% endblock %}
