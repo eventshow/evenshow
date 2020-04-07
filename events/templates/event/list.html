@@ -30,7 +30,7 @@
         <tr>
           {% if role == "huésped" %}
           <th id="">Puntuar</th>
-          <th id="">Estado de solicitud</th>
+          <th id="">Estado</th>
           <th id="">Título</th>
           <th id="">Fecha</th>
           <th id="">Dirección</th>
@@ -43,8 +43,9 @@
           {% endif %}
         </tr>
       </thead>
-      {% for object in object_list %}
       <tbody>
+      {% for object in object_list %}
+     
         <tr>
           {% if role == "huésped" %}
           <td>
@@ -117,8 +118,9 @@
           </td>
           {% endif %}
         </tr>
-      </tbody>
-      {% endfor %}
+     
+      {% endfor %} 
+    </tbody>
     </table>
     {% include "pagination.html" %}
   </div>
