@@ -155,13 +155,12 @@
   <script src="{% static 'js/materialize.min.js' %}"></script>
   <script src="{% static 'js/util.js' %}"></script>
 
-      <script>//Autocompletado
+     <script>//Autocompletado
 
 document.addEventListener('DOMContentLoaded', function() {
+
        var options = {
            data: {
-               "HTML":null,
-               "CSS":null,
     {% for l in locations %}
             "{{ l }}":null,
     {% endfor %}
@@ -170,11 +169,19 @@ document.addEventListener('DOMContentLoaded', function() {
        }
     var elems = document.querySelectorAll('.autocomplete');
     var instances = M.Autocomplete.init(elems, options);
+    instances.close();
+
   });
 </script>
 
 
   {% endblock javascript %}
+
+<style>
+    .autocomplete-content{
+        margin-top: 12%;
+    }
+</style>
 
 </body>
 

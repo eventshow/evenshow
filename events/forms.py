@@ -168,9 +168,14 @@ class RegistrationForm(UserCreationForm):
 
     def clean_friend_token(self):
         friend_token = self.cleaned_data.get('friend_token')
+        deleted_token = Profile.objects.filter(
+            user__username='deleted').values('token').first()
         refered = Profile.objects.filter(token=friend_token).exists()
+
         if friend_token and not refered:
             raise ValidationError('El código introducido no existe')
+        elif deleted_token and deleted_token['token'] == friend_token:
+            raise ValidationError(';)')
         return friend_token
 
     def clean_username(self):
@@ -237,7 +242,7 @@ class ProfileForm(forms.ModelForm):
 
 class SearchHomeForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad"}))
+        attrs={'placeholder': "Localidad", 'class': "input-field autocomplete ", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
@@ -261,11 +266,10 @@ class SearchHomeForm(forms.Form):
             raise ValidationError(
                 'La fecha debe ser futura')
         return date
-      
+
     def clean_location(self):
         location = self.cleaned_data.get('location')
         location_join = location.replace(' ', '')
-
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
@@ -273,7 +277,7 @@ class SearchHomeForm(forms.Form):
 
 class SearchFilterForm(forms.Form):
     location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad"}))
+        attrs={'placeholder': "Localidad", 'class': "autocomplete input-field", 'id': "autocomplete-input"}))
     date = forms.DateField(
         required=False,
         widget=forms.DateInput(
@@ -291,10 +295,11 @@ class SearchFilterForm(forms.Form):
         input_formats=('%H:%M',)
     )
 
-    max_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
+    max_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+                                   widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False, widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
-
+    min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+                                   widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
@@ -303,6 +308,12 @@ class SearchFilterForm(forms.Form):
                 'La fecha debe ser futura')
         return date
 
+    def clean_location(self):
+        location = self.cleaned_data.get('location')
+        location_join = location.replace(' ', '')
+        if not location_join.isalpha() and location:
+            raise ValidationError('Introduzca solo letras y espacios')
+        return location
 
     def clean(self):
         min_price = self.cleaned_data.get('min_price')
@@ -310,7 +321,7 @@ class SearchFilterForm(forms.Form):
         if min_price and max_price and min_price >= max_price:
             raise ValidationError(
                 'El precio mínimo no puede ser mayor o igual que el precio máximo')
-        return min_price, max_price
+        return self.cleaned_data
 
 
 class UserForm(UserChangeForm):
@@ -352,4 +363,3 @@ class UserForm(UserChangeForm):
         if not username:
             raise ValidationError('El usuario es necesario')
         return username
-

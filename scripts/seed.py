@@ -24,8 +24,8 @@ INITIAL_DATA = []
 CATEGORIES = ['TV', 'Juegos', 'Idiomas',
               'Aprender', 'Cocina', 'Deportes', 'Otros']
 ENROLLMENT_STATUS = ['ACCEPTED', 'PENDING', 'REJECTED']
-EVENT_PKS_THIS_YEAR = range(1, 16)
-EVENT_PKS_FUTURE = range(16, 31)
+EVENT_PKS_THIS_YEAR = range(1, 151)
+EVENT_PKS_FUTURE = range(151, 301)
 PROFILE_IMAGE_FILES = [
     'https://i.imgur.com/DHM869r.png',
     'https://i.imgur.com/nPuyNCw.png',
@@ -51,7 +51,7 @@ EVENT_IMAGE_FILES = [
     'https://i.imgur.com/ZmkYrp3.jpg',
 ]
 FAKE = Faker('es_ES')
-USER_PKS = range(1, 51)
+USER_PKS = range(1, 31)
 TIMEZONE = '+0000'
 
 
@@ -278,8 +278,8 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
             'fields': fields
         }
 
+        seed_transaction(event, enroller, host, updated_at, price)
         if status == 'ACCEPTED':
-            seed_transaction(enroller, host, updated_at, price)
             ac += 1
             if enroller not in attendees:
                 attendees.append(enroller)
@@ -338,13 +338,15 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
             INITIAL_DATA.append(rating)
 
 
-def seed_transaction(transmitter, recipient, created_at, amount):
+def seed_transaction(event, transmitter, recipient, created_at, amount):
     fields = {
         'amount': amount + 1.15,
-        'concept': 'Eventshow: asistencia a evento',
         'created_at': created_at + TIMEZONE,
         'updated_at': created_at + TIMEZONE,
+        'event': event,
         'created_by': transmitter,
+        'customer_id': 'cus_{0}'.format(get_random_string(length=14)),
+        'is_paid_for': random.choice([True, False]),
         'recipient': recipient,
     }
     transaction = {
