@@ -557,10 +557,6 @@ class RateHostView(generic.CreateView):
             host = event.created_by
             auto_rating = self.request.user.id == host.id
 
-            print(exist_already_rating)
-            print(is_enrolled_for_this_event)
-            print(auto_rating)
-
             if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating) and host.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
