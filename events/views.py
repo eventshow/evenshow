@@ -1,17 +1,21 @@
-from django.db.models import Count
-from datetime import date, datetime
+from datetime import datetime
+from io import BytesIO
 
 import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
+from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views import generic
-from django.views.generic.edit import FormMixin, ModelFormMixin
-from django.views.generic.list import MultipleObjectMixin
 from django.views.defaults import page_not_found
+from django.views.generic.list import MultipleObjectMixin
+from xhtml2pdf import pisa
 
 from . import forms
 from . import models
@@ -62,6 +66,7 @@ class HomeView(generic.FormView):
         kwargs = {key: val for key, val in kwargs.items() if val}
 
         return redirect(reverse('list_event_filter', kwargs=kwargs))
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -362,7 +367,8 @@ class EventSearchNearbyView(generic.ListView):
         context['object_list'] = queryset
 
         if not queryset:
-            context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
+            context[
+                'location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
 
         return render(request, self.template_name, context)
 
@@ -405,7 +411,7 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=int(event.price*100),
+                amount=int(event.price * 100),
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
@@ -420,6 +426,7 @@ class EnrollmentCreateView(generic.View):
             recipient = event.created_by.email
 
             # services.EmailService().send_email(subject, body, [recipient])
+
             return render(request, 'enrollment/thanks.html', context)
         else:
             return redirect('/')
@@ -479,7 +486,8 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
         status = request.POST.get('status')
 
-        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (status == 'ACCEPTED' or status == 'REJECTED'):
+        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (
+                status == 'ACCEPTED' or status == 'REJECTED'):
             services.EnrollmentService().update(
                 enrollment_pk, host, status)
             event = models.Enrollment.objects.get(pk=enrollment_pk).event
@@ -729,3 +737,48 @@ class UserUpdateView(generic.UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
+
+@method_decorator(login_required, name='dispatch')
+class DownloadPDF(View):
+
+    def render_to_pdf(self, template_src, context_dict={}):
+        template = get_template(template_src)
+        html = template.render(context_dict)
+        result = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return None
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        profile = user.profile
+        events = selectors.EventSelector().hosted(user)
+        enrollments = models.Enrollment.objects.filter(created_by=user)
+        ratings = models.Rating.objects.filter(created_by=user)
+        transactions = models.Transaction.objects.filter(created_by=user)
+        data = {
+            "name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "date_join": user.date_joined,
+            "location": profile.location,
+
+            "picture": profile.picture,
+            "birthdate": profile.birthdate,
+            "token": profile.token,
+            "eventpoints": profile.eventpoints,
+            "bio": profile.bio,
+            "events": events,
+            "enrollments": enrollments,
+            "ratings": ratings,
+            "transactions": transactions,
+
+        }
+        pdf = self.render_to_pdf('profile/pdf.html', data)
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = 'datos de usuario.pdf'
+        content = "attachment; filename=%s" % (filename)
+        response['Content-Disposition'] = content
+        return response
