@@ -20,7 +20,7 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="grid-example col s6">
-                            <div class="validate-input" id="create-event">
+                            <div class="validate-input" id="edit-event">
                                 <label>USUARIO</label>
                                 {{ form.username }}
                                 <div class="form-errors">
@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="grid-example col s6">
-                            <div class="validate-input" id="create-event">
+                            <div class="validate-input" id="edit-event">
                                 <label>EMAIL</label>
                                 {{form.email}}
                                 <div class="form-errors">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="row">
                         <div class="grid-example col s6">
-                            <div class="validate-input" id="create-event">
+                            <div class="validate-input" id="edit-event">
                                 <label>NOMBRE</label>
                                 {{form.first_name}}
                                 <div class="form-errors">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="grid-example col s6">
-                            <div class="validate-input" id="create-event">
+                            <div class="validate-input" id="edit-event">
                                 <label>APELLIDOS</label>
                                 {{form.last_name}}
                                 <div class="form-errors">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="row">
                         <div class="grid-example col s12">
-                            <div class="validate-input" id="create-event">
+                            <div class="validate-input" id="edit-event">
                                 <label>FECHA DE NACIMIENTO</label>
                                 {{ profile_form.birthdate }}
                                 <div class="form-errors">
@@ -71,7 +71,7 @@
                     </div>
                     <div class="row">
                         <div class="grid-example col s12">
-                            <div class="validate-input" id="create-event">
+                            <div class="validate-input" id="edit-event">
                                 <label>IMAGEN</label>
                                 {{profile_form.picture}}
                                 <div class="form-errors">
@@ -82,7 +82,7 @@
                     </div>
                     <div class="row">
                         <div class="grid-example col s12">
-                            <div class="validate-input" id="create-event">
+                            <div class="validate-input" id="edit-event">
                                 <label>SOBRE MÍ</label>
                                 {{profile_form.bio}}
                                 <div class="form-errors">

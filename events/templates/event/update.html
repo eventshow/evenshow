@@ -103,7 +103,7 @@
                     </div>
                   </div>
                   <div class="grid-example col s4">
-                    <label>EDAD MÍN</label>
+                    <label>EDAD</label>
                     {{ form.min_age }}
                     <div class="form-errors">
                       {{ form.min_age.errors }}
@@ -120,9 +120,9 @@
                 </div>
                 <div class="container">
                   <div class="row">
-                    <div class="grid-example col m3 offset-m10 s3 offset-s6">
+                    <div class="grid-example col m3 offset-m10 s3 offset-s4">
                       <a id="send-buttons" href="#test2" onclick="showClickB()"
-                        class="waves-effect waves-light btn-large">Siguiente</a>
+                        class="waves-effect  btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
@@ -163,7 +163,7 @@
                     </div>
                   </div>
                   <div class="grid-example col s4" id="iphone-right">
-                    <label>HORA FIN</label>
+                    <label>FIN</label>
                     {{form.end_time}}
                     <div class="form-errors">
                       {{ form.end_time.errors }}
@@ -173,9 +173,9 @@
                 </div>
                 <div class="container">
                   <div class="row">
-                    <div class="grid-example col m3 offset-m10 s3 offset-s6">
+                    <div class="grid-example col m3 offset-m10 s3 offset-s4">
                       <a id="send-buttons" href="#test3" onclick="showClickC()"
-                        class="waves-effect waves-light btn-large">Siguiente</a>
+                        class="waves-effect  btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
@@ -185,27 +185,27 @@
                 <h4 class="flow-text separated-create" id="">Extra</h4><br>
 
                 <div class="row">
-                  <div class="grid-example col s4" id="iphone-left">
+                  <div class="grid-example col m4 s6" id="iphone-left">
                     <label>MASCOTAS</label>
                     {{ form.pets }}
                     <div class="form-errors">
                       {{ form.pets.errors }}
                     </div>
                   </div>
-                  <div class="grid-example col s4">
+                  <div class="grid-example col m4 s6" id="iphone-right">
+                    <label>APARCAMIENTO</label>
+                    {{ form.parking_nearby }}
+                    <div class="form-errors">
+                      {{ form.parking_nearby.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col m4 s12">
                     <label>IDIOMA</label>
                     <div class="event-lang">
                       {{ form.lang }}
                     </div>
                     <div class="form-errors">
                       {{ form.lang.errors }}
-                    </div>
-                  </div>
-                  <div class="grid-example col s4" id="iphone-right">
-                    <label>APARCAMIENTO</label>
-                    {{ form.parking_nearby }}
-                    <div class="form-errors">
-                      {{ form.parking_nearby.errors }}
                     </div>
                   </div>
                   <div class="grid-example col s12">
@@ -226,8 +226,8 @@
 
                 <div class="container">
                   <div class="row">
-                    <div class="grid-example col m3 offset-m10 s3 offset-s6">
-                      <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
+                    <div class="grid-example col m3 offset-m10 s3 offset-s4">
+                      <button id="send-buttons" type="submit" class="waves-effect btn-large">Enviar</button>
                     </div>
                   </div>
                 </div>
@@ -242,19 +242,17 @@
       </div>
 
       <script>
-        var max_chars = 100;
 
-        $('#title').keydown(function (e) {
-          if ($(this).val().length >= max_chars) {
-            $(this).val($(this).val().substr(0, max_chars));
-          }
-        });
-
-        $('#title').keyup(function (e) {
-          if ($(this).val().length >= max_chars) {
-            $(this).val($(this).val().substr(0, max_chars));
-          }
-        });
+        function ValidaLongitud(campo, longitudMaxima) {
+            try {
+                if (campo.value.length > (longitudMaxima - 1))
+                    return false;
+                else
+                    return true;             
+            } catch (e) {
+                return false;
+            }
+        }
 
         function showClickA() {
           document.getElementById("test1").style.display = "block";
