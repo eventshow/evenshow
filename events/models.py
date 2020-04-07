@@ -8,10 +8,11 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Q
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.crypto import get_random_string
-
 
 from core.models import Common
 
@@ -21,8 +22,27 @@ from core.models import Common
 User = get_user_model()
 
 
+@receiver(pre_delete, sender=User, dispatch_uid='user_delete_signal')
+def change_events_location_on_user_deletion(sender, instance, using, **kwargs):
+    Event.objects.filter(created_by=instance).update(
+        location_city='No disponible',
+        location_street='No disponible',
+        location_number=0
+    )
+    now = datetime.now()
+    Event.objects.filter(Q(created_by=instance) & (Q(start_day__gte=now.date(
+    ), start_time__gte=now.time()) | Q(start_day__gte=now.date()))).delete()
+
+
+def get_default_category():
+    return Category.objects.get_or_create(name='Evento')[0]
+
+
 def get_sentinel_user():
-    return User.objects.get_or_create(username='deleted')[0]
+    user = User.objects.get_or_create(username='deleted')[0]
+    Profile.objects.get_or_create(
+        user=user, picture='https://i.imgur.com/rvCgR1E.png', birthdate='1970-01-01')
+    return user
 
 
 class Profile(models.Model):
@@ -59,7 +79,8 @@ class Profile(models.Model):
     @property
     def age(self):
         today = date.today()
-        return today.year - self.birthdate.year - ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+        return today.year - self.birthdate.year - (
+            (today.month, today.day) < (self.birthdate.month, self.birthdate.day))
 
     @property
     def avg_attendee_score(self):
@@ -124,9 +145,9 @@ class Event(Common):
         'Extra info for the attendee', blank=True, null=True)
 
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='host_events', default='')
+        User, on_delete=models.SET(get_sentinel_user), related_name='host_events', default='')
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, related_name='category_events', null=True)
+        Category, on_delete=models.SET(get_default_category), related_name='category_events')
 
     class Meta:
         indexes = [models.Index(
@@ -189,7 +210,7 @@ class Enrollment(Common):
                               choices=STATUS_CHOICES, default='PENDING')
 
     created_by = models.ForeignKey(
-        User, on_delete=models.SET(get_sentinel_user), related_name='attendee_enrollments')
+        User, on_delete=models.CASCADE, related_name='attendee_enrollments')
     event = models.ForeignKey(
         Event, on_delete=models.CASCADE, related_name='event_enrollments')
 
@@ -200,6 +221,18 @@ class Enrollment(Common):
 
     def __str__(self):
         return self.created_by.username + ' on ' + self.event.title + ', status ' + self.status
+
+    @property
+    def is_accepted(self):
+        return self.status == 'ACCEPTED'
+
+    @property
+    def is_pending(self):
+        return self.status == 'PENDING'
+
+    @property
+    def is_rejected(self):
+        return self.status == 'REJECTED'
 
 
 class Rating(Common):
@@ -214,7 +247,7 @@ class Rating(Common):
     on = models.CharField('On', max_length=8, choices=ON_CHOICES)
 
     event = models.ForeignKey(
-        Event, on_delete=models.CASCADE, related_name='ratings')
+        Event, on_delete=models.SET_NULL, related_name='ratings', null=True)
     created_by = models.ForeignKey(
         User, on_delete=models.SET(get_sentinel_user), related_name='reviewer_ratings')
     reviewed = models.ForeignKey(
@@ -251,3 +284,17 @@ class Transaction(Common):
 
     def __str__(self):
         return str(self.id)
+
+
+class Message(Common):
+    title = models.CharField('Title', max_length=250)
+    description = models.TextField('Description')
+
+    class Meta:
+        ordering = ['created_at']
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
+        get_latest_by = 'created_at'
+
+    def __str__(self):
+        return str(self.title)

@@ -1,16 +1,51 @@
 {%extends 'base.html'%}
 {% load static %}
 {% block content %}
+
+<style>
+  body {
+    background-size: cover;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  .page-footer {
+    width: 100%;
+    z-index: 1000 !important;
+  }
+</style>
+
+<ul id="slide-out" class="sidenav sidenav-fixed control-panel  ">
+  <li>
+    <div class="user-view">
+  <li>
+    {% if request.get_full_path == '/events/create' %}
+    <h2 class="sidebar-create">Ofrece una experiencia</h2>
+    {% else %}
+    <h2>{{event.title}}</h2>
+    {% endif %}
+  </li>
+</ul>
+<ul id="slide-out" class="sidenav sidenav-fixed preferences">
+  <li class="part">
+    <h3><a class="active" href="#test1" onclick="showClickA()">¿Cómo será?</a></h3>
+  </li>
+  <li class="part">
+    <h3><a href="#test2" onclick="showClickB()">¿Cuándo será?</a></h3>
+  </li>
+  <li class="part">
+    <h3><a href="#test3" onclick="showClickC()">Extra</a></h3>
+  </li>
+</ul>
 {% if request.get_full_path == '/events/create' %}
+
 <div class="container">
-  <div class="title-share">
-    <div class="col s12">
-      <h3 class="flow-text" id="name-host-serg">Crea una experiencia</h3>
-    </div>
-  </div>
-</div>
-<div class="container">
-  <div class="center-form">
+  <div class="center-form-create">
     <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
       {% csrf_token %}
       <div class="row">
@@ -19,15 +54,9 @@
         </div>
       </div>
       {% else %}
+
       <div class="container">
-        <div class="title-share">
-          <div class="col s12">
-            <h3 class="flow-text" id="name-host-serg">{{event.title}}</h3>
-          </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="center-form">
+        <div class="center-form-create">
           <form class="form-eventshow-create" id="create-event" method="post"
             action="{% url 'update_event' event.pk %}">
             {% csrf_token %}
@@ -40,152 +69,170 @@
             <div class="row">
               <div id="test1">
                 <h4 class="flow-text separated-create" id="">¿Cómo será?</h4><br>
-                <div class="container-create">
-                  <label>CATEGORÍA</label>
-                  <div class="row">
-                    <div class="grid-example col s12">
-                      <div class="form-errors">
-                        {{ form.category }}
-                        {{ form.category.errors }}
-                      </div>
+
+                <label>CATEGORÍA</label>
+                <div class="row">
+                  <div class="grid-example col s12">
+                    <div class="form-errors">
+                      {{ form.category }}
+                      {{ form.category.errors }}
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="grid-example col s12">
-                      <label>TÍTULO</label>
-                      {{ form.title }}
-                      <div class="form-errors">
-                        {{ form.title.errors }}
-                      </div>
+                </div>
+                <div class="row">
+                  <div class="grid-example col s12">
+                    <label>TÍTULO</label>
+                    {{ form.title }}
+                    <div class="form-errors">
+                      {{ form.title.errors }}
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="grid-example col s12">
-                      <label>DESCRIPCIÓN</label>
-                      {{ form.description }}
+                </div>
+                <div class="row">
+                  <div class="grid-example col s12">
+                    <label>DESCRIPCIÓN</label>
+                    {{ form.description }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="grid-example col s4">
+                    <label>AFORO</label>
+                    {{ form.capacity }}
+                    <div class="form-errors">
+                      {{ form.capacity.errors }}
                     </div>
                   </div>
+                  <div class="grid-example col s4">
+                    <label>EDAD MÍN</label>
+                    {{ form.min_age }}
+                    <div class="form-errors">
+                      {{ form.min_age.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col s4">
+                    <label>PRECIO</label>
+                    {{ form.price }}
+                    <div class="form-errors">
+                      {{ form.price.errors }}
+                    </div>
+                  </div>
+
+                </div>
+                <div class="container">
                   <div class="row">
-                    <div class="grid-example col s4">
-                      <label>AFORO</label>
-                      {{ form.capacity }}
-                      <div class="form-errors">
-                        {{ form.capacity.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s4">
-                      <label>EDAD MÍN</label>
-                      {{ form.min_age }}
-                      <div class="form-errors">
-                        {{ form.min_age.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s4">
-                      <label>PRECIO</label>
-                      {{ form.price }}
-                      <div class="form-errors">
-                        {{ form.price.errors }}
-                      </div>
+                    <div class="grid-example col s3 offset-s10">
+                      <a id="send-buttons" href="#test2" onclick="showClickB()"
+                        class="waves-effect waves-light btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
               </div>
               <div id="test2">
                 <h4 class="flow-text separated-create" id="">¿Cuándo será?</h4><br>
-                <div class="container-create">
-                  <div class="row">
-                    <div class="grid-example col s12">
-                      <label>UBICACIÓN</label>
-                      {{ form.location_city }}
-                      <div class="form-errors">
-                        {{ form.location_city.errors }}
-                      </div>
-                      {{ form.location_street }}
-                      <div class="form-errors">
-                        {{ form.location_street.errors }}
-                      </div>
-                      {{ form.location_number }}
-                      <div class="form-errors">
-                        {{ form.location_number.errors }}
-                      </div>
+
+                <div class="row">
+                  <div class="grid-example col s12">
+                    <label>UBICACIÓN</label>
+                    {{ form.location_city }}
+                    <div class="form-errors">
+                      {{ form.location_city.errors }}
+                    </div>
+                    {{ form.location_street }}
+                    <div class="form-errors">
+                      {{ form.location_street.errors }}
+                    </div>
+                    {{ form.location_number }}
+                    <div class="form-errors">
+                      {{ form.location_number.errors }}
                     </div>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="grid-example col s4">
+                    <label>FECHA</label>
+                    {{form.start_day}}
+                    <div class="form-errors">
+                      {{ form.start_day.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col s4">
+                    <label>HORA INICIO</label>
+                    {{form.start_time}}
+                    <div class="form-errors">
+                      {{ form.start_time.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col s4">
+                    <label>HORA FIN</label>
+                    {{form.end_time}}
+                    <div class="form-errors">
+                      {{ form.end_time.errors }}
+                    </div>
+                  </div>
+
+                </div>
+                <div class="container">
                   <div class="row">
-                    <div class="grid-example col s4">
-                      <label>FECHA</label>
-                      {{form.start_day}}
-                      <div class="form-errors">
-                        {{ form.start_day.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s4">
-                      <label>HORA INICIO</label>
-                      {{form.start_time}}
-                      <div class="form-errors">
-                        {{ form.start_time.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s4">
-                      <label>HORA FIN</label>
-                      {{form.end_time}}
-                      <div class="form-errors">
-                        {{ form.end_time.errors }}
-                      </div>
+                    <div class="grid-example col s3 offset-s10">
+                      <a id="send-buttons" href="#test3" onclick="showClickC()"
+                        class="waves-effect waves-light btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div id="test3">
                 <h4 class="flow-text separated-create" id="">Extra</h4><br>
-                <div class="container-create">
-                  <div class="row">
-                    <div class="grid-example col s4">
-                      <label>MASCOTAS</label>
-                      {{ form.pets }}
-                      <div class="form-errors">
-                        {{ form.pets.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s4">
-                      <label>IDIOMA</label>
-                      <div class="event-lang">
-                        {{ form.lang }}
-                      </div>
-                      <div class="form-errors">
-                        {{ form.lang.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s4">
-                      <label>APARCAMIENTO</label>
-                      {{ form.parking_nearby }}
-                      <div class="form-errors">
-                        {{ form.parking_nearby.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s12">
-                      <label>IMAGEN DEL EVENTO</label>
-                      {{ form.picture }}
-                      <div class="form-errors">
-                        {{ form.picture.errors }}
-                      </div>
-                    </div>
-                    <div class="grid-example col s12">
-                      <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
-                      {{ form.extra_info }}
-                      <div class="form-errors">
-                      </div>
-                    </div>
-                  </div>
-                  {{ form.extra_info.errors }}
-                </div>
-              </div>
-              <div class="container">
+
                 <div class="row">
-                  <div class="grid-example col s3 offset-s10">
-                    <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
+                  <div class="grid-example col s4">
+                    <label>MASCOTAS</label>
+                    {{ form.pets }}
+                    <div class="form-errors">
+                      {{ form.pets.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col s4">
+                    <label>IDIOMA</label>
+                    <div class="event-lang">
+                      {{ form.lang }}
+                    </div>
+                    <div class="form-errors">
+                      {{ form.lang.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col s4">
+                    <label>APARCAMIENTO</label>
+                    {{ form.parking_nearby }}
+                    <div class="form-errors">
+                      {{ form.parking_nearby.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col s12">
+                    <label>IMAGEN DEL EVENTO</label>
+                    {{ form.picture }}
+                    <div class="form-errors">
+                      {{ form.picture.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col s12">
+                    <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
+                    {{ form.extra_info }}
+                    <div class="form-errors">
+                    </div>
+                  </div>
+                </div>
+                {{ form.extra_info.errors }}
+
+                <div class="container">
+                  <div class="row">
+                    <div class="grid-example col s3 offset-s10">
+                      <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
             <div class="form-errors-create">
               {{ form.non_field_errors }}
@@ -193,4 +240,39 @@
           </form>
         </div>
       </div>
+
+      <script>
+        var max_chars = 100;
+
+        $('#title').keydown(function (e) {
+          if ($(this).val().length >= max_chars) {
+            $(this).val($(this).val().substr(0, max_chars));
+          }
+        });
+
+        $('#title').keyup(function (e) {
+          if ($(this).val().length >= max_chars) {
+            $(this).val($(this).val().substr(0, max_chars));
+          }
+        });
+
+        function showClickA() {
+          document.getElementById("test1").style.display = "block";
+          document.getElementById("test2").style.display = "none";
+          document.getElementById("test3").style.display = "none";
+        }
+        function showClickB() {
+          document.getElementById("test1").style.display = "none";
+          document.getElementById("test2").style.display = "block";
+          document.getElementById("test3").style.display = "none";
+        }
+        function showClickC() {
+          document.getElementById("test1").style.display = "none";
+          document.getElementById("test2").style.display = "none";
+          document.getElementById("test3").style.display = "block";
+        }
+      </script>
+      <script type="text/javascript">
+        showClickA();
+      </script>
       {% endblock %}
