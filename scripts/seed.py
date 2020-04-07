@@ -24,8 +24,8 @@ INITIAL_DATA = []
 CATEGORIES = ['TV', 'Juegos', 'Idiomas',
               'Aprender', 'Cocina', 'Deportes', 'Otros']
 ENROLLMENT_STATUS = ['ACCEPTED', 'PENDING', 'REJECTED']
-EVENT_PKS_THIS_YEAR = range(1, 16)
-EVENT_PKS_FUTURE = range(16, 31)
+EVENT_PKS_THIS_YEAR = range(1, 151)
+EVENT_PKS_FUTURE = range(151, 301)
 PROFILE_IMAGE_FILES = [
     'https://i.imgur.com/DHM869r.png',
     'https://i.imgur.com/nPuyNCw.png',
@@ -51,7 +51,7 @@ EVENT_IMAGE_FILES = [
     'https://i.imgur.com/ZmkYrp3.jpg',
 ]
 FAKE = Faker('es_ES')
-USER_PKS = range(1, 51)
+USER_PKS = range(1, 31)
 TIMEZONE = '+0000'
 
 

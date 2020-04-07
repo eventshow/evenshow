@@ -24,80 +24,82 @@
 </style>
 
 
-    {% if form.location.errors%}
+{% if form.location.errors%}
 
-        <style>
-        .location{
-            margin-top: -142%;
-        }
-        </style>
+<style>
+    .location {
+        margin-top: -142%;
+    }
+</style>
 
-    {% endif %}
+{% endif %}
 
-       {% if form.start_hour.errors and form.date.errors%}
+{% if form.start_hour.errors and form.date.errors%}
 
-        <style>
-        .location{
-            margin-top: -152%;
-        }
-        </style>
+<style>
+    .location {
+        margin-top: -152%;
+    }
+</style>
 
-    {% endif %}
+{% endif %}
 
-      {% if form.start_hour.errors or form.date.errors%}
+{% if form.start_hour.errors or form.date.errors%}
 
-        <style>
-        .location{
-            margin-top: -152%;
-        }
-        </style>
+<style>
+    .location {
+        margin-top: -152%;
+    }
+</style>
 
-    {% endif %}
+{% endif %}
 
-    {% if form.location.errors and form.date.errors and form.start_hour.errors %}
-         <style>
-        .location{
-            margin-top: -161%;
-        }
-        </style>
-    {% endif %}
+{% if form.location.errors and form.date.errors and form.start_hour.errors %}
+<style>
+    .location {
+        margin-top: -161%;
+    }
+</style>
+{% endif %}
 
-  
+
 <div class="container">
-
-    <div class="right container-home">
-    <h2>{{ message }}</h2><br>
+{% if user.is_authenticated and message %}
+ <div class="right container-home">
+        <h2>{{ message }}</h2><br>
         {{ message.description }}
     </div>
+{% endif %}
+
     <div class="row">
         <div class="col s6 form-home">
 
-            <form class="form-eventshow" method="POST" action="{% url 'home' %}">
+            <form class="form-eventshow" method="POST" action="{% url 'home' %}" autocomplete="off">
                 {% csrf_token %}
                 <h3 class="">Encuentra y reserva experiencias únicas</h3>
                 <div class="row">
                     <div class="col s9 location-prov">
-                    <label>UBICACIÓN                </label>
+                        <label>UBICACIÓN </label>
 
-                     <div class=" form-errors">
+                        <div class=" form-errors">
                             {{ form.location }}
-                         {{ form.location.errors }}</div>
+                            {{ form.location.errors }}</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s6">
                         <label>FECHA
                             <div class="form-errors">
-                            {{ form.date }}
-                            {{ form.date.errors }}
+                                {{ form.date }}
+                                {{ form.date.errors }}
                             </div>
                         </label>
                     </div>
                     <div class="col s6">
                         <label>HORA
                             <div class="form-errors">
-                            {{ form.start_hour }}
-                            {{ form.start_hour.errors }}
+                                {{ form.start_hour }}
+                                {{ form.start_hour.errors }}
                             </div>
                         </label>
                     </div>

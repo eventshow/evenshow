@@ -1,23 +1,26 @@
-from django.db.models import Count
-from datetime import date, datetime, timezone
+from datetime import date, datetime
+from io import BytesIO
 
 import stripe
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.db.models import Count
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse
+from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views import generic
-from django.views.generic.edit import FormMixin, ModelFormMixin
-from django.views.generic.list import MultipleObjectMixin
 from django.views.defaults import page_not_found
+from django.views.generic.list import MultipleObjectMixin
+from xhtml2pdf import pisa
 
 from . import forms
 from . import models
 from . import selectors
 from . import services
-from .models import Event
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -49,21 +52,21 @@ class HomeView(generic.FormView):
             **response_kwargs
         )
 
-    def get_success_url(self):
-        request = self.request.POST
-        date = request.get('date')
-        location = request.get('location')
-        start_hour = request.get('start_hour')
+    def form_valid(self, form):
+        data = form.cleaned_data
+
+        kwargs = {}
+        kwargs['date'] = data.pop('date', None) or None
+        kwargs['location'] = data.pop('location', None) or None
+        kwargs['start_hour'] = data.pop('start_hour', None) or None
 
         if self.request.session.get('form_values'):
             del self.request.session['form_values']
 
-        return reverse_lazy('list_event_filter', kwargs={
-            'date': date,
-            'location': location,
-            'start_hour': start_hour,
-        }
-        )
+        kwargs = {key: val for key, val in kwargs.items() if val}
+
+        return redirect(reverse('list_event_filter', kwargs=kwargs))
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -290,23 +293,24 @@ class EventFilterFormView(generic.FormView):
     form_class = forms.SearchFilterForm
     template_name = 'event/list_search.html'
 
-    def get_success_url(self):
-        request = self.request.POST
-        date = request.get('date')
-        location = request.get('location')
-        start_hour = request.get('start_hour')
-        min_price = request.get('min_price')
-        max_price = request.get('max_price')
-        self.request.session['form_values'] = request
+    def form_valid(self, form):
+        data = form.cleaned_data
 
-        return reverse_lazy('list_event_filter', kwargs={
-            'date': date,
-            'location': location,
-            'start_hour': start_hour,
-            'min_price': min_price,
-            'max_price': max_price
-        }
-        )
+        kwargs = {}
+        kwargs['date'] = data.pop('date', None) or None
+        kwargs['location'] = data.pop('location', None) or None
+        kwargs['start_hour'] = data.pop('start_hour', None) or None
+        kwargs['min_price'] = data.pop('min_price', None) or None
+        kwargs['max_price'] = data.pop('max_price', None) or None
+        self.request.session['form_values'] = self.request.POST
+
+        kwargs = {key: val for key, val in kwargs.items() if val}
+
+        return redirect(reverse('list_event_filter', kwargs=kwargs))
+
+    def form_invalid(self, form):
+        self.request.session['form_values'] = self.request.POST
+        return redirect('list_event_filter')
 
 
 class EventFilterListView(generic.ListView):
@@ -329,19 +333,13 @@ class EventFilterListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(
-            EventFilterListView, self).get_queryset()
-        self.kwargs['start_day'] = self.kwargs.pop('date', None)
-        date = self.kwargs['start_day']
-        if date:
-            self.kwargs['start_day'] = datetime.strptime(
-                date, '%d/%m/%Y').strftime('%Y-%m-%d')
-
+        self.kwargs['start_day'] = self.kwargs.pop('date', None) or None
         self.kwargs['location_city__icontains'] = self.kwargs.pop(
-            'location', None)
-        self.kwargs['start_time__gte'] = self.kwargs.pop('start_hour', None)
-        self.kwargs['price__gte'] = self.kwargs.pop('min_price', None)
-        self.kwargs['price__lte'] = self.kwargs.pop('max_price', None)
+            'location', None) or None
+        self.kwargs['start_time__gte'] = self.kwargs.pop(
+            'start_hour', None) or None
+        self.kwargs['price__gte'] = self.kwargs.pop('min_price', None) or None
+        self.kwargs['price__lte'] = self.kwargs.pop('max_price', None) or None
 
         queryset = services.EventService().events_filter_search(
             self.request.user, **self.kwargs)
@@ -366,7 +364,8 @@ class EventSearchNearbyView(generic.ListView):
         context['object_list'] = queryset
 
         if not queryset:
-            context['location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
+            context[
+                'location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
 
         return render(request, self.template_name, context)
 
@@ -409,7 +408,7 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             stripe.Charge.create(
-                amount=int(event.price*100),
+                amount=int(event.price * 100),
                 currency='eur',
                 description='Comprar entrada para evento',
                 source=request.POST['stripeToken']
@@ -448,7 +447,6 @@ class EnrollmentDeleteView(generic.View):
             body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
                 user.username, event.title)
             recipient = event.created_by.email
-
             # services.EmailService().send_email(subject, body, [recipient])
 
             return redirect('enrolled_events')
@@ -484,7 +482,8 @@ class EnrollmentUpdateView(generic.View):
         enrollment_pk = kwargs.get('pk')
         status = request.POST.get('status')
 
-        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (status == 'ACCEPTED' or status == 'REJECTED'):
+        if services.EnrollmentService().count(enrollment_pk) and self.updatable(host) and (
+                status == 'ACCEPTED' or status == 'REJECTED'):
             services.EnrollmentService().update(
                 enrollment_pk, host, status)
             event = models.Enrollment.objects.get(pk=enrollment_pk).event
@@ -552,8 +551,9 @@ class RateHostView(generic.CreateView):
 
             is_enrolled_for_this_event = services.EnrollmentService().user_is_enrolled_and_accepted(event.id,
                                                                                                     created_by)
-            auto_rating = self.request.user.id == event.created_by.id
-            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating):
+            host = event.created_by
+            auto_rating = self.request.user.id == host.id
+            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating) and host.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -583,7 +583,7 @@ class RateHostView(generic.CreateView):
         rating.reviewed = host
         rating.event = event
         rating.on = 'HOST'
-        if services.RatingService().is_valid_rating(rating, event, created_by):
+        if services.RatingService().is_valid_rating(rating, event, created_by) and host.username != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:
@@ -616,7 +616,7 @@ class RateAttendeeView(generic.CreateView):
             auto_rating = self.request.user.id == attendee.id
             if (
                     not exist_already_rating) and is_owner_of_this_event and attendee_enrolled_for_this_event and event.has_finished and (
-                    not auto_rating):
+                    not auto_rating) and attendee.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -651,7 +651,7 @@ class RateAttendeeView(generic.CreateView):
         rating.event = event
         rating.on = 'ATTENDEE'
 
-        if services.RatingService().is_valid_rating(rating, event, created_by):
+        if services.RatingService().is_valid_rating(rating, event, created_by) and reviewed.usename != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:
@@ -683,6 +683,19 @@ class TransactionListView(generic.ListView):
         super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDeleteView(generic.DeleteView):
+    template_name = 'profile/user_confirm_delete.html'
+    model = User
+
+    def delete(self, request, *args, **kwargs):
+        self.get_object().delete()
+        return redirect('home')
+
+    def get_object(self):
+        return self.request.user
 
 
 @method_decorator(login_required, name='dispatch')
@@ -720,3 +733,48 @@ class UserUpdateView(generic.UpdateView):
         else:
             return self.render_to_response(
                 self.get_context_data(form=form, profile_form=profile_form))
+
+@method_decorator(login_required, name='dispatch')
+class DownloadPDF(View):
+
+    def render_to_pdf(self, template_src, context_dict={}):
+        template = get_template(template_src)
+        html = template.render(context_dict)
+        result = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return None
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        profile = user.profile
+        events = selectors.EventSelector().hosted(user)
+        enrollments = models.Enrollment.objects.filter(created_by=user)
+        ratings = models.Rating.objects.filter(created_by=user)
+        transactions = models.Transaction.objects.filter(created_by=user)
+        data = {
+            "name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "date_join": user.date_joined,
+            "location": profile.location,
+
+            "picture": profile.picture,
+            "birthdate": profile.birthdate,
+            "token": profile.token,
+            "eventpoints": profile.eventpoints,
+            "bio": profile.bio,
+            "events": events,
+            "enrollments": enrollments,
+            "ratings": ratings,
+            "transactions": transactions,
+
+        }
+        pdf = self.render_to_pdf('profile/pdf.html', data)
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = 'datos de usuario.pdf'
+        content = "attachment; filename=%s" % (filename)
+        response['Content-Disposition'] = content
+        return response
