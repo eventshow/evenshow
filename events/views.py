@@ -1,11 +1,19 @@
-from datetime import datetime
+import stripe
+import requests
+import urllib
+
+from django.db.models import Count
+from datetime import date, datetime
+
 from io import BytesIO
 
-import stripe
 from django.conf import settings
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.template.loader import get_template
@@ -100,14 +108,49 @@ class AttendeeListView(generic.ListView):
 
 
 class AttendeePaymentView(generic.View):
-    template_name = 'main/payment.html'
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         if services.EventService().count(kwargs.get('pk')):
             pk = self.kwargs.get('pk')
             event = models.Event.objects.get(pk=pk)
-            payment = event.price
-            return render(request, self.template_name, {'payment': payment})
+            if self.request.user.profile.stripe_access_token is None and self.request.user.profile.stripe_user_id is None:
+                return redirect('authorize')
+            else:
+                if event.has_finished:
+                    attende_list = selectors.UserSelector().event_attendees(pk)
+                
+                    for attendee in attende_list:
+
+                        transaction = models.Transaction.objects.filter(created_by=attendee, event=event).first()
+
+                        if transaction:
+
+                            is_paid_for = transaction.is_paid_for
+
+                            if not is_paid_for:
+
+                                try:
+                                    fee = services.PaymentService().fee(transaction.amount)
+                                    attendee_amount = fee + transaction.amount
+
+                                    services.PaymentService().charge(attendee_amount, transaction.customer_id, fee, transaction.recipient)
+                                    
+                                    transaction.is_paid_for = True
+                                    transaction.save()
+
+                                    services.UserService().add_bonus(transaction.created_by, transaction.amount)
+
+                                except stripe.error.StripeError:
+                                    redirect('not_impl')
+                            
+                            else:
+                                
+                                return redirect('/')
+                        
+                    return redirect('hosted_events')
+
+                else:
+                    return redirect('/')
         else:
             return redirect('/')
 
@@ -143,6 +186,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             ).user_is_old_enough(event.pk, user)
             context['user_is_owner'] = services.EventService(
             ).user_is_owner(user, event.pk)
+
+            context['have_creditcard'] = services.PaymentService().is_customer(user.email)
 
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
@@ -409,15 +454,13 @@ class EnrollmentCreateView(generic.View):
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
-            stripe.Charge.create(
-                amount=int(event.price * 100),
-                currency='eur',
-                description='Comprar entrada para evento',
-                source=request.POST['stripeToken']
-            )
-
             event = models.Event.objects.get(pk=event_pk)
-            services.UserService().add_bonus(attendee, event.price)
+
+            if not services.PaymentService().is_customer(attendee.email):
+                customer = services.PaymentService().get_or_create_customer(request.user.email, request.POST['stripeToken'])
+            else:
+                customer = services.PaymentService().get_or_create_customer(request.user.email, None)
+            services.PaymentService().save_transaction(event.price*100, customer.id, event, attendee, event.created_by)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
@@ -676,6 +719,55 @@ class SignUpView(generic.CreateView):
         login(self.request, user, backend=settings.AUTHENTICATION_BACKENDS[1])
         return super(SignUpView, self).form_valid(form)
 
+@method_decorator(login_required, name='dispatch')
+class StripeAuthorizeCallbackView(generic.View):
+
+    def get(self, request):
+        code = request.GET.get('code')
+        if code:
+            data = {
+                'client_secret': settings.STRIPE_SECRET_KEY,
+                'grant_type': 'authorization_code',
+                'client_id': settings.STRIPE_CONNECT_CLIENT_ID,
+                'code': code
+            }
+            url = 'https://connect.stripe.com/oauth/token'
+            resp = requests.post(url, params=data)
+            
+            stripe_user_id = resp.json()['stripe_user_id']
+            stripe_access_token = resp.json()['access_token']
+            usuario=request.session['usuario']
+            user = User.objects.filter(pk=usuario).first()
+            try:
+                login(request, user)
+            except ValueError:
+                pass
+            
+            profile = user.profile
+            profile.stripe_access_token = stripe_access_token
+            profile.stripe_user_id = stripe_user_id
+            profile.save()
+            user.save()
+        url = reverse('hosted_events')
+        response = redirect(url)
+        return response
+
+@method_decorator(login_required, name='dispatch')        
+class StripeAuthorizeView(generic.View):
+
+    def get(self, request):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('login'))
+        request.session['usuario']=request.user.id
+        url = 'https://connect.stripe.com/oauth/authorize'
+        params = {
+            'response_type': 'code',
+            'scope': 'read_write',
+            'client_id': settings.STRIPE_CONNECT_CLIENT_ID,
+            'redirect_uri': f'http://localhost:8000/oauth/callback'
+        }
+        url = f'{url}?{urllib.parse.urlencode(params)}'
+        return redirect(url)
 
 @method_decorator(login_required, name='dispatch')
 class TransactionListView(generic.ListView):

@@ -106,6 +106,14 @@
           <td>
             <button type="button" onclick="location.href='{% url 'list_attendees' object.pk %}'"
               title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
+
+            <form action="{% url 'attendee_payment' object.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" title="Cobrar">
+                <em id="title-name" class="small material-icons">attach_money</em>
+              </button>
+            </form>
+            
             {% if not object.has_started %}
             <button type="button" onclick="location.href='{% url 'update_event' object.pk %}'" title="Editar"> <em
                 id="title-name" class="small material-icons">edit</em></button>
@@ -113,6 +121,7 @@
               title="Añadir sistentes"> <em id="title-name" class="small material-icons">group_add</em> </button>
             <button type="button" onclick="location.href='{% url 'delete_event' object.pk %}'" title="Eliminar">
               <em id="title-name" class="small material-icons">delete</em></button>
+
             {% endif %}
           </td>
           {% endif %}
