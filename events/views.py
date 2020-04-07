@@ -1,5 +1,5 @@
 from django.db.models import Count
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 import stripe
 from django.conf import settings
@@ -198,7 +198,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -269,7 +269,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            #services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -423,7 +423,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            #services.EmailService().send_email(subject, body, [recipient])
+            # services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -435,27 +435,24 @@ class EnrollmentDeleteView(generic.View):
     template_name = 'enrollment/list.html'
 
     def post(self, request, *args, **kwargs):
-        try:
-            enrollment = models.Enrollment.objects.get(pk=kwargs.get('pk'))
-            event = enrollment.event
+        enrollment = models.Enrollment.objects.filter(
+            pk=kwargs.get('pk')).first()
+        event = enrollment.event
+        if enrollment and not event.has_started:
+            user = self.request.user
+            if (enrollment.created_at.replace(tzinfo=None) - (datetime.now())).days > 3:
+                selectors.TransactionSelector().user_on_event(user, event).delete()
+            enrollment.delete()
 
-            if enrollment and not event.has_started:
-                user = self.request.user
-                if (datetime.now() - enrollment.created_at).days > 3:
-                    selectors.TransactionSelector().user_on_event(user, event).delete()
-                enrollment.delete()
+            subject = 'Asistencia a {0} cancelada'.format(event.title)
+            body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
+                user.username, event.title)
+            recipient = event.created_by.email
 
-                subject = 'Asistencia a {0} cancelada'.format(event.title)
-                body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
-                    user.username, event.title)
-                recipient = event.created_by.email
+            # services.EmailService().send_email(subject, body, [recipient])
 
-                # services.EmailService().send_email(subject, body, [recipient])
-
-                return redirect('enrolled_events')
-            else:
-                return redirect('/')
-        except:
+            return redirect('enrolled_events')
+        else:
             return redirect('/')
 
 

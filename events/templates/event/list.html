@@ -75,7 +75,7 @@
               {% endif %}
             </p>
           </td>
-          <td><strong><a href="{% url 'detail_event' object.pk %}">{{object.event.title}}</a></strong></td>
+          <td><strong><a href="{% url 'detail_event' object.event.pk %}">{{object.event.title}}</a></strong></td>
           <td>{{object.event.start_day}}</td>
           <td>{{object.event.location_city}}, {{object.event.location_street}}, {{object.event.location_number}}</td>
           <td>
