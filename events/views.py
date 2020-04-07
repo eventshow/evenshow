@@ -282,7 +282,7 @@ class EventUpdateView(generic.UpdateView):
         event_pk = self.kwargs.get('pk')
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
-                'pk')) and not services.EventService().has_finished(event_pk):
+                'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
