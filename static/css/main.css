@@ -1448,6 +1448,19 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	#copiar{
+		margin-left: -110px;
+	}
+	#eventpoint{
+		bottom:-35%;
+		margin-left: 3% !important;
+	}
+	.name-host-ref{
+		margin-bottom: 207px;
+	}
+	#panel{
+		margin-left: 21px;
+	}
 	.table-generic{
 		width:100%;
 		text-align-last: left;
