@@ -2093,6 +2093,80 @@ margin-top: -29% !important;
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
+	.center-form-create {
+		margin-top: 5% !important;
+		margin-left: -4% !important;
+	}
+
+	#name-host-title-del {
+		height: auto;
+		font-family: Raleway, sans-serif;
+		font-size: 30px;
+		font-weight: bold;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		margin-top: 10px;
+		margin-bottom: 20%;
+		color: #5D5E5E;
+		max-width: 420px;
+		width: auto;
+	}
+	
+	#create-event input {
+		width: 130% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -17% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 14px;
+	}
+	
+	.description {
+		width: 105% !important;
+		height: auto;
+		margin-bottom: 5% !important;
+		color: #5D5E5E !important;
+		border: 1px solid #FFF !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -2.5% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 95% !important;
+	}
+	
+	#send-buttons-pw {
+		width: 130px;
+		height: 40%;
+		margin-left: -60%;
+		margin-right: 5%;
+		margin-top: 10%;
+		margin-bottom: 65px !important;
+		text-align: center !important;
+		font-size: 15px;
+		padding-top: 0px;
+		padding-bottom: 30%;
+	}
+	
+	#send-buttons-pw-conf {
+		width: 130px;
+		height: 40%;
+		margin-left: 10%;
+		margin-top: 10%;
+		padding-bottom: 30%;
+		margin-bottom: 65px !important;
+		align-content: center;
+		font-size: 15px;
+		padding-top: 0px;
+	}
+
+	.data-email{
+		margin-left: -9% !important;
+	}
 
 }
 
