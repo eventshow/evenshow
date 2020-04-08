@@ -1616,7 +1616,7 @@ table {
         right: 0;
 	}
 	
-	#delete-btn {
+	.delete-btn {
 		font-weight: bolder;
 		font-size: 20px;
 		text-align: center;
@@ -1627,7 +1627,7 @@ table {
 		display: block !important;
 	}
 	
-	#delete-btn-a {
+	.delete-btn-a {
 		width: 97px;
 		height: 63px;
 		font-weight: bold;
@@ -1645,7 +1645,7 @@ table {
 		align-content: center;
 	}
 	
-	#delete-btn-big {
+	.delete-btn-big {
 		font-weight: bolder;
 		font-size: 20px;
 		text-align: center;
@@ -1658,7 +1658,7 @@ table {
 		display: block !important;
 	}
 	
-	#delete-btn-a-big {
+	.delete-btn-a-big {
 		width: 97px;
 		height: 63px;
 		font-weight: bold;
