@@ -628,8 +628,8 @@ element.style {
 }
 
 #send-buttons-pw {
-	width: 93%;
-	height: 40%;
+	width: 100%;
+	height: 41%;
 	margin-left: 30%;
 	margin-right: 5%;
 	margin-top: 10%;
@@ -641,7 +641,7 @@ element.style {
 
 #send-buttons-pw-conf {
 	width: 100%;
-	height: 40%;
+	height: 41%;
 	margin-left: 60%;
 	margin-top: 10%;
 	padding-bottom: 10%;
@@ -652,9 +652,9 @@ element.style {
 }
 
 #send-buttons-pw-conf2 {
-	    width: 93%;
-    height: 40%;
-    margin-left: 30.5%;
+    width: 100%;
+    height: 41%;
+    margin-left: 60%;
     margin-top: 10%;
     padding-bottom: 7%;
     margin-bottom: 34px !important;
@@ -664,15 +664,15 @@ element.style {
 }
 
 #send-buttons-pw-conf3 {
-	width: 100%;
-	height: 40%;
-	margin-left: 60.5%;
-	margin-top: 10%;
-	padding-bottom: 10%;
-	margin-bottom: 58px !important;
-	align-content: center;
-	font-size: 18px;
-	padding-top: 13px;
+	    width: 100%;
+    height: 81%;
+    margin-left: 30%;
+    margin-top: -20%;
+    padding-bottom: 10%;
+    margin-bottom: 58px !important;
+    align-content: center;
+    font-size: 18px;
+    padding-top: 13px;
 }
 
 .conf-sep{
@@ -1090,7 +1090,7 @@ label {
 	margin-bottom: 2%;
 }
 
-#title-delete {
+#title-delete-user {
 	max-width: 1149px;
 	width: auto;
 	max-height: 47px;
@@ -1108,6 +1108,33 @@ label {
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+
+#title-delete-user {
+	max-width: 1149px;
+	width: auto;
+	max-height: 47px;
+	height: auto;
+	font-family: Raleway, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #686969;
+	margin: 0% auto;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#delete-title-user {
+	margin-top: -5%;
+	position: inherit;
+	text-align: center;
+	align-content: center;
 }
 
 #delete-title {
