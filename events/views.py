@@ -302,10 +302,12 @@ class EventFilterFormView(generic.FormView):
         kwargs['category'] = self.request.POST.get('category', None) or None
         self.request.session['form_values'] = self.request.POST
 
-        if self.request.session.get('latitude') and kwargs.get('location'):
-            del self.request.session['latitude']
-
         kwargs = {key: val for key, val in kwargs.items() if val}
+
+        if self.request.session.get('latitude'):
+            if not bool(kwargs) or (bool(kwargs) and kwargs.get('location')):
+                print('-------')
+                del self.request.session['latitude']
 
         return redirect(reverse('list_event_filter', kwargs=kwargs))
 
@@ -346,10 +348,10 @@ class EventFilterListView(generic.ListView):
         self.kwargs['category'] = self.kwargs.pop('category', None) or None
 
         if not self.request.session.get('latitude') or self.kwargs.get('location'):
-            queryset = services.EventService().events_filter_search(
+            queryset = selectors.EventSelector().events_filter_search(
                 self.request.user, **self.kwargs)
         else:
-            queryset = services.EventService().nearby_events_distance(
+            queryset = selectors.EventSelector().nearby_events_distance(
                 self.request.user, 50000, self.request.session.get('latitude'), self.request.session.get('longitude'), **self.kwargs)
 
         return queryset
@@ -362,6 +364,9 @@ class EventSearchNearbyView(generic.View):
 
         self.request.session['latitude'] = 37.382641
         self.request.session['longitude'] = -5.996300
+
+        if self.request.session.get('form_values'):
+            del self.request.session['form_values']
 
         return redirect('list_event_filter')
 
