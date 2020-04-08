@@ -131,7 +131,12 @@ class AttendeePaymentView(generic.View):
                             if not is_paid_for:
 
                                 try:
-                                    fee = services.PaymentService().fee(transaction.amount)
+                                    fee = 0
+                                    if transaction.discount:
+                                        fee = services.PaymentService().fee(transaction.amount, attendee)
+                                    else:
+                                        fee = services.PaymentService().fee(transaction.amount)
+
                                     attendee_amount = fee + transaction.amount
 
                                     services.PaymentService().charge(
@@ -140,7 +145,8 @@ class AttendeePaymentView(generic.View):
                                     transaction.is_paid_for = True
                                     transaction.save()
 
-                                    services.UserService().add_bonus(transaction.created_by, transaction.amount)
+                                    if not transaction.discount:
+                                        services.UserService().add_bonus(transaction.created_by, transaction.amount)
 
                                 except stripe.error.StripeError:
                                     redirect('not_impl')

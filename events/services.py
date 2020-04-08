@@ -282,7 +282,7 @@ class PaymentService():
 
         if amount_company < 0:
             res = amount_host * var_stripe + const_stripe
-            attendee.profile.eventpoints = eventpoints - (amount_company * 0,5)
+            attendee.profile.eventpoints = eventpoints - (round(amount_company * 0,5))
         else:
             res = (amount_host + amount_company) * var_stripe + const_stripe
             attendee.profile.eventpoints = 0
