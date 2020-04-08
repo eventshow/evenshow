@@ -32,32 +32,27 @@
                     {{ form.max_price.errors }}
                 </div>
                 <button class="btn-submit search" type="submit">Buscar</button>
+                {% for category in categories %}
+                <input type="hidden" name="category_name" value="{{category.category__name}}">
+                <div class="col">
+                    <button class="btn-category" type="submit" name="category" value="{{category.category}}">
+                        <h3 class="title-search">{{category.category__name}}</h3>
+                        <h3 class="title-search">Resultados {{category.total}}</h3>
+                    </button>
+                </div>
+                {% endfor %}
             </form>
         </div>
     </div>
 </div>
 <div class="container">
-    {% if not category %}
-    <form class="row" method="POST" action="{% url 'event_filter' %}">
-        {% csrf_token %}
-        {% for category in categories %}
-        <input type="hidden" name="category_name" value="{{category.category__name}}">
-        <div class="col">
-            <button class="btn-category" type="submit" name="category" value="{{category.category}}">
-                <h3 class="title-search">{{category.category__name}}</h3>
-                <h3 class="title-search">Resultados {{category.total}}</h3>
-            </button>
-        </div>
-        {% endfor %}
-    </form>
     <div class="row text-left">
         <div class="col l6 ">
-            {% elif category %}
+            {% if category %}
             <h1 class="title-search">Categoría <h1 class="title-event element">{{ category }}</h1>
             </h1>
-            {% else %}
-            <h1 class="title-search">{{ location }}</h1>
             {% endif %}
+            <h1 class="title-search">{{location|default_if_none:''}}</h1>
             <h3 class="title-search">{{page_obj.end_index}} de {{page_obj.paginator.count}} resultados</h3>
         </div>
     </div>

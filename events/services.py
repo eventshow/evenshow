@@ -102,9 +102,10 @@ class EventService():
 
         return res
 
-    def nearby_events_distance(self, user, distance, latitude, longitude):
+    def nearby_events_distance(self, user, distance, latitude, longitude, **kwargs):
         now = datetime.now()
-        events = self.base_search_events(user)[:20]
+        filters = {key: val for key, val in kwargs.items() if val}
+        events = self.base_search_events(user).filter(**filters)[:20]
         result = []
 
         events_distances_oredered = self.common_method_distance_order(
