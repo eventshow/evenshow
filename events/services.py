@@ -142,23 +142,28 @@ class EventService():
 
     def common_method_distance_order(self, events, latitude, longitude):
         gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
+        events_distances = {}
 
         latitude_user = latitude
         longitude_user = longitude
 
         origins = [{"lat": latitude_user, "lng": longitude_user}]
-        destinations = ""
 
-        for event in events:
-            destinations = destinations + str(
-                event.location_number) + " " + event.location_street + ", " + event.location_city + "|"
+        new_event_list = [events[i:i+20] for i in range(0, len(events), 20)]
 
-        distancematrix = gmaps.distance_matrix(origins, destinations)
-        events_distances = {}
+        for event_list in new_event_list:
+            destinations = ""
 
-        for element, event in zip(distancematrix['rows'][0]['elements'], events):
-            if element['status'] == 'OK':
-                events_distances[event] = element['distance']['value']
+            for event in event_list:
+                destinations = destinations + str(
+                    event.location_number) + " " + event.location_street + ", " + event.location_city + "|"
+
+            distancematrix = gmaps.distance_matrix(origins, destinations)
+
+
+            for element, event in zip(distancematrix['rows'][0]['elements'], event_list):
+                if element['status'] == 'OK':
+                    events_distances[event] = element['distance']['value']
 
         events_distances_oredered = OrderedDict(
             sorted(events_distances.items(), key=itemgetter(1), reverse=False))
