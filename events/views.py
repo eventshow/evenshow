@@ -380,9 +380,6 @@ class EventFilterListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(
-            EventFilterListView, self).get_queryset()
-
         self.kwargs['start_day'] = self.kwargs.pop('date', None) or None
         self.kwargs['location_city__icontains'] = self.kwargs.pop(
             'location', None) or None
@@ -484,24 +481,23 @@ class EnrollmentDeleteView(generic.View):
     template_name = 'enrollment/list.html'
 
     def post(self, request, *args, **kwargs):
-        try:
-            enrollment = models.Enrollment.objects.get(pk=kwargs.get('pk'))
-            event = enrollment.event
+        enrollment = models.Enrollment.objects.filter(
+            pk=kwargs.get('pk')).first()
+        event = enrollment.event
+        if enrollment and not event.has_started:
+            user = self.request.user
+            if (enrollment.is_accepted and (event.start_day - date.today()).days > 3) or not enrollment.is_accepted:
+                selectors.TransactionSelector().user_on_event(user, event).delete()
+            enrollment.delete()
 
-            if enrollment and not event.has_started:
-                enrollment.delete()
+            subject = 'Asistencia a {0} cancelada'.format(event.title)
+            body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
+                user.username, event.title)
+            recipient = event.created_by.email
+            # services.EmailService().send_email(subject, body, [recipient])
 
-                subject = 'Asistencia a {0} cancelada'.format(event.title)
-                body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
-                    self.request.user.username, event.title)
-                recipient = event.created_by.email
-
-                # services.EmailService().send_email(subject, body, [recipient])
-
-                return redirect('enrolled_events')
-            else:
-                return redirect('/')
-        except:
+            return redirect('enrolled_events')
+        else:
             return redirect('/')
 
 
