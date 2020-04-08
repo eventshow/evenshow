@@ -1121,6 +1121,17 @@ label {
 	right: 0;
 }
 
+#title-delete-comi {
+    font-weight: bold;
+    color: #686969;
+    margin: 0% auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: -3%;
+}
+
 #delete-title {
 	margin-top: -5%;
 	position: center;
