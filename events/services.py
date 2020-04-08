@@ -260,6 +260,38 @@ class PaymentService():
 
         return round(res - amount_host)
 
+    def fee(self, amount_host: int, attendee:User) -> int:
+        res = 0
+        const_stripe = 25
+        var_stripe = 1.029
+        eventpoints_eur = attendee.profile.discount
+        eventpoints = attendee.profile.eventpoints
+
+        amount_company = 0
+
+        if (amount_host >= 0) and amount_host <= 50:
+            amount_company = 15-eventpoints_eur
+        elif (amount_host > 50) and (amount_host <= 150):
+            amount_company = (amount_host * 0.25)-eventpoints_eur  
+        elif (amount_host > 150) and (amount_host <= 300):
+            amount_company = (amount_host * 0.2)-eventpoints_eur 
+        elif (amount_host > 300) and (amount_host <= 500):
+            amount_company = (amount_host * 0.15)-eventpoints_eur 
+        elif (amount_host > 500):
+            amount_company = (amount_host * 0.10)-eventpoints_eur
+
+        if amount_company < 0:
+            res = amount_host * var_stripe + const_stripe
+            attendee.profile.eventpoints = eventpoints - (amount_company * 0,5)
+        else:
+            res = (amount_host + amount_company) * var_stripe + const_stripe
+            attendee.profile.eventpoints = 0
+        
+        attendee.profile.save()
+
+
+        return round(res - amount_host)
+
     def charge(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
 
         stripe.Charge.create(
@@ -275,7 +307,7 @@ class PaymentService():
 
     def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User) -> None:
         
-        models.Transaction.objects.create(amount = amount, created_by=created_by, recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False)
+        models.Transaction.objects.create(amount = amount, created_by=created_by, recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False, discount=True)
 
     def get_or_create_customer(self, email:str, source:str) -> stripe.Customer:
         stripe.api_key = settings.STRIPE_SECRET_KEY
