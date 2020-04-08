@@ -340,7 +340,7 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
 
 def seed_transaction(event, transmitter, recipient, created_at, amount):
     fields = {
-        'amount': amount + 1.15,
+        'amount': amount*100 + 1.15,
         'created_at': created_at + TIMEZONE,
         'updated_at': created_at + TIMEZONE,
         'event': event,
@@ -348,6 +348,7 @@ def seed_transaction(event, transmitter, recipient, created_at, amount):
         'customer_id': 'cus_{0}'.format(get_random_string(length=14)),
         'is_paid_for': random.choice([True, False]),
         'recipient': recipient,
+        'event': event
     }
     transaction = {
         'model': 'events.Transaction',

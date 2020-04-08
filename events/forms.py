@@ -108,7 +108,7 @@ class EventForm(forms.ModelForm):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={'placeholder': "usuario"}))
+        attrs={'placeholder': "usuario o email"}))
     password = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "contraseña"}))
 
