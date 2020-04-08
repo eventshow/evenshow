@@ -199,7 +199,7 @@ class Event(Common):
     @property
     def can_delete(self):
 
-        return datetime.now().date() < (self.start_day - timedelta(days=3))
+        return datetime.now().date() < (self.start_day - timedelta(days=4))
 
     def save(self, *args, **kwargs):
         self.full_clean()
