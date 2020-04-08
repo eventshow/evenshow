@@ -59,6 +59,7 @@ class HomeView(generic.FormView):
         if self.request.session.get('form_values'):
             del self.request.session['form_values']
             del self.request.session['latitude']
+            del self.request.session['longitude']
             self.request.session['form_values'] = kwargs
 
         kwargs = {key: val for key, val in kwargs.items() if val}
@@ -306,8 +307,8 @@ class EventFilterFormView(generic.FormView):
 
         if self.request.session.get('latitude'):
             if not bool(kwargs) or (bool(kwargs) and kwargs.get('location')):
-                print('-------')
                 del self.request.session['latitude']
+                del self.request.session['longitude']
 
         return redirect(reverse('list_event_filter', kwargs=kwargs))
 
