@@ -102,7 +102,6 @@ class AttendeeListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(AttendeeListView, self).get_queryset()
         queryset = selectors.UserSelector().event_attendees(self.kwargs.get('pk'))
         return queryset
 
@@ -278,7 +277,6 @@ class EventHostedListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(EventHostedListView, self).get_queryset()
         queryset = selectors.EventSelector().hosted(self.request.user)
         return queryset
 
@@ -297,7 +295,6 @@ class EventEnrolledListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(EventEnrolledListView, self).get_queryset()
         queryset = selectors.EnrollmentSelector().created_by(self.request.user)
         return queryset
 
@@ -419,7 +416,6 @@ class EventSearchNearbyView(generic.ListView):
         return render(request, self.template_name, context)
 
     def get_queryset(self):
-        queryset = super(EventSearchNearbyView, self).get_queryset()
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
         if latitude and longitude:
@@ -782,7 +778,6 @@ class TransactionListView(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
 
