@@ -264,7 +264,7 @@ class PaymentService():
         res = 0
         const_stripe = 25
         var_stripe = 1.029
-        eventpoints_eur = attendee.profile.discount
+        eventpoints_eur = attendee.profile.eventpoints*0.5
         eventpoints = attendee.profile.eventpoints
 
         amount_company = 0
@@ -280,15 +280,16 @@ class PaymentService():
         elif (amount_host > 500):
             amount_company = (amount_host * 0.10)-eventpoints_eur
 
+        print(amount_company)
         if amount_company < 0:
             res = amount_host * var_stripe + const_stripe
-            attendee.profile.eventpoints = eventpoints - (round(amount_company * 0,5))
+            attendee.profile.eventpoints = - (round(amount_company * 2))
         else:
             res = (amount_host + amount_company) * var_stripe + const_stripe
             attendee.profile.eventpoints = 0
         
+        print(res)
         attendee.profile.save()
-
 
         return round(res - amount_host)
 

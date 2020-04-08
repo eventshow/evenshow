@@ -200,6 +200,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
+            
 
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
@@ -463,7 +464,6 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             event = models.Event.objects.get(pk=event_pk)
-
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
                     request.user.email, request.POST['stripeToken'])
