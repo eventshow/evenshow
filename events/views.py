@@ -200,6 +200,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['gmaps_key'] = settings.GOOGLE_API_KEY
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
         context['event_is_full'] = event_is_full
+        context['attendees'] = selectors.EnrollmentSelector().on_event(
+            event.pk, 'ACCEPTED').count()
 
         context['user_can_enroll'] = not event_is_full and user_can_enroll
 
