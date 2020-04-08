@@ -279,6 +279,7 @@ class Transaction(Common):
     event = models.ForeignKey(
         Event, on_delete=models.CASCADE, related_name='event_transaction')
     is_paid_for = models.BooleanField('Is paid for?')
+    discount = models.BooleanField('Discount')
 
     class Meta:
         ordering = ['-created_at']
