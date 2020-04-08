@@ -17,7 +17,7 @@
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-conf">
                         <div class="right">
-                            <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
+                            <button class="waves-effect waves-light btn-large btn-block delete-btn"
                                 type="submit">Sí</button>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="grid-example col s6">
                     <div class="delete-buttons-conf">
                         <div class="left">
-                            <a id="delete-btn-a" class="waves-effect waves-light btn-large btn-block"
+                            <a class="waves-effect waves-light btn-large btn-block delete-btn-a"
                                 href="{% url 'hosted_events'%}">No</a>
                         </div>
                     </div>
@@ -34,13 +34,15 @@
 
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-big-title">
-                        <div class="right">
-                            <button id="delete-btn-big" class="waves-effect waves-light btn-large btn-block"
+                        <div class="left">
+
+                            <button  class="delete-btn-big waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
-                             <div class="left">
-                            <a id="delete-btn-a-big" class="waves-effect waves-light btn-large btn-block"
-                                href="{% url 'hosted_events'%}">No</a>
                         </div>
+                        <div class="right">
+                            <a  class="delete-btn-a-big waves-effect waves-light btn-large btn-block"
+                                href="{% url 'hosted_events'%}">No</a>
+
                         </div>
                     </div>
                 </div>
