@@ -241,6 +241,15 @@ class EventDeleteView(generic.DeleteView):
     
         context = super(EventDeleteView, self).get_context_data(**kwargs)
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+
+        event_pk = self.kwargs.get('pk')
+        if services.EventService().count(event_pk):
+            event = models.Event.objects.get(pk=event_pk)
+            
+            attendees = selectors.UserSelector().event_attendees(event_pk).count()
+            amount_host=services.PaymentService().fee(round(event.price*100))
+            context['penalty'] = amount_host*attendees
+
         return context
 
     def delete(self, request, *args, **kwargs):
