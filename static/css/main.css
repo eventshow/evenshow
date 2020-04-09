@@ -709,6 +709,17 @@ element.style {
 	display: block !important;
 }
 
+.delete-btn {
+	font-weight: bolder;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 63px;
+	margin-top: 77px!important;
+	position: relative !important;
+	display: block !important;
+}
+
 
 .delete-btn-a {
 	width: 128px;

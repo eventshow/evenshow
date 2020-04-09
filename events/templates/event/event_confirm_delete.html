@@ -8,11 +8,15 @@
                 <span class="flow-text">
                     <h1 id="title-delete">¿Estás seguro de que quieres eliminar el evento <strong id="title-del-event">
                             {{object.title}}</strong>?</h1>
+                                {% if not object.can_delete  %}
+
                     <h3 id="title-delete-comi">Recibirá una penalización por ello (más información en los términos y
                         condiciones)</h3>
+                    {% endif %}
                 </span>
             </div>
         </div>
+
         <div class="container">
             <div class="row">
                 {% if object.title|length <= 50 %}
@@ -25,7 +29,7 @@
                             {% else %}
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                 data-key="{{ stripe_key }}" data-description="Pagar penalización"
-                                data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es"
+                                data-amount="{% widthratio penalty 1 100|floatformat:'0' %}" data-locale="es"
                                 data-currency="eur" data-label="Sí">
                                 </script>
                             <script>
