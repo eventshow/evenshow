@@ -249,7 +249,7 @@ class EventDeleteView(generic.DeleteView):
             
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
             amount_host=services.PaymentService().fee(round(event.price*100))
-            context['penalty'] = amount_host*attendees
+            context['penalty'] = (amount_host*attendees)/100
 
         return context
 
