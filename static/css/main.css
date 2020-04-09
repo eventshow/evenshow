@@ -910,10 +910,9 @@ p.description {
 }
 
 .form-search {
-	    margin-top: 80px;
-    margin-right: -35%;
-    margin-left: -6%;
-
+    margin-top: 80px;
+    margin-right: -65%;
+    margin-left: 10%;
 }
 
 .search {
@@ -2131,6 +2130,8 @@ table {
 		margin-left: -17%;
 		width: 99%;
 	}
+
+
 		.btn-submit {
     width: 69% !important;
 }
