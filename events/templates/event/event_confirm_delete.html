@@ -8,22 +8,39 @@
                 <span class="flow-text">
                     <h1 id="title-delete">¿Estás seguro de que quieres eliminar el evento <strong id="title-del-event">
                             {{object.title}}</strong>?</h1>
+                                {% if not object.can_delete  %}
+
+                    <h3 id="title-delete-comi">Recibirá una penalización por ello (más información en los términos y
+                        condiciones)</h3>
+                    {% endif %}
                 </span>
             </div>
         </div>
+
         <div class="container">
             <div class="row">
                 {% if object.title|length <= 50 %}
                 <div class="grid-example col s4 offset-s2">
-                    <div class="delete-buttons-conf">
+                    <div class="delete-buttons-delete">
                         <div class="right">
-                            <button class="waves-effect waves-light btn-large btn-block delete-btn"
+                            {% if object.can_delete %}
+                            <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
+                            {% else %}
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="{{ stripe_key }}" data-description="Pagar penalización"
+                                data-amount="{% widthratio penalty 1 100|floatformat:'0' %}" data-locale="es"
+                                data-currency="eur" data-label="Sí">
+                                </script>
+                            <script>
+                                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large delete-btn");
+                            </script>
+                            {% endif%}
                         </div>
                     </div>
                 </div>
                 <div class="grid-example col s6">
-                    <div class="delete-buttons-conf">
+                    <div class="delete-buttons-delete-no">
                         <div class="left">
                             <a class="waves-effect waves-light btn-large btn-block delete-btn-a"
                                 href="{% url 'hosted_events'%}">No</a>
@@ -36,11 +53,11 @@
                     <div class="delete-buttons-big-title">
                         <div class="left">
 
-                            <button  class="delete-btn-big waves-effect waves-light btn-large btn-block"
+                            <button class="delete-btn-big waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
                         </div>
                         <div class="right">
-                            <a  class="delete-btn-a-big waves-effect waves-light btn-large btn-block"
+                            <a class="delete-btn-a-big waves-effect waves-light btn-large btn-block"
                                 href="{% url 'hosted_events'%}">No</a>
 
                         </div>
