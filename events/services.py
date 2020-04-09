@@ -243,7 +243,6 @@ class RatingService:
 
 class PaymentService():
     def fee(self, amount_host: int) -> int:
-        print('Sin bonificacion----------------------------------------------------------------')
         res = 0
         const_stripe = 25
         var_stripe = 1.029
@@ -261,8 +260,7 @@ class PaymentService():
 
         return round(res - amount_host)
 
-    def fee(self, amount_host: int, attendee:User) -> int:
-        print('Con bonificacion----------------------------------------------------------------')
+    def fee_discount(self, amount_host: int, attendee:User) -> int:
         res = 0
         const_stripe = 25
         var_stripe = 1.029
@@ -282,7 +280,6 @@ class PaymentService():
         elif (amount_host > 500):
             amount_company = (amount_host * 0.10)-eventpoints_eur
 
-        print(amount_company)
         if amount_company < 0:
             res = amount_host * var_stripe + const_stripe
             attendee.profile.eventpoints = - (round(amount_company * 2))
@@ -290,7 +287,6 @@ class PaymentService():
             res = (amount_host + amount_company) * var_stripe + const_stripe
             attendee.profile.eventpoints = 0
         
-        print(res)
         attendee.profile.save()
 
         return round(res - amount_host)

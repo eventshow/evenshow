@@ -134,7 +134,7 @@ class AttendeePaymentView(generic.View):
                                 try:
                                     fee = 0
                                     if transaction.discount:
-                                        fee = services.PaymentService().fee(transaction.amount, attendee)
+                                        fee = services.PaymentService().fee_discount(transaction.amount, attendee)
                                     else:
                                         fee = services.PaymentService().fee(transaction.amount)
 
