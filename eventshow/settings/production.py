@@ -29,6 +29,8 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_2VnijOUd5sd8e2PZ41h83HIn00gkxo4bFs'
 STRIPE_SECRET_KEY = 'sk_test_CAG7jbyKGW8SNOQCIeQJwF9w00Kcv8oVN7'
 STRIPE_CONNECT_CLIENT_ID = 'ca_GvXb5KbNOFxZC6nccjrcsyVjjj4uWaiN'
 
+STRIPE_REQUEST_URI = 'https://eventshow.herokuapp.com/oauth/callback'
+
 # Google Maps
 GOOGLE_API_KEY = 'AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ'
 
@@ -180,13 +182,10 @@ DATE_INPUT_FORMATS = [
 
 # Email
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'contacteventshow@gmail.com'
-EMAIL_HOST_PASSWORD = 'isppevent20*'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_HOST = os.environ.get('MAILGUN_SMTP_SERVER', '')
+EMAIL_PORT = os.environ.get('MAILGUN_SMTP_PORT', '')
+EMAIL_HOST_USER = os.environ.get('MAILGUN_SMTP_LOGIN', '')
+EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD', '')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

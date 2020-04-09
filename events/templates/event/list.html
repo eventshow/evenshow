@@ -30,7 +30,7 @@
         <tr>
           {% if role == "huésped" %}
           <th id="">Puntuar</th>
-          <th id="">Estado de solicitud</th>
+          <th id="">Estado</th>
           <th id="">Título</th>
           <th id="">Fecha</th>
           <th id="">Dirección</th>
@@ -40,14 +40,17 @@
           <th id="">Fecha</th>
           <th id="">Dirección</th>
           <th id="">Acciones</th>
+          <th id="">Cobrar</th>
+
           {% endif %}
         </tr>
       </thead>
-      {% for object in object_list %}
       <tbody>
+      {% for object in object_list %}
+     
         <tr>
           {% if role == "huésped" %}
-          <td>
+          <td >
             {% if object.event.has_finished %}
             {% if not object.is_accepted %}
             <p class="request-fail">Su solicitud no ha sido aceptada</p>
@@ -107,13 +110,6 @@
             <button type="button" onclick="location.href='{% url 'list_attendees' object.pk %}'"
               title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
 
-            <form action="{% url 'attendee_payment' object.pk %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" title="Cobrar">
-                <em id="title-name" class="small material-icons">attach_money</em>
-              </button>
-            </form>
-
             {% if not object.has_started %}
             {% if object.can_update %}
             <button type="button" onclick="location.href='{% url 'update_event' object.pk %}'" title="Editar"> <em
@@ -125,12 +121,25 @@
               <em id="title-name" class="small material-icons">delete</em></button>
             {% endif %}
           </td>
+              <td id="paddinButton">
+                  <form action="{% url 'attendee_payment' object.pk %}" method="POST">
+              {% csrf_token %}
+                {% if object.has_finished %}
+              <button type="submit" title="Cobrar">
+                <em id="title-name" class="small material-icons">attach_money</em>
+              </button>
+                     {% endif %}
+            </form>
+              </td>
           {% endif %}
         </tr>
-      </tbody>
-      {% endfor %}
+
+      {% endfor %} 
+    </tbody>
     </table>
     {% include "pagination.html" %}
+   
   </div>
+
 </div>
 {% endblock %}

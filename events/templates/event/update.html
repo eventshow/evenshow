@@ -31,17 +31,27 @@
     {% endif %}
   </li>
 </ul>
-<ul id="slide-out" class="sidenav sidenav-fixed preferences">
+<ul id="slide-out resp" class="sidenav sidenav-fixed preferences">
+  {% if request.get_full_path == '/events/create' %}
+  <li>    <h2 class="panel-resp">Ofrece una experiencia</h2>
+  </li>
+  {% else %}
+  <h2 class="panel-resp">{{event.title}}</h2>
+  {% endif %}
   <li class="part">
-    <h3><a class="active" href="#test1" onclick="showClickA()">¿Cómo será?</a></h3>
+    <h3><a class="sidenav-close active" href="#test1" onclick="showClickA()">¿Cómo será?</a></h3>
   </li>
   <li class="part">
-    <h3><a href="#test2" onclick="showClickB()">¿Cuándo será?</a></h3>
+    <h3><a class= "sidenav-close" href="#test2" onclick="showClickB()">¿Cuándo será?</a></h3>
   </li>
   <li class="part">
-    <h3><a href="#test3" onclick="showClickC()">Extra</a></h3>
+    <h3><a class= "sidenav-close" href="#test3" onclick="showClickC()">Extra</a></h3>
   </li>
 </ul>
+
+<a id="movil" href="#" data-target="slide-out resp"
+        class="btn-floating btn-large waves-effect waves-eventshow sidenav-trigger panel-resp"><em id="menu-movil"
+          class="material-icons">create</em></a>
 {% if request.get_full_path == '/events/create' %}
 
 <div class="container">
@@ -95,7 +105,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="grid-example col s4">
+                  <div class="grid-example col s4" id="iphone-left">
                     <label>AFORO</label>
                     {{ form.capacity }}
                     <div class="form-errors">
@@ -103,13 +113,13 @@
                     </div>
                   </div>
                   <div class="grid-example col s4">
-                    <label>EDAD MÍN</label>
+                    <label>EDAD</label>
                     {{ form.min_age }}
                     <div class="form-errors">
                       {{ form.min_age.errors }}
                     </div>
                   </div>
-                  <div class="grid-example col s4">
+                  <div class="grid-example col s4" id="iphone-right">
                     <label>PRECIO</label>
                     {{ form.price }}
                     <div class="form-errors">
@@ -120,9 +130,9 @@
                 </div>
                 <div class="container">
                   <div class="row">
-                    <div class="grid-example col s3 offset-s10">
+                    <div class="grid-example col m3 offset-m10 s3 offset-s4">
                       <a id="send-buttons" href="#test2" onclick="showClickB()"
-                        class="waves-effect waves-light btn-large">Siguiente</a>
+                        class="waves-effect  btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
@@ -148,22 +158,22 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="grid-example col s4">
+                  <div class="grid-example col m4 s12">
                     <label>FECHA</label>
                     {{form.start_day}}
                     <div class="form-errors">
                       {{ form.start_day.errors }}
                     </div>
                   </div>
-                  <div class="grid-example col s4">
-                    <label>HORA INICIO</label>
+                  <div class="grid-example col m4 s6" id="iphone-left">
+                    <label>INICIO</label>
                     {{form.start_time}}
                     <div class="form-errors">
                       {{ form.start_time.errors }}
                     </div>
                   </div>
-                  <div class="grid-example col s4">
-                    <label>HORA FIN</label>
+                  <div class="grid-example col m4 s6" id="iphone-right">
+                    <label>FIN</label>
                     {{form.end_time}}
                     <div class="form-errors">
                       {{ form.end_time.errors }}
@@ -173,9 +183,9 @@
                 </div>
                 <div class="container">
                   <div class="row">
-                    <div class="grid-example col s3 offset-s10">
+                    <div class="grid-example col m3 offset-m10 s3 offset-s4">
                       <a id="send-buttons" href="#test3" onclick="showClickC()"
-                        class="waves-effect waves-light btn-large">Siguiente</a>
+                        class="waves-effect  btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
@@ -185,27 +195,27 @@
                 <h4 class="flow-text separated-create" id="">Extra</h4><br>
 
                 <div class="row">
-                  <div class="grid-example col s4">
+                  <div class="grid-example col m4 s6" id="iphone-left">
                     <label>MASCOTAS</label>
                     {{ form.pets }}
                     <div class="form-errors">
                       {{ form.pets.errors }}
                     </div>
                   </div>
-                  <div class="grid-example col s4">
+                  <div class="grid-example col m4 s6" id="iphone-right">
+                    <label>APARCAMIENTO</label>
+                    {{ form.parking_nearby }}
+                    <div class="form-errors">
+                      {{ form.parking_nearby.errors }}
+                    </div>
+                  </div>
+                  <div class="grid-example col m4 s12">
                     <label>IDIOMA</label>
                     <div class="event-lang">
                       {{ form.lang }}
                     </div>
                     <div class="form-errors">
                       {{ form.lang.errors }}
-                    </div>
-                  </div>
-                  <div class="grid-example col s4">
-                    <label>APARCAMIENTO</label>
-                    {{ form.parking_nearby }}
-                    <div class="form-errors">
-                      {{ form.parking_nearby.errors }}
                     </div>
                   </div>
                   <div class="grid-example col s12">
@@ -226,8 +236,8 @@
 
                 <div class="container">
                   <div class="row">
-                    <div class="grid-example col s3 offset-s10">
-                      <button id="send-buttons" type="submit" class="waves-effect waves-light btn-large">Enviar</button>
+                    <div class="grid-example col m3 offset-m10 s3 offset-s4">
+                      <button id="send-buttons" type="submit" class="send-btn btn-large">Enviar</button>
                     </div>
                   </div>
                 </div>
@@ -242,19 +252,17 @@
       </div>
 
       <script>
-        var max_chars = 100;
 
-        $('#title').keydown(function (e) {
-          if ($(this).val().length >= max_chars) {
-            $(this).val($(this).val().substr(0, max_chars));
-          }
-        });
-
-        $('#title').keyup(function (e) {
-          if ($(this).val().length >= max_chars) {
-            $(this).val($(this).val().substr(0, max_chars));
-          }
-        });
+        function ValidaLongitud(campo, longitudMaxima) {
+            try {
+                if (campo.value.length > (longitudMaxima - 1))
+                    return false;
+                else
+                    return true;             
+            } catch (e) {
+                return false;
+            }
+        }
 
         function showClickA() {
           document.getElementById("test1").style.display = "block";

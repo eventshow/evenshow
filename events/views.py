@@ -103,7 +103,6 @@ class AttendeeListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(AttendeeListView, self).get_queryset()
         queryset = selectors.UserSelector().event_attendees(self.kwargs.get('pk'))
         return queryset
 
@@ -247,18 +246,44 @@ class EventDeleteView(generic.DeleteView):
     model = models.Event
     success_url = EVENT_SUCCESS_URL
 
+    def get_context_data(self, **kwargs):
+    
+        context = super(EventDeleteView, self).get_context_data(**kwargs)
+        context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+
+        event_pk = self.kwargs.get('pk')
+        if services.EventService().count(event_pk):
+            event = models.Event.objects.get(pk=event_pk)
+            
+            attendees = selectors.UserSelector().event_attendees(event_pk).count()
+            amount_host=services.PaymentService().fee(round(event.price*100))
+            context['penalty'] = (amount_host*attendees)/100
+
+        return context
+
     def delete(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
             event = models.Event.objects.get(pk=event_pk)
+
+            if not event.can_delete:
+                try:
+                    attendees = selectors.UserSelector().event_attendees(event_pk).count()
+                    amount_host=services.PaymentService().fee(round(event.price*100))
+                    services.PaymentService().charge(round(amount_host*attendees), request.POST['stripeToken'])
+                    
+                except stripe.error.StripeError:
+                    redirect('not_impl')
+
+
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            # services.EmailService().send_email(subject, body, recipient_list)
+            services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -286,7 +311,6 @@ class EventHostedListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(EventHostedListView, self).get_queryset()
         queryset = selectors.EventSelector().hosted(self.request.user)
         return queryset
 
@@ -305,7 +329,6 @@ class EventEnrolledListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super(EventEnrolledListView, self).get_queryset()
         queryset = selectors.EnrollmentSelector().created_by(self.request.user)
         return queryset
 
@@ -329,7 +352,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            # services.EmailService().send_email(subject, body, recipient_list)
+            services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -427,7 +450,6 @@ class EventSearchNearbyView(generic.ListView):
         return render(request, self.template_name, context)
 
     def get_queryset(self):
-        queryset = super(EventSearchNearbyView, self).get_queryset()
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
         if latitude and longitude:
@@ -485,7 +507,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            # services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -510,7 +532,7 @@ class EnrollmentDeleteView(generic.View):
             body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
                 user.username, event.title)
             recipient = event.created_by.email
-            # services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return redirect('enrolled_events')
         else:
@@ -562,8 +584,8 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            # services.EmailService().send_email(
-            # subject, body, [recipient.email])
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
@@ -783,7 +805,7 @@ class StripeAuthorizeView(generic.View):
             'response_type': 'code',
             'scope': 'read_write',
             'client_id': settings.STRIPE_CONNECT_CLIENT_ID,
-            'redirect_uri': f'http://localhost:8000/oauth/callback'
+            'redirect_uri': settings.STRIPE_REQUEST_URI
         }
         url = f'{url}?{urllib.parse.urlencode(params)}'
         return redirect(url)
@@ -796,7 +818,6 @@ class TransactionListView(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        super(TransactionListView, self).get_queryset()
         queryset = selectors.TransactionSelector().my_transaction(self.request.user)
         return queryset
 
@@ -891,7 +912,7 @@ class DownloadPDF(View):
         pdf = self.render_to_pdf('profile/pdf.html', data)
 
         response = HttpResponse(pdf, content_type='application/pdf')
-        filename = 'datos de usuario.pdf'
+        filename = user.username+'-eventshow.pdf'
         content = "attachment; filename=%s" % (filename)
         response['Content-Disposition'] = content
         return response

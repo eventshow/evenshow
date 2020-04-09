@@ -193,6 +193,11 @@ class Event(Common):
     def can_update(self):
         return datetime.now().date() < (self.start_day - timedelta(days=4))
 
+    @property
+    def can_delete(self):
+
+        return datetime.now().date() < (self.start_day - timedelta(days=4))
+
     def save(self, *args, **kwargs):
         self.full_clean()
         super(Event, self).save(*args, **kwargs)

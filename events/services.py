@@ -303,6 +303,15 @@ class PaymentService():
                     'account': host.profile.stripe_user_id,
                 }
             )
+    
+    def charge(self, amount:int, source:str) -> None:
+
+        stripe.Charge.create(
+            amount=amount,
+            currency='eur',
+            description='A event payment',
+            source=source
+        )
 
     def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User, discount:bool) -> None:
         
