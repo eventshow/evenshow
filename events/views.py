@@ -210,7 +210,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 @method_decorator(login_required, name='dispatch')
 class EventCreateView(generic.CreateView):
     model = models.Event
-    form_class = forms.EventForm
+    form_class = forms.EventCreateForm
     success_url = EVENT_SUCCESS_URL
     template_name = 'event/update.html'
 
@@ -328,7 +328,7 @@ class EventEnrolledListView(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class EventUpdateView(generic.UpdateView):
     model = models.Event
-    form_class = forms.EventForm
+    form_class = forms.EventUpdateForm
     success_url = EVENT_SUCCESS_URL
     template_name = 'event/update.html'
 
@@ -339,8 +339,10 @@ class EventUpdateView(generic.UpdateView):
             event = form.save(commit=False)
             event_db = models.Event.objects.get(pk=event_pk)
 
-            if event.price == event_db.price:
+            if not event.price:
 
+                event.price = event_db.price
+                
                 subject = 'Evento actualizado'
                 body = 'El evento ' + event_db.title + \
                     'en el que estás inscrito ha sido actualizado'
