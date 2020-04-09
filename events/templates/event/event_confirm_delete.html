@@ -17,7 +17,7 @@
             <div class="row">
                 {% if object.title|length <= 50 %}
                 <div class="grid-example col s4 offset-s2">
-                    <div class="delete-buttons-conf">
+                    <div class="delete-buttons-delete">
                         <div class="right">
                             {% if object.can_delete %}
                             <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
@@ -29,14 +29,14 @@
                                 data-currency="eur" data-label="Sí">
                                 </script>
                             <script>
-                                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large btn-block delete-btn ");
+                                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large delete-btn");
                             </script>
                             {% endif%}
                         </div>
                     </div>
                 </div>
                 <div class="grid-example col s6">
-                    <div class="delete-buttons-conf">
+                    <div class="delete-buttons-delete-no">
                         <div class="left">
                             <a class="waves-effect waves-light btn-large btn-block delete-btn-a"
                                 href="{% url 'hosted_events'%}">No</a>
