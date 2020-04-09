@@ -1632,6 +1632,11 @@ table {
 	background-color: #B6244D !important;
 }
 
+.modal-msg{
+	margin-left: 80%;
+	padding-right: 80%;
+}
+
 /* RESPONSIVE */
 
 /* IPHONE 5/SE  */
@@ -1639,9 +1644,10 @@ table {
 @media only screen and (min-width: 320px) and (max-width: 568px) {
 
  
-	#titleTerms{
+	#titleTerms {
 		margin-top: -61px;
-    margin-bottom: 75px;
+		margin-bottom: 75px;
+	}
    
 	#paddinButton2{
 	margin-top: -14px;
