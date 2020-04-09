@@ -1643,6 +1643,13 @@ table {
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
 
+	.modal-mov{
+		margin-top: 6%;
+
+    height: 71px;
+    font-size: 18px;
+	}
+
  
 	#titleTerms {
 		margin-top: -61px;
@@ -2095,7 +2102,7 @@ table {
 }
 
 	.location {
-    margin-top: -519%;
+    margin-top: -512%;
     margin-left: 153%;
 }
 
