@@ -238,12 +238,38 @@ class EventDeleteView(generic.DeleteView):
     model = models.Event
     success_url = EVENT_SUCCESS_URL
 
+    def get_context_data(self, **kwargs):
+    
+        context = super(EventDeleteView, self).get_context_data(**kwargs)
+        context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+
+        event_pk = self.kwargs.get('pk')
+        if services.EventService().count(event_pk):
+            event = models.Event.objects.get(pk=event_pk)
+            
+            attendees = selectors.UserSelector().event_attendees(event_pk).count()
+            amount_host=services.PaymentService().fee(round(event.price*100))
+            context['penalty'] = (amount_host*attendees)/100
+
+        return context
+
     def delete(self, request, *args, **kwargs):
         host = request.user
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
             event = models.Event.objects.get(pk=event_pk)
+
+            if not event.can_delete:
+                try:
+                    attendees = selectors.UserSelector().event_attendees(event_pk).count()
+                    amount_host=services.PaymentService().fee(round(event.price*100))
+                    services.PaymentService().charge(round(amount_host*attendees), request.POST['stripeToken'])
+                    
+                except stripe.error.StripeError:
+                    redirect('not_impl')
+
+
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)

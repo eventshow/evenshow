@@ -146,9 +146,8 @@ DATE_INPUT_FORMATS = [
 
 EMAIL_HOST = 'smtp.eu.mailgun.org'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'noreplay@mg.event-show.es'
-EMAIL_HOST_PASSWORD = '66914e233fb45d65c540ea1f0f6bc5f0-aa4b0867-a98d35d4'
-EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
