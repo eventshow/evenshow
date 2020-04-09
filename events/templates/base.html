@@ -110,14 +110,17 @@
         <li>
           <div class="divider"></div>
         </li>
+          {%if user.is_authenticated %}
 
         <li><a class="sh-eventshow">Mis experiencias</a></li>
         <li><a href="{% url 'hosted_events' %}">Anfitrión</a></li>
         <li><a href="{% url 'enrolled_events' %}">Huésped</a></li>
+              {% endif %}
+
 
       </ul>
       <a id="movil" href="#" data-target="slide-out"
-        class="btn-floating btn-large waves-effect waves-light sidenav-trigger"><em id="menu-movil"
+        class="btn-floating btn-large t waves-light sidenav-trigger"><em id="menu-movil"
           class="material-icons">menu</em></a>
     </nav>
   </header>

@@ -33,8 +33,10 @@
           <th id="">Acciones</th>
         </tr>
       </thead>
+          <tbody>
+
       {% for enrollment in object_list %}
-      <tbody>
+          <tr>
         <td>
           <em class="fa fa-star"> <em
               class="rating-search">&nbsp{{enrollment.created_by.profile.avg_attendee_score|floatformat:1|default_if_none:"n/a"|default:"n/a"}}</em></em>
@@ -49,7 +51,7 @@
             <button type="submit" class="waves-effect waves-light btn button-enrolls" title="Aceptar" name="status"
               value="ACCEPTED">Aceptar
             </button>
-            <button type="submit" class="waves-effect waves-light btn button-enrolls" title="Rechazar"
+            <button type="submit" class="waves-effect waves-light btn button-enrolls-mov" title="Rechazar"
               name="status" value="REJECTED">Rechazar
             </button>
           </form>
@@ -57,8 +59,9 @@
           Ya ha comenzado
           {% endif %}
         </td>
-      </tbody>
+          </tr>
       {% endfor %}
+          </tbody>
     </table>
     {% include "pagination.html" %}
   </div>
