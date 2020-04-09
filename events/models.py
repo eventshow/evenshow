@@ -2,7 +2,7 @@ import pytz
 import random
 import uuid
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -73,6 +73,8 @@ class Profile(models.Model):
     eventpoints = models.PositiveIntegerField(
         'Eventpoints', default=0, editable=False)
     bio = models.TextField('Bio', blank=True, null=True)
+    stripe_access_token = models.CharField('stripe_access_token', max_length=250, blank=True, null=True, editable=False)
+    stripe_user_id = models.CharField('stripe_user_id', max_length=250, blank=True, null=True, editable=False)
 
     @property
     def age(self):
@@ -189,6 +191,11 @@ class Event(Common):
         aux = ','.join([self.location_street, self.location_city])
         return '+'.join([str(self.location_number), aux])
 
+    @property
+    def can_update(self):
+
+        return datetime.now().date() < (self.start_day - timedelta(days=4))
+
     def save(self, *args, **kwargs):
         self.full_clean()
         super(Event, self).save(*args, **kwargs)
@@ -271,7 +278,9 @@ class Transaction(Common):
     recipient = models.ForeignKey(User, on_delete=models.SET(
         get_sentinel_user), related_name='recipient_transaction')
     amount = models.PositiveIntegerField('Amount')
-    concept = models.CharField('Concept', max_length=140)
+    customer_id = models.CharField('Customer_id', max_length=250)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event_transaction')
+    is_paid_for = models.BooleanField('Is paid for?')
 
     class Meta:
         ordering = ['-created_at']

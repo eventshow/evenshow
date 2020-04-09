@@ -1,0 +1,107 @@
+<head>
+    <title>Datos de usuario</title>
+    <style>
+    @page {
+        size: a4 portrait;
+
+    }
+
+
+
+
+    </style>
+</head>
+
+<body>
+<br>
+<h2>Datos de usuario</h2>
+<hr>
+<h3>{{name}} {{last_name}}</h3>
+<h3>fecha de registro: {{date_join}}</h3>
+<h3>email: {{email}}</h3>
+<br>
+
+
+
+<hr>
+<h2>Perfil</h2>
+
+<hr>
+<h3>localización: {{location}}</h3>
+<h3>foto: {{picture}}</h3>
+<h3>fecha de nacimiento: {{birhtdate}}</h3>
+<h3>token: {{token}}</h3>
+<h3>eventpoints: {{eventpoints}}</h3>
+<h3>biografía: {{bio}}</h3>
+
+<br>
+<hr>
+<h2>Eventos</h2>
+{% for event in events %}
+
+<hr>
+<h3>titulo: {{event.title}}</h3>
+<h3>descripción: {{event.description}}</h3>
+<h3>foto: {{event.picture}}</h3>
+<h3>ciudad: {{event.location_city}}</h3>
+<h3>calle: {{event.location_street}}</h3>
+<h3>número: {{event.location_number}}</h3>
+<h3>día de comienzo: {{event.start_day}}</h3>
+<h3>hora de comienzo: {{event.start_time}}</h3>
+<h3>hora de finalización: {{event.end_time}}</h3>
+<h3>precio: {{event.price}}</h3>
+<h3>capacidad: {{event.capacity}}</h3>
+<h3>edad mínima: {{event.min_age}}</h3>
+<h3>idioma: {{event.lang}}</h3>
+<h3>mascotas: {{event.pets}}</h3>
+<h3>aparcamiento cercano: {{event.parking_nearby}}</h3>
+<h3>información extra: {{event.extra_info}}</h3>
+<h3>creado por: {{event.created_by}}</h3>
+
+{% empty %}
+<h3>No hay eventos</h3>
+{% endfor %}
+
+<br>
+<hr>
+
+<h2>Solicitudes de evento</h2>
+{% for enrollment in enrollments %}
+<hr>
+<h3>creado por: {{enrollment.created_by}}</h3>
+<h3>evento: {{enrollment.event}}</h3>
+<h3>estado: {{enrollment.status}}</h3>
+{% empty %}
+<h3>No hay solicitudes</h3>
+{% endfor %}
+<br>
+<hr>
+<h2>Puntuaciones</h2>
+{% for rating in ratings %}
+<hr>
+<h3>creado por: {{rating.created_by}}</h3>
+<h3>evento: {{rating.event}}</h3>
+<h3>usuario puntuado: {{rating.reviewed}}</h3>
+<h3>puntuación: {{rating.score}}</h3>
+<h3>comentario: {{rating.comment}}</h3>
+<h3>sobre un: {{rating.on}}</h3>
+
+{% empty %}
+<h3>No hay puntuaciones</h3>
+{% endfor %}
+
+<br>
+<hr>
+<h2>Transacciones</h2>
+{% for transaction in transactions %}
+<hr>
+<h3>creado por: {{transaction.created_by}}</h3>
+<h3>concepto: {{transaction.concept}}</h3>
+<h3>receptor: {{transaction.recipient}}</h3>
+<h3>cuantía (en euros): {{transaction.amount}}</h3>
+
+{% empty %}
+<h3>No hay transacciones</h3>
+{% endfor %}
+</body>
+</html>

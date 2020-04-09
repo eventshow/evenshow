@@ -136,6 +136,9 @@ class UserSelector:
 
 
 class TransactionSelector:
+    def user_on_event(self, user: User, event: models.Event) -> models.Event:
+        return models.Transaction.objects.filter(created_by=user, event=event).first()
+
     def my_transaction(self, user: User) -> QuerySet:
         transaction_list = models.Transaction.objects.filter(
             created_by=user).order_by('amount')

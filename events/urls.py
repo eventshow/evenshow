@@ -9,6 +9,7 @@ urlpatterns = [
     path('home', views.HomeView.as_view(), name='home'),
 
     path('auth/signup/', views.SignUpView.as_view(), name='signup'),
+    path('authorize/', views.StripeAuthorizeView.as_view(), name='authorize'),
 
     path('enrollments/thanks', TemplateView.as_view(template_name='enrollment/thanks.html'),
          name='thanks'),
@@ -43,6 +44,7 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
+    path('oauth/callback/', views.StripeAuthorizeCallbackView.as_view(), name='authorize_callback'),
     path('profile', login_required(TemplateView.as_view(template_name='profile/detail.html')),
          name='detail_profile'),
     path('profile/delete', views.UserDeleteView.as_view(), name='delete_profile'),
@@ -60,4 +62,10 @@ urlpatterns = [
 
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
+
+    path('profile/pdf_download', views.DownloadPDF.as_view(), name='pdf_download'),
+
+     path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
+         name='grac'),
+
 ]
