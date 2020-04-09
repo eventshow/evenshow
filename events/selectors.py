@@ -1,7 +1,8 @@
-from datetime import time
+from datetime import datetime, time, timedelta
 
 from django.contrib.auth import get_user_model
-from django.db.models import Q, QuerySet
+from django.db.models import Count, F, FloatField, Sum, Q, QuerySet
+from django.db.models.functions import Cast
 
 from . import models
 from .models import Message
@@ -18,6 +19,19 @@ class EnrollmentSelector:
 
     def user_on_event(self, user: User, event_pk: int) -> models.Enrollment:
         return models.Enrollment.objects.filter(event__pk=event_pk, created_by=user).first()
+
+    def aux(self, user: User) -> int:
+        today = datetime.now().date()
+        return models.Enrollment.objects.filter(
+            event__created_by=user,
+            event__start_day__gte=today,
+            event__start_day__lte=today + timedelta(days=4),
+            status='ACCEPTED'
+        ).values('event__title').annotate(
+            count=Count('event'),
+            penalty=Cast(F('event__price'), FloatField()) *
+            Cast(F('count'), FloatField())
+        )
 
 
 class EventSelector:
