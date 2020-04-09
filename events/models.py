@@ -73,8 +73,10 @@ class Profile(models.Model):
     eventpoints = models.PositiveIntegerField(
         'Eventpoints', default=0, editable=False)
     bio = models.TextField('Bio', blank=True, null=True)
-    stripe_access_token = models.CharField('stripe_access_token', max_length=250, blank=True, null=True, editable=False)
-    stripe_user_id = models.CharField('stripe_user_id', max_length=250, blank=True, null=True, editable=False)
+    stripe_access_token = models.CharField(
+        'stripe_access_token', max_length=250, blank=True, null=True, editable=False)
+    stripe_user_id = models.CharField(
+        'stripe_user_id', max_length=250, blank=True, null=True, editable=False)
 
     @property
     def age(self):
@@ -183,17 +185,12 @@ class Event(Common):
         return ' '.join([self.location_city, self.location_street, str(self.location_number)])
 
     @property
-    def location(self):
-        return ' '.join([self.location_city, self.location_street, str(self.location_number)])
-
-    @property
     def g_location(self):
         aux = ','.join([self.location_street, self.location_city])
         return '+'.join([str(self.location_number), aux])
 
     @property
     def can_update(self):
-
         return datetime.now().date() < (self.start_day - timedelta(days=4))
 
     @property
@@ -284,7 +281,8 @@ class Transaction(Common):
         get_sentinel_user), related_name='recipient_transaction')
     amount = models.PositiveIntegerField('Amount')
     customer_id = models.CharField('Customer_id', max_length=250)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event_transaction')
+    event = models.ForeignKey(
+        Event, on_delete=models.CASCADE, related_name='event_transaction')
     is_paid_for = models.BooleanField('Is paid for?')
 
     class Meta:
