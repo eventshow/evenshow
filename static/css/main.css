@@ -1611,6 +1611,24 @@ table {
 	#panel{
 		margin-left: 21px;
 	}
+
+
+	.name-host-mov,
+	#name-host-mov {
+	height: 40px;
+	max-width: 550px;
+	left: auto;
+	font-family: Raleway, sans-serif;
+	font-size: 26px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	margin-top: 2%;
+	color: #5D5E5E;
+}
+
 	.table-generic{
 		width:100%;
 		text-align-last: left;
@@ -2185,7 +2203,7 @@ table {
 }
 
 .name-host-detail {
-margin-top: -29% !important;
+	margin-top: -29% !important;
 	margin:12%
 }
 
@@ -2211,6 +2229,10 @@ margin-top: -29% !important;
 .pagination {
 	margin-top: 30px;
 
+}
+
+.img-rat-mov{
+	margin-left: -53%;
 }
 
 }
