@@ -1531,6 +1531,10 @@ table {
 	opacity: 0;
 }
 
+.waves-effect.waves-eventshow .waves-ripple{
+	background-color: #B6244D !important;
+}
+
 /* RESPONSIVE */
 
 /* IPHONE 5/SE  */
