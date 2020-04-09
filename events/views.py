@@ -872,7 +872,7 @@ class DownloadPDF(View):
         pdf = self.render_to_pdf('profile/pdf.html', data)
 
         response = HttpResponse(pdf, content_type='application/pdf')
-        filename = 'datos de usuario.pdf'
+        filename = user.username+'-eventshow.pdf'
         content = "attachment; filename=%s" % (filename)
         response['Content-Disposition'] = content
         return response
