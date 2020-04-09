@@ -144,7 +144,6 @@ DATE_INPUT_FORMATS = [
 
 # Email
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.eu.mailgun.org'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'noreplay@mg.event-show.es'
