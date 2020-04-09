@@ -31,7 +31,13 @@
     {% endif %}
   </li>
 </ul>
-<ul id="slide-out" class="sidenav sidenav-fixed preferences">
+<ul id="slide-out resp" class="sidenav sidenav-fixed preferences">
+  {% if request.get_full_path == '/events/create' %}
+  <li>    <h2 class="panel-resp">Ofrece una experiencia</h2>
+  </li>
+  {% else %}
+  <h2 class="panel-resp">{{event.title}}</h2>
+  {% endif %}
   <li class="part">
     <h3><a class="active" href="#test1" onclick="showClickA()">¿Cómo será?</a></h3>
   </li>
@@ -42,6 +48,10 @@
     <h3><a href="#test3" onclick="showClickC()">Extra</a></h3>
   </li>
 </ul>
+
+<a id="movil" href="#" data-target="slide-out resp"
+        class="btn-floating btn-large waves-effect waves-light sidenav-trigger panel-resp"><em id="menu-movil"
+          class="material-icons">create</em></a>
 {% if request.get_full_path == '/events/create' %}
 
 <div class="container">
@@ -227,7 +237,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="grid-example col m3 offset-m10 s3 offset-s4">
-                      <button id="send-buttons" type="submit" class="waves-effect btn-large">Enviar</button>
+                      <button id="send-buttons" type="submit" class="send-btn waves-effect btn-large">Enviar</button>
                     </div>
                   </div>
                 </div>
