@@ -1480,8 +1480,11 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	img.responsive-img, video.responsive-video {
+		max-width: 150%;
+	}
 	.name-host-rating{
-		margin-top: 141px;
+		margin-top: 161px;
 	}
 	#margin_place2{
 		margin-top: -62px;
@@ -1522,9 +1525,8 @@ table {
 		margin-top: -58px;
 	}
 	.container#square{
-		margin-top:60% !important;
-		max-width: 97%;
-    padding: 1rem 1rem 1rem 1rem;
+		margin-top:45% !important;
+		border:0px solid;
 	}
 	.name-host{
 		margin-top:31%;
