@@ -48,7 +48,7 @@
         {% elif event.created_by.username == 'deleted' %}
         <h3 class="warning-full" href="">No disponible</h3>
         {% elif user_can_enroll and not event.has_started %}
-        <form action="{% url 'enroll_event' object.pk %}" method="POST">
+        <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
             {% csrf_token %}
             {% if not have_creditcard %}
                 <button type="button" id="abrir-popup" class="aves-effect waves-light btn-large button-detail-auth" onclick="abrirPopup();this.onclick=null">{{ object.price }}€</button>

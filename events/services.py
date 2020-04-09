@@ -243,6 +243,7 @@ class RatingService:
 
 class PaymentService():
     def fee(self, amount_host: int) -> int:
+        print('Sin bonificacion----------------------------------------------------------------')
         res = 0
         const_stripe = 25
         var_stripe = 1.029
@@ -261,6 +262,7 @@ class PaymentService():
         return round(res - amount_host)
 
     def fee(self, amount_host: int, attendee:User) -> int:
+        print('Con bonificacion----------------------------------------------------------------')
         res = 0
         const_stripe = 25
         var_stripe = 1.029
