@@ -693,6 +693,16 @@ background: #FFF;
 	align-content: center;
 }
 
+.delete-buttons-delete {
+	margin-top: 5.8%;
+	align-content: center;
+}
+
+.delete-buttons-delete-no {
+	margin-top: 0.9%;
+	align-content: center;
+}
+
 #delete-btn {
 	font-weight: bolder;
 	font-size: 20px;
@@ -704,7 +714,19 @@ background: #FFF;
 	display: block !important;
 }
 
-#delete-btn-a {
+.delete-btn {
+	font-weight: bolder;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 63px;
+	margin-top: 77px!important;
+	position: relative !important;
+	display: block !important;
+}
+
+
+.delete-btn-a {
 	width: 128px;
 	height: 63px;
 	font-weight: bold;
@@ -1140,6 +1162,26 @@ label {
 	color: red;
 }
 
+#title-delete {
+	max-width: 1149px;
+	width: auto;
+	max-height: 47px;
+	height: auto;
+	font-family: Raleway, sans-serif;
+	font-size: 40px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #686969;
+	margin: 0% auto;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 #title-delete-user {
 	max-width: 1149px;
 	width: auto;
@@ -1158,6 +1200,17 @@ label {
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+
+#title-delete-comi {
+    font-weight: bold;
+    color: #686969;
+    margin: 0% auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+	margin-bottom: -3%;
 }
 
 #title-delete-user {
