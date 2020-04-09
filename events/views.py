@@ -58,9 +58,10 @@ class HomeView(generic.FormView):
 
         if self.request.session.get('form_values'):
             del self.request.session['form_values']
+            self.request.session['form_values'] = kwargs
+        if self.request.session.get('latitude'):
             del self.request.session['latitude']
             del self.request.session['longitude']
-            self.request.session['form_values'] = kwargs
 
         kwargs = {key: val for key, val in kwargs.items() if val}
 
