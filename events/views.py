@@ -416,8 +416,8 @@ class EventSearchNearbyView(generic.View):
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
 
-        self.request.session['latitude'] = 37.382641
-        self.request.session['longitude'] = -5.996300
+        self.request.session['latitude'] = latitude
+        self.request.session['longitude'] = longitude
 
         if self.request.session.get('form_values'):
             del self.request.session['form_values']
