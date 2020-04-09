@@ -40,6 +40,8 @@
           <th id="">Fecha</th>
           <th id="">Dirección</th>
           <th id="">Acciones</th>
+          <th id="">Cobrar</th>
+
           {% endif %}
         </tr>
       </thead>
@@ -108,13 +110,6 @@
             <button type="button" onclick="location.href='{% url 'list_attendees' object.pk %}'"
               title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
 
-            <form action="{% url 'attendee_payment' object.pk %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" title="Cobrar">
-                <em id="title-name" class="small material-icons">attach_money</em>
-              </button>
-            </form>
-
             {% if not object.has_started %}
             {% if object.can_update %}
             <button type="button" onclick="location.href='{% url 'update_event' object.pk %}'" title="Editar"> <em
@@ -126,9 +121,17 @@
               <em id="title-name" class="small material-icons">delete</em></button>
             {% endif %}
           </td>
+              <td>
+                  <form action="{% url 'attendee_payment' object.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" title="Cobrar">
+                <em id="title-name" class="small material-icons">attach_money</em>
+              </button>
+            </form>
+              </td>
           {% endif %}
         </tr>
-     
+
       {% endfor %} 
     </tbody>
     </table>
