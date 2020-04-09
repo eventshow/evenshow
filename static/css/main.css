@@ -554,19 +554,24 @@ element.style {
 }
 
 .container-home {
-	background: #FFF;
+background: #FFF;
     margin-top: 3%;
-    margin-left: -56%;
-    margin-right: -13%;
+    margin-left: -107%;
+    margin-right: -16%;
     border-radius: 15px;
     border: 1px solid #B6244D;
     padding: 4% 4% 4% 4%;
     font-size: 18px;
 }
 
+
 .container-home h2{
 	font-weight: 600;
 	color: #B6244D;
+}
+
+.container-home p{
+	font-size: 18px;
 }
 
 .container-password {
@@ -2092,8 +2097,38 @@ margin-top: -29% !important;
 	opacity: 1;
 }
 
+.text-mov{
+	padding-right: 10%;
 }
 
+.container-home {
+background: #FFF;
+    margin-top: 3%;
+    margin-left: 7%;
+    border-radius: 15px;
+    border: 1px solid #B6244D;
+    padding: 4% 4% 4% 4%;
+    font-size: 18px;
+
+
+}
+
+
+.container-home h2{
+	font-weight: 600;
+	color: #B6244D;
+}
+
+.container-home p{
+	margin-top: 2%;
+	font-family: Arial !important;
+}
+.mar-modal{
+	margin-right: 10%;
+}
+
+
+}
 
 /* IPHONE X */
 
