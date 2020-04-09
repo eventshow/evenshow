@@ -39,18 +39,18 @@
   <h2 class="panel-resp">{{event.title}}</h2>
   {% endif %}
   <li class="part">
-    <h3><a class="active" href="#test1" onclick="showClickA()">¿Cómo será?</a></h3>
+    <h3><a class="sidenav-close active" href="#test1" onclick="showClickA()">¿Cómo será?</a></h3>
   </li>
   <li class="part">
-    <h3><a href="#test2" onclick="showClickB()">¿Cuándo será?</a></h3>
+    <h3><a class= "sidenav-close" href="#test2" onclick="showClickB()">¿Cuándo será?</a></h3>
   </li>
   <li class="part">
-    <h3><a href="#test3" onclick="showClickC()">Extra</a></h3>
+    <h3><a class= "sidenav-close" href="#test3" onclick="showClickC()">Extra</a></h3>
   </li>
 </ul>
 
 <a id="movil" href="#" data-target="slide-out resp"
-        class="btn-floating btn-large waves-effect waves-light sidenav-trigger panel-resp"><em id="menu-movil"
+        class="btn-floating btn-large waves-effect waves-eventshow sidenav-trigger panel-resp"><em id="menu-movil"
           class="material-icons">create</em></a>
 {% if request.get_full_path == '/events/create' %}
 
