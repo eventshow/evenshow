@@ -1,10 +1,8 @@
 from django import template
 
-from events.models import Transaction
-
 register = template.Library()
 
 
 @register.simple_tag
-def to_euros(dividend: float) -> float:
-    return round(dividend / 100, 2)
+def to_euros(cents: float) -> float:
+    return round(cents/100, 2)

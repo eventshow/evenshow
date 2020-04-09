@@ -115,13 +115,14 @@
             </form>
 
             {% if not object.has_started %}
+            {% if object.can_update %}
             <button type="button" onclick="location.href='{% url 'update_event' object.pk %}'" title="Editar"> <em
                 id="title-name" class="small material-icons">edit</em></button>
+            {% endif %}
             <button type="button" onclick="location.href='{% url 'list_enrollments' object.pk %}'"
               title="Añadir sistentes"> <em id="title-name" class="small material-icons">group_add</em> </button>
             <button type="button" onclick="location.href='{% url 'delete_event' object.pk %}'" title="Eliminar">
               <em id="title-name" class="small material-icons">delete</em></button>
-
             {% endif %}
           </td>
           {% endif %}

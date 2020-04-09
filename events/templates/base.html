@@ -66,7 +66,7 @@
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
 
-              <li><a href="{% url 'detail_profile' %}"> {{ user.username }} </a></li>
+              <li><a href=""> {{ user.username }} </a></li>
               <li><a href="{% url 'detail_profile' %}">Panel de control</a></li>
               <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
             </ul>
@@ -98,7 +98,15 @@
         <li>
           <div class="divider"></div>
         </li>
-        <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+          {%if user.is_authenticated %}
+          {% if not user.first_name or not user.last_name or  not user.profile.bio %}
+          <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
+          {% else %}
+          <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+          {% endif %}
+		{% else %}
+		<li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+        {% endif %}
         <li>
           <div class="divider"></div>
         </li>
