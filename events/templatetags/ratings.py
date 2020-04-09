@@ -9,4 +9,4 @@ User = get_user_model()
 
 @register.simple_tag
 def user_on_event(user: User, event: Event) -> Rating:
-    return Rating.objects.filter(created_by=user, event=event).values_list('score', flat=True).first()
+    return Rating.objects.filter(created_by=user, event=event).first()

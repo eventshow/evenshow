@@ -23,7 +23,7 @@
     </div>
     <div class="col m6 rectangle-info separated6" id="detail-info">
         <h2 class="title-detail">aforo</h2>
-        <h2 class="subtitle-detail">{{ object.capacity }}</h2>
+        <h2 class="subtitle-detail">{{attendees}} / {{object.capacity}}</h2>
     </div>
     <div class="col m6 rectangle-info separated7" id="detail-info">
         <h2 class="title-detail">edad mín.</h2>
@@ -50,6 +50,7 @@
         {% elif user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
+            {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada"
                 data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
@@ -58,6 +59,10 @@
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
+            {% else %}
+            <button type="submit"
+                class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€</button>
+            {% endif %}
         </form>
         {% endif %}
         {% elif event.created_by.username == 'deleted' %}
@@ -116,8 +121,7 @@
         </h3>
         <div class="col-md-7 map-detail">
             <br>
-            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"
-               ></iframe>
+            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
             <br>
         </div>
     </div>
@@ -155,15 +159,13 @@
         width: 100%;
         margin-top: 25%;
     }
-@media only screen and (min-width: 320px) and (max-width: 568px) {
 
-     .page-footer {
-        width: 100%;
-        margin-top: 308%;
+    @media only screen and (min-width: 320px) and (max-width: 568px) {
+
+        .page-footer {
+            width: 100%;
+            margin-top: 308%;
+        }
     }
-}
-
-
-
 </style>
 {% endblock %}
