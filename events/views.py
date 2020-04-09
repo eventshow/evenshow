@@ -338,15 +338,20 @@ class EventUpdateView(generic.UpdateView):
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
             event_db = models.Event.objects.get(pk=event_pk)
-            subject = 'Evento actualizado'
-            body = 'El evento ' + event_db.title + \
-                   'en el que estás inscrito ha sido actualizado'
-            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
-            recipient_list = list(
-                recipient_list_queryset.values_list('email', flat=True))
-            services.EmailService().send_email(subject, body, recipient_list)
-            services.EventService().update(event, host)
-            return super(EventUpdateView, self).form_valid(form)
+
+            if event.price == event_db.price:
+
+                subject = 'Evento actualizado'
+                body = 'El evento ' + event_db.title + \
+                    'en el que estás inscrito ha sido actualizado'
+                recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+                recipient_list = list(
+                    recipient_list_queryset.values_list('email', flat=True))
+                services.EmailService().send_email(subject, body, recipient_list)
+                services.EventService().update(event, host)
+                return super(EventUpdateView, self).form_valid(form)
+            else:
+                return redirect('/')
         else:
             return redirect('events')
 
