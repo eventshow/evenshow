@@ -65,13 +65,12 @@
 
 <div class="container">
 {% if user.is_authenticated and message %}
-        <h2>{{ message }}</h2>
-        <p class="flow-text">{{ message.description }}</p>
+ <div class="right container-home">
+        <h2>{{ message }}</h2><br>
+        {{ message.description }}
     </div>
 {% endif %}
 
-
-<div class="container">
     <div class="row">
         <div class="col s6 form-home">
 
