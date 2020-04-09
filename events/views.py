@@ -249,7 +249,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            # services.EmailService().send_email(subject, body, recipient_list)
+            services.EmailService().send_email(subject, body, recipient_list)
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -318,7 +318,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            # services.EmailService().send_email(subject, body, recipient_list)
+            services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
         else:
@@ -467,7 +467,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            # services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -492,7 +492,7 @@ class EnrollmentDeleteView(generic.View):
             body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
                 user.username, event.title)
             recipient = event.created_by.email
-            # services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return redirect('enrolled_events')
         else:
@@ -544,8 +544,8 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            # services.EmailService().send_email(
-            # subject, body, [recipient.email])
+            services.EmailService().send_email(
+                subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
         else:
@@ -872,7 +872,7 @@ class DownloadPDF(View):
         pdf = self.render_to_pdf('profile/pdf.html', data)
 
         response = HttpResponse(pdf, content_type='application/pdf')
-        filename = 'datos de usuario.pdf'
+        filename = user.username+'-eventshow.pdf'
         content = "attachment; filename=%s" % (filename)
         response['Content-Disposition'] = content
         return response
