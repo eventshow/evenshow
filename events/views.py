@@ -339,21 +339,23 @@ class EventUpdateView(generic.UpdateView):
             event = form.save(commit=False)
             event_db = models.Event.objects.get(pk=event_pk)
 
-            if not event.price:
+            attende_list = selectors.UserSelector().event_attendees(event_pk)
 
+            if attende_list.count() > 0 and not event.price:
                 event.price = event_db.price
-                
-                subject = 'Evento actualizado'
-                body = 'El evento ' + event_db.title + \
-                    'en el que estás inscrito ha sido actualizado'
-                recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
-                recipient_list = list(
-                    recipient_list_queryset.values_list('email', flat=True))
-                services.EmailService().send_email(subject, body, recipient_list)
-                services.EventService().update(event, host)
-                return super(EventUpdateView, self).form_valid(form)
-            else:
+            elif attende_list.count() > 0 and event.price:
                 return redirect('/')
+                
+            subject = 'Evento actualizado'
+            body = 'El evento ' + event_db.title + \
+                'en el que estás inscrito ha sido actualizado'
+            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list = list(
+                recipient_list_queryset.values_list('email', flat=True))
+            services.EmailService().send_email(subject, body, recipient_list)
+            services.EventService().update(event, host)
+            return super(EventUpdateView, self).form_valid(form)
+            
         else:
             return redirect('events')
 
@@ -363,10 +365,25 @@ class EventUpdateView(generic.UpdateView):
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
                 'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
+            
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
+    
+    def get_form_class(self):
+        host = self.request.user
+        event_pk = self.kwargs.get('pk')
 
+        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get(
+                'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
+
+            attende_list = selectors.UserSelector().event_attendees(event_pk)
+
+            if attende_list.count() == 0:
+                return forms.EventCreateForm
+            else:
+                return forms.EventUpdateForm
+         
 
 class EventFilterFormView(generic.FormView):
     form_class = forms.SearchFilterForm
