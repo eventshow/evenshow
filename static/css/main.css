@@ -1466,7 +1466,7 @@ table {
 	border-radius: 15px;
 }
 
-#titleThanks {
+#titleThanks, #titleTerms {
 	height: 80px;
 	font-family: Raleway, sans-serif;
 	font-size: 42px;
@@ -1530,12 +1530,22 @@ table {
 .panel-resp{
 	opacity: 0;
 }
+#textTerms{
+	color: black;
+	font-size:13px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
 
 /* RESPONSIVE */
 
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	#titleTerms{
+		margin-top: -61px;
+    margin-bottom: 75px;
+	}
 	.center-form-create {
 		margin-top: 5% !important;
 		margin-left: -8% !important;
