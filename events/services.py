@@ -306,7 +306,7 @@ class PaymentService():
                 }
             )
 
-    def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User) -> None:
+    def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User, discount:bool) -> None:
         
         models.Transaction.objects.create(amount = amount, created_by=created_by, recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False, discount=True)
 

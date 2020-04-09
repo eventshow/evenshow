@@ -29,6 +29,7 @@ from . import forms
 from . import models
 from . import selectors
 from . import services
+from django.utils.datastructures import MultiValueDictKeyError
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -463,6 +464,13 @@ class EnrollmentCreateView(generic.View):
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
+            discount = False
+            try:
+                request.POST['checkbox']
+                discount = True
+            except MultiValueDictKeyError:
+                pass
+            
             event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
@@ -470,7 +478,7 @@ class EnrollmentCreateView(generic.View):
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
             services.PaymentService().save_transaction(
-                event.price*100, customer.id, event, attendee, event.created_by)
+                event.price*100, customer.id, event, attendee, event.created_by, discount)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
