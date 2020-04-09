@@ -1243,7 +1243,7 @@ label {
 	bottom: 10%;
 	width: 800px;
 	height: 10px;
-	margin-left: -2% !important;
+	margin-left: -12% !important;
 }
 
 
@@ -1456,6 +1456,7 @@ table {
 #title-name,
 #copiar {
 	color: #B6244D;
+	
 }
 
 .modal-evetshow {
@@ -1578,7 +1579,7 @@ table {
 		margin-top: -94px;
 	}
 	#name-ref{
-		margin-top: 10%;
+		margin-top: 17%;
 	}
 	.titulo{
 		margin-top: -61px;
@@ -1588,11 +1589,20 @@ table {
 		font-size: 35px;
 	}
 	#copiar{
-		margin-left: -110px;
+		margin-left: -89px;
 	}
 	#eventpoint{
-		bottom:-24%;
-		margin-left: 3% !important;
+			font-style: italic;
+			font-family: Raleway, sans-serif;
+			position: absolute;
+	
+			width: auto;
+			height: auto;
+
+
+			bottom:-24%;
+			margin-left: 3% !important;
+		
 	}
 	.name-host-ref{
 		margin-bottom: 207px;
@@ -2148,6 +2158,10 @@ table {
 
 }
 
+
+#copy{
+	margin-left: -65%;
+}
 #login-res{
 	border: transparent;
 	margin-top: 7%;
