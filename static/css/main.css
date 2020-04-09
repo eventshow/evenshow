@@ -1130,6 +1130,11 @@ label {
 	margin-bottom: 2%;
 }
 
+.not-age{
+	font-weight: bolder ;
+	color: red;
+}
+
 #title-delete-user {
 	max-width: 1149px;
 	width: auto;
