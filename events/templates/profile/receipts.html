@@ -1,5 +1,6 @@
 {% extends 'profile/preferences.html' %}
 {% block content %}
+{% load transactions %}
 <div class="container" id="panel">
   <div class="titleRef">
     <div class="col s12">
@@ -15,7 +16,6 @@
             <th id="">Descargar</th>
             <th id="">Id</th>
             <th id="">Fecha</th>
-            <th id="">Concepto</th>
             <th id="">Cantidad</th>
             <th id="">Emisor</th>
             <th id="">Receptor</th>
@@ -26,15 +26,13 @@
         {% for transaction in object_list %}
         <tr>
           <td>
-            <button type="button" onclick="location.href='/ups'"
-              title="Descargar">
+            <button type="button" onclick="location.href='/ups'" title="Descargar">
               <em id="title-name" class="samll material-icons">file_download</em>
             </button>
           </td>
           <td>{{transaction.id}}</td>
           <td>{{transaction.created_at}}</td>
-          <td>{{transaction.concept}}</td>
-          <td>{{transaction.amount|floatformat:1}}€</td>
+          <td>{% to_euros transaction.amount %}€</td>
           <td>{{transaction.created_by.username}}</td>
           <td>{{transaction.recipient.username}}</td>
         </tr>
@@ -43,6 +41,5 @@
     </table>
     {% include "pagination.html" %}
   </div>
-</div>
 </div>
 {%endblock%}
