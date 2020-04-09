@@ -50,7 +50,7 @@
      
         <tr>
           {% if role == "huésped" %}
-          <td>
+          <td >
             {% if object.event.has_finished %}
             {% if not object.is_accepted %}
             <p class="request-fail">Su solicitud no ha sido aceptada</p>
@@ -121,7 +121,7 @@
               <em id="title-name" class="small material-icons">delete</em></button>
             {% endif %}
           </td>
-              <td>
+              <td id="paddinButton">
                   <form action="{% url 'attendee_payment' object.pk %}" method="POST">
               {% csrf_token %}
               <button type="submit" title="Cobrar">

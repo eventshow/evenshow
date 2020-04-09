@@ -1569,6 +1569,12 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	#paddinButton2{
+	margin-top: -14px;
+	}
+	#paddinButton{
+		margin-top: -35px;
+	}
 	img.responsive-img, video.responsive-video {
 		max-width: 150%;
 	}
