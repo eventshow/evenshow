@@ -2537,3 +2537,19 @@ background: #FFF;
 
 
 }
+
+
+/* PIXEL 2 XL */
+
+@media only screen and (min-width: 411px) and (max-width: 823px) {
+
+
+}
+
+/* IPHONE 6/7/8 PLUS */
+
+@media only screen and (min-width: 414px) and (max-width: 736px) {
+
+
+}
+
