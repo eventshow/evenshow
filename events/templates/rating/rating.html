@@ -4,7 +4,7 @@
 <div class="container">
   <div class="title">
     <div class="col s12">
-      <h3 class="name-host">Valora a <a id="title-name">{{host_name}}</a>
+      <h3 class="name-host-rating">Valora a <a id="title-name">{{host_name}}</a>
         por su evento <a id="title-name">{{event_title}}</a></h3>
     </div>
   </div>
@@ -14,11 +14,11 @@
     {% csrf_token %}
     <div class="row">
       <div class="col s6">
-        <h4 class="name-host">{{host_name}}</h4>
+        <h4 class="name-host name-host-mov">{{host_name}}</h4>
       </div>
       <div class="col s3"></div>
       <div class="col s3">
-        <img src="{{user_img}}" alt="Anfitrion" class="circle responsive-img">
+        <img src="{{user_img}}" alt="Anfitrion" class="circle responsive-img img-rat-mov">
       </div>
     </div>
     <label class="title-form">PUNTUACIÓN</label>
@@ -42,7 +42,7 @@
 <div class="container">
   <div class="title">
     <div class="col s12">
-      <h3 class="name-host">Valora a <a id="title-name">{{attendee_name}}</a>
+      <h3 class="name-host-rating">Valora a <a id="title-name">{{attendee_name}}</a>
         por su asistencia a <a id="title-name">{{event_title}}</a></h3>
     </div>
   </div>
