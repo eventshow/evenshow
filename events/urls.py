@@ -68,6 +68,6 @@ urlpatterns = [
      path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
          name='grac'),
      path('vista/terminos', TemplateView.as_view(template_name='terms.html'),
-         name='grac'),
+         name='terms'),
 
 ]
