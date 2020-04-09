@@ -35,15 +35,24 @@ class RatingForm(forms.ModelForm):
 
 
 class EventForm(forms.ModelForm):
-    start_day = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS,
+    title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title', 'onkeypress': 'return ValidaLongitud(this, 100);'}))
+    description = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}))
+    capacity = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}))
+    min_age = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
+    price = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
+    location_city = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}))
+    location_street = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}))
+    location_number = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}))
+    start_day = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,
                                 widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
-    start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+    start_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
                                  'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
-    end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
+    end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
                                'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
+    picture = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'https://'}))
 
     class Meta:
         model = Event
@@ -51,40 +60,95 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title', 'onkeypress': 'return ValidaLongitud(this, 100);'}),
-            'description': forms.TextInput(attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
-            'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
-            'capacity': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
-            'min_age': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
-            'price': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
-            'location_city': forms.TextInput(attrs={'required': False, 'placeholder': 'Sevilla', 'name': 'location_city'}),
-            'location_street': forms.TextInput(attrs={'required': False, 'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
-            'location_number': forms.TextInput(attrs={'required': False, 'placeholder': '01', 'name': 'location_number'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
             'extra_info': forms.TextInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
 
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        if not title:
+            raise ValidationError('Inserte un título')
+        return title
+
+    def clean_description(self):
+        description = self.cleaned_data.get('description')
+        if not description:
+            raise ValidationError('Inserte una descripción')
+        return description
+
     def clean_capacity(self):
         capacity = self.cleaned_data.get('capacity')
-        if capacity < 1:
+        if capacity and capacity < 1:
             raise ValidationError(
                 'El aforo no puede ser menor que uno')
+        elif not capacity:
+            raise ValidationError('Introduzca el aforo')
         return capacity
+
+    def clean_min_age(self):
+        min_age = self.cleaned_data.get('min_age')
+        if min_age and min_age < 1:
+            raise ValidationError(
+                'La edad no puede ser menor que uno')
+        elif not min_age:
+            raise ValidationError('Introduzca la edad')
+        return min_age
 
     def clean_price(self):
         price = self.cleaned_data.get('price')
-        if price < 0.0:
+        if price and price < 0.0:
             raise ValidationError(
                 'El precio no puede ser negativo')
+        elif not price:
+            raise ValidationError('Introduzca el precio')
         return price
+
+    def clean_location_number(self):
+        location_number = self.cleaned_data.get('location_number')
+        if not location_number:
+            raise ValidationError('Complete la ubicación')
+        return location_number
+
+    def clean_start_day(self):
+        start_day = self.cleaned_data.get('start_day')
+        if not start_day:
+            raise ValidationError('Introduzca la fecha')
+        return start_day
+    
+    def clean_start_time(self):
+        start_time = self.cleaned_data.get('start_time')
+        if not start_time:
+            raise ValidationError('Introduzca la hora de inicio')
+        return start_time
+
+    def clean_end_time(self):
+        end_time = self.cleaned_data.get('end_time')
+        if not end_time:
+            raise ValidationError('Inserte la hora de fin')
+        return end_time
+    
+    def clean_picture(self):
+        picture = self.cleaned_data.get('picture')
+        if not picture:
+            raise ValidationError('Inserte la imagen')
+        return picture
 
     def clean(self):
         clean_data = self.cleaned_data
+        title = self.cleaned_data.get('title')
+        description = self.cleaned_data.get('description')
+        capacity = self.cleaned_data.get('capacity')
+        min_age = self.cleaned_data.get('min_age')
+        price = self.cleaned_data.get('price')
+        location_city = self.cleaned_data.get('location_city')
+        location_street = self.cleaned_data.get('location_street')
+        location_number = self.cleaned_data.get('location_number')
         start_day = self.cleaned_data.get('start_day')
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
+        picture = self.cleaned_data.get('picture')
 
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
                                                   (isinstance(start_time, type(time)) and
@@ -92,18 +156,13 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
-        if not isinstance(start_time, type(time)):
-            raise ValidationError('Inserte una hora')
-        elif isinstance(end_time, type(time)) and (start_time >= end_time):
+        if isinstance(end_time, type(time)) and (start_time >= end_time):
             raise ValidationError(
                 'El evento no puede empezar después de terminar')
-        return clean_data
 
-    def clean_end_time(self):
-        end_time = self.cleaned_data.get('end_time')
-        if not isinstance(end_time, type(time)):
-            raise ValidationError('Inserte una hora')
-        return end_time
+        if not title or not description or not capacity or not min_age or not price or not location_city or not location_street or not location_number or not start_day or not start_time or not end_time or not picture: 
+            raise ValidationError('Hay algún elemeto sin completar')
+        return clean_data
 
 
 class LoginForm(AuthenticationForm):
