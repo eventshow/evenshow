@@ -210,7 +210,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 @method_decorator(login_required, name='dispatch')
 class EventCreateView(generic.CreateView):
     model = models.Event
-    form_class = forms.EventCreateForm
+    form_class = forms.EventForm
     success_url = EVENT_SUCCESS_URL
     template_name = 'event/update.html'
 
@@ -328,7 +328,7 @@ class EventEnrolledListView(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class EventUpdateView(generic.UpdateView):
     model = models.Event
-    form_class = forms.EventUpdateForm
+    form_class = forms.EventForm
     success_url = EVENT_SUCCESS_URL
     template_name = 'event/update.html'
 
@@ -369,20 +369,6 @@ class EventUpdateView(generic.UpdateView):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
-    
-    def get_form_class(self):
-        host = self.request.user
-        event_pk = self.kwargs.get('pk')
-
-        if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, self.kwargs.get(
-                'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
-
-            attende_list = selectors.UserSelector().event_attendees(event_pk)
-
-            if attende_list.count() == 0:
-                return forms.EventCreateForm
-            else:
-                return forms.EventUpdateForm
          
 
 class EventFilterFormView(generic.FormView):
