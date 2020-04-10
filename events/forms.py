@@ -83,7 +83,7 @@ class EventForm(forms.ModelForm):
         if capacity and capacity < 1:
             raise ValidationError(
                 'El aforo no puede ser menor que uno')
-        elif not capacity:
+        elif not capacity and capacity != 0:
             raise ValidationError('Introduzca el aforo')
         return capacity
 
@@ -92,7 +92,7 @@ class EventForm(forms.ModelForm):
         if min_age and min_age < 1:
             raise ValidationError(
                 'La edad no puede ser menor que uno')
-        elif not min_age:
+        elif not min_age and min_age != 0:
             raise ValidationError('Introduzca la edad')
         return min_age
 
@@ -101,7 +101,7 @@ class EventForm(forms.ModelForm):
         if price and price < 0.0:
             raise ValidationError(
                 'El precio no puede ser negativo')
-        elif not price:
+        elif not price and price != 0:
             raise ValidationError('Introduzca el precio')
         return price
 
@@ -156,7 +156,7 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
-        if isinstance(end_time, type(time)) and (start_time >= end_time):
+        if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (start_time >= end_time):
             raise ValidationError(
                 'El evento no puede empezar después de terminar')
 
