@@ -26,6 +26,7 @@ from . import forms
 from . import models
 from . import selectors
 from . import services
+import uuid
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -909,20 +910,22 @@ class FileUploadView(View):
         s3 = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                           aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
                           aws_session_token=settings.AWS_SESSION_TOKEN)
-
-        presigned_post = s3.generate_presigned_post(
-            Bucket=S3_BUCKET,
-            Key=file_name,
-            Fields={"acl": "public-read", "Content-Type": file_type},
-            Conditions=[
-                {"acl": "public-read"},
-                {"Content-Type": file_type}
-            ],
-            ExpiresIn=3600
-        )
-        dump = json.dumps({
-            'data': presigned_post,
-            'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
-        })
-        return HttpResponse(dump, content_type='application/json')
-
+        file_name = str(uuid.uuid4())+'.'+file_type
+        if not file_type=='jpg' or not file_type=='png':
+            presigned_post = s3.generate_presigned_post(
+                Bucket=S3_BUCKET,
+                Key=file_name,
+                Fields={"acl": "public-read", "Content-Type": file_type},
+                Conditions=[
+                    {"acl": "public-read"},
+                    {"Content-Type": file_type}
+                ],
+                ExpiresIn=3600
+            )
+            dump = json.dumps({
+                'data': presigned_post,
+                'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
+            })
+            return HttpResponse(dump, content_type='application/json')
+        else:
+            pass
