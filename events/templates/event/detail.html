@@ -147,14 +147,14 @@
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                data-amount="{% widthratio object.price_discount 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
                 data-label="Sí">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", " btn-large discount-yes left ");
             </script>
             {% else %}
-            <a class=" waves-light btn-large modal-trigger modal-mov " href="#modal3">{{ object.price }}€</a>
+            <button class=" waves-light btn-large modal-trigger modal-mov " href="#modal3">{{ object.price_discount }}€</button>
             {% endif %}
 
         </form>
@@ -172,6 +172,7 @@
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
             </script>
             {% else %}
+                <button class=" waves-light btn-large modal-trigger modal-mov " href="#modal3">{{ object.price }}€</button>
             {% endif %}
 
         </form>
