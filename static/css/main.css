@@ -2588,7 +2588,9 @@ background: #FFF;
 	#eventpoint{
 		bottom: -4%;
 	}
-
+	#titleTerms{
+		margin-top: -9px;
+	}
 }
 
 
