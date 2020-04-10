@@ -21,7 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-9x776!@a8$%5jxgt!la$o0mn()cc2xf4so4_95_-bc33w(wka'
+#AWS
 
+AWS_ACCESS_KEY_ID = 'ASIA5COAWZQUOSEDSH4E'
+AWS_SECRET_ACCESS_KEY = '1/ahcV9DpeIIf/2sg7RLsM+u2uUEy+eqaq5oMruB'
+
+S3_BUCKET = 'ispp'
+
+AWS_SESSION_TOKEN ='FwoGZXIvYXdzEAwaDKUPEzCcadOJfwB/ziLDAdt5r8WrjLehuFuny3l86bosC6BN9FpapRZ0XUYbZQtZi+viRm7+Xt05gOtKpufzOLsDwUGxcQyJCqEoXPhobIfwzui2C8w/3OUwh/JYX+GeV2HoINCxWnMQ12sieplWpk5W/jCDTbTD4wqrdNRhp0yULYzxFbb7tO22ZiWU9TD6Uprdui4FY7tbyV1M5IXPVNHAq8dpaEoVOoHuiEitoBrc0Sx4z9/DUKoIyYtyy6hEwiWjxA4Pk9tftvh5BMpO88srkSj/o8H0BTItHRI1i4sPNRQ+z2EIVaB+amXVxJTshS0iPKHTyW8ljHSbj8uqppP3e9sl3kT6'
 # Stripe
 STRIPE_PUBLISHABLE_KEY = 'pk_test_2VnijOUd5sd8e2PZ41h83HIn00gkxo4bFs'
 STRIPE_SECRET_KEY = 'sk_test_CAG7jbyKGW8SNOQCIeQJwF9w00Kcv8oVN7'

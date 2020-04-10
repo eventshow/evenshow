@@ -5,9 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm, UserCreationForm
 from django.core.exceptions import ValidationError
-from django.forms import inlineformset_factory
 from django.utils.timezone import now
-
 
 from .models import Category, Event, Profile, Rating
 
@@ -40,9 +38,9 @@ class EventForm(forms.ModelForm):
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
     start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
-                                 'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+        'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
     end_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs={
-                               'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
+        'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
 
     class Meta:
@@ -51,19 +49,28 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title', 'onkeypress': 'return ValidaLongitud(this, 100);'}),
-            'description': forms.TextInput(attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id': 'title',
+                                            'onkeypress': 'return ValidaLongitud(this, 100);'}),
+            'description': forms.TextInput(
+                attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
-            'capacity': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
-            'min_age': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
-            'price': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
-            'location_city': forms.TextInput(attrs={'required': False, 'placeholder': 'Sevilla', 'name': 'location_city'}),
-            'location_street': forms.TextInput(attrs={'required': False, 'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
-            'location_number': forms.TextInput(attrs={'required': False, 'placeholder': '01', 'name': 'location_number'}),
+            'capacity': forms.NumberInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
+            'min_age': forms.NumberInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
+            'price': forms.NumberInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
+            'location_city': forms.TextInput(
+                attrs={'required': False, 'placeholder': 'Sevilla', 'name': 'location_city'}),
+            'location_street': forms.TextInput(
+                attrs={'required': False, 'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
+            'location_number': forms.TextInput(
+                attrs={'required': False, 'placeholder': '01', 'name': 'location_number'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
+            'extra_info': forms.TextInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
 
     def clean_capacity(self):
@@ -88,7 +95,8 @@ class EventForm(forms.ModelForm):
 
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
                                                   (isinstance(start_time, type(time)) and
-                                                   (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+                                                   (
+                                                           start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
@@ -212,7 +220,8 @@ class ProfileForm(forms.ModelForm):
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
     picture = forms.URLField(required=False, widget=forms.URLInput(
-        attrs={'placeholder': "https://"}))
+        attrs={'placeholder': "https://", 'type': 'hidden', 'id': 'avatar-url', 'name': 'avatar-url',
+               'value': '/static/favicon.png'}))
 
     class Meta:
         model = Profile

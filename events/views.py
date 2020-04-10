@@ -1,20 +1,17 @@
-import stripe
-import requests
+import boto3
+import json
 import urllib
-
-from django.db.models import Count
-from datetime import date, datetime
-
+from datetime import date
 from io import BytesIO
 
+import requests
+import stripe
 from django.conf import settings
-from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
-
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.db.models import Count
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse
 from django.template.loader import get_template
 from django.urls import reverse_lazy
@@ -239,17 +236,17 @@ class EventDeleteView(generic.DeleteView):
     success_url = EVENT_SUCCESS_URL
 
     def get_context_data(self, **kwargs):
-    
+
         context = super(EventDeleteView, self).get_context_data(**kwargs)
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
 
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk):
             event = models.Event.objects.get(pk=event_pk)
-            
+
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
-            amount_host=services.PaymentService().fee(round(event.price*100))
-            context['penalty'] = (amount_host*attendees)/100
+            amount_host = services.PaymentService().fee(round(event.price * 100))
+            context['penalty'] = (amount_host * attendees) / 100
 
         return context
 
@@ -263,12 +260,11 @@ class EventDeleteView(generic.DeleteView):
             if not event.can_delete:
                 try:
                     attendees = selectors.UserSelector().event_attendees(event_pk).count()
-                    amount_host=services.PaymentService().fee(round(event.price*100))
-                    services.PaymentService().charge(round(amount_host*attendees), request.POST['stripeToken'])
-                    
+                    amount_host = services.PaymentService().fee(round(event.price * 100))
+                    services.PaymentService().charge(round(amount_host * attendees), request.POST['stripeToken'])
+
                 except stripe.error.StripeError:
                     redirect('not_impl')
-
 
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
@@ -355,7 +351,8 @@ class EventUpdateView(generic.UpdateView):
         event_pk = self.kwargs.get('pk')
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
-                'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
+                'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(
+            event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -486,7 +483,7 @@ class EnrollmentCreateView(generic.View):
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
             services.PaymentService().save_transaction(
-                event.price*100, customer.id, event, attendee, event.created_by)
+                event.price * 100, customer.id, event, attendee, event.created_by)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
@@ -625,7 +622,8 @@ class RateHostView(generic.CreateView):
             host = event.created_by
             auto_rating = self.request.user.id == host.id
 
-            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (not auto_rating) and host.username != 'deleted':
+            if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (
+            not auto_rating) and host.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -898,7 +896,33 @@ class DownloadPDF(View):
         pdf = self.render_to_pdf('profile/pdf.html', data)
 
         response = HttpResponse(pdf, content_type='application/pdf')
-        filename = user.username+'-eventshow.pdf'
+        filename = user.username + '-eventshow.pdf'
         content = "attachment; filename=%s" % (filename)
         response['Content-Disposition'] = content
         return response
+
+
+class FileUploadView(View):
+    def get(self, request,file_name,file_type, **kwargs):
+        S3_BUCKET = settings.S3_BUCKET
+
+        s3 = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                          aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                          aws_session_token=settings.AWS_SESSION_TOKEN)
+
+        presigned_post = s3.generate_presigned_post(
+            Bucket=S3_BUCKET,
+            Key=file_name,
+            Fields={"acl": "public-read", "Content-Type": file_type},
+            Conditions=[
+                {"acl": "public-read"},
+                {"Content-Type": file_type}
+            ],
+            ExpiresIn=3600
+        )
+        dump = json.dumps({
+            'data': presigned_post,
+            'url': 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, file_name)
+        })
+        return HttpResponse(dump, content_type='application/json')
+
