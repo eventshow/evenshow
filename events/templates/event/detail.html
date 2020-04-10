@@ -50,13 +50,21 @@
         {% elif user_can_enroll and not event.has_started %}
         <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
             {% csrf_token %}
+            
             {% if not have_creditcard %}
-                <button type="button" id="abrir-popup" class="aves-effect waves-light btn-large button-detail-auth" onclick="abrirPopup();this.onclick=null">{{ object.price }}€</button>
-                <div id="overlay"></div>
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada"
+                data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                data-label="{{ object.price }}€">
+                </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
+            </script>
             {% else %}
             <button type="submit"
                 class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€</button>
             {% endif %}
+           
         </form>
         {% endif %}
         {% elif event.created_by.username == 'deleted' %}
@@ -162,167 +170,6 @@
         }
     }
 
-    .StripeElement {
-        width: 400px;
-        height: 400px;
-        color: #32325d;
-        background-color: rgb(183, 35, 76);
-        border: 1px solid transparent;
-        border-radius: 4px;
-
-        box-shadow: 0 1px 3px 0 #e6ebf1;
-        -webkit-transition: box-shadow 150ms ease;
-        transition: box-shadow 150ms ease;
-
-    }
-
-    input {
-        padding: 10px 12px;
-    }
-
-    input:focus,
-    .StripeElement--focus {
-        box-shadow: 0 1px 3px 0 #cfd7df;
-    }
-
-    .StripeElement--invalid {
-        border-color: #fa755a;
-    }
-
-    .StripeElement--webkit-autofill {
-        background-color: #fefde5 !important;
-    }
-
 </style>
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    var stripe = Stripe('{{stripe_key}}');
 
-    var elements = stripe.elements();
-    
-    var style = {
-        base: {
-            color: '#ffffff',
-            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-            fontSmoothing: 'antialiased',
-            fontSize: '16px',
-            '::placeholder': {
-            color: '#aab7c4'
-            }
-        },
-        invalid: {
-            color: '#fa755a',
-            iconColor: '#fa755a'
-        }
-    };
-
-    function abrirPopup(){
-        var overlay = document.getElementById('overlay');
-        var divPopup = document.createElement('div');
-
-        divPopup.setAttribute('id', 'pop-up');
-        overlay.appendChild(divPopup);
-
-        var button = document.createElement('button');
-        button.setAttribute('id', 'cerrar-popup');
-        button.setAttribute('onclick', 'cerrarPopup();');
-        button.innerHTML = 'Cerrar';
-        button.setAttribute('type', 'button');
-        divPopup.appendChild(button);
-
-        var divCard = document.createElement('div');
-        divCard.setAttribute('id', 'card-element');
-        divPopup.appendChild(divCard);
-
-        var divError = document.createElement('div');
-        divError.setAttribute('id', 'card-errors');
-        divPopup.appendChild(divError);
-        
-
-        if (!elements.getElement('card')){
-            var card = elements.create('card', {style: style},);
-        }else{
-            var card = elements.getElement('card');
-        }
-
-        var check = document.createElement('input');
-        check.type = 'checkbox';
-        check.setAttribute('id', 'discount');
-        check.setAttribute('name', 'checkbox');
-        check.value = 'checkbox';
-        check.setAttribute('onclick', 'check()');
-        divPopup.appendChild(check);
-
-        var span = document.createElement('span');
-        span.setAttribute('for', 'discount');
-        span.innerHTML = 'Descuento';
-        span.setAttribute('onclick', 'check()');
-        divPopup.appendChild(span);
-
-        var divSubmit = document.createElement('div');
-        divSubmit.setAttribute('id', 'submit');
-        divPopup.appendChild(divSubmit);
-
-        var submit = document.createElement('input');
-        submit.setAttribute('type', 'submit');
-        submit.setAttribute('class', 'aves-effect waves-light btn-large button-detail-auth');
-        divSubmit.appendChild(submit);
-        
-        card.mount('#card-element');
-        card.addEventListener('change', function(event){
-            var displayError = document.getElementById('card-errors')
-            if(event.error){
-                displayError.textContent = event.error.message;
-            }else{
-                displayError.textContent = '';
-            }
-        });
-
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', function(event){
-            event.preventDefault();
-
-            stripe.createToken(card).then(function(result) {
-                if (result.error){
-                    var errorElement = document.getElementById('card-errors');
-                    displayError.textContent = event.error.message;
-                }else{
-                    stripeTokenHandler(result.token);
-                }
-            });
-        });
-
-        function stripeTokenHandler(token) {
-            var form = document.getElementById('payment-form');
-            var hiddenInput = document.createElement('input');
-            hiddenInput.setAttribute('type', 'hidden');
-            hiddenInput.setAttribute('name', 'stripeToken');
-            hiddenInput.setAttribute('value', token.id);
-            form.appendChild(hiddenInput);
-
-            form.submit();
-        };
-
-    };
-    
-    function cerrarPopup() {
-            var overlay = document.getElementById('overlay');
-            var divPopup = document.getElementById('pop-up');
-
-            overlay.removeChild(divPopup);
-
-            document.getElementById('abrir-popup').setAttribute('onclick', 'abrirPopup();this.onclick=null');
-        };
-
-    function check(){
-        var check = document.getElementById('discount').checked;
-        if (!check){
-            document.getElementById('discount').checked = true;
-        }else{
-            document.getElementById('discount').checked = false;
-        }
-    };
-    
-    
-</script>
 {% endblock %}

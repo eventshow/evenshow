@@ -200,8 +200,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
+        
             
-
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
         context['gmaps_key'] = settings.GOOGLE_API_KEY
@@ -485,13 +485,6 @@ class EnrollmentCreateView(generic.View):
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
-
-            discount = False
-            try:
-                request.POST['checkbox']
-                discount = True
-            except MultiValueDictKeyError:
-                pass
             
             event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
@@ -500,7 +493,53 @@ class EnrollmentCreateView(generic.View):
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
             services.PaymentService().save_transaction(
-                event.price*100, customer.id, event, attendee, event.created_by, discount)
+                event.price*100, customer.id, event, attendee, event.created_by, False)
+
+            subject = 'Nueva inscripción a {0}'.format(event.title)
+            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
+                enrollment.created_by.username, event.title)
+            recipient = event.created_by.email
+
+            services.EmailService().send_email(subject, body, [recipient])
+
+            return render(request, 'enrollment/thanks.html', context)
+        else:
+            return redirect('/')
+
+@method_decorator(login_required, name='dispatch')
+class EnrollmentCreateDiscountView(generic.View):
+    model = models.Enrollment
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        event_pk = kwargs.get('pk')
+        event = models.Event.object.get(pk=event_pk)
+        context['event_title'] = event.title
+
+    def post(self, request, *args, **kwargs):
+        attendee = self.request.user
+        event_pk = kwargs.get('pk')
+        event = models.Event.objects.get(pk=event_pk)
+        event_exists = services.EventService().count(event_pk)
+        event_is_full = selectors.UserSelector().event_attendees(
+            event_pk).count() >= event.capacity
+        event_has_started = event.has_started
+        user_can_enroll = services.EnrollmentService().user_can_enroll(
+            event_pk, attendee)
+
+        context = {'event_title': models.Event.objects.get(pk=event_pk)}
+
+        if event_exists and user_can_enroll and not event_is_full and not event_has_started:
+            enrollment = services.EnrollmentService().create(event_pk, attendee)
+            
+            event = models.Event.objects.get(pk=event_pk)
+            if not services.PaymentService().is_customer(attendee.email):
+                customer = services.PaymentService().get_or_create_customer(
+                    request.user.email, request.POST['stripeToken'])
+            else:
+                customer = services.PaymentService().get_or_create_customer(request.user.email, None)
+            services.PaymentService().save_transaction(
+                event.price*100, customer.id, event, attendee, event.created_by, True)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
