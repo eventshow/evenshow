@@ -39,6 +39,8 @@ urlpatterns = [
          views.EnrollmentListView.as_view(), name='list_enrollments'),
     path('events/<int:pk>/enroll',
          views.EnrollmentCreateView.as_view(), name='enroll_event'),
+    path('events/<int:pk>/enroll/discount',
+         views.EnrollmentCreateDiscountView.as_view(), name='enroll_event'),
     path('events/<int:pk>/delete', views.EventDeleteView.as_view(),
          name='delete_event'),
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
