@@ -1219,6 +1219,7 @@ label {
 	margin-bottom: -8%;
 	margin-left: 10%;
 	font-size: 19px;
+	z-index: 10;
 }
 
 #title-delete-comi-sm {
@@ -1232,6 +1233,7 @@ label {
 	margin-bottom: -9%;
 	margin-left: 10%;
 	font-size: 19px;
+	z-index: 10;
 }
 
 
