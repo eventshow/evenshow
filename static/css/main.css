@@ -1518,7 +1518,7 @@ table {
 }
 
 #title-name,
-#copiar {
+#copiar, #title-name-terms {
 	color: #B6244D;
 	
 }
@@ -1664,7 +1664,7 @@ table {
 
  
 	#titleTerms {
-		margin-top: -61px;
+		margin-top: -2px;
 		margin-bottom: 75px;
 	}
    
@@ -2378,14 +2378,16 @@ background: #FFF;
 .mar-modal{
 	margin-right: 10%;
 }
-
+#title-name-terms{
+	font-size: 22px;
+}
 
 }
 
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
-
+	
 	#titleTerms{
 		margin-top: -9px;
 	}
