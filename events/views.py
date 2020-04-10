@@ -83,8 +83,8 @@ class HomeView(generic.FormView):
             context['no_geolocation'] = 'No se ha podido determinar tu ubicación'
             return self.render_to_response(context)
         elif nearby:
-            self.request.session['latitude'] = latitude
-            self.request.session['longitude'] = longitude
+            self.request.session['latitude'] = float(latitude)
+            self.request.session['longitude'] = float(longitude)
         elif self.request.session.get('latitude') or self.request.session.get('longitude'):
             del self.request.session['latitude']
             del self.request.session['longitude']
