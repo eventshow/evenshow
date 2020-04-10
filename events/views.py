@@ -133,7 +133,7 @@ class AttendeePaymentView(generic.View):
                                     fee = services.PaymentService().fee(transaction.amount)
                                     attendee_amount = fee + transaction.amount
 
-                                    services.PaymentService().charge(
+                                    services.PaymentService().charge_connect(
                                         attendee_amount, transaction.customer_id, fee, transaction.recipient)
 
                                     transaction.is_paid_for = True
