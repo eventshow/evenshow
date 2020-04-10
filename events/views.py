@@ -808,20 +808,33 @@ class UserDeleteView(generic.DeleteView):
 
     def delete(self, request, *args, **kwargs):
         user = self.get_object()
-        total_penalty = selectors.EnrollmentSelector().aux(
-            user).aggregate(Sum('penalty')).get('penalty__sum', None)
+        price_sum = self.get_price_sum()
         try:
-            if total_penalty:
-                fee = services.PaymentService().fee(round(total_penalty*100))
+            if price_sum:
+                penalty = services.PaymentService().fee(round(price_sum))
                 services.PaymentService().charge(
-                    round(fee), user.profile.stripe_access_token)
+                    round(penalty), request.POST.get('stripeToken'))
             user.delete()
             return redirect('home')
         except stripe.error.StripeError:
             return redirect('payment_error')
 
+    def get_context_data(self, **kwargs):
+        context = super(UserDeleteView, self).get_context_data(**kwargs)
+        context['penalized'] = self.get_penalized_events().count()
+        context['penalty'] = services.PaymentService().fee(
+            round(self.get_price_sum()))/100
+        context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        return context
+
     def get_object(self):
         return self.request.user
+
+    def get_penalized_events(self):
+        return selectors.EventSelector().penalized(self.get_object())
+
+    def get_price_sum(self):
+        return self.get_penalized_events().aggregate(Sum('penalty')).get('penalty__sum', None)*100
 
 
 @method_decorator(login_required, name='dispatch')
