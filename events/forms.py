@@ -51,7 +51,7 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title', 'onkeypress': 'return ValidaLongitud(this, 100);'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id': 'title', 'onkeypress': 'return ValidaLongitud(this, 100);'}),
             'description': forms.TextInput(attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
             'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
             'capacity': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
@@ -259,6 +259,8 @@ class SearchHomeForm(forms.Form):
         ),
         input_formats=('%H:%M',)
     )
+    latitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
+    longitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
 
     def clean_date(self):
         date = self.cleaned_data.get('date')

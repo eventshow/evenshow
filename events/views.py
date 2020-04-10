@@ -71,24 +71,25 @@ class HomeView(generic.FormView):
         if self.request.session.get('form_values'):
             del self.request.session['form_values']
             self.request.session['form_values'] = kwargs
-        if self.request.session.get('latitude'):
-            del self.request.session['latitude']
-            del self.request.session['longitude']
+
+        nearby = self.request.POST.get('nearby', None) or None
+        latitude = data.get('latitude', None) or None
+        longitude = data.get('longitude', None) or None
 
         kwargs = {key: val for key, val in kwargs.items() if val}
 
+        if nearby and not(latitude and longitude):
+            context = self.get_context_data(form=form)
+            context['no_geolocation'] = 'No se ha podido determinar tu ubicación'
+            return self.render_to_response(context)
+        elif nearby:
+            self.request.session['latitude'] = latitude
+            self.request.session['longitude'] = longitude
+        elif self.request.session.get('latitude') or self.request.session.get('longitude'):
+            del self.request.session['latitude']
+            del self.request.session['longitude']
+
         return redirect(reverse('list_event_filter', kwargs=kwargs))
-
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        no_geolocation = self.request.session.get(
-            'no_geolocation', None) or None
-
-        if no_geolocation:
-            context['no_geolocation'] = no_geolocation
-            del self.request.session['no_geolocation']
-
-        return context
 
 
 @method_decorator(login_required, name='dispatch')
@@ -445,24 +446,6 @@ class EventFilterListView(generic.ListView):
                 self.request.user, 50000, self.request.session.get('latitude'), self.request.session.get('longitude'), **self.kwargs)
 
         return queryset
-
-
-class EventSearchNearbyView(generic.View):
-    def post(self, request, *args, **kwargs):
-        latitude = self.request.POST.get('latitude')
-        longitude = self.request.POST.get('longitude')
-
-        if not (latitude and longitude):
-            request.session['no_geolocation'] = 'No se ha podido determinar tu ubicación'
-            return redirect('home')
-        else:
-            self.request.session['latitude'] = latitude
-            self.request.session['longitude'] = longitude
-
-            if self.request.session.get('form_values'):
-                del self.request.session['form_values']
-
-            return redirect('list_event_filter')
 
 
 @method_decorator(login_required, name='dispatch')

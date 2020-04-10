@@ -90,7 +90,6 @@
                 <div class="row">
                     <div class="col s9 location-prov">
                         <label>UBICACIÓN </label>
-
                         <div class=" form-errors">
                             {{ form.location }}
                             {{ form.location.errors }}
@@ -116,19 +115,16 @@
                         </label>
                     </div>
                 </div>
+                {{form.latitude}}
+                {{form.longitude}}
+                {{form.errors}}
 
-                <button class="waves-effect waves-light btn-large right">Buscar</button>
-            </form>
-
-            <form class="" method="POST" action="{% url 'event_nearby_search_home' %}">
-                {% csrf_token %}
-                <input type="hidden" name="longitude">
-                <input type="hidden" name="latitude">
-
-                <button class="waves-effect waves-light btn-small location "><i title="Eventos a 50km de ti"
+                <button class="waves-effect waves-light btn-small location" type="submit" name="nearby"
+                    value="nearby"><i title="Eventos a 50km de ti"
                         class="location-em material-icons ">location_on</i></button>
+                <button class="waves-effect waves-light btn-large right" type="submit" name="search"
+                    value="search">Buscar</button>
             </form>
-
         </div>
     </div>
 </div>

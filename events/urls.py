@@ -26,8 +26,6 @@ urlpatterns = [
     re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?(?:c(?P<category>\d*)/)?$',
             views.EventFilterListView.as_view(), name='list_event_filter'),
 
-    path('events/nearby',
-         views.EventSearchNearbyView.as_view(), name='event_nearby_search_home'),
     path('events/create', views.EventCreateView.as_view(),
          name='create_event'),
     path('events/payment/<int:pk>',
@@ -44,7 +42,8 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
-    path('oauth/callback/', views.StripeAuthorizeCallbackView.as_view(), name='authorize_callback'),
+    path('oauth/callback/', views.StripeAuthorizeCallbackView.as_view(),
+         name='authorize_callback'),
     path('profile', login_required(TemplateView.as_view(template_name='profile/detail.html')),
          name='detail_profile'),
     path('profile/delete', views.UserDeleteView.as_view(), name='delete_profile'),
@@ -65,9 +64,9 @@ urlpatterns = [
 
     path('profile/pdf_download', views.DownloadPDF.as_view(), name='pdf_download'),
 
-     path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
+    path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
          name='grac'),
-     path('vista/terminos', TemplateView.as_view(template_name='terms.html'),
+    path('vista/terminos', TemplateView.as_view(template_name='terms.html'),
          name='terms'),
 
 ]
