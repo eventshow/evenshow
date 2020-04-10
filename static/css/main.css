@@ -2445,6 +2445,17 @@ background: #FFF;
 		font-family: Raleway, sans-serif;
 		font-size: 95% !important;
 	}
+
+	#title-name-terms{
+	font-size: 30px;
+}
+
+	}
+#textTerms {
+    color: black;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 	
 	#send-buttons-pw {
 		width: 130px;
