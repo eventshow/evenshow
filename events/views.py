@@ -405,7 +405,11 @@ class EventFilterListView(generic.ListView):
         context = super(EventFilterListView,
                         self).get_context_data(**kwargs)
         context['locations'] = services.EventService().locations()
-        context['location'] = self.kwargs.get('location_city__icontains', None)
+        if self.request.session.get('message_geolocation'):
+            context['location'] = self.request.session.get('message_geolocation')
+            del self.request.session['message_geolocation']
+        else:
+            context['location'] = self.kwargs.get('location_city__icontains', None)
         context['category'] = models.Category.objects.filter(
             pk=self.kwargs.get('category')).values_list('name', flat=True).first()
         context['form'] = self.form_class(
@@ -440,6 +444,11 @@ class EventSearchNearbyView(generic.View):
     def post(self, request, *args, **kwargs):
         latitude = self.request.POST.get('latitude')
         longitude = self.request.POST.get('longitude')
+
+        if not (latitude and longitude):
+            self.request.session['message_geolocation']='Su navegador no tiene activada la geolocalización.' \
+                                                        ' Por favor actívela para ver los eventos cercanos. A ' \
+                                                        'continuación se le muestran todos los eventos'
 
         self.request.session['latitude'] = latitude
         self.request.session['longitude'] = longitude
