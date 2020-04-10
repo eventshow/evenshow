@@ -901,8 +901,12 @@ p.description {
 }
 
 .location {
-	margin-left: 12%;
+	padding-top: 6px;
+    margin-left: 0;
+    padding-left: 46px;
+    padding-right: 45px;
 }
+
 
 .form-eventshow select {
 	width: 100% !important;
