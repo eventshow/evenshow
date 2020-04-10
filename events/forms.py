@@ -53,7 +53,8 @@ class EventForm(forms.ModelForm):
                                             'onkeypress': 'return ValidaLongitud(this, 100);'}),
             'description': forms.TextInput(
                 attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
-            'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
+            'picture': forms.TextInput(attrs={'required': False, 'type': 'hidden','id': 'event-url', 'name': 'event-url',
+               'value': ''}),
             'capacity': forms.NumberInput(
                 attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
             'min_age': forms.NumberInput(

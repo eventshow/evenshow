@@ -71,4 +71,6 @@ urlpatterns = [
          name='terms'),
     path('profile/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
          name='upload_file'),
+    path('events/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
+         name='upload_file_event'),
 ]
