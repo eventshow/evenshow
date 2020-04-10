@@ -24,12 +24,12 @@ class EnrollmentSelector:
 class EventSelector:
     def hosted(self, host: User) -> QuerySet:
         hosted_events = models.Event.objects.filter(
-            created_by=host).order_by('title')
+            created_by=host)
         return hosted_events
 
     def enrolled(self, attendee: User, status='ACCEPTED') -> QuerySet:
         enrolled_events = models.Event.objects.filter(
-            event_enrollments__created_by=attendee).order_by('title')
+            event_enrollments__created_by=attendee)
         return enrolled_events
 
     def not_enrolled(self, attendee: User) -> QuerySet:
@@ -53,11 +53,6 @@ class EventSelector:
     def rated_by_user(self, user: User, on='HOST') -> QuerySet:
         return models.Event.objects.filter(ratings__created_by=user, ratings__on=on)
 
-    def event_enrolled_accepted(self, attendee: User, status='ACCEPTED') -> QuerySet:
-        event_enrolled_accepted = models.Event.objects.filter(
-            event_enrollments__created_by=attendee, event_enrollments__status=status).order_by('title')
-        return event_enrolled_accepted
-
 
 class RatingSelector:
     def on_user(self, reviewed: User, on='HOST') -> QuerySet:
@@ -77,7 +72,7 @@ class UserSelector:
 
     def event_attendees(self, event_pk: int) -> QuerySet:
         event_attendees = User.objects.filter(
-            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED').order_by('username')
+            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED')
         return event_attendees
 
     def rated_on_event(self, event_pk: int) -> QuerySet:
