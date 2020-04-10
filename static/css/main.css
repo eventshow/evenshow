@@ -1658,6 +1658,12 @@ table {
 
 }
 
+	.text-left {
+		margin-left: -10%;
+		margin-top: 12% !important;
+		margin-bottom: 4%;
+	}
+
 	.modal-mov{
 		margin-top: 6%;
 
@@ -2116,10 +2122,6 @@ table {
     padding: 15px 15px 90px;
 }
 
-	.location {
-    margin-top: -512%;
-    margin-left: 153%;
-}
 
 	.footer-copyright {
 		text-align: left;
@@ -2545,9 +2547,7 @@ background: #FFF;
 		margin-top: 9%;
 	}
 
-	.location {
-    margin-left: 30%;
-}
+
 
 	.form-search{
 		margin-top: 111px;
