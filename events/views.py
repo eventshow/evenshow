@@ -817,10 +817,6 @@ class StripeAuthorizeCallbackView(generic.View):
             stripe_access_token = resp.json()['access_token']
             usuario = request.session['usuario']
             user = User.objects.filter(pk=usuario).first()
-            try:
-                login(request, user)
-            except ValueError:
-                pass
 
             profile = user.profile
             profile.stripe_access_token = stripe_access_token
@@ -847,6 +843,7 @@ class StripeAuthorizeView(generic.View):
             'redirect_uri': settings.STRIPE_REQUEST_URI
         }
         url = f'{url}?{urllib.parse.urlencode(params)}'
+        request.session.modified = True
         return redirect(url)
 
 
