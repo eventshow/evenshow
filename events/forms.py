@@ -80,7 +80,7 @@ class EventForm(forms.ModelForm):
 
     def clean_capacity(self):
         capacity = self.cleaned_data.get('capacity')
-        if capacity and capacity < 1:
+        if capacity is not None and capacity < 1:
             raise ValidationError(
                 'El aforo no puede ser menor que uno')
         elif not capacity and capacity != 0:
@@ -89,7 +89,7 @@ class EventForm(forms.ModelForm):
 
     def clean_min_age(self):
         min_age = self.cleaned_data.get('min_age')
-        if min_age and min_age < 1:
+        if min_age is not None and min_age < 1:
             raise ValidationError(
                 'La edad no puede ser menor que uno')
         elif not min_age and min_age != 0:
@@ -98,7 +98,7 @@ class EventForm(forms.ModelForm):
 
     def clean_price(self):
         price = self.cleaned_data.get('price')
-        if price and price < 0.0:
+        if price is not None and price < 0.0:
             raise ValidationError(
                 'El precio no puede ser negativo')
         elif not price and price != 0:
@@ -160,9 +160,6 @@ class EventForm(forms.ModelForm):
             raise ValidationError(
                 'El evento no puede empezar después de terminar')
 
-        if not title or not description or not capacity or not min_age or not price or not location_city or not location_street or not location_number or not start_day or not start_time or not end_time or not picture: 
-            raise ValidationError('Hay algún elemeto sin completar')
-        return clean_data
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(required=True, widget=forms.TextInput(
