@@ -2723,6 +2723,41 @@ background: #FFF;
 		margin-left: -40% !important;
 		margin-top: 70% !important;
 	}
+
+	#title-delete-comi-sm {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -90% !important;
+    	margin-left: 3% !important;
+}
+	}
+
+	
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -53% !important;
+		margin-left: 7% !important;
+	}
+
+	.delete-buttons-big-title {
+		margin-top: 56%;
+		align-content: center;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
