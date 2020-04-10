@@ -1001,6 +1001,7 @@ p.description {
 	margin-top: -5%;
 	font-size: 20px;
 	font-weight: 400;
+	margin-left: 115%;
 }
 
 .price:hover {
@@ -1686,7 +1687,19 @@ table {
 
 	margin-right: 3%;
 
+
+
 }
+
+	.price{
+
+		background-color: transparent !important;
+		border: transparent !important;
+		color: transparent;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
+		-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
+
+	}
 
 	.modal-mov{
 		margin-top: 6%;
