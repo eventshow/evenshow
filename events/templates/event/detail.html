@@ -48,7 +48,8 @@
         {% elif event.created_by.username == 'deleted' %}
         <h3 class="warning-full" href="">No disponible</h3>
         {% elif user_can_enroll and not event.has_started %}
-        <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
+
+            <form action="{% url 'enroll_event_discount' object.pk %}" method="POST" id="payment-form">
             {% csrf_token %}
             
             {% if not have_creditcard %}
@@ -61,26 +62,31 @@
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
             {% else %}
-            <button type="submit"
-                class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€</button>
-
-
+            <a class=" waves-light btn-large modal-trigger modal-mov button-detail-auth" href="#modal3">{{ object.price }}€</a>
             {% endif %}
            
         </form>
 
-              <a class=" waves-light btn-large modal-trigger modal-mov button-detail-auth" href="#modal3">{{ object.price }}€</a>
+              <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
+            {% csrf_token %}
 
-            <div id="modal3" class="modal modal-evetshow-detail">
-      <div class="center modal-content ">
-        <h1> Tienes <strong style="color: #B6244D">{{ user.profile.eventpoints }}</strong> eventpoints ¿Quieres utilizarlos?</h1><br>
+            {% if not have_creditcard %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada"
+                data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                data-label="{{ object.price }}€">
+                </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
+            </script>
+            {% else %}
+            {% endif %}
 
-      </div>
-      <div class=" center modal-footer-detail">
-        <button href="#!" class="modal-close waves-effect waves btn-large">SÍ</button>
-      <button href="#!" class="modal-close waves-effect waves btn-large">NO</button>
-      </div>
-    </div>
+        </form>
+
+
+
+
 
         {% endif %}
         {% elif event.created_by.username == 'deleted' %}
@@ -161,6 +167,19 @@
     {% include 'pagination.html' %}
     {% endif %}
 </div>
+  <div id="modal3" class="modal modal-evetshow-detail">
+ <div class="center modal-content ">
+        <h1> Tienes <strong style="color: #B6244D">{{ user.profile.eventpoints }}</strong> eventpoints ¿Quieres utilizarlos?</h1><br>
+
+      </div>
+
+
+      <div class=" center modal-footer-detail">
+        <button href="#!" class="modal-close waves-effect waves btn-large">SÍ</button>
+      <button href="#!" class="modal-close waves-effect waves btn-large">NO</button>
+      </div>
+    </div>
+
 <style>
     body {
         background-size: cover;
