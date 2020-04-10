@@ -260,6 +260,7 @@ class PaymentService():
 
         return round(res - amount_host)
 
+
     def fee_discount(self, amount_host: int, attendee:User) -> int:
         res = 0
         const_stripe = 25
@@ -291,7 +292,8 @@ class PaymentService():
 
         return round(res - amount_host)
 
-    def charge(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
+   
+    def charge_connect(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
 
         stripe.Charge.create(
                 amount=amount,
