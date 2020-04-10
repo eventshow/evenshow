@@ -340,11 +340,6 @@ class EventUpdateView(generic.UpdateView):
             event_db = models.Event.objects.get(pk=event_pk)
 
             attende_list = selectors.UserSelector().event_attendees(event_pk)
-
-            if attende_list.count() > 0 and not event.price:
-                event.price = event_db.price
-            elif attende_list.count() > 0 and event.price:
-                return redirect('/')
                 
             subject = 'Evento actualizado'
             body = 'El evento ' + event_db.title + \
