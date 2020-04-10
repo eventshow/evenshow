@@ -2385,6 +2385,10 @@ background: #FFF;
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
+
+	#titleTerms{
+		margin-top: -9px;
+	}
 	#eventpoint{
 		font-style: italic;
 		font-family: Raleway, sans-serif;
