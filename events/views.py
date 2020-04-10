@@ -102,7 +102,8 @@ class AttendeeListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('pk'))
+        queryset = selectors.UserSelector().event_attendees(
+            self.kwargs.get('pk')).order_by('username')
         return queryset
 
 
@@ -239,16 +240,16 @@ class EventDeleteView(generic.DeleteView):
     success_url = EVENT_SUCCESS_URL
 
     def get_context_data(self, **kwargs):
-    
+
         context = super(EventDeleteView, self).get_context_data(**kwargs)
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
 
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk):
             event = models.Event.objects.get(pk=event_pk)
-            
+
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
-            amount_host=services.PaymentService().fee(round(event.price*100))
+            amount_host = services.PaymentService().fee(round(event.price*100))
             context['penalty'] = (amount_host*attendees)/100
 
         return context
@@ -263,12 +264,12 @@ class EventDeleteView(generic.DeleteView):
             if not event.can_delete:
                 try:
                     attendees = selectors.UserSelector().event_attendees(event_pk).count()
-                    amount_host=services.PaymentService().fee(round(event.price*100))
-                    services.PaymentService().charge(round(amount_host*attendees), request.POST['stripeToken'])
-                    
+                    amount_host = services.PaymentService().fee(round(event.price*100))
+                    services.PaymentService().charge(
+                        round(amount_host*attendees), request.POST['stripeToken'])
+
                 except stripe.error.StripeError:
                     redirect('not_impl')
-
 
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
@@ -303,7 +304,8 @@ class EventHostedListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.EventSelector().hosted(self.request.user)
+        queryset = selectors.EventSelector().hosted(
+            self.request.user).order_by('start_day')
         return queryset
 
 
@@ -321,7 +323,8 @@ class EventEnrolledListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.EnrollmentSelector().created_by(self.request.user)
+        queryset = selectors.EnrollmentSelector().created_by(
+            self.request.user).order_by('event__start_day')
         return queryset
 
 
@@ -728,7 +731,7 @@ class RateAttendeeView(generic.CreateView):
         rating.event = event
         rating.on = 'ATTENDEE'
 
-        if services.RatingService().is_valid_rating(rating, event, created_by) and reviewed.usename != 'deleted':
+        if services.RatingService().is_valid_rating(rating, event, created_by) and reviewed.username != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:
