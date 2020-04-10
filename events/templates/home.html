@@ -24,43 +24,7 @@
 </style>
 
 
-{% if form.location.errors%}
 
-<style>
-    .location {
-        margin-top: -142%;
-    }
-</style>
-
-{% endif %}
-
-{% if form.start_hour.errors and form.date.errors%}
-
-<style>
-    .location {
-        margin-top: -152%;
-    }
-</style>
-
-{% endif %}
-
-{% if form.start_hour.errors or form.date.errors%}
-
-<style>
-    .location {
-        margin-top: -152%;
-    }
-</style>
-
-{% endif %}
-
-{% if form.location.errors and form.date.errors and form.start_hour.errors %}
-<style>
-    .location {
-        margin-top: -161%;
-    }
-</style>
-{% endif %}
 
 
 <div class="container">
@@ -115,7 +79,6 @@
                 </div>
                 {{form.latitude}}
                 {{form.longitude}}
-                {{form.errors}}
 
                 <button class="waves-effect waves-light btn-large left location left" type="submit" name="nearby" value="nearby">
 
