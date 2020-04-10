@@ -2718,6 +2718,39 @@ background: #FFF;
 		margin-top: 60% !important;
 	}
 
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -55% !important;
+		margin-left: 6% !important;
+	}
+
+	#title-delete-comi-sm {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -88% !important;
+		margin-left: 3% !important;
+	}
+
+	.delete-buttons-big-title {
+		margin-top: 35%;
+		align-content: center;
+	}
+
 }
 
 
