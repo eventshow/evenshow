@@ -1478,7 +1478,7 @@ label {
 }
 
 .table-generic {
-	width: 80%;
+	width: 90%;
 	text-align-last: center;
 	margin: auto;
 }
@@ -2385,6 +2385,15 @@ background: #FFF;
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
+	#eventpoint{
+		font-style: italic;
+		font-family: Raleway, sans-serif;
+		position: absolute;
+		width: auto;
+		height: auto;
+		bottom:10%;
+		margin-left: 3% !important;	
+	}
 	.center-form-create {
 		margin-top: 5% !important;
 		margin-left: -4% !important;
