@@ -8,14 +8,33 @@
                 <span class="flow-text">
                     <h1 id="title-delete">¿Estás seguro de que quieres eliminar el evento <strong id="title-del-event">
                             {{object.title}}</strong>?</h1>
-                                {% if not object.can_delete  %}
-
-                    <h3 id="title-delete-comi">Recibirá una penalización por ello (más información en los términos y
-                        condiciones)</h3>
-                    {% endif %}
                 </span>
+
+            </div>
+
+        </div>
+
+        {% if not object.can_delete and object.title|length <= 50 %}
+        <div class="container">
+            <div class="row">
+                <div class="grid-example col s12">
+                    <h4 id="title-delete-comi">Recibirá una penalización por ello  (más información en  <a href="{% url 'terms' %}"> términos y
+                        condiciones</a>)</h4>
+                </div>
             </div>
         </div>
+        {% elif not object.can_delete and object.title|length > 50 %}
+
+        <div class="container">
+            <div class="row">
+                <div class="grid-example col s12">
+                    <h4 id="title-delete-comi-sm">Recibirá una penalización por ello (más información en <a href="{% url 'terms' %}">términos y
+                        condiciones</a>)</h4>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
 
         <div class="container">
             <div class="row">
@@ -24,7 +43,7 @@
                     <div class="delete-buttons-delete">
                         <div class="right">
                             {% if object.can_delete %}
-                            <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
+                            <button class="delete-btn waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
                             {% else %}
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
