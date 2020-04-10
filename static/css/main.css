@@ -381,6 +381,13 @@ element.style {
 
 }
 
+.button-enrolls-mov{
+
+	margin-right: 3%;
+
+}
+
+
 .button-detail-auth {
 	color: white !important;
 	margin-top: -8% !important;
@@ -1642,6 +1649,12 @@ table {
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
 
+	.button-enrolls-mov{
+
+	margin-right: 3%;
+
+}
+
 	.modal-mov{
 		margin-top: 6%;
 
@@ -2528,6 +2541,43 @@ background: #FFF;
 		margin-bottom: 9%;
 		margin-top: 9%;
 	}
+
+	.location {
+    margin-top: -425%;
+    margin-left: 165%;
+}
+
+	.form-search{
+		margin-top: 111px;
+    margin-left: -14%;
+	}
+
+	.separated2 {
+		margin-left: 8%;
+	}
+
+	.date-res{
+		margin-left: 8%;
+	}
+
+	.separated7 {
+		margin-left: 8%;
+	}
+
+	.principal-detail {
+    margin-bottom: -99%;
+}
+
+	.section-detail2{
+		margin-bottom: 30%;
+	}
+
+	.user-rat {
+		margin-left: 46% !important;
+	}
+
+
+
 }
 
 
