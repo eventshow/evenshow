@@ -1544,7 +1544,18 @@ table {
 	margin-top: 15%
 }
 
+.discount-yes{
+	margin-left: 40%;
+	position:relative;
+}
 
+.discount-no{
+	    margin-right: 40%;
+    padding-left: 23px;
+    padding-right: 23px;
+	position: relative;
+
+}
 .modal-evetshow-detail {
 	border-radius: 15px !important;
 	margin-top: 15%
@@ -1687,7 +1698,17 @@ table {
 
 	margin-right: 3%;
 
+}
 
+	.discount-yes{
+	margin-left: 20%;
+	position:relative;
+}
+
+.discount-no{
+	    margin-right: 20%;
+
+	position: relative;
 
 }
 
