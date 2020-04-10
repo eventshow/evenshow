@@ -261,7 +261,7 @@ class PaymentService():
         return round(res - amount_host)
 
 
-    def fee_discount(self, amount_host: int, attendee:User) -> int:
+    def fee_discount(self, amount_host: int, attendee:User, info:bool) -> int:
         res = 0
         const_stripe = 25
         var_stripe = 1.029
@@ -288,13 +288,14 @@ class PaymentService():
             res = (amount_host + amount_company) * var_stripe + const_stripe
             attendee.profile.eventpoints = 0
         
-        attendee.profile.save()
+        if not info:
+            attendee.profile.save()
 
         return round(res - amount_host)
 
    
     def charge_connect(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
-
+        
         stripe.Charge.create(
                 amount=amount,
                 currency='eur',

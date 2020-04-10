@@ -118,13 +118,14 @@ class AttendeePaymentView(generic.View):
                 return redirect('authorize')
             else:
                 if event.has_finished:
+                    
                     attende_list = selectors.UserSelector().event_attendees(pk)
-
+                    
                     for attendee in attende_list:
 
                         transaction = models.Transaction.objects.filter(
                             created_by=attendee, event=event).first()
-
+                        
                         if transaction:
 
                             is_paid_for = transaction.is_paid_for
@@ -134,7 +135,8 @@ class AttendeePaymentView(generic.View):
                                 try:
                                     fee = 0
                                     if transaction.discount:
-                                        fee = services.PaymentService().fee_discount(transaction.amount, attendee)
+                                        
+                                        fee = services.PaymentService().fee_discount(transaction.amount, attendee, False)
                                     else:
                                         fee = services.PaymentService().fee(transaction.amount)
 
@@ -201,6 +203,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
+            
+            context['price_discount'] = services.PaymentService().fee_discount(event.price, user, True) + event.price
         
             
         hours, minutes = divmod(duration, 60)
@@ -503,7 +507,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            #services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -549,7 +553,7 @@ class EnrollmentCreateDiscountView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            #services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
