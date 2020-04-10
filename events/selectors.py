@@ -58,7 +58,7 @@ class UserSelector:
 
     def event_attendees(self, event_pk: int) -> QuerySet:
         event_attendees = User.objects.filter(
-            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED').order_by('username')
+            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED')
         return event_attendees
 
     def rated_on_event(self, event_pk: int) -> QuerySet:

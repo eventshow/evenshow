@@ -102,7 +102,8 @@ class AttendeeListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('pk'))
+        queryset = selectors.UserSelector().event_attendees(
+            self.kwargs.get('pk')).order_by('username')
         return queryset
 
 
@@ -303,7 +304,8 @@ class EventHostedListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.EventSelector().hosted(self.request.user)
+        queryset = selectors.EventSelector().hosted(
+            self.request.user).order_by('start_day')
         return queryset
 
 
@@ -321,7 +323,8 @@ class EventEnrolledListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.EnrollmentSelector().created_by(self.request.user)
+        queryset = selectors.EnrollmentSelector().created_by(
+            self.request.user).order_by('event__start_day')
         return queryset
 
 
