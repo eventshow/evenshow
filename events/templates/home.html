@@ -66,10 +66,8 @@
 <div class="container">
     {% if user.is_authenticated and message %}
     <div class="center">
-        <!-- Modal Trigger -->
         <a class=" waves-light btn modal-trigger modal-mov" href="#modal2">¡ATENCIÓN {{ message }}!</a>
     </div>
-    <!-- Modal Structure -->
     <div id="modal2" class="modal modal-evetshow">
         <div class="modal-content">
             <h3 class="modal-title">{{message}}</h3><br>
@@ -119,9 +117,11 @@
                 {{form.longitude}}
                 {{form.errors}}
 
-                <button class="waves-effect waves-light btn-small location" type="submit" name="nearby"
-                    value="nearby"><i title="Eventos a 50km de ti"
-                        class="location-em material-icons ">location_on</i></button>
+                <button class="waves-effect waves-light btn-large location" type="submit" name="nearby" value="nearby">
+                    Localízame
+                    <i title="Eventos a 50km de ti" class="location-em material-icons "> location_on</i></button>
+
+
                 <button class="waves-effect waves-light btn-large right" type="submit" name="search"
                     value="search">Buscar</button>
             </form>
