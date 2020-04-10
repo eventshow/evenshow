@@ -40,7 +40,7 @@ urlpatterns = [
     path('events/<int:pk>/enroll',
          views.EnrollmentCreateView.as_view(), name='enroll_event'),
     path('events/<int:pk>/enroll/discount',
-         views.EnrollmentCreateDiscountView.as_view(), name='enroll_event'),
+         views.EnrollmentCreateDiscountView.as_view(), name='enroll_event_discount'),
     path('events/<int:pk>/delete', views.EventDeleteView.as_view(),
          name='delete_event'),
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
