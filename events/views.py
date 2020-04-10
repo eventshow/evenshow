@@ -79,6 +79,17 @@ class HomeView(generic.FormView):
 
         return redirect(reverse('list_event_filter', kwargs=kwargs))
 
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        no_geolocation = self.request.session.get(
+            'no_geolocation', None) or None
+
+        if no_geolocation:
+            context['no_geolocation'] = no_geolocation
+            del self.request.session['no_geolocation']
+
+        return context
+
 
 @method_decorator(login_required, name='dispatch')
 class AttendeeListView(generic.ListView):
@@ -243,16 +254,16 @@ class EventDeleteView(generic.DeleteView):
     success_url = EVENT_SUCCESS_URL
 
     def get_context_data(self, **kwargs):
-    
+
         context = super(EventDeleteView, self).get_context_data(**kwargs)
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
 
         event_pk = self.kwargs.get('pk')
         if services.EventService().count(event_pk):
             event = models.Event.objects.get(pk=event_pk)
-            
+
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
-            amount_host=services.PaymentService().fee(round(event.price*100))
+            amount_host = services.PaymentService().fee(round(event.price*100))
             context['penalty'] = (amount_host*attendees)/100
 
         return context
@@ -267,12 +278,12 @@ class EventDeleteView(generic.DeleteView):
             if not event.can_delete:
                 try:
                     attendees = selectors.UserSelector().event_attendees(event_pk).count()
-                    amount_host=services.PaymentService().fee(round(event.price*100))
-                    services.PaymentService().charge(round(amount_host*attendees), request.POST['stripeToken'])
-                    
+                    amount_host = services.PaymentService().fee(round(event.price*100))
+                    services.PaymentService().charge(
+                        round(amount_host*attendees), request.POST['stripeToken'])
+
                 except stripe.error.StripeError:
                     redirect('not_impl')
-
 
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
@@ -405,11 +416,7 @@ class EventFilterListView(generic.ListView):
         context = super(EventFilterListView,
                         self).get_context_data(**kwargs)
         context['locations'] = services.EventService().locations()
-        if self.request.session.get('message_geolocation'):
-            context['location'] = self.request.session.get('message_geolocation')
-            del self.request.session['message_geolocation']
-        else:
-            context['location'] = self.kwargs.get('location_city__icontains', None)
+        context['location'] = self.kwargs.get('location_city__icontains', None)
         context['category'] = models.Category.objects.filter(
             pk=self.kwargs.get('category')).values_list('name', flat=True).first()
         context['form'] = self.form_class(
@@ -446,17 +453,16 @@ class EventSearchNearbyView(generic.View):
         longitude = self.request.POST.get('longitude')
 
         if not (latitude and longitude):
-            self.request.session['message_geolocation']='Su navegador no tiene activada la geolocalización.' \
-                                                        ' Por favor actívela para ver los eventos cercanos. A ' \
-                                                        'continuación se le muestran todos los eventos'
+            request.session['no_geolocation'] = 'No se ha podido determinar tu ubicación'
+            return redirect('home')
+        else:
+            self.request.session['latitude'] = latitude
+            self.request.session['longitude'] = longitude
 
-        self.request.session['latitude'] = latitude
-        self.request.session['longitude'] = longitude
+            if self.request.session.get('form_values'):
+                del self.request.session['form_values']
 
-        if self.request.session.get('form_values'):
-            del self.request.session['form_values']
-
-        return redirect('list_event_filter')
+            return redirect('list_event_filter')
 
 
 @method_decorator(login_required, name='dispatch')

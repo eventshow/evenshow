@@ -65,21 +65,21 @@
 
 <div class="container">
     {% if user.is_authenticated and message %}
-<div class="center">
-  <!-- Modal Trigger -->
-  <a class=" waves-light btn modal-trigger modal-mov" href="#modal2">¡ATENCIÓN {{ message }}!</a>
-</div>
-  <!-- Modal Structure -->
-   <div id="modal2" class="modal modal-evetshow">
-      <div class="modal-content">
-        <h3 class="modal-title">{{message}}</h3><br>
-        <h4>{{message.description}}</h4>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves btn">OK!</a>
-      </div>
+    <div class="center">
+        <!-- Modal Trigger -->
+        <a class=" waves-light btn modal-trigger modal-mov" href="#modal2">¡ATENCIÓN {{ message }}!</a>
     </div>
-{% endif %}
+    <!-- Modal Structure -->
+    <div id="modal2" class="modal modal-evetshow">
+        <div class="modal-content">
+            <h3 class="modal-title">{{message}}</h3><br>
+            <h4>{{message.description}}</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves btn">OK!</a>
+        </div>
+    </div>
+    {% endif %}
 
     <div class="row">
         <div class="col s6 form-home">
@@ -93,7 +93,9 @@
 
                         <div class=" form-errors">
                             {{ form.location }}
-                            {{ form.location.errors }}</div>
+                            {{ form.location.errors }}
+                            {{ no_geolocation }}
+                        </div>
                     </div>
                 </div>
                 <div class="row">
