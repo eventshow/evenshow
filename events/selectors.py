@@ -44,10 +44,8 @@ class EventSelector:
             event__start_day__gte=today,
             event__start_day__lte=today + timedelta(days=4),
             status='ACCEPTED'
-        ).values('event__title').annotate(
+        ).values('event__price').annotate(
             count=Count('event'),
-            penalty=Cast(F('event__price'), FloatField()) *
-            Cast(F('count'), FloatField())
         )
 
     def rated_by_user(self, user: User, on='HOST') -> QuerySet:

@@ -250,7 +250,7 @@ class EventDeleteView(generic.DeleteView):
 
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
             amount_host = services.PaymentService().fee(round(event.price*100))
-            context['penalty'] = (amount_host*attendees)/100
+            context['penalty'] = (amount_host*attendees)
 
         return context
 
@@ -812,22 +812,31 @@ class UserDeleteView(generic.DeleteView):
 
     def delete(self, request, *args, **kwargs):
         user = self.get_object()
-        price_sum = self.get_price_sum()
         try:
-            if price_sum:
-                penalty = services.PaymentService().fee(round(price_sum))
+            if self.price_sum:
                 services.PaymentService().charge(
-                    round(penalty), request.POST.get('stripeToken'))
+                    round(self.fee)*self.attendee_sum,
+                    request.POST.get('stripeToken')
+                )
             user.delete()
             return redirect('home')
         except stripe.error.StripeError:
             return redirect('payment_error')
 
+    def dispatch(self, request, *args, **kwargs):
+        self.penalized_events = self.get_penalized_events()
+        aux = self.penalized_events.aggregate(
+            Sum('event__price'), Sum('count'))
+        self.price_sum = float(aux.get('event__price__sum', None)*100)
+        self.attendee_sum = aux.get('count__sum', None)
+        self.fee = services.PaymentService().fee(self.price_sum)
+        return super(UserDeleteView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(UserDeleteView, self).get_context_data(**kwargs)
-        context['penalized'] = self.get_penalized_events().count()
-        context['penalty'] = services.PaymentService().fee(
-            round(self.get_price_sum()))/100
+
+        context['penalized'] = self.penalized_events.count()
+        context['penalty'] = self.fee * self.attendee_sum
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
         return context
 
@@ -836,9 +845,6 @@ class UserDeleteView(generic.DeleteView):
 
     def get_penalized_events(self):
         return selectors.EventSelector().penalized(self.get_object())
-
-    def get_price_sum(self):
-        return self.get_penalized_events().aggregate(Sum('penalty')).get('penalty__sum', None)*100
 
 
 @method_decorator(login_required, name='dispatch')

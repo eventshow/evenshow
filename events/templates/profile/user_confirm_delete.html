@@ -25,8 +25,8 @@
                         {% if penalized %}
                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                             data-key="{{ stripe_key }}" data-description="Pagar penalización"
-                            data-amount="{% widthratio penalty 1 100|floatformat:'0' %}" data-locale="es"
-                            data-currency="eur" data-label="Sí">
+                            data-amount="{{ penalty | floatformat:'0' }}" data-locale="es" data-currency="eur"
+                            data-label="Sí">
                             </script>
                         <script>
                             document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large delete-btn");
