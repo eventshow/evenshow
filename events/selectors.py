@@ -1,7 +1,8 @@
-from datetime import time
+from datetime import datetime, time, timedelta
 
 from django.contrib.auth import get_user_model
-from django.db.models import Q, QuerySet
+from django.db.models import Count, F, FloatField, Sum, Q, QuerySet
+from django.db.models.functions import Cast
 
 from . import models
 from .models import Message
@@ -23,12 +24,12 @@ class EnrollmentSelector:
 class EventSelector:
     def hosted(self, host: User) -> QuerySet:
         hosted_events = models.Event.objects.filter(
-            created_by=host).order_by('title')
+            created_by=host)
         return hosted_events
 
     def enrolled(self, attendee: User, status='ACCEPTED') -> QuerySet:
         enrolled_events = models.Event.objects.filter(
-            event_enrollments__created_by=attendee).order_by('title')
+            event_enrollments__created_by=attendee)
         return enrolled_events
 
     def not_enrolled(self, attendee: User) -> QuerySet:
@@ -36,13 +37,19 @@ class EventSelector:
             event_enrollments__created_by=attendee)
         return not_enrolled_events
 
+    def penalized(self, user: User) -> int:
+        today = datetime.now().date()
+        return models.Enrollment.objects.filter(
+            event__created_by=user,
+            event__start_day__gte=today,
+            event__start_day__lte=today + timedelta(days=4),
+            status='ACCEPTED'
+        ).values('event__price').annotate(
+            count=Count('event'),
+        )
+
     def rated_by_user(self, user: User, on='HOST') -> QuerySet:
         return models.Event.objects.filter(ratings__created_by=user, ratings__on=on)
-
-    def event_enrolled_accepted(self, attendee: User, status='ACCEPTED') -> QuerySet:
-        event_enrolled_accepted = models.Event.objects.filter(
-            event_enrollments__created_by=attendee, event_enrollments__status=status).order_by('title')
-        return event_enrolled_accepted
 
 
 class RatingSelector:
@@ -63,7 +70,7 @@ class UserSelector:
 
     def event_attendees(self, event_pk: int) -> QuerySet:
         event_attendees = User.objects.filter(
-            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED').order_by('username')
+            attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED')
         return event_attendees
 
     def rated_on_event(self, event_pk: int) -> QuerySet:
