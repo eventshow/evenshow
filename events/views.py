@@ -335,15 +335,19 @@ class EventUpdateView(generic.UpdateView):
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
             event_db = models.Event.objects.get(pk=event_pk)
+
+            attende_list = selectors.UserSelector().event_attendees(event_pk)
+                
             subject = 'Evento actualizado'
             body = 'El evento ' + event_db.title + \
-                   'en el que estás inscrito ha sido actualizado'
+                'en el que estás inscrito ha sido actualizado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
             services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
+            
         else:
             return redirect('events')
 
@@ -353,10 +357,11 @@ class EventUpdateView(generic.UpdateView):
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
                 'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
+            
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
-
+         
 
 class EventFilterFormView(generic.FormView):
     form_class = forms.SearchFilterForm
