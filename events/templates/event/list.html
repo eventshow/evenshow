@@ -58,7 +58,7 @@
             {% if object.event.created_by.username == 'deleted' %}
             <p class="request-fail">No disponible</p>
             {% else %}
-            <button type="button" onclick="location.href='{% url 'create_rating_host' object.event.pk %}'"
+            <button id="noPaddin" type="button" onclick="location.href='{% url 'create_rating_host' object.event.pk %}'"
               title="Puntuar">
               <em id="title-name" class="samll material-icons">star</em>
             </button>

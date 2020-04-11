@@ -1669,7 +1669,7 @@ table {
 	}
    
 	#paddinButton2{
-	margin-top: -14px;
+	margin-top: -1px;
 	}
 	#paddinButton{
 		margin-top: -35px;
@@ -2381,13 +2381,18 @@ background: #FFF;
 #title-name-terms{
 	font-size: 22px;
 }
+#noPaddin{
+	padding: 0px;
+}
 
 }
 
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
-	
+	#noPaddin{
+		padding: 0px;
+	}
 	#titleTerms{
 		margin-top: -9px;
 	}
