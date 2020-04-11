@@ -42,7 +42,7 @@
           <tr>
             <td id="paddinButton2">
               {% if att not in rated_attendees and event_has_finished and att.username != 'deleted' %}
-              <button type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
+              <button id="noPaddin" type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
                 title="Puntuar">
                 <i id="title-name" class="samll material-icons">star</i>
               </button>

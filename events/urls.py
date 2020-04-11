@@ -44,10 +44,16 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
-    path('oauth/callback/', views.StripeAuthorizeCallbackView.as_view(), name='authorize_callback'),
+    path('oauth/callback/', views.StripeAuthorizeCallbackView.as_view(),
+         name='authorize_callback'),
+
+    path('payment/error', TemplateView.as_view(template_name='payment_error.html'),
+         name='payment_error'),
+
     path('profile', login_required(TemplateView.as_view(template_name='profile/detail.html')),
          name='detail_profile'),
     path('profile/delete', views.UserDeleteView.as_view(), name='delete_profile'),
+    path('profile/download', views.DownloadPDF.as_view(), name='pdf_download'),
     path('profile/referred',
          login_required(TemplateView.as_view(template_name='profile/referred.html')), name='referred'),
     path('profile/receipts', views.TransactionListView.as_view(),
@@ -62,12 +68,6 @@ urlpatterns = [
 
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
-
-    path('profile/pdf_download', views.DownloadPDF.as_view(), name='pdf_download'),
-
-     path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
-         name='grac'),
-     path('vista/terminos', TemplateView.as_view(template_name='terms.html'),
+    path('terms', TemplateView.as_view(template_name='terms.html'),
          name='terms'),
-
 ]

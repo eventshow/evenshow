@@ -22,10 +22,21 @@
             <div class="row">
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-conf">
+                        {% if penalized %}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{ stripe_key }}" data-description="Pagar penalización"
+                            data-amount="{{ penalty | floatformat:'0' }}" data-locale="es" data-currency="eur"
+                            data-label="Sí">
+                            </script>
+                        <script>
+                            document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large delete-btn");
+                        </script>
+                        {% else %}
                         <div class="right">
                             <button class="delete-btn-profile waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="grid-example col s6">

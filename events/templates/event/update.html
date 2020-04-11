@@ -102,6 +102,9 @@
                   <div class="grid-example col s12">
                     <label>DESCRIPCIÓN</label>
                     {{ form.description }}
+                    <div class="form-errors">
+                      {{ form.description.errors }}
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -229,10 +232,10 @@
                     <label>INFORMACIÓN EXTRA PARA EL ASISTENTE</label>
                     {{ form.extra_info }}
                     <div class="form-errors">
+                      {{ form.extra_info.errors }}
                     </div>
                   </div>
                 </div>
-                {{ form.extra_info.errors }}
 
                 <div class="container">
                   <div class="row">
