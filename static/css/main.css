@@ -1647,10 +1647,9 @@ table {
 	opacity: 0;
 }
 #textTerms{
-	color: black;
+	
 	font-size:13px;
-	margin-top: 15px;
-	margin-bottom: 15px;
+	
 }
 
 .waves-effect.waves-eventshow .waves-ripple{
@@ -2512,15 +2511,15 @@ background: #FFF;
 
 	#title-name-terms{
 	font-size: 30px;
-}
-
 	}
-#textTerms {
-	color: black;
-	font-size: 16px;
-	margin-top: 15px;
-	margin-bottom: 15px;
-}
+
+	
+	#textTerms {
+		color: black;
+		font-size: 16px;
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
 
 #send-buttons-pw {
 	width: 130px;
