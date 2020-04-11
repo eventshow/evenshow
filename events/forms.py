@@ -60,6 +60,15 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id': 'title', 'onkeypress': 'return ValidaLongitud(this, 100);'}),
+            'description': forms.TextInput(attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
+            'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
+            'capacity': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
+            'min_age': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
+            'price': forms.NumberInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
+            'location_city': forms.TextInput(attrs={'required': False, 'placeholder': 'Sevilla', 'name': 'location_city'}),
+            'location_street': forms.TextInput(attrs={'required': False, 'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
+            'location_number': forms.TextInput(attrs={'required': False, 'placeholder': '01', 'name': 'location_number'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
@@ -314,6 +323,8 @@ class SearchHomeForm(forms.Form):
         ),
         input_formats=('%H:%M',)
     )
+    latitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
+    longitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
