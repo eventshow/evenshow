@@ -7,7 +7,7 @@
             <div class="grid-example col s12" id="delete-title-user">
                 <span class="flow-text">
 
-                        <h2 id="title-delete">
+                    <h2 id="title-delete">
                         ¿Estás seguro de que quieres eliminar tu cuenta? Revisa nuestros términos y
                         condiciones antes para saber qué información se eliminará. Además, deber tener en cuenta los
                         eventos
@@ -22,10 +22,21 @@
             <div class="row">
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-conf">
+                        {% if penalized %}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{ stripe_key }}" data-description="Pagar penalización"
+                            data-amount="{{ penalty | floatformat:'0' }}" data-locale="es" data-currency="eur"
+                            data-label="Sí">
+                            </script>
+                        <script>
+                            document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large delete-btn");
+                        </script>
+                        {% else %}
                         <div class="right">
                             <button id="delete-btn" class="waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="grid-example col s6">

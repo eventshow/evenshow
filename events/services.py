@@ -194,7 +194,6 @@ class PaymentService():
 
         return round(res - amount_host)
 
-
     def charge_connect(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
         stripe.Charge.create(
             amount=amount,
@@ -206,8 +205,9 @@ class PaymentService():
                 'account': host.profile.stripe_user_id,
             }
         )
-        
-    def charge(self, amount:int, source:str) -> None:
+
+
+    def charge(self, amount: int, source: str) -> None:
         stripe.Charge.create(
             amount=amount,
             currency='eur',
@@ -219,7 +219,7 @@ class PaymentService():
         models.Transaction.objects.create(amount=amount, created_by=created_by,
                                           recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False)
 
-    def get_or_create_customer(self, email:str, source:str) -> stripe.Customer:
+    def get_or_create_customer(self, email: str, source: str) -> stripe.Customer:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         connected_customers = stripe.Customer.list()
         for customer in connected_customers:
