@@ -2751,6 +2751,22 @@ background: #FFF;
 		align-content: center;
 	}
 
+	.rectangle-info-title {
+		margin-top: -30%;
+		margin-right: 5%;
+	}
+	.section-detail2 {
+		margin-top: -175%;
+		margin-bottom: 50%;
+	}
+
+	.button-detail-auth {
+		color: white !important;
+		margin-top: 140% !important;
+		margin-left: -55% !important;
+		font-size: 28px;
+	}
+
 }
 
 
