@@ -901,9 +901,12 @@ p.description {
 }
 
 .location {
-	margin-top: -132%;
-	margin-left: 63%;
+	padding-top: 6px;
+    margin-left: 0;
+    padding-left: 46px;
+    padding-right: 45px;
 }
+
 
 .form-eventshow select {
 	width: 100% !important;
@@ -1675,6 +1678,13 @@ table {
 
 }
 
+
+	.text-left {
+		margin-left: -10%;
+		margin-top: 12% !important;
+		margin-bottom: 4%;
+	}
+
 	.price{
 
 		background-color: transparent !important;
@@ -1682,6 +1692,7 @@ table {
 		color: transparent;
 		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
 		-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
+
 
 	}
 
@@ -2143,10 +2154,6 @@ table {
     padding: 15px 15px 90px;
 }
 
-	.location {
-    margin-top: -512%;
-    margin-left: 153%;
-}
 
 	.footer-copyright {
 		text-align: left;
