@@ -1,7 +1,8 @@
-from datetime import time
+from datetime import datetime, time, timedelta
 
 from django.contrib.auth import get_user_model
-from django.db.models import Q, QuerySet
+from django.db.models import Count, F, FloatField, Sum, Q, QuerySet
+from django.db.models.functions import Cast
 
 from . import models
 from .models import Message
@@ -35,6 +36,17 @@ class EventSelector:
         not_enrolled_events = models.Event.objects.exclude(
             event_enrollments__created_by=attendee)
         return not_enrolled_events
+
+    def penalized(self, user: User) -> int:
+        today = datetime.now().date()
+        return models.Enrollment.objects.filter(
+            event__created_by=user,
+            event__start_day__gte=today,
+            event__start_day__lte=today + timedelta(days=4),
+            status='ACCEPTED'
+        ).values('event__price').annotate(
+            count=Count('event'),
+        )
 
     def rated_by_user(self, user: User, on='HOST') -> QuerySet:
         return models.Event.objects.filter(ratings__created_by=user, ratings__on=on)
