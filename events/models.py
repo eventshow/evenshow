@@ -4,6 +4,7 @@ import uuid
 
 from datetime import datetime, date, timedelta
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -96,7 +97,7 @@ class Profile(models.Model):
 
     @property
     def discount(self):
-        return self.eventpoints * self.EVENTPOINT_VALUE
+        return self.eventpoints * settings.EVENTPOINT_VALUE
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -146,8 +147,8 @@ class Event(Common):
     extra_info = models.TextField(
         'Extra info for the attendee', blank=True, null=True)
 
-    created_by = models.ForeignKey(
-        User, on_delete=models.SET(get_sentinel_user), related_name='host_events', default='')
+    created_by = models.ForeignKey(User, on_delete=models.SET(
+        get_sentinel_user), related_name='host_events', default='')
     category = models.ForeignKey(
         Category, on_delete=models.SET(get_default_category), related_name='category_events')
 
