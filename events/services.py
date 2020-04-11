@@ -260,21 +260,19 @@ class PaymentService():
 
         return round(res - amount_host)
 
-    def charge(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
-
+    def charge_connect(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
         stripe.Charge.create(
-                amount=amount,
-                currency='eur',
-                customer=customer_id,
-                description='A event payment',
-                application_fee_amount = application_fee_amount,
-                destination={
-                    'account': host.profile.stripe_user_id,
-                }
-            )
-    
-    def charge(self, amount:int, source:str) -> None:
+            amount=amount,
+            currency='eur',
+            customer=customer_id,
+            description='A event payment',
+            application_fee_amount=application_fee_amount,
+            destination={
+                'account': host.profile.stripe_user_id,
+            }
+        )
 
+    def charge(self, amount: int, source: str) -> None:
         stripe.Charge.create(
             amount=amount,
             currency='eur',
@@ -282,31 +280,29 @@ class PaymentService():
             source=source
         )
 
-    def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User) -> None:
-        
-        models.Transaction.objects.create(amount = amount, created_by=created_by, recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False)
+    def save_transaction(self, amount: int, customer_id: int, event: models.Event, created_by: User, recipient: User) -> None:
+        models.Transaction.objects.create(amount=amount, created_by=created_by,
+                                          recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False)
 
-    def get_or_create_customer(self, email:str, source:str) -> stripe.Customer:
+    def get_or_create_customer(self, email: str, source: str) -> stripe.Customer:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         connected_customers = stripe.Customer.list()
         for customer in connected_customers:
             if customer.email == email:
                 return customer
         return stripe.Customer.create(
-            email = email,
-            source = source
-    )
+            email=email,
+            source=source
+        )
 
-    def is_customer(self, email:str) -> bool:
+    def is_customer(self, email: str) -> bool:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         connected_customers = stripe.Customer.list()
         for customer in connected_customers:
             if customer.email == email:
                 return True
-        
+
         return False
-                
-        
 
 
 class UserService:

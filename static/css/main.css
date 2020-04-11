@@ -751,7 +751,7 @@ background: #FFF;
 	align-content: center;
 }
 
-#delete-btn-big {
+.delete-btn-big {
 	font-weight: bolder;
 	font-size: 20px;
 	text-align: center;
@@ -763,7 +763,7 @@ background: #FFF;
 	display: block !important;
 }
 
-#delete-btn-a-big {
+.delete-btn-a-big {
 	width: 127px;
 	height: 63px;
 	font-weight: bold;
@@ -1002,6 +1002,7 @@ p.description {
 	margin-top: -5%;
 	font-size: 20px;
 	font-weight: 400;
+	margin-left: 115%;
 }
 
 .price:hover {
@@ -1216,8 +1217,26 @@ label {
     bottom: 0;
     left: 0;
     right: 0;
-	margin-bottom: -3%;
+	margin-bottom: -8%;
+	margin-left: 10%;
+	font-size: 19px;
+	z-index: 10;
 }
+
+#title-delete-comi-sm {
+    font-weight: bold;
+    color: #686969;
+    margin: 0% auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+	margin-bottom: -9%;
+	margin-left: 10%;
+	font-size: 19px;
+	z-index: 10;
+}
+
 
 #title-delete-user {
 	max-width: 1149px;
@@ -1653,7 +1672,19 @@ table {
 
 	margin-right: 3%;
 
+
+
 }
+
+	.price{
+
+		background-color: transparent !important;
+		border: transparent !important;
+		color: transparent;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
+		-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
+
+	}
 
 	.modal-mov{
 		margin-top: 6%;
@@ -1853,7 +1884,7 @@ table {
         letter-spacing: normal;
 		color: #686969;
 		margin: 0% auto;
-		padding-top: 7% !important;
+		padding-top: 10% !important;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -2378,12 +2409,40 @@ background: #FFF;
 .mar-modal{
 	margin-right: 10%;
 }
-#title-name-terms{
+
+  #title-name-terms{
 	font-size: 22px;
 }
 #noPaddin{
 	padding: 0px;
 }
+
+#title-delete-comi-sm {
+	font-weight: bold;
+	color: #686969;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	width: 285px;
+	margin-bottom: -110% !important;
+	margin-left: -7% !important;
+}
+
+#title-delete-comi {
+	font-weight: bold;
+	color: #686969;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	width: 285px;
+	margin-bottom: -63% !important;
+	margin-left: -7% !important;
+}
+
 
 }
 
@@ -2487,6 +2546,42 @@ background: #FFF;
 	font-size: 15px;
 	padding-top: 0px;
 }
+
+	#title-delete-comi-sm {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -85% !important;
+		margin-left: 0% !important;
+	}
+
+	
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -63% !important;
+		margin-left: 0% !important;
+	}
+
+
+	.title-share-edit {
+		margin-left: -13%;
+		margin-bottom: 9%;
+		margin-top: 9%;
+	}
 
 .data-email {
 	margin-left: -9% !important;

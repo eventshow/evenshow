@@ -65,7 +65,7 @@
             <h4 class="subtitle-event element">Edad mínima: {{ event.min_age }}</h4>{% endif %}
             <h4 class="title-category element">Descripción:</h4>
             <h5 class="subtitle-event element">{{ event.description }}
-                <a class="waves-effect waves-light btn button-search price right" id="button-search"
+                <a class="waves-effect waves-light btn button-search price" id="button-search"
                     href="{% url 'detail_event' event.pk %}">{{ event.price }}€</a>
             </h5>
         </div>
