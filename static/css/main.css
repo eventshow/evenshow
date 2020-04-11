@@ -2774,7 +2774,98 @@ background: #FFF;
 
 @media only screen and (min-width: 411px) and (max-width: 823px) {
 
+	#create-event input {
+		width: 130% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -17.5% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 14px;
+	}
 
+	#send-buttons {
+		margin-left: 80%;
+		margin-bottom: 30% !important;
+		margin-top: -80% !important;
+	}
+
+	.send-btn {
+		margin-left: 155% !important;
+	}
+
+	#send-buttons-pw {
+		width: 130px;
+		height: 40%;
+		margin-left: -32%;
+		margin-right: 5%;
+		margin-top: 10%;
+		margin-bottom: 65px !important;
+		text-align: center !important;
+		font-size: 15px;
+		padding-top: 0px;
+		padding-bottom: 30%;
+	}
+
+	.iphone-right{
+		margin-right: -10% !important;
+	}
+
+	#edit-event textarea {
+		width: 105% !important;
+		height: auto;
+		color: #5D5E5E !important;
+		margin-bottom: -25% !important;
+		border: 1px solid #B6244D;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -3.25% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px !important;
+	}
+
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: -40% !important;
+		margin-top: 70% !important;
+	}
+
+	#title-delete-comi-sm {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -90% !important;
+    	margin-left: 3% !important;
+}
+	}
+
+	
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -53% !important;
+		margin-left: 7% !important;
+	}
+
+	.delete-buttons-big-title {
+		margin-top: 56%;
+		align-content: center;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
