@@ -280,7 +280,6 @@ class EventDeleteView(generic.DeleteView):
             if not event.can_delete:
                 penalty(event, request.POST.get('stripeToken'))
 
-
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
@@ -353,7 +352,7 @@ class EventUpdateView(generic.UpdateView):
             event_db = models.Event.objects.get(pk=event_pk)
 
             attende_list = selectors.UserSelector().event_attendees(event_pk)
-                
+
             subject = 'Evento actualizado'
             body = 'El evento ' + event_db.title + \
                 'en el que estás inscrito ha sido actualizado'
@@ -363,7 +362,7 @@ class EventUpdateView(generic.UpdateView):
             services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
-            
+
         else:
             return redirect('events')
 
@@ -373,11 +372,11 @@ class EventUpdateView(generic.UpdateView):
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
                 'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
-            
+
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
-         
+
 
 class EventFilterFormView(generic.FormView):
     form_class = forms.SearchFilterForm
@@ -826,19 +825,22 @@ class UserDeleteView(generic.DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         self.penalized_events = self.get_penalized_events()
-        aux = self.penalized_events.aggregate(
-            Sum('event__price'), Sum('count'))
-        self.price_sum = float(aux.get('event__price__sum', None)*100)
-        self.attendee_sum = aux.get('count__sum', None)
-        self.fee = services.PaymentService().fee(self.price_sum)
+        self.is_penalized = self.penalized_events.count()
+        if self.is_penalized:
+            aux = self.penalized_events.aggregate(
+                Sum('event__price'), Sum('count'))
+            self.price_sum = float(aux.get('event__price__sum', 0) or 0)*100
+            self.attendee_sum = aux.get('count__sum', 0) or 0
+            self.fee = services.PaymentService().fee(self.price_sum)
         return super(UserDeleteView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(UserDeleteView, self).get_context_data(**kwargs)
 
-        context['penalized'] = self.penalized_events.count()
-        context['penalty'] = self.fee * self.attendee_sum
-        context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        context['penalized'] = self.is_penalized
+        if self.is_penalized:
+            context['penalty'] = self.fee * self.attendee_sum
+            context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
         return context
 
     def get_object(self):
