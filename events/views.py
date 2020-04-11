@@ -1,9 +1,11 @@
-import boto3
 import json
+import logging
 import urllib
+import uuid
 from datetime import date
 from io import BytesIO
 
+import boto3
 import requests
 import stripe
 from django.conf import settings
@@ -26,7 +28,6 @@ from . import forms
 from . import models
 from . import selectors
 from . import services
-import uuid
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -624,7 +625,7 @@ class RateHostView(generic.CreateView):
             auto_rating = self.request.user.id == host.id
 
             if (not exist_already_rating) and is_enrolled_for_this_event and event.has_finished and (
-            not auto_rating) and host.username != 'deleted':
+                    not auto_rating) and host.username != 'deleted':
                 return super().get(self, request, args, *kwargs)
             else:
                 return redirect('home')
@@ -904,14 +905,14 @@ class DownloadPDF(View):
 
 
 class FileUploadView(View):
-    def get(self, request,file_name,file_type, **kwargs):
+    def get(self, request, file_name, file_type, **kwargs):
         S3_BUCKET = settings.S3_BUCKET
 
         s3 = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                          aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                          aws_session_token=settings.AWS_SESSION_TOKEN)
-        file_name = str(uuid.uuid4())+'.'+file_type
-        if not file_type=='jpg' or not file_type=='png':
+                          aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,region_name='eu-west-3')
+
+        file_name = str(uuid.uuid4()) + '.' + file_type
+        if not file_type == 'jpg' or not file_type == 'png':
             presigned_post = s3.generate_presigned_post(
                 Bucket=S3_BUCKET,
                 Key=file_name,
