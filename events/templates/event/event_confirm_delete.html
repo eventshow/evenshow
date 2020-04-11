@@ -46,13 +46,13 @@
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-delete">
                         <div class="right">
-                            {% if object.can_delete %}
+                            {% if object.can_delete or ateendees == 0 %}
                             <button class="delete-btn waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
                             {% else %}
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                 data-key="{{ stripe_key }}" data-description="Pagar penalización"
-                                data-amount="{{ penalty|floatformat:'0' }}" data-locale="es" data-currency="eur"
+                                data-amount="{% widthratio penalty 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
                                 data-label="Sí">
                                 </script>
                             <script>
