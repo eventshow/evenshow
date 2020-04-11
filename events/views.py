@@ -2,7 +2,7 @@ import stripe
 import requests
 import urllib
 
-from django.db.models import Count
+from django.db.models import Count, Sum
 from datetime import date, datetime
 
 from io import BytesIO
@@ -250,7 +250,7 @@ class EventDeleteView(generic.DeleteView):
 
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
             amount_host = services.PaymentService().fee(round(event.price*100))
-            context['penalty'] = (amount_host*attendees)/100
+            context['penalty'] = (amount_host*attendees)
 
         return context
 
@@ -262,14 +262,8 @@ class EventDeleteView(generic.DeleteView):
             event = models.Event.objects.get(pk=event_pk)
 
             if not event.can_delete:
-                try:
-                    attendees = selectors.UserSelector().event_attendees(event_pk).count()
-                    amount_host = services.PaymentService().fee(round(event.price*100))
-                    services.PaymentService().charge(
-                        round(amount_host*attendees), request.POST['stripeToken'])
+                penalty(event, request.POST.get('stripeToken'))
 
-                except stripe.error.StripeError:
-                    redirect('not_impl')
 
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
@@ -817,11 +811,40 @@ class UserDeleteView(generic.DeleteView):
     model = User
 
     def delete(self, request, *args, **kwargs):
-        self.get_object().delete()
-        return redirect('home')
+        user = self.get_object()
+        try:
+            if self.price_sum:
+                services.PaymentService().charge(
+                    round(self.fee)*self.attendee_sum,
+                    request.POST.get('stripeToken')
+                )
+            user.delete()
+            return redirect('home')
+        except stripe.error.StripeError:
+            return redirect('payment_error')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.penalized_events = self.get_penalized_events()
+        aux = self.penalized_events.aggregate(
+            Sum('event__price'), Sum('count'))
+        self.price_sum = float(aux.get('event__price__sum', None)*100)
+        self.attendee_sum = aux.get('count__sum', None)
+        self.fee = services.PaymentService().fee(self.price_sum)
+        return super(UserDeleteView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDeleteView, self).get_context_data(**kwargs)
+
+        context['penalized'] = self.penalized_events.count()
+        context['penalty'] = self.fee * self.attendee_sum
+        context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        return context
 
     def get_object(self):
         return self.request.user
+
+    def get_penalized_events(self):
+        return selectors.EventSelector().penalized(self.get_object())
 
 
 @method_decorator(login_required, name='dispatch')
@@ -905,3 +928,14 @@ class DownloadPDF(View):
         content = "attachment; filename=%s" % (filename)
         response['Content-Disposition'] = content
         return response
+
+
+def penalty(event, stripe_token):
+    try:
+        attendees = selectors.UserSelector().event_attendees(event.pk).count()
+        fee = services.PaymentService().fee(round(event.price*100))
+        services.PaymentService().charge(
+            round(fee*attendees), stripe_token)
+
+    except stripe.error.StripeError:
+        redirect('payment_error')

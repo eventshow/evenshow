@@ -29,9 +29,9 @@ def change_events_location_on_user_deletion(sender, instance, using, **kwargs):
         location_street='No disponible',
         location_number=0
     )
-    now = datetime.now()
-    Event.objects.filter(Q(created_by=instance) & (Q(start_day__gte=now.date(
-    ), start_time__gte=now.time()) | Q(start_day__gte=now.date()))).delete()
+    today = datetime.now().date()
+    Event.objects.filter(
+        created_by=instance, start_day__gt=today + timedelta(days=4)).delete()
 
 
 def get_default_category():
