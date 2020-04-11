@@ -196,6 +196,12 @@ element.style {
 	margin-bottom: 8%;
 }
 
+.section-detail2-big {
+	height: 900px;
+	width: 100%;
+	margin-top: -46%;
+	margin-bottom: 8%;
+}
 .section-detail3 {
 	height: 900px;
 	width: 100%;
@@ -732,6 +738,17 @@ background: #FFF;
 	display: block !important;
 }
 
+.delete-btn-profile {
+	font-weight: bolder;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 63px;
+	margin-top: 77px!important;
+	position: relative !important;
+	display: block !important;
+}
+
 
 .delete-btn-a {
 	width: 128px;
@@ -745,6 +762,20 @@ background: #FFF;
 	position: relative !important;
 	display: block !important;
 }
+
+.delete-btn-a-profile {
+	width: 128px;
+	height: 63px;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 4px;
+	font-size: 20px;
+	margin-top: 88px !important;
+	margin-left: 12% !important;
+	position: relative !important;
+	display: block !important;
+}
+
 
 .delete-buttons-big-title {
 	margin-top: 6%;
@@ -1886,6 +1917,17 @@ table {
 		position: relative !important;
 		display: block !important;
 	}
+
+	.delete-btn-profile {
+		font-weight: bolder;
+		font-size: 20px;
+		text-align: center;
+		width: 77px;
+		height: 53px;
+		margin-top: 195px!important;
+		position: relative !important;
+		display: block !important;
+	}
 	
 	.delete-btn-a {
 		width: 97px;
@@ -1899,6 +1941,30 @@ table {
 		position: relative !important;
 		display: block !important;
 	}
+
+	.delete-btn-a-profile {
+		width: 77px;
+		height: 53px;
+		font-weight: bold;
+		text-align: center;
+		padding-top: 1px;
+		padding-left: 25px;
+		font-size: 20px;
+		margin-top: 198px !important;
+		margin-left: 12% !important;
+		position: relative !important;
+		display: block !important;
+	}
+
+	.sep-title {
+		color: #B6244D;
+		font-size: 44px;
+		border-radius: 9px;
+		text-align: left;
+		background-color: white;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+	}
+	
 	
 	.delete-buttons-big-title {
 		margin-top: 6%;
@@ -2012,8 +2078,9 @@ table {
 	.conf-sep{
 		margin-top: -29%;
 	}
+
 	.user-rat {
-		margin-left: 7% !important;
+		margin-left: 53% !important;
 		margin-top: 5% !important;
 	}
 
@@ -2195,7 +2262,8 @@ table {
 }
 
 .rectangle-info-title {
-    margin-top: -28%;
+	margin-top: -38%;
+	margin-right: 8%;
 }
 .separated1 {
     margin-left: 52%;
@@ -2257,11 +2325,21 @@ table {
 }
 
 .section-detail2{
-	margin-top: -190%;
+	margin-top: -230%;
+	margin-bottom: -215%;
 }
 
-.section-detail3{
-	margin-top: -234%;
+.section-detail2-big {
+    height: 900px;
+    width: 100%;
+    margin-top: -190%;
+    margin-bottom: -205%;
+}
+.section-detail3 {
+    height: 900px;
+    width: 100%;
+    margin-top: -54%;
+    margin-bottom: 45%;
 }
 
 .title-text{
@@ -2421,6 +2499,27 @@ background: #FFF;
 	margin-left: -7% !important;
 }
 
+#title-delete-profile {
+    max-width: 1149px;
+    width: auto;
+    max-height: 45px;
+    height: auto;
+    font-family: Raleway, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #686969;
+    margin: 0% auto;
+    padding-top: 11% !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 
 }
 
@@ -2430,6 +2529,13 @@ background: #FFF;
 	.center-form-create {
 		margin-top: 5% !important;
 		margin-left: -4% !important;
+	}
+
+	.section-detail3 {
+		height: 900px;
+		width: 100%;
+		margin-top: -54%;
+		margin-bottom: -38%;
 	}
 
 	#name-host-title-del {
@@ -2644,11 +2750,33 @@ background: #FFF;
 	.section-detail2{
 		margin-bottom: 30%;
 	}
-
+	.section-detail2-big{
+		margin-bottom: 30%;
+	}
 	.user-rat {
 		margin-left: 46% !important;
 	}
 
+	#title-delete-profile {
+		max-width: 1149px;
+		width: auto;
+		max-height: 45px;
+		height: auto;
+		font-family: Raleway, sans-serif;
+		font-size: 18px;
+		font-weight: bold;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #686969;
+		margin: 0% auto;
+		padding-top: 11% !important;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
 
 
 }
@@ -2755,9 +2883,22 @@ background: #FFF;
 		margin-top: -30%;
 		margin-right: 5%;
 	}
+
+	.section-detail {
+		height: 1200px;
+		width: 100%;
+		margin-top: -50% !important;
+		margin-bottom: 8%;
+	}
+
 	.section-detail2 {
-		margin-top: -175%;
-		margin-bottom: 50%;
+    	margin-top: -245%;
+    	margin-bottom: -170%;
+	}
+
+	.section-detail2-big {
+		margin-top: -225%;
+		margin-bottom: -165%;
 	}
 
 	.button-detail-auth {
@@ -2767,6 +2908,115 @@ background: #FFF;
 		font-size: 28px;
 	}
 
+	.separated2 {
+		margin-left: 11%;
+	}
+
+	.separated7 {
+		margin-left: 11%;
+	}
+
+	.date-res {
+		margin-left: 11%;
+	}
+
+	.name-host-detail {
+		margin-top: -26% !important;
+		margin: 12%;
+	}
+
+	.user-comment {
+		margin-left: 45.5% !important;
+		margin-bottom: 7% !important;
+	}
+
+
+	.title-section {
+		margin-right: 2%;
+		margin-bottom: 4.5%;
+		margin-top: 8% !important;
+	}
+	.map-detail iframe {
+		width: 364px;
+		height: 216px;
+		frameborder: 0;
+		border: 0;
+		allowfullscreen: "";
+		aria-hidden: false;
+		margin: 3%;
+		tabindex: "0";
+	}
+
+	.img-bio {
+		margin-top: 3%;
+		margin-left: 25.5%;
+	}
+
+	.rating-bio {
+		margin-left: 37.5%;
+		margin-top: 4%;
+		margin-bottom: 5%;
+	}
+
+	.warning-full {
+		margin-top: 139% !important;
+		height: 70px;
+		margin-left: -73% !important;
+	}
+
+	.warning-own {
+		padding-bottom: 47px;
+		margin-top: 138% !important;
+		margin-left: -58% !important;
+		height: 70px;
+		padding-left: 15px;
+	}
+
+	#title-delete-profile {
+		max-width: 1149px;
+		width: auto;
+		max-height: 45px;
+		height: auto;
+		font-family: Raleway, sans-serif;
+		font-size: 23px;
+		font-weight: bold;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #686969;
+		margin: 0% auto;
+		padding-top: 11% !important;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.delete-btn-profile {
+		font-weight: bolder;
+		font-size: 20px;
+		text-align: center;
+		width: 97px;
+		height: 63px;
+		margin-top: 293px!important;
+		position: relative !important;
+		display: block !important;
+	}
+
+
+	.delete-btn-a-profile {
+		width: 97px;
+		height: 63px;
+		font-weight: bold;
+		text-align: center;
+		padding-top: 4px;
+		font-size: 20px;
+		margin-top: 297px !important;
+		margin-left: 12% !important;
+		position: relative !important;
+		display: block !important;
+	}
 }
 
 
@@ -2821,7 +3071,6 @@ background: #FFF;
 		border: 1px solid #B6244D;
 		border-radius: 12px !important;
 		padding-left: 4% !important;
-		margin-left: -3.25% !important;
 		font-family: Raleway, sans-serif;
 		font-size: 12px !important;
 	}
