@@ -280,7 +280,7 @@ class EventDeleteView(generic.DeleteView):
 
 
             subject = 'Evento cancelado'
-            body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
+            body = 'El evento ' + event.title + ' en el que estás inscrito ha sido cancelado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
