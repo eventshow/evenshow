@@ -147,7 +147,7 @@
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{% widthratio object.price_discount 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                data-amount="{% widthratio price_discount 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
                 data-label="Sí">
                 </script>
             <script>
@@ -165,7 +165,7 @@
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                data-amount="{% widthratio price_all 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
                 data-label="No">
                 </script>
             <script>

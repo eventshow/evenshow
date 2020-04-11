@@ -204,7 +204,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
             
-            context['price_discount'] = services.PaymentService().fee_discount(event.price, user, True) + event.price
+            context['price_discount'] = (services.PaymentService().fee_discount(float(event.price*100), user, True) + event.price*100)/100
+            context['price_all'] = (services.PaymentService().fee(float(event.price*100)) + event.price*100)/100
         
             
         hours, minutes = divmod(duration, 60)

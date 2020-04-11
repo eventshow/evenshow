@@ -266,7 +266,7 @@ class PaymentService():
         var_stripe = 1.029
         eventpoints_eur = attendee.profile.eventpoints*0.5
         eventpoints = attendee.profile.eventpoints
-
+    
         amount_company = 0
 
         if (amount_host >= 0) and amount_host <= 50:
