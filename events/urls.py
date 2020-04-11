@@ -70,4 +70,6 @@ urlpatterns = [
          name='not_impl'),
     path('terms', TemplateView.as_view(template_name='terms.html'),
          name='terms'),
+      path('thanks', TemplateView.as_view(template_name='enrollment/thanks.html'),
+         name='terms'),
 ]
