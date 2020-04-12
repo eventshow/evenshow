@@ -60,6 +60,8 @@ class EventForm(forms.ModelForm):
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
+    picture = forms.CharField(required=False, widget=forms.TextInput(attrs={'type': 'hidden', 'id': 'avatar-url', 'name': 'avatar-url',
+               'value': ''}))
 
     class Meta:
         model = Event
@@ -299,8 +301,8 @@ class ProfileForm(forms.ModelForm):
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
     picture = forms.URLField(required=False, widget=forms.URLInput(
-        attrs={'placeholder': "https://", 'type': 'hidden', 'id': 'avatar-url', 'name': 'avatar-url',
-               'value': '/static/favicon.png'}))
+        attrs={'type': 'hidden', 'id': 'avatar-url', 'name': 'avatar-url',
+               'value': ''}))
 
     class Meta:
         model = Profile
