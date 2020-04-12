@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+{% load transactions %}
 {% if user.is_authenticated %}
 <img class="img-detail-auth" src="{{object.picture}}">
 {% else %}
@@ -52,16 +53,15 @@
             {% csrf_token %}
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{% widthratio object.price 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
-                data-label="{{ object.price }}€">
+                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{% to_cents event_price%}"
+                data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
             {% else %}
             <button type="submit"
-                class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€</button>
+                class="aves-effect waves-light btn-large button-detail-auth">{{ event_price}}€</button>
             {% endif %}
         </form>
         {% endif %}

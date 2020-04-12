@@ -150,8 +150,7 @@ class AttendeePaymentView(generic.View):
                             if not is_paid_for:
 
                                 try:
-                                    fee = services.PaymentService().fee(transaction.amount)
-                                    attendee_amount = fee + transaction.amount
+                                    attendee_amount = transaction.amount
 
                                     services.PaymentService().charge_connect(
                                         attendee_amount, transaction.customer_id, fee, transaction.recipient)
@@ -162,7 +161,7 @@ class AttendeePaymentView(generic.View):
                                     services.UserService().add_bonus(transaction.created_by, transaction.amount)
 
                                 except stripe.error.StripeError:
-                                    redirect('not_impl')
+                                    redirect('payment_error')
 
                             else:
 
@@ -221,7 +220,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['event_is_full'] = event_is_full
         context['attendees'] = selectors.EnrollmentSelector().on_event(
             event.pk, 'ACCEPTED').count()
-
+        context['event_price'] = float(event.price) + services.PaymentService().fee(
+            float(event.price)*100) / 100
         context['user_can_enroll'] = not event_is_full and user_can_enroll
 
         return context
@@ -488,8 +488,11 @@ class EnrollmentCreateView(generic.View):
                     request.user.email, request.POST['stripeToken'])
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
+
+            price = float(event.price) + services.PaymentService().fee(
+                float(event.price)*100) / 100
             services.PaymentService().save_transaction(
-                event.price*100, customer.id, event, attendee, event.created_by)
+                price, customer.id, event, attendee, event.created_by)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
