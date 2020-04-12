@@ -13,7 +13,6 @@
         <thead>
           <div class="provisional">
             <tr>
-              <th id="">Descargar</th>
               <th id="">Id</th>
               <th id="">Fecha</th>
               <th id="">Cantidad</th>
@@ -25,11 +24,6 @@
         <tbody>
           {% for transaction in object_list %}
           <tr>
-            <td id="paddinButton2">
-              <button id="noPaddin" type="button" onclick="location.href='/ups'" title="Descargar">
-                <em id="title-name" class="samll material-icons">file_download</em>
-              </button>
-            </td>
             <td>{{transaction.id}}</td>
             <td>{{transaction.created_at}}</td>
             <td>{{ transaction.amount|floatformat:2 }}€</td>
