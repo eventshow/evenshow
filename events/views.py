@@ -62,21 +62,15 @@ class HomeView(generic.FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
+        request = self.request.POST.copy()
 
         kwargs = {}
         kwargs['date'] = data.pop('date', None) or None
-        kwargs['location'] = data.pop('location', None) or None
         kwargs['start_hour'] = data.pop('start_hour', None) or None
 
-        if self.request.session.get('form_values'):
-            del self.request.session['form_values']
-            self.request.session['form_values'] = kwargs
-
-        nearby = self.request.POST.get('nearby', None) or None
-        latitude = data.get('latitude', None) or None
-        longitude = data.get('longitude', None) or None
-
-        kwargs = {key: val for key, val in kwargs.items() if val}
+        nearby = request.get('nearby', None) or None
+        latitude = 37.382641  # data.get('latitude', None) or None
+        longitude = -5.996300  # data.get('longitude', None) or None
 
         if nearby and not(latitude and longitude):
             context = self.get_context_data(form=form)
@@ -85,9 +79,17 @@ class HomeView(generic.FormView):
         elif nearby:
             self.request.session['latitude'] = float(latitude)
             self.request.session['longitude'] = float(longitude)
+            del request['location']
         elif self.request.session.get('latitude') or self.request.session.get('longitude'):
             del self.request.session['latitude']
             del self.request.session['longitude']
+            kwargs['location'] = data.pop('location', None) or None
+
+        if self.request.session.get('form_values'):
+            del self.request.session['form_values']
+            self.request.session['form_values'] = request
+
+        kwargs = {key: val for key, val in kwargs.items() if val}
 
         return redirect(reverse('list_event_filter', kwargs=kwargs))
 
@@ -439,7 +441,10 @@ class EventFilterListView(generic.ListView):
             'max_price', None) or None
         self.kwargs['category'] = self.kwargs.pop('category', None) or None
 
-        if not self.request.session.get('latitude') or self.kwargs.get('location'):
+        latitude = self.request.session.get('latitude')
+        longitude = self.request.session.get('longitude')
+
+        if not (latitude and longitude):
             queryset = selectors.EventSelector().events_filter_search(
                 self.request.user, **self.kwargs).order_by('start_day')
         else:
