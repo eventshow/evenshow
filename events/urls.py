@@ -23,11 +23,9 @@ urlpatterns = [
     path('events/hosted', views.EventHostedListView.as_view(),
          name='hosted_events'),
     path('events/filter', views.EventFilterFormView.as_view(), name='event_filter'),
-    re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?$',
+    re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?(?:c(?P<category>\d*)/)?$',
             views.EventFilterListView.as_view(), name='list_event_filter'),
 
-    path('events/nearby',
-         views.EventSearchNearbyView.as_view(), name='event_nearby_search_home'),
     path('events/create', views.EventCreateView.as_view(),
          name='create_event'),
     path('events/payment/<int:pk>',
@@ -44,10 +42,16 @@ urlpatterns = [
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
          name='update_event'),
 
-    path('oauth/callback/', views.StripeAuthorizeCallbackView.as_view(), name='authorize_callback'),
+    path('oauth/callback/', views.StripeAuthorizeCallbackView.as_view(),
+         name='authorize_callback'),
+
+    path('payment/error', TemplateView.as_view(template_name='payment_error.html'),
+         name='payment_error'),
+
     path('profile', login_required(TemplateView.as_view(template_name='profile/detail.html')),
          name='detail_profile'),
     path('profile/delete', views.UserDeleteView.as_view(), name='delete_profile'),
+    path('profile/download', views.DownloadPDF.as_view(), name='pdf_download'),
     path('profile/referred',
          login_required(TemplateView.as_view(template_name='profile/referred.html')), name='referred'),
     path('profile/receipts', views.TransactionListView.as_view(),
@@ -59,18 +63,15 @@ urlpatterns = [
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
-
+    
+    path('terms', TemplateView.as_view(template_name='terms.html'),
+     name='terms'),
+  
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
-
-    path('profile/pdf_download', views.DownloadPDF.as_view(), name='pdf_download'),
-
-     path('vista/gracias', TemplateView.as_view(template_name='enrollment/thanks.html'),
-         name='grac'),
-     path('vista/terminos', TemplateView.as_view(template_name='terms.html'),
-         name='terms'),
     path('profile/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
          name='upload_file'),
     path('events/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
          name='upload_file_event'),
+
 ]

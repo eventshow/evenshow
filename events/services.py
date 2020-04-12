@@ -2,20 +2,16 @@ import googlemaps
 import pytz
 import stripe
 
-from collections import OrderedDict
-from datetime import date, datetime, time, timedelta
-from operator import itemgetter
+from datetime import date, datetime
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
 from django.utils.timezone import now
 
 from . import models
 from . import selectors
-from .models import Message
 
 User = get_user_model()
 
@@ -102,68 +98,6 @@ class EventService():
             res = False
 
         return res
-
-    def nearby_events_distance(self, self_view, distance, latitude, longitude):
-        events = models.Event.objects.filter(start_day__gte=date.today())
-        events_cleaned = []
-        if self_view.request.user.is_authenticated:
-            for event in events:
-                if self_view.request.user not in selectors.UserSelector().event_attendees(
-                        event.pk) and event.has_started is False:
-                    events_cleaned.append(event)
-        else:
-            for event in events:
-                if event.has_started is False:
-                    events_cleaned.append(event)
-
-        result = []
-
-        if events_cleaned:
-            events_distances_oredered = self.common_method_distance_order(
-                events_cleaned, latitude, longitude)
-
-            for event, eventdistance in events_distances_oredered.items():
-                if eventdistance <= int(distance):
-                    result.append(event)
-                else:
-                    break
-
-        return result
-
-    def events_filter_search(self, user, **kwargs):
-        if user.is_authenticated:
-            events = models.Event.objects.filter(
-                ~Q(event_enrollments__created_by=user), Q(start_day__gte=date.today()))
-        else:
-            events = models.Event.objects.filter(start_day__gte=date.today())
-        filters = {key: val for key, val in kwargs.items() if val}
-
-        return events.filter(**filters)
-
-    def common_method_distance_order(self, events, latitude, longitude):
-        gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
-
-        latitude_user = latitude
-        longitude_user = longitude
-
-        origins = [{"lat": latitude_user, "lng": longitude_user}]
-        destinations = ""
-
-        for event in events:
-            destinations = destinations + str(
-                event.location_number) + " " + event.location_street + ", " + event.location_city + "|"
-
-        distancematrix = gmaps.distance_matrix(origins, destinations)
-        events_distances = {}
-
-        for element, event in zip(distancematrix['rows'][0]['elements'], events):
-            if element['status'] == 'OK':
-                events_distances[event] = element['distance']['value']
-
-        events_distances_oredered = OrderedDict(
-            sorted(events_distances.items(), key=itemgetter(1), reverse=False))
-
-        return events_distances_oredered
 
     def update(self, event: models.Event, updated_by: User):
         event.updated_by = updated_by
@@ -260,21 +194,20 @@ class PaymentService():
 
         return round(res - amount_host)
 
-    def charge(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
-
+    def charge_connect(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
         stripe.Charge.create(
-                amount=amount,
-                currency='eur',
-                customer=customer_id,
-                description='A event payment',
-                application_fee_amount = application_fee_amount,
-                destination={
-                    'account': host.profile.stripe_user_id,
-                }
-            )
-    
-    def charge(self, amount:int, source:str) -> None:
+            amount=amount,
+            currency='eur',
+            customer=customer_id,
+            description='A event payment',
+            application_fee_amount=application_fee_amount,
+            destination={
+                'account': host.profile.stripe_user_id,
+            }
+        )
 
+
+    def charge(self, amount: int, source: str) -> None:
         stripe.Charge.create(
             amount=amount,
             currency='eur',
@@ -282,31 +215,29 @@ class PaymentService():
             source=source
         )
 
-    def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User) -> None:
-        
-        models.Transaction.objects.create(amount = amount, created_by=created_by, recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False)
+    def save_transaction(self, amount: int, customer_id: int, event: models.Event, created_by: User, recipient: User) -> None:
+        models.Transaction.objects.create(amount=amount, created_by=created_by,
+                                          recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False)
 
-    def get_or_create_customer(self, email:str, source:str) -> stripe.Customer:
+    def get_or_create_customer(self, email: str, source: str) -> stripe.Customer:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         connected_customers = stripe.Customer.list()
         for customer in connected_customers:
             if customer.email == email:
                 return customer
         return stripe.Customer.create(
-            email = email,
-            source = source
-    )
+            email=email,
+            source=source
+        )
 
-    def is_customer(self, email:str) -> bool:
+    def is_customer(self, email: str) -> bool:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         connected_customers = stripe.Customer.list()
         for customer in connected_customers:
             if customer.email == email:
                 return True
-        
+
         return False
-                
-        
 
 
 class UserService:

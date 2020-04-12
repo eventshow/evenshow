@@ -1,7 +1,9 @@
 import json
 import urllib
+
 import uuid
-from datetime import date
+from django.db.models import Count, Sum
+from datetime import date, datetime
 from io import BytesIO
 
 import boto3
@@ -60,17 +62,36 @@ class HomeView(generic.FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
+        request = self.request.POST.copy()
 
         kwargs = {}
         kwargs['date'] = data.pop('date', None) or None
-        kwargs['location'] = data.pop('location', None) or None
         kwargs['start_hour'] = data.pop('start_hour', None) or None
+
+        nearby = request.get('nearby', None) or None
+        latitude = data.get('latitude', None) or None
+        longitude = data.get('longitude', None) or None
+
+        if nearby and not(latitude and longitude):
+            context = self.get_context_data(form=form)
+            context['no_geolocation'] = 'No se ha podido determinar tu ubicación'
+            return self.render_to_response(context)
+        elif nearby:
+            self.request.session['latitude'] = float(latitude)
+            self.request.session['longitude'] = float(longitude)
+            del request['location']
+        elif self.request.session.get('latitude') or self.request.session.get('longitude'):
+            del self.request.session['latitude']
+            del self.request.session['longitude']
+            kwargs['location'] = data.pop('location', None) or None
+        else:
+            kwargs['location'] = data.pop('location', None) or None
 
         if self.request.session.get('form_values'):
             del self.request.session['form_values']
 
+        self.request.session['form_values'] = request
         kwargs = {key: val for key, val in kwargs.items() if val}
-
         return redirect(reverse('list_event_filter', kwargs=kwargs))
 
 
@@ -100,7 +121,8 @@ class AttendeeListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.UserSelector().event_attendees(self.kwargs.get('pk'))
+        queryset = selectors.UserSelector().event_attendees(
+            self.kwargs.get('pk')).order_by('username')
         return queryset
 
 
@@ -131,7 +153,7 @@ class AttendeePaymentView(generic.View):
                                     fee = services.PaymentService().fee(transaction.amount)
                                     attendee_amount = fee + transaction.amount
 
-                                    services.PaymentService().charge(
+                                    services.PaymentService().charge_connect(
                                         attendee_amount, transaction.customer_id, fee, transaction.recipient)
 
                                     transaction.is_paid_for = True
@@ -246,8 +268,10 @@ class EventDeleteView(generic.DeleteView):
             event = models.Event.objects.get(pk=event_pk)
 
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
-            amount_host = services.PaymentService().fee(round(event.price * 100))
-            context['penalty'] = (amount_host * attendees) / 100
+
+            amount_host = services.PaymentService().fee(round(event.price*100))
+            context['penalty'] = (amount_host*attendees)
+
 
         return context
 
@@ -259,13 +283,7 @@ class EventDeleteView(generic.DeleteView):
             event = models.Event.objects.get(pk=event_pk)
 
             if not event.can_delete:
-                try:
-                    attendees = selectors.UserSelector().event_attendees(event_pk).count()
-                    amount_host = services.PaymentService().fee(round(event.price * 100))
-                    services.PaymentService().charge(round(amount_host * attendees), request.POST['stripeToken'])
-
-                except stripe.error.StripeError:
-                    redirect('not_impl')
+                penalty(event, request.POST.get('stripeToken'))
 
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
@@ -300,7 +318,8 @@ class EventHostedListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.EventSelector().hosted(self.request.user)
+        queryset = selectors.EventSelector().hosted(
+            self.request.user).order_by('start_day')
         return queryset
 
 
@@ -318,7 +337,8 @@ class EventEnrolledListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = selectors.EnrollmentSelector().created_by(self.request.user)
+        queryset = selectors.EnrollmentSelector().created_by(
+            self.request.user).order_by('event__start_day')
         return queryset
 
 
@@ -335,15 +355,19 @@ class EventUpdateView(generic.UpdateView):
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, event_pk):
             event = form.save(commit=False)
             event_db = models.Event.objects.get(pk=event_pk)
+
+            attende_list = selectors.UserSelector().event_attendees(event_pk)
+
             subject = 'Evento actualizado'
             body = 'El evento ' + event_db.title + \
-                   'en el que estás inscrito ha sido actualizado'
+                'en el que estás inscrito ha sido actualizado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
             services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
+
         else:
             return redirect('events')
 
@@ -352,8 +376,7 @@ class EventUpdateView(generic.UpdateView):
         event_pk = self.kwargs.get('pk')
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
-                'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(
-            event_pk):
+                'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
@@ -372,9 +395,15 @@ class EventFilterFormView(generic.FormView):
         kwargs['start_hour'] = data.pop('start_hour', None) or None
         kwargs['min_price'] = data.pop('min_price', None) or None
         kwargs['max_price'] = data.pop('max_price', None) or None
+        kwargs['category'] = self.request.POST.get('category', None) or None
         self.request.session['form_values'] = self.request.POST
 
         kwargs = {key: val for key, val in kwargs.items() if val}
+
+        if self.request.session.get('latitude'):
+            if not bool(kwargs) or (bool(kwargs) and kwargs.get('location')):
+                del self.request.session['latitude']
+                del self.request.session['longitude']
 
         return redirect(reverse('list_event_filter', kwargs=kwargs))
 
@@ -393,13 +422,13 @@ class EventFilterListView(generic.ListView):
         context = super(EventFilterListView,
                         self).get_context_data(**kwargs)
         context['locations'] = services.EventService().locations()
-        context['location'] = self.kwargs['location_city__icontains']
-
+        context['location'] = self.kwargs.get('location_city__icontains', None)
+        context['category'] = models.Category.objects.filter(
+            pk=self.kwargs.get('category')).values_list('name', flat=True).first()
         context['form'] = self.form_class(
             self.request.session.get('form_values'))
-        context['categories'] = set(list(context.get(
-            'object_list').annotate(total=Count('category')).values_list('category__name', 'total')))
-
+        context['categories'] = context.get('paginator').object_list.values(
+            'category__name', 'category').annotate(total=Count('category')).order_by('total')
         return context
 
     def get_queryset(self):
@@ -408,45 +437,22 @@ class EventFilterListView(generic.ListView):
             'location', None) or None
         self.kwargs['start_time__gte'] = self.kwargs.pop(
             'start_hour', None) or None
-        self.kwargs['price__gte'] = self.kwargs.pop('min_price', None) or None
-        self.kwargs['price__lte'] = self.kwargs.pop('max_price', None) or None
+        self.kwargs['price__gte'] = self.kwargs.pop(
+            'min_price', None) or None
+        self.kwargs['price__lte'] = self.kwargs.pop(
+            'max_price', None) or None
+        self.kwargs['category'] = self.kwargs.pop('category', None) or None
 
-        queryset = services.EventService().events_filter_search(
-            self.request.user, **self.kwargs)
+        latitude = self.request.session.get('latitude')
+        longitude = self.request.session.get('longitude')
 
-        return queryset
-
-
-class EventSearchNearbyView(generic.ListView):
-    model = models.Event
-    template_name = 'event/list_search.html'
-    paginate_by = 12
-    form_class = forms.SearchFilterForm
-
-    def post(self, request, *args, **kwargs):
-        latitude = self.request.POST.get('latitude')
-        longitude = self.request.POST.get('longitude')
-        queryset = self.get_queryset()
-        context = {}
-        context['latitude'] = latitude
-        context['longitude'] = longitude
-        context['form'] = self.form_class
-        context['object_list'] = queryset
-
-        if not queryset:
-            context[
-                'location'] = "Su navegador no tiene activada la geolocalización. Por favor actívela para ver los eventos cercanos."
-
-        return render(request, self.template_name, context)
-
-    def get_queryset(self):
-        latitude = self.request.POST.get('latitude')
-        longitude = self.request.POST.get('longitude')
-        if latitude and longitude:
-            queryset = services.EventService().nearby_events_distance(
-                self, 50000, latitude, longitude)
+        if not (latitude and longitude):
+            queryset = selectors.EventSelector().events_filter_search(
+                self.request.user, **self.kwargs).order_by('start_day')
         else:
-            queryset = []
+            queryset = selectors.EventSelector().nearby_events_distance(
+                self.request.user, 50000, self.request.session.get('latitude'), self.request.session.get('longitude'), **self.kwargs)
+
         return queryset
 
 
@@ -722,7 +728,7 @@ class RateAttendeeView(generic.CreateView):
         rating.event = event
         rating.on = 'ATTENDEE'
 
-        if services.RatingService().is_valid_rating(rating, event, created_by) and reviewed.usename != 'deleted':
+        if services.RatingService().is_valid_rating(rating, event, created_by) and reviewed.username != 'deleted':
             services.RatingService().create(rating)
             return super().form_valid(form)
         else:
@@ -813,11 +819,43 @@ class UserDeleteView(generic.DeleteView):
     model = User
 
     def delete(self, request, *args, **kwargs):
-        self.get_object().delete()
-        return redirect('home')
+        user = self.get_object()
+        try:
+            if self.price_sum:
+                services.PaymentService().charge(
+                    round(self.fee)*self.attendee_sum,
+                    request.POST.get('stripeToken')
+                )
+            user.delete()
+            return redirect('home')
+        except stripe.error.StripeError:
+            return redirect('payment_error')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.penalized_events = self.get_penalized_events()
+        self.is_penalized = self.penalized_events.count()
+        if self.is_penalized:
+            aux = self.penalized_events.aggregate(
+                Sum('event__price'), Sum('count'))
+            self.price_sum = float(aux.get('event__price__sum', 0) or 0)*100
+            self.attendee_sum = aux.get('count__sum', 0) or 0
+            self.fee = services.PaymentService().fee(self.price_sum)
+        return super(UserDeleteView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDeleteView, self).get_context_data(**kwargs)
+
+        context['penalized'] = self.is_penalized
+        if self.is_penalized:
+            context['penalty'] = self.fee * self.attendee_sum
+            context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
+        return context
 
     def get_object(self):
         return self.request.user
+
+    def get_penalized_events(self):
+        return selectors.EventSelector().penalized(self.get_object())
 
 
 @method_decorator(login_required, name='dispatch')
@@ -903,6 +941,7 @@ class DownloadPDF(View):
         return response
 
 
+
 class FileUploadView(View):
     def get(self, request, file_name, file_img, file_type, **kwargs):
         S3_BUCKET = settings.S3_BUCKET
@@ -933,3 +972,14 @@ class FileUploadView(View):
             return HttpResponse(dump, content_type='application/json')
         else:
             pass
+
+def penalty(event, stripe_token):
+    try:
+        attendees = selectors.UserSelector().event_attendees(event.pk).count()
+        fee = services.PaymentService().fee(round(event.price*100))
+        services.PaymentService().charge(
+            round(fee*attendees), stripe_token)
+
+    except stripe.error.StripeError:
+        redirect('payment_error')
+

@@ -32,6 +32,15 @@
                     {{ form.max_price.errors }}
                 </div>
                 <button class="btn-submit search" type="submit">Buscar</button>
+                <!-- {% for category in categories %}
+                <input type="hidden" name="category_name" value="{{category.category__name}}">
+                <div class="col">
+                    <button class="btn-category" type="submit" name="category" value="{{category.category}}">
+                        <h3 class="title-search">{{category.category__name}}</h3>
+                        <h3 class="title-search">Resultados {{category.total}}</h3>
+                    </button>
+                </div>
+                {% endfor %} -->
             </form>
         </div>
     </div>
@@ -39,8 +48,12 @@
 <div class="container">
     <div class="row text-left">
         <div class="col l6 ">
-            <h1 class="title-search">{% if location %} {{ location }} {% endif %}</h1>
-            <h3 class="title-search-result">{{page_obj.end_index}} de {{page_obj.paginator.count}} resultados</h3>
+            {% if category %}
+            <h1 class="title-search">Categoría <h1 class="title-event element">{{ category }}</h1>
+            </h1>
+            {% endif %}
+            <h1 class="title-search">{{location|default_if_none:''}}</h1>
+            <h3 class="title-search">{{page_obj.end_index}} de {{page_obj.paginator.count}} resultados</h3>
         </div>
     </div>
 </div>
@@ -58,14 +71,15 @@
             <a href="{% url 'detail_event' event.pk %}">
                 <h2 class="title-event element">{{ event.title }}</h2>
             </a>
-            <h4 class="subtitle-event element"> Hora: {{event.start_time}} | Duración: {{ event.duration }}</h4>
+            <h4 class="subtitle-event element">Hora: {{event.start_time}} | Duración: {{ event.duration }}</h4>
             <h4 class="subtitle-event element">Fecha: {{ event.start_day }}</h4>
             <h4 class="subtitle-event element">Lugar: {{ event.location_city }}</h4>
-            {% if user.is_authenticated and user.profile.age < event.min_age %} <h4 class="subtitle-event element not-age">Edad mínima: {{ event.min_age }}</h4> {% else %}
+            {% if user.is_authenticated and user.profile.age < event.min_age %} <h4
+                class="subtitle-event element not-age">Edad mínima: {{ event.min_age }}</h4> {% else %}
             <h4 class="subtitle-event element">Edad mínima: {{ event.min_age }}</h4>{% endif %}
             <h4 class="title-category element">Descripción:</h4>
             <h5 class="subtitle-event element">{{ event.description }}
-                <a class="waves-effect waves-light btn button-search price right" id="button-search"
+                <a class="waves-effect waves-light btn button-search price" id="button-search"
                     href="{% url 'detail_event' event.pk %}">{{ event.price }}€</a>
             </h5>
         </div>
