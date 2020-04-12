@@ -69,6 +69,7 @@ urlpatterns = [
   
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
+
     path('profile/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
          name='upload_file'),
     path('events/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
