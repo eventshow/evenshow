@@ -8,38 +8,32 @@
     </div>
   </div>
   <div class="container">
-  <div class="table-generic">
-    <table class="responsive-table" id="myTable">
-      <thead>
-        <div class="provisional">
+    <div class="table-generic">
+      <table class="responsive-table" id="myTable">
+        <thead>
+          <div class="provisional">
+            <tr>
+              <th id="">Id</th>
+              <th id="">Fecha</th>
+              <th id="">Cantidad</th>
+              <th id="">Emisor</th>
+              <th id="">Receptor</th>
+            </tr>
+          </div>
+        </thead>
+        <tbody>
+          {% for transaction in object_list %}
           <tr>
-            <th id="">Descargar</th>
-            <th id="">Id</th>
-            <th id="">Fecha</th>
-            <th id="">Cantidad</th>
-            <th id="">Emisor</th>
-            <th id="">Receptor</th>
+            <td>{{transaction.id}}</td>
+            <td>{{transaction.created_at}}</td>
+            <td>{{ transaction.amount|floatformat:2 }}€</td>
+            <td>{{transaction.created_by.username}}</td>
+            <td>{{transaction.recipient.username}}</td>
           </tr>
-        </div>
-      </thead>
-      <tbody>
-        {% for transaction in object_list %}
-        <tr>
-          <td id="paddinButton2">
-            <button id="noPaddin" type="button" onclick="location.href='/ups'" title="Descargar">
-              <em id="title-name" class="samll material-icons">file_download</em>
-            </button>
-          </td>
-          <td>{{transaction.id}}</td>
-          <td>{{transaction.created_at}}</td>
-          <td>{% to_euros transaction.amount %}€</td>
-          <td>{{transaction.created_by.username}}</td>
-          <td>{{transaction.recipient.username}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% include "pagination.html" %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% include "pagination.html" %}
+    </div>
   </div>
-</div>
-{%endblock%}
+  {%endblock%}
