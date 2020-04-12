@@ -150,8 +150,7 @@ class AttendeePaymentView(generic.View):
                             if not is_paid_for:
 
                                 try:
-                                    fee = services.PaymentService().fee(transaction.amount)
-                                    attendee_amount = fee + transaction.amount
+                                    attendee_amount = transaction.amount
 
                                     services.PaymentService().charge_connect(
                                         attendee_amount, transaction.customer_id, fee, transaction.recipient)
