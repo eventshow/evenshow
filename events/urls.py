@@ -23,11 +23,9 @@ urlpatterns = [
     path('events/hosted', views.EventHostedListView.as_view(),
          name='hosted_events'),
     path('events/filter', views.EventFilterFormView.as_view(), name='event_filter'),
-    re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?$',
+    re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?(?:c(?P<category>\d*)/)?$',
             views.EventFilterListView.as_view(), name='list_event_filter'),
 
-    path('events/nearby',
-         views.EventSearchNearbyView.as_view(), name='event_nearby_search_home'),
     path('events/create', views.EventCreateView.as_view(),
          name='create_event'),
     path('events/payment/<int:pk>',
@@ -65,11 +63,16 @@ urlpatterns = [
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
-
+    
+    path('terms', TemplateView.as_view(template_name='terms.html'),
+     name='terms'),
+  
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
+
     path('terms', TemplateView.as_view(template_name='terms.html'),
          name='terms'),
       path('thanks', TemplateView.as_view(template_name='enrollment/thanks.html'),
          name='thanks'),
+
 ]
