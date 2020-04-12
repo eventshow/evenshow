@@ -118,14 +118,14 @@ class AttendeePaymentView(generic.View):
                 return redirect('authorize')
             else:
                 if event.has_finished:
-                    
+
                     attende_list = selectors.UserSelector().event_attendees(pk)
-                    
+
                     for attendee in attende_list:
 
                         transaction = models.Transaction.objects.filter(
                             created_by=attendee, event=event).first()
-                        
+
                         if transaction:
 
                             is_paid_for = transaction.is_paid_for
@@ -135,8 +135,9 @@ class AttendeePaymentView(generic.View):
                                 try:
                                     fee = 0
                                     if transaction.discount:
-                                        
-                                        fee = services.PaymentService().fee_discount(transaction.amount, attendee, False)
+
+                                        fee = services.PaymentService().fee_discount(
+                                            transaction.amount, attendee, False)
                                     else:
                                         fee = services.PaymentService().fee(transaction.amount)
 
@@ -203,16 +204,18 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
-            
-            context['price_discount'] = (services.PaymentService().fee_discount(float(event.price*100), user, True) + event.price*100)/100
-            context['price_all'] = (services.PaymentService().fee(float(event.price*100)) + event.price*100)/100
-        
-            
+
+            context['price_discount'] = (services.PaymentService().fee_discount(
+                float(event.price*100), user, True) + event.price*100)/100
+            context['price_all'] = (services.PaymentService().fee(
+                float(event.price*100)) + event.price*100)/100
+
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
         context['gmaps_key'] = settings.GOOGLE_API_KEY
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
         context['event_is_full'] = event_is_full
+        context['points'] = user.profile.eventpoints
         context['attendees'] = selectors.EnrollmentSelector().on_event(
             event.pk, 'ACCEPTED').count()
 
@@ -277,7 +280,6 @@ class EventDeleteView(generic.DeleteView):
 
             if not event.can_delete:
                 penalty(event, request.POST.get('stripeToken'))
-
 
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + ' en el que estás inscrito ha sido cancelado'
@@ -351,7 +353,7 @@ class EventUpdateView(generic.UpdateView):
             event_db = models.Event.objects.get(pk=event_pk)
 
             attende_list = selectors.UserSelector().event_attendees(event_pk)
-                
+
             subject = 'Evento actualizado'
             body = 'El evento ' + event_db.title + \
                 'en el que estás inscrito ha sido actualizado'
@@ -361,7 +363,7 @@ class EventUpdateView(generic.UpdateView):
             services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
-            
+
         else:
             return redirect('events')
 
@@ -371,11 +373,11 @@ class EventUpdateView(generic.UpdateView):
 
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get(
                 'pk')) and not services.EventService().has_finished(event_pk) and services.EventService().can_update(event_pk):
-            
+
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
-         
+
 
 class EventFilterFormView(generic.FormView):
     form_class = forms.SearchFilterForm
@@ -493,7 +495,7 @@ class EnrollmentCreateView(generic.View):
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
-            
+
             event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
@@ -513,6 +515,7 @@ class EnrollmentCreateView(generic.View):
             return render(request, 'enrollment/thanks.html', context)
         else:
             return redirect('/')
+
 
 @method_decorator(login_required, name='dispatch')
 class EnrollmentCreateDiscountView(generic.View):
@@ -539,7 +542,7 @@ class EnrollmentCreateDiscountView(generic.View):
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
-            
+
             event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
