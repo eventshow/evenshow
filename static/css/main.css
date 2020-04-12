@@ -144,9 +144,6 @@ nav ul a:hover {
 	color: white;
 }
 
-element.style {
-	top: 70px !important;
-}
 
 
 /* IMG */
@@ -2308,12 +2305,8 @@ table {
 .map-detail iframe{
 		 width:278px;
 	height:146px;
-	frameborder:0;
 	border:0;
-	allowfullscreen:"";
-	aria-hidden:false;
 	margin: 3%;
-                tabindex:"0";
 
 }
 
