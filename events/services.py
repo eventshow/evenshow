@@ -282,10 +282,12 @@ class PaymentService():
 
         if amount_company < 0:
             res = amount_host * var_stripe + const_stripe
-            attendee.profile.eventpoints = - (round(amount_company * 2))
+            if not info:
+                attendee.profile.eventpoints = - (round(amount_company * 2))
         else:
             res = (amount_host + amount_company) * var_stripe + const_stripe
-            attendee.profile.eventpoints = 0
+            if not info:
+                attendee.profile.eventpoints = 0
         
         if not info:
             attendee.profile.save()
