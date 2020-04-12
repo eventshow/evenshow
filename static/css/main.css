@@ -2326,11 +2326,12 @@ table {
     margin-top: -190%;
     margin-bottom: -205%;
 }
+
 .section-detail3 {
     height: 900px;
     width: 100%;
     margin-top: -54%;
-    margin-bottom: 45%;
+    margin-bottom: 125%;
 }
 
 .title-text{
@@ -2804,6 +2805,13 @@ background: #FFF;
 	height: 256px;
 	border: 0;
 	margin: 3%;
+}
+
+.section-detail3 {
+    height: 900px;
+    width: 100%;
+    margin-top: -54%;
+    margin-bottom: 68%;
 }
 
 }
