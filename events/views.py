@@ -1,5 +1,4 @@
 import json
-import logging
 import urllib
 import uuid
 from datetime import date
@@ -905,14 +904,21 @@ class DownloadPDF(View):
 
 
 class FileUploadView(View):
-    def get(self, request, file_name, file_type, **kwargs):
+    def get(self, request, file_name, file_img, file_type, **kwargs):
         S3_BUCKET = settings.S3_BUCKET
+        print('---------------')
+        if settings.AWS_SESSION_TOKEN == '':
 
-        s3 = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                          aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,region_name='eu-west-3')
 
+
+            s3 = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                              aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, region_name='eu-west-3')
+        else:
+            s3 = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                              aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                              aws_session_token=settings.AWS_SESSION_TOKEN)
         file_name = str(uuid.uuid4()) + '.' + file_type
-        if not file_type == 'jpg' or not file_type == 'png':
+        if file_img == 'image':
             presigned_post = s3.generate_presigned_post(
                 Bucket=S3_BUCKET,
                 Key=file_name,

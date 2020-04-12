@@ -75,8 +75,8 @@
                         <div class="grid-example col s12 center-profile">
                             <div class="validate-input" id="edit-event">
                                 <label>IMAGEN</label>
-                                            <input type="file" id="file_input"/>
-                                            <img id="preview" src=""/>
+                                <input type="file" id="file_input" accept="image/*"/>
+                                <img id="preview" src=""/>
                                 {{profile_form.picture}}
                                 <div class="form-errors">
                                     {{ profile_form.pciture.errors }}
@@ -107,7 +107,7 @@
         </div>
     </div>
 </div>
-            <script>(function() {
+<script>(function() {
   document.getElementById("file_input").onchange = function(){
     var files = document.getElementById("file_input").files;
     var file = files[0];
@@ -121,21 +121,31 @@
 function getSignedRequest(file){
   var xhr = new XMLHttpRequest();
   xhr.open("GET", file.name+"/"+file.type);
+
   xhr.onreadystatechange = function(){
-    if(file.type ==="image/jpeg" || file.type==="image/png"){
+      console.log(file.size)
+
+
+
         if(xhr.readyState === 4){
           if(xhr.status === 200){
             var response = JSON.parse(xhr.responseText);
             uploadFile(file, response.data, response.url);
           }
           else{
-            alert("Could not get signed URL.");
+            alert("El archivo ha de ser una imagen");
           }
-        }
        }
+
       };
+    if(file.size < 5000000){
       xhr.send();
+    }else{
+      alert("El archivo debe pesar menos de 5 mb");
+
+    }
 }
+
 
 function uploadFile(file, s3Data, url){
   var xhr = new XMLHttpRequest();
@@ -146,19 +156,22 @@ function uploadFile(file, s3Data, url){
     postData.append(key, s3Data.fields[key]);
   }
   postData.append('file', file);
-
   xhr.onreadystatechange = function() {
+    console.log(file.size);
+
     if(xhr.readyState === 4){
       if(xhr.status === 200 || xhr.status === 204){
         document.getElementById("preview").src = url;
         document.getElementById("avatar-url").value = url;
       }
       else{
-        alert("Could not upload file.");
+        alert("No se ha podido subir el archivo");
       }
    }
+
   };
   xhr.send(postData);
 }
-            </script>
+
+</script>
 {% endblock %}
