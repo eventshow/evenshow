@@ -906,10 +906,7 @@ class DownloadPDF(View):
 class FileUploadView(View):
     def get(self, request, file_name, file_img, file_type, **kwargs):
         S3_BUCKET = settings.S3_BUCKET
-        print('---------------')
         if settings.AWS_SESSION_TOKEN == '':
-
-
 
             s3 = boto3.client('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                               aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, region_name='eu-west-3')
