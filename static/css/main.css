@@ -314,6 +314,18 @@ element.style {
 	margin-top: -2%;
 }
 
+#title-delete-profile {
+	font-family: Raleway, sans-serif;
+	font-size: 32px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #686969;
+
+}
+
 .rectangle-info h2 {
 	margin-top: 7%;
 	margin-bottom: -8%;
@@ -622,9 +634,14 @@ background: #FFF;
 }
 
 #send-buttons {
-	margin-bottom: 30% !important;
+    margin-bottom: 30% !important;
+    margin-left: -55%;
 }
 
+
+.send-btn{
+	margin-left: 5%;
+}
 .img-profile-detail {
 	height: 100px;
 	margin-left: 68%;
@@ -1706,9 +1723,9 @@ table {
 
 	.modal-mov{
 		margin-top: 6%;
-
-    height: 71px;
-    font-size: 18px;
+		width: 90%;
+    	height: 71px;
+    	font-size: 18px;
 	}
 
  
@@ -2798,8 +2815,9 @@ background: #FFF;
 }
 
 .principal-detail {
-	margin-bottom: -99%;
+	margin-bottom: -89%;
 }
+
 .map-detail iframe {
 	width: 340px;
 	height: 256px;
@@ -2812,6 +2830,10 @@ background: #FFF;
     width: 100%;
     margin-top: -54%;
     margin-bottom: 68%;
+}
+
+.send-btn {
+    margin-left: 115% !important;
 }
 
 }
@@ -2946,7 +2968,7 @@ background: #FFF;
 
 	.button-detail-auth {
 		color: white !important;
-		margin-top: 140% !important;
+		margin-top: 155% !important;
 		margin-left: -55% !important;
 		font-size: 28px;
 	}
@@ -2998,14 +3020,14 @@ background: #FFF;
 	}
 
 	.warning-full {
-		margin-top: 139% !important;
+		margin-top: 155% !important;
 		height: 70px;
 		margin-left: -73% !important;
 	}
 
 	.warning-own {
 		padding-bottom: 47px;
-		margin-top: 138% !important;
+		margin-top: 155% !important;
 		margin-left: -58% !important;
 		height: 70px;
 		padding-left: 15px;
@@ -3163,3 +3185,61 @@ background: #FFF;
 
 }
 
+/* Samsung S5 */
+@media only screen and (min-width: 360px) and (max-width: 640px) {
+	.principal-detail {
+		margin-bottom: -109%;
+	}
+
+	.section-detail2-big {
+		height: 900px;
+		width: 100%;
+		margin-top: -170%;
+		margin-bottom: -205%;
+	}
+
+	.button-detail-auth {
+		color: white !important;
+		margin-top: 142% !important;
+		margin-left: -55% !important;
+		font-size: 28px;
+	}
+	.warning-full {
+		margin-top: 140% !important;
+		margin-left: -73% !important;
+	
+	}
+	
+	.warning-own {
+		margin-top: 142% !important;
+		margin-left: -58% !important;
+	
+	}
+
+	.separated2 {
+		margin-left: 7%;
+		margin-top: 13% !important;
+	}
+
+	.separated7 {
+		margin-left: 7%;
+		margin-top: 78% !important;
+	}
+
+	.date-res {
+		margin-top: 45% !important;
+		margin-left: 7%;
+	}
+
+	.map-detail iframe {
+		width: 316px;
+		height: 182px;
+		border: 0;
+		margin: 3%;
+	}
+
+	.section-detail2 {
+		margin-top: -180%;
+		margin-bottom: -211%;
+	}
+}
