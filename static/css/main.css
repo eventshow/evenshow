@@ -47,14 +47,10 @@
 }
 
 .map-detail iframe{
-		 width:838px;
+	width:838px;
 	height:346px;
-	frameborder:0;
 	border:0;
-	allowfullscreen:"";
-	aria-hidden:false;
-
-                tabindex:"0";
+    
 
 }
 
@@ -1860,20 +1856,8 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 12px;
 	}
+	
 
-	
-	#edit-event input {
-		width: 130% !important;
-		height: 60px !important;
-		color: #5D5E5E !important;
-		border: 1px solid #B6244D !important;
-		border-radius: 12px !important;
-		padding-left: 4% !important;
-		margin-left: -15% !important;
-		font-family: Raleway, sans-serif;
-		font-size: 12px;
-	}
-	
 	#iphone-left{
 		margin-left: -10% !important;
 	}
@@ -2379,16 +2363,12 @@ table {
 .map-detail{
 	margin-left: 0%;
 }
-.map-detail iframe{
-		 width:278px;
-	height:146px;
-	frameborder:0;
-	border:0;
-	allowfullscreen:"";
-	aria-hidden:false;
-	margin: 3%;
-                tabindex:"0";
 
+.map-detail iframe{
+	width:278px;
+	height:146px;
+	border:0;
+	margin: 3%;
 }
 
 
@@ -2407,7 +2387,6 @@ table {
 
 #name-res{
 	margin-top: 10% !important;
-	margin: 3%;
 	font-weight: 500;
 	color: #B6244D ;
 }
@@ -2473,7 +2452,7 @@ background: #FFF;
 
 .container-home p{
 	margin-top: 2%;
-	font-family: Arial !important;
+	font-family: Arial, sans-serif !important;
 }
 .mar-modal{
 	margin-right: 10%;
@@ -2674,6 +2653,7 @@ background: #FFF;
 	}
 
 
+
 	.title-share-edit {
 		margin-left: -13%;
 		margin-bottom: 9%;
@@ -2819,8 +2799,14 @@ background: #FFF;
 .principal-detail {
 	margin-bottom: -99%;
 }
+.map-detail iframe {
+	width: 340px;
+	height: 256px;
+	border: 0;
+	margin: 3%;
+}
 
-
+}
 
 
 
@@ -2943,6 +2929,13 @@ background: #FFF;
 		margin-bottom: -165%;
 	}
 
+	.section-detail3 {
+		height: 900px;
+		width: 100%;
+		margin-top: -54%;
+		margin-bottom: -18%;
+	}
+
 	.button-detail-auth {
 		color: white !important;
 		margin-top: 140% !important;
@@ -2964,7 +2957,7 @@ background: #FFF;
 
 	.name-host-detail {
 		margin-top: -26% !important;
-		margin: 12%;
+	
 	}
 
 	.user-comment {
@@ -2981,12 +2974,8 @@ background: #FFF;
 	.map-detail iframe {
 		width: 364px;
 		height: 216px;
-		frameborder: 0;
 		border: 0;
-		allowfullscreen: "";
-		aria-hidden: false;
 		margin: 3%;
-		tabindex: "0";
 	}
 
 	.img-bio {
