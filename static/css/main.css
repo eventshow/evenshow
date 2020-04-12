@@ -1676,7 +1676,8 @@ table {
 }
 
 	.price{
-
+		margin-left: 0%;
+		margin-right: 0%;
 		background-color: transparent !important;
 		border: transparent !important;
 		color: transparent;
