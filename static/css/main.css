@@ -2290,11 +2290,9 @@ table {
 
 .name-host-detail {
     margin-top: 7%;
-	margin: 2%;
 }
 
 .host-bio{
-	margin: 3%;
 	margin-top: 4%;
 }
 
@@ -2339,7 +2337,6 @@ table {
 
 #name-res{
 	margin-top: 10% !important;
-	margin: 3%;
 	font-weight: 500;
 	color: #B6244D ;
 }
@@ -2351,7 +2348,6 @@ table {
 
 .name-host-detail {
 	margin-top: -29% !important;
-	margin:12%
 }
 
 .control-panel {
@@ -2409,7 +2405,6 @@ background: #FFF;
 
 .container-home p{
 	margin-top: 2%;
-	font-family: Arial !important;
 }
 .mar-modal{
 	margin-right: 10%;
