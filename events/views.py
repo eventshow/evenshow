@@ -161,7 +161,7 @@ class AttendeePaymentView(generic.View):
                                     services.UserService().add_bonus(transaction.created_by, transaction.amount)
 
                                 except stripe.error.StripeError:
-                                    redirect('not_impl')
+                                    redirect('payment_error')
 
                             else:
 
