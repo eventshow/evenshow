@@ -1548,6 +1548,14 @@ table {
 	
 }
 
+.discount-no-price{
+		margin-right: 30% !important;
+	}
+
+	.discount-yes-price{
+		margin-left: 30% !important;
+	}
+
 .modal-evetshow {
 	border-radius: 15px !important;
 	margin-top: 15%
@@ -1733,17 +1741,6 @@ table {
 }
 
 
-	.discount-yes{
-	margin-left: 20%;
-	position:relative;
-}
-
-.discount-no {
-	margin-right: 20%;
-
-
-	position: relative;
-}
 
 	.text-left {
 		margin-left: -10%;
@@ -2514,15 +2511,26 @@ background: #FFF;
 	margin-left: -7% !important;
 }
 
-	.modal-margin{
-		margin-left: 5%;
+	.discount-no{
+		margin-right: 18%;
+	}
+
+	.discount-yes{
+		margin-left: 18% !important;
+	}
+
+	.discount-no-price{
+		margin-right: 4% !important;
 		padding: 6px;
 	}
 
-	.discount-no{
-		margin-right: 5%;
+	.discount-yes-price{
+		margin-left: 4% !important;
 		padding: 6px;
 	}
+
+
+
 
 
 }
@@ -2787,13 +2795,16 @@ background: #FFF;
 		margin-left: 46% !important;
 	}
 
-	.modal-margin{
-		margin-left: 9%;
+		.discount-no-price{
+		margin-right: 12% !important;
 	}
 
-	.discount-no{
-		margin-right: 9%;
+	.discount-yes-price{
+		margin-left: 12% !important;
 	}
+
+
+
 
 }
 	/* PIXEL 2 */
