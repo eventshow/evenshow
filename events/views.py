@@ -163,7 +163,6 @@ class AttendeePaymentView(generic.View):
 
                                     attendee_amount = fee + transaction.amount
 
-
                                     services.PaymentService().charge_connect(
                                         attendee_amount, transaction.customer_id, fee, transaction.recipient)
 
@@ -247,7 +246,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['event_price'] = float(event.price) + services.PaymentService().fee(
             float(event.price)*100) / 100
         context['user_can_enroll'] = not event_is_full and user_can_enroll
-        context['commission'] = services.PaymentService().fee(float(event.price)*100) / 100
+        context['commission'] = services.PaymentService().fee(
+            float(event.price)*100) / 100
 
         return context
 
@@ -507,7 +507,7 @@ class EnrollmentCreateView(generic.View):
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
-            
+
             event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
@@ -522,7 +522,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            #services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -561,11 +561,8 @@ class EnrollmentCreateDiscountView(generic.View):
                     request.user.email, request.POST['stripeToken'])
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
-
-            price = float(event.price) + services.PaymentService().fee(
-                float(event.price)*100) / 100
-            services.PaymentService().save_transaction(int(event.price*100), customer.id, event, attendee, event.created_by, True)
-
+            services.PaymentService().save_transaction(int(event.price*100),
+                                                       customer.id, event, attendee, event.created_by, True)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
@@ -880,7 +877,8 @@ class TransactionListView(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = selectors.TransactionSelector().my_transaction(self.request.user)
+        queryset = selectors.TransactionSelector().my_transaction(
+            self.request.user).order_by('-created_at')
         return queryset
 
 

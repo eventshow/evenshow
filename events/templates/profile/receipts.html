@@ -26,7 +26,9 @@
           <tr>
             <td>{{transaction.id}}</td>
             <td>{{transaction.created_at}}</td>
-            <td>{{ transaction.amount|floatformat:2 }}€</td>
+            {% apply_fee transaction.amount as amount %}
+            {% to_euros amount as amount%}
+            <td>{{ amount|floatformat:2 }}€</td>
             <td>{{transaction.created_by.username}}</td>
             <td>{{transaction.recipient.username}}</td>
           </tr>

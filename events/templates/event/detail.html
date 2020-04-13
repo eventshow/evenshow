@@ -49,15 +49,16 @@
         {% elif event.created_by.username == 'deleted' %}
         <h3 class="warning-full" href="">No disponible</h3>
         {% elif user_can_enroll and not event.has_started %}
-             {% if points > 0 %}
+        {% if points > 0 %}
 
-             <a class=" waves-light btn-large modal-trigger modal-mov button-detail-auth" href="#modal3">{{ object.price }}€</a>
-
-
-            {% else %}
+        <a class=" waves-light btn-large modal-trigger modal-mov button-detail-auth"
+            href="#modal3">{{ object.price }}€</a>
 
 
-                 <form action="{% url 'enroll_event' object.pk %}" method="POST">
+        {% else %}
+
+
+        <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
@@ -68,12 +69,12 @@
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
             {% else %}
-            <button type="submit"
-                class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€ + {{commission}}</button>
+            <button type="submit" class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€ +
+                {{commission}}</button>
             {% endif %}
         </form>
 
-            {% endif %}
+        {% endif %}
 
 
 
@@ -82,7 +83,8 @@
         {% elif event.created_by.username == 'deleted' %}
         <h3 class="warning-full" href="">No disponible</h3>
         {% else %}
-        <a class="waves-effect waves-light btn-large button-detail btn-large" id="enroll" href="{% url 'login' %}">INSCRIBIRSE</a>
+        <a class="waves-effect waves-light btn-large button-detail btn-large" id="enroll"
+            href="{% url 'login' %}">INSCRIBIRSE</a>
         {% endif %}
     </div>
     <div class="col m6 rectangle-info separated1" id="detail-info">
@@ -157,26 +159,27 @@
     {% include 'pagination.html' %}
     {% endif %}
 </div>
-  <div id="modal3" class="modal modal-evetshow-detail">
-                  <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons"> highlight_off</em></button>
+<div id="modal3" class="modal modal-evetshow-detail">
+    <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons">
+            highlight_off</em></button>
 
- <div class="center modal-content ">
-        <h1> Tienes <strong style="color: #B6244D">{{ user.profile.eventpoints }}</strong> eventpoints ¿Quieres utilizarlos?</h1><br>
+    <div class="center modal-content ">
+        <h1> Tienes <strong style="color: #B6244D">{{ user.profile.eventpoints }}</strong> eventpoints ¿Quieres
+            utilizarlos?</h1><br>
 
-      </div>
-
-
-      <div class=" center modal-footer-detail">
+    </div>
 
 
-              <form action="{% url 'enroll_event_discount' object.pk %}" method="POST" id="payment-form">
+    <div class=" center modal-footer-detail">
+
+
+        <form action="{% url 'enroll_event_discount' object.pk %}" method="POST" id="payment-form">
             {% csrf_token %}
 
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{{ price_discount_cent }}" data-locale="es" data-currency="eur"
-                data-label="Sí">
+                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_discount_cent }}"
+                data-locale="es" data-currency="eur" data-label="Sí">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", " btn-large discount-yes left ");
@@ -187,26 +190,25 @@
 
         </form>
 
-              <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
+        <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
             {% csrf_token %}
 
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{{ price_all_cent }}" data-locale="es" data-currency="eur"
-                data-label="No">
+                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_all_cent }}"
+                data-locale="es" data-currency="eur" data-label="No">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
             </script>
             {% else %}
-                <button class=" btn-large discount-no-price right " type="submit">No ({{ price_all }} €)</button>
+            <button class=" btn-large discount-no-price right " type="submit">No ({{ price_all }} €)</button>
             {% endif %}
 
         </form>
 
-      </div>
     </div>
+</div>
 
 <style>
     body {
@@ -232,7 +234,6 @@
             margin-top: 308%;
         }
     }
-
 </style>
 
 {% endblock %}

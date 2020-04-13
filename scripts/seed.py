@@ -278,7 +278,8 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
             'fields': fields
         }
 
-        seed_transaction(event, enroller, host, updated_at, price)
+        if event_date < datetime.now().date():
+            seed_transaction(event, enroller, host, updated_at, price)
         if status == 'ACCEPTED':
             ac += 1
             if enroller not in attendees:
@@ -340,7 +341,7 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
 
 def seed_transaction(event, transmitter, recipient, created_at, amount):
     fields = {
-        'amount': amount*100 + 1.15,
+        'amount': amount*100,
         'created_at': created_at + TIMEZONE,
         'updated_at': created_at + TIMEZONE,
         'event': event,
