@@ -103,6 +103,38 @@
     </div>
     <hr>
 </div>
+
+{% if  object.extra_info|length > 0 and object.description|length >= 150 %}
+<div class="section-detail2-big">
+    <div class="col-3 title-section">
+        <h1 class="title-section">Información extra</h1>
+    </div>
+    <div class="col-5 title-section">
+        <h3 class="title-text">{{object.extra_info}}</h3>
+    </div>
+    <hr>
+</div>
+{% elif  object.extra_info|length == 0 and object.description|length >= 150 %}
+<div class="section-detail2-big">
+    <div class="col-3 title-section">
+        <h1 class="title-section">Información extra</h1>
+    </div>
+    <div class="col-5 title-section">
+        <h3 class="title-text">No hay información extra sobre este evento</h3>
+    </div>
+    <hr>
+</div>
+{% elif  object.extra_info|length == 0 and object.description|length < 150 %}
+<div class="section-detail2">
+    <div class="col-3 title-section">
+        <h1 class="title-section">Información extra</h1>
+    </div>
+    <div class="col-5 title-section">
+        <h3 class="title-text">No hay información extra sobre este evento</h3>
+    </div>
+    <hr>
+</div>
+{% else %}
 <div class="section-detail2">
     <div class="col-3 title-section">
         <h1 class="title-section">Información extra</h1>
@@ -112,6 +144,9 @@
     </div>
     <hr>
 </div>
+{% endif %}
+
+
 <div class="section-detail3">
     <div class="col-3 title-section">
         <h1 class="title-section">Anfitrión</h1>
@@ -135,7 +170,7 @@
         </h3>
         <div class="col-md-7 map-detail">
             <br>
-            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
+            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}" tabindex ="0" aria-hidden="false" allowfullscreen ></iframe>
             <br>
         </div>
     </div>
