@@ -247,6 +247,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['event_price'] = float(event.price) + services.PaymentService().fee(
             float(event.price)*100) / 100
         context['user_can_enroll'] = not event_is_full and user_can_enroll
+        context['commission'] = services.PaymentService().fee(float(event.price)*100) / 100
 
         return context
 
