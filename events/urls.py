@@ -18,14 +18,16 @@ urlpatterns = [
     path('enrollments/<int:pk>/update',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),
 
-    path('events/enrolled',
-         views.EventEnrolledListView.as_view(), name='enrolled_events'),
-    path('events/hosted', views.EventHostedListView.as_view(),
+    path('events/enrolled', views.EventEnrolledListView.as_view(),
+         name='enrolled_events'),
+    path('events/hosted/', views.EventHostedListView.as_view(),
          name='hosted_events'),
     path('events/filter', views.EventFilterFormView.as_view(), name='event_filter'),
     re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?(?:c(?P<category>\d*)/)?$',
             views.EventFilterListView.as_view(), name='list_event_filter'),
-
+    
+    path('events/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
+         name='upload_file_event'),
     path('events/create', views.EventCreateView.as_view(),
          name='create_event'),
     path('events/payment/<int:pk>',
@@ -58,21 +60,17 @@ urlpatterns = [
          name='receipts'),
     path('profile/update', views.UserUpdateView.as_view(),
          name='update_profile'),
+    path('profile/update/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
+         name='upload_file'),
 
     path('ratings/new/host/<int:event_pk>',
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
-    
-    path('terms', TemplateView.as_view(template_name='terms.html'),
-     name='terms'),
   
+    path('terms', TemplateView.as_view(template_name='terms.html'),
+         name='terms'),
+
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
-
-    path('profile/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
-         name='upload_file'),
-    path('events/<str:file_name>/<str:file_img>/<str:file_type>',views.FileUploadView.as_view(),
-         name='upload_file_event'),
-
 ]
