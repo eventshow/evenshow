@@ -46,7 +46,7 @@
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-delete">
                         <div class="right">
-                            {% if object.can_delete or ateendees == 0 %}
+                            {% if object.can_delete or attendees_count == 0 %}
                             <button class="delete-btn waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
                             {% else %}
