@@ -896,7 +896,7 @@ class UserDeleteView(generic.DeleteView):
                     round(self.fee)*self.attendee_sum,
                     request.POST.get('stripeToken')
                 )
-            # user.delete()
+            user.delete()
             return redirect('home')
         except stripe.error.StripeError:
             return redirect('payment_error')
