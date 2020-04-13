@@ -2786,10 +2786,6 @@ background: #FFF;
 		margin-top: -150% !important;
 		margin-bottom: -180% !important;
 	}
-	
-	.user-rat {
-		margin-left: 46% !important;
-	}
 
 	#title-delete-profile {
 		max-width: 1149px;
@@ -2889,11 +2885,6 @@ background: #FFF;
 }
 	/* PIXEL 2 */
 	@media only screen and (min-width: 411px) and (max-width: 731px) {
-
-	.send-btn {
-    	margin-left: 115% !important;
-	}
-
 
 	#eventpoint {
 		bottom: -4%;
