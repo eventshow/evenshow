@@ -2,96 +2,102 @@
 {% block content %}
 {% load static %}
 {% load transactions %}
-<div class="container">
-   <div class="row">
-      <div class="col s10 m8 l9 ">
-         <img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
-         <div class="col m6  rectangle-info-title">
-            <h1 class="sep-title left">{{object.title}}</h1>
-         </div>
-      </div>
-      <div class="col s12 m4 l3">
-         <h1 class="title-detail">Detalles del evento</h1>
-         <div class="col">
-            <h2 class="subtitle-detail">Fecha: <a>{{ object.start_day| date:"d M, Y" }}</a></h2>
-            <h2 class="subtitle-detail">Hora comienzo: <a>{{ object.start_time }}</a></h2>
-            <h2 class="subtitle-detail">duración: <a>{{ duration }}</a></h2>
-            <h2 class="subtitle-detail">aforo: <a> {{attendees}} / {{object.capacity}} </a></h2>
-            <h2 class="subtitle-detail">edad mín: <a>{{ object.min_age }}</a></h2>
-            <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
-         </div>
-         <div class="col  l12 ">
-            <a class="waves-effect waves-light btn-large button-detail-auth-price">
-               <p class="price-detail">{{ object.price }} €</p>
-            </a>
-         </div>
-      </div>
-   </div>
- <hr class="hr-sep-first">
-   <div class="row section-detail">
-      <div class="col s2">
-         <h1 class="title-section-left">Descripción</h1>
-      </div>
-      <div class="col s10 ">
-         <h1 class="text-section-right">{{object.description}}</h1>
-      </div>
-   </div>
-   <hr class="hr-sep">
-   <div class="row section-detail">
-      <div class="col s10 ">
-         <h1 class="name-host-detail">{{object.created_by.first_name}} {{object.created_by.last_name}}</h1>
-         {% if event.created_by.username != 'deleted' %}
-         <h3 class="text-section-left">{{object.created_by.profile.bio}}</h3>
-         {% endif %}
-      </div>
-      <div class="col s2">
-         <h1 class="title-section-right">Anfitrión</h1>
-         <img class="img-detail-bio" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+          <img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
+      <div class="col m6  rectangle-info-title">
+             <h1 class="sep-title left">{{object.title}}</h1>
+          </div>
 
-          <div class="rating-host-detail">
-            <em class="fa fa-star"><em
-               class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
+<div class="row">
+
+   <div class="col s12 m8 l9">
+
+   </div>
+   <div class="col s12 m4 l3 details-event-principal">
+      <h1 class="title-detail">Detalles del evento</h1>
+      <div class="col">
+         <h2 class="subtitle-detail">Fecha: <a>{{ object.start_day| date:"d M, Y" }}</a></h2>
+         <h2 class="subtitle-detail">Hora comienzo: <a>{{ object.start_time }}</a></h2>
+         <h2 class="subtitle-detail">duración: <a>{{ duration }}</a></h2>
+         <h2 class="subtitle-detail">aforo: <a> {{attendees}} / {{object.capacity}} </a></h2>
+         <h2 class="subtitle-detail">edad mín: <a>{{ object.min_age }}</a></h2>
+         <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
+      </div>
+      <div class="col s12 center">
+         <a class="waves-effect waves-light btn-large button-detail-auth-price">
+            <p class="price-detail">{{ object.price }} €</p>
+         </a>
+      </div>
+   </div>
+</div>
+<hr class="hr-detail">
+<div class="row sep-detail">
+   <div class="col s12 m4 l3">
+      <h1 class="title-section">Descripción</h1>
+   </div>
+   <div class="col s12 m8 l9 ">
+      <h1 class="text-section">{{object.description}}</h1>
+   </div>
+</div>
+<hr>
+<div class="row sep-detail">
+   <div class="col s12 m8 l9 ">
+      <h1 class="name-host-bio-detail">{{object.created_by.first_name}} {{object.created_by.last_name}}</h1>
+      {% if event.created_by.username != 'deleted' %}
+      <h3 class="text-section">{{object.created_by.profile.bio}}</h3>
+      {% endif %}
+   </div>
+   <div class="col s12 m4 l3">
+      <h1 class="title-section">Anfitrión</h1>
+      <img class="img-detail-bio" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+      <div class="rating-host-detail">
+         <em class="fa fa-star"><em
+            class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
+      </div>
+   </div>
+</div>
+<hr>
+<div class="row sep-detail">
+   <div class="col s12 m4 l3">
+      <h1 class="title-section">Dirección</h1>
+      <h3 class="title-section-h3">{{object.location_street}} {{object.location_number}} <br> <a>{{object.location_city}}</a></h3>
+   </div>
+   <div class="col s12 m8 l9 map-detail">
+      <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
+   </div>
+</div>
+<hr>
+<div class="row sep-detail">
+<div class="col s12 m4 l3">
+      <h1 class="title-section">Información extra</h1>
+   </div>
+   <div class="col s12 m8 l9 ">
+      <h1 class="text-section">{{object.extra_info}}</h1>
+   </div>
+
+
+</div>
+    <hr>
+
+<div class="row sep-detail">
+   <div class="col s12 m4 l3">
+      <h1 class="title-section">Comentarios de húespedes <br> que asistieron a algún evento de este anfitrión</h1>
+   </div>
+   {% if event.created_by.username != 'deleted' %}
+   <div class="col s12 m8 l9">
+      {% for rating in object_list %}
+      <div class="comments">
+         <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture}}">
+         <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
+         <div class="user-rat">
+            <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score}}</i></i>
          </div>
+         <h3 class="comment-detail">{{rating.comment}}</h3>
       </div>
-      <hr>
+      {% endfor %}
    </div>
-   <hr class="hr-sep">
-   <div class="row section-detail">
-      <div class="col s2">
-         <h1 class="title-section-left">Dirección</h1>
-         <h3 class="title-section-left-h3">{{object.location_street}} {{object.location_number}} <br> <a>{{object.location_city}}</a></h3>
-      </div>
-      <div class="col s10 map-detail">
-         <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
-      </div>
-   </div>
-   <hr class="hr-sep">
-   <div class="row section-detail">
-      <div class="col s10 ">
-         <h1 class="text-section-left">{{object.extra_info}}</h1>
-      </div>
-      <div class="col s2">
-         <h1 class="title-section-right">Información extra</h1>
-      </div>
-   </div>
-   <hr class="hr-sep">
-<div class="row section-detail-comment">
-   <div class="col s2">
-      <h1 class="title-section-left comments-detail">Comentarios de húespedes <br> que asistieron a algún evento de este anfitrión</h1>
-   </div>
-   <div class="col s10 ">
-        {% for rating in object_list %}
-        <div class="comments">
-            <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture}}">
-            <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
-            <div class="user-rat">
-                <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score}}</i></i>
-            </div>
-            <h3 class="comment-detail">{{rating.comment}}</h3>
-        </div>
-        {% endfor %}
+   <div class="col s12 center">
+      {% include 'pagination.html' %}
+      {% endif %}
    </div>
 </div>
-</div>
-{% include 'pagination.html' %}
 {% endblock %}

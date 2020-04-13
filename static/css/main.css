@@ -169,26 +169,25 @@ nav ul a:hover {
 /* IMG */
 
 .img-detail {
-	width: 100% !important;
-	height: 767px;
-	object-fit: cover;
-	margin-left: -31%;
+	width: 72% !important;
+    height: 758px;
+    object-fit: cover;
+    z-index: -1;
 
 }
 
 .img-detail-bio{
-		margin-left: 3%;
+	margin-left: 3%;
 	margin-top: 16%;
 	width: 150px;
 
 }
 
-.img-detail-auth {
-	margin-top: -10px !important;
-	width: 100% !important;
-	height: 767px;
-	object-fit: cover;
+.details-event-principal{
+	margin-top: -55%;
 }
+
+
 
 .objetfitcover>.img-detail {
 	width: 200px;
@@ -198,8 +197,7 @@ nav ul a:hover {
 }
 
 .principal-detail {
-	height: 900px;
-	width: 100%;
+	z-index: 20;
 	margin-top: -10%;
 }
 
@@ -235,46 +233,35 @@ nav ul a:hover {
 	margin-bottom: 8%;
 }
 
-.title-section-left {
+.title-section {
 	color: #5D5E5E;
     font-weight: 600;
-    margin-left: -130%;
+	margin-left: 2%;
 }
 
-.title-section-left-h3 {
+.title-section-h3 {
 	color: #5D5E5E;
     font-weight: 400;
-    margin-left: -170%;
 	margin-top: 15%;
 	text-align: center;
+	margin-left: 3%;
 }
 
-.title-section-right {
-	color: #5D5E5E;
-    font-weight: 600;
-    margin-right: -130%;
-}
 
-.text-section-right {
+.text-section {
 	color: #5D5E5E;
     font-weight: 300;
     font-size: 24px;
+	margin-left: 2%;
 }
 
-.text-section-left {
-	color: #5D5E5E;
-    font-weight: 300;
-    font-size: 24px;
-	margin-left: -20%;
-	    margin-right: 22%;
 
-}
 
 .name-host-detail {
 	color: #B7234D;
     font-weight: 600;
     margin-bottom: 2%;
-	margin-left: -23%;
+	margin-left: 0.5%;
 }
 
 .detail-bio {
@@ -371,15 +358,21 @@ nav ul a:hover {
 
 .title-detail {
 	margin-top: 20%;
-    font-weight: 500;
-	margin-left: -90%;
+	margin-left: -6%;
+	color: #5D5E5E;
+    font-weight: 600;
 }
+
 
 .subtitle-detail {
     margin-top: 15%;
     font-weight: 500;
-  	margin-left: -90%;
 	font-size: 24px!important;
+	color: #5D5E5E;
+}
+
+.hr-detail{
+	margin-top: -2%;
 }
 
 .separated1 {
@@ -419,7 +412,7 @@ nav ul a:hover {
 	text-align: center;
 	background-color: white;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-	margin-left: -42%;
+	margin-left: 10%;
 }
 
 
@@ -443,9 +436,15 @@ nav ul a:hover {
 
 
 .button-detail-auth-price {
-	margin-top: 72% !important;
-	margin-left: 13%;
+	    margin-top: 22%;
+    margin-left: -12%;
 
+}
+
+
+
+.text-section{
+	margin-bottom: 6%;
 }
 
 .price-detail{
@@ -609,7 +608,7 @@ nav ul a:hover {
 }
 
 .rating-host-detail {
-	margin-left: 32% !important;
+	margin-left: 17% !important;
     margin-top: 4% !important;
 }
 
@@ -678,6 +677,14 @@ background: #FFF;
 	margin-top: 10%;
 	margin-left: 6%;
 }
+
+.name-host-bio-detail{
+	color: #B7234D;
+    font-weight: 600;
+    margin-bottom: 5%;
+    margin-left: 0;
+		margin-top: 0;
+	}
 
 .delete-buttons {
 	margin-top: 5%;
@@ -1592,6 +1599,14 @@ table {
 	margin-top: 10px;
 }
 
+.sep-detail{
+	margin-top: 7%;
+	margin-bottom: 7%;
+
+}
+
+
+
 .pagination {
 	font-size: large;
 	margin-top: 10px;
@@ -1759,12 +1774,65 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+.img-detail{
+		margin-top: -21%;
+	width: 100% !important;
+	height: 518px;
+
+}
+
+	.details-event-principal {
+    margin-left: 24% !important;
+		margin-top: 5%;
+}
+
+
+	.title-detail{
+		margin-left: -26%;
+	}
+
+	.subtitle-detail{
+		margin-left: -26%;
+	}
 
 	.button-enrolls-mov{
 
 	margin-right: 3%;
 
+
 }
+
+
+	.name-host-bio-detail{
+	color: #B7234D;
+    font-weight: 600;
+    margin-bottom: 5%;
+    margin-left: 0;
+		margin-top: 0;
+	}
+	.title-section-h3{
+		margin-left: -20% !important;
+    margin-bottom: 10%;
+	}
+
+	.img-comment-detail {
+		margin-left: 0%;
+	}
+
+	.img-detail-bio{
+	margin-top: 0;
+	margin-left: 24%;
+}
+
+.rating-host-detail{
+	margin-left: 39% !important;
+}
+
+
+	.button-detail-auth-price{
+		margin-left: -50%;
+		margin-bottom: 6%;
+	}
 
 
 	.text-left {
@@ -2134,8 +2202,12 @@ table {
 		margin-top: -29%;
 	}
 	.user-rat {
-		margin-left: 7% !important;
+		margin-left: 39% !important;
 		margin-top: 5% !important;
+	}
+
+	.comment-detail{
+		margin-left: 39% !important;
 	}
 
 	.form-eventshow-edit {
@@ -2287,19 +2359,9 @@ table {
     margin-bottom: 6%;
 		}
 
-		.img-detail-auth {
-    margin-top: -66px !important;
-    width: 100% !important;
-    height: 457px;
-    object-fit: cover;
-}
 
-		.img-detail {
-    width: 100% !important;
-    height: 457px;
-    object-fit: cover;
 
-}
+
 
 		.date-res{
 			margin-top: 45% !important;
@@ -2370,9 +2432,16 @@ table {
 	margin-bottom: -129%;
 
 }
+.name-host-detail{
+	    margin-left: 39% !important;
+    margin-top: -30% !important;
+}
+
+
 
 .title-section{
 	margin-right: 2%;
+	margin-bottom: 5%;
 }
 
 .section-detail2{
@@ -2387,9 +2456,7 @@ table {
 	margin: 3%;
 }
 
-.name-host-detail {
-    margin-top: 7%;
-}
+
 
 .host-bio{
 	margin-top: 4%;
@@ -2438,9 +2505,7 @@ table {
 	margin-top: 10%;
 }
 
-.name-host-detail {
-	margin-top: -29% !important;
-}
+
 
 .control-panel {
 	z-index: 2 !important;
