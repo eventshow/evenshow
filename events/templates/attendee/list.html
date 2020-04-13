@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load ratings %}
 <style>
   body {
     background-size: cover;
@@ -37,17 +38,17 @@
           </div>
         </thead>
         <tbody>
-        {%for att in object_list %}
-       
+          {%for att in object_list %}
           <tr>
             <td id="paddinButton2">
               {% if att not in rated_attendees and event_has_finished and att.username != 'deleted' %}
-              <button id="noPaddin" type="button" onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'"
-                title="Puntuar">
+              <button id="noPaddin" type="button"
+                onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'" title="Puntuar">
                 <i id="title-name" class="samll material-icons">star</i>
               </button>
               {% elif att in rated_attendees %}
-              Ya puntuado
+              {% user_on_event user event_pk as rating %}
+              <em id="title-name" class="samll material-icons">star<em class="rating-search">{{rating.score}}</em></em>
               {% elif not event_has_started%}
               No ha empezado
               {% elif not event_has_finished%}
@@ -58,9 +59,8 @@
             <td>{{att.first_name}}</td>
             <td>{{att.last_name}}</td>
           </tr>
-        
-        {% endfor %}
-      </tbody>
+          {% endfor %}
+        </tbody>
       </table>
       {% include "pagination.html" %}
     </div>
