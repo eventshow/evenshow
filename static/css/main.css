@@ -168,6 +168,11 @@ nav ul a:hover {
 	color: white;
 }
 
+.comments-title{
+	    margin-right: -60%;
+
+}
+
 
 
 /* IMG */
@@ -697,7 +702,7 @@ background: #FFF;
 	color: #B7234D;
     font-weight: 600;
     margin-bottom: 5%;
-    margin-left: 0;
+    margin-left: 1%;
 		margin-top: 0;
 	}
 
@@ -1833,6 +1838,10 @@ table {
 
 }
 
+	.sep-title{
+		margin-left: 10%;
+	}
+
 	.commission{
 		margin-left: -27%;
 	}
@@ -2507,7 +2516,7 @@ table {
 
 .title-section{
 	margin-right: 2%;
-	margin-bottom: 5%;
+	margin-bottom: 8%;
 }
 
 .section-detail2{
