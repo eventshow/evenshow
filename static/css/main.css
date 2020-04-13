@@ -180,6 +180,16 @@ nav ul a:hover {
 
 }
 
+.img-detail-auth {
+	width: 72% !important;
+    height: 758px;
+    object-fit: cover;
+    z-index: -1;
+	margin-top: -11px;
+
+
+}
+
 .img-detail-bio{
 	margin-left: 3%;
 	margin-top: 16%;
@@ -415,7 +425,7 @@ nav ul a:hover {
 	text-align: center;
 	background-color: white;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-	margin-left: 10%;
+	margin-left: 40%;
 }
 
 
@@ -444,6 +454,11 @@ nav ul a:hover {
 
 }
 
+.commission{
+	margin-top: 5%;
+	text-align: left;
+}
+
 
 
 .text-section{
@@ -454,7 +469,7 @@ nav ul a:hover {
 	color: white;
 	font-size: 25px;
 	white-space: pre;
-	margin-top: 4%;
+	margin-top: 18%;
 
 }
 
@@ -1820,6 +1835,20 @@ table {
 	height: 518px;
 
 }
+
+	.commission{
+		margin-left: -27%;
+	}
+
+	.img-detail-auth {
+	    width: 100% !important;
+    object-fit: cover;
+    z-index: -1;
+    margin-top: -66px;
+    height: 512px;
+}
+
+
 
 	.details-event-principal {
     margin-left: 24% !important;

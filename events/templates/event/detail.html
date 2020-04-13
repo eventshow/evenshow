@@ -2,7 +2,13 @@
 {% block content %}
 {% load static %}
 {% load transactions %}
-          <img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
+
+    {% if user.is_authenticated %}
+            <img class="img-detail-auth" alt="imagen del evento" src="{{object.picture}}">
+        {% else %}
+                <img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
+    {% endif %}
+
       <div class="col m6  rectangle-info-title">
              <h1 class="sep-title left">{{object.title}}</h1>
           </div>
@@ -23,26 +29,25 @@
          <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
       </div>
       <div class="col s12 center">
-         <a class="waves-effect waves-light btn-large button-detail-auth-price">
             {% if user.is_authenticated %}
         {% if user_is_owner %}
-        <h3 class="price-detail" href="">Propietario</h3>
+        <h3 class=" btn-large button-detail-auth-price " href="">Propietario</h3>
         {% elif not user_is_old_enough %}
-        <h3 class="price-detail">No tienes la edad suficiente</h3>
+        <h3 class=" btn-large button-detail-auth-price">No tienes la edad suficiente</h3>
         {% elif event_is_full %}
-        <h3 class="price-detail" href="">Aforo completo</h3>
+        <h3 class=" btn-large button-detail-auth-price ">Aforo Completo</h3>
         {% elif event.has_started %}
-        <h3 class="price-detail" href="">Ya ha empezado</h3>
+        <h3 class=" btn-large button-detail-auth-price " href="">Ya ha empezado</h3>
         {% elif event.has_finished %}
-        <h3 class="price-detail" href="">Ya ha terminado</h3>
+        <h3 class=" btn-large button-detail-auth-price " href="">Ya ha terminado</h3>
         {% elif user_is_enrolled %}
-        <h3 class="price-detail" href="">Ya estás inscrito</h3>
+        <h3 class=" btn-large button-detail-auth-price " href="">Ya estás inscrito</h3>
         {% elif event.created_by.username == 'deleted' %}
-        <h3 class="price-detail" href="">No disponible</h3>
+        <h3 class=" btn-large button-detail-auth-price" href="">No disponible</h3>
         {% elif user_can_enroll and not event.has_started %}
              {% if points > 0 %}
 
-             <a class=" waves-light btn-large modal-trigger modal-mov button-detail-auth" href="#modal3">{{ object.price }}€</a>
+             <a class=" waves-light btn-large modal-trigger modal-mov price-detail" href="#modal3">{{ object.price }} €</a>
 
 
             {% else %}
@@ -56,11 +61,12 @@
                 data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
                 </script>
             <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large");
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth-price  price-detail");
             </script>
             {% else %}
             <button type="submit"
-                class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€ + {{commission}}</button>
+                class="waves-effect waves-light btn-large button-detail-auth-price price-detail">{{ object.price }}€ </button>
+                <p class="commission">Se cobrarán {{commission}}€ en concepto de gastos de gestión</p>
             {% endif %}
         </form>
 
@@ -73,9 +79,8 @@
         {% elif event.created_by.username == 'deleted' %}
         <h3 class="price-detail" href="">No disponible</h3>
         {% else %}
-        <a class="waves-effect waves-light btn-large button-detail btn-large" id="enroll" href="{% url 'login' %}">INSCRIBIRSE</a>
+        <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll" href="{% url 'login' %}">INSCRIBIRSE</a>
         {% endif %}
-         </a>
       </div>
    </div>
 </div>
@@ -201,31 +206,6 @@
       </div>
     </div>
 
-<style>
-    body {
-        background-size: cover;
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-    }
 
-    main {
-        flex: 1 0 auto;
-    }
-
-    .page-footer {
-        width: 100%;
-        margin-top: 25%;
-    }
-
-    @media only screen and (min-width: 320px) and (max-width: 568px) {
-
-        .page-footer {
-            width: 100%;
-            margin-top: 308%;
-        }
-    }
-
-</style>
 
 {% endblock %}
