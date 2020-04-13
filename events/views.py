@@ -944,7 +944,7 @@ class DownloadPDF(View):
         return response
 
 
-
+@method_decorator(login_required, name='dispatch')
 class FileUploadView(View):
     def get(self, request, file_name, file_img, file_type, **kwargs):
         S3_BUCKET = settings.S3_BUCKET
