@@ -152,7 +152,7 @@ class AttendeePaymentView(generic.View):
                             if not is_paid_for:
 
                                 try:
-
+                                    print(transaction.discount)
                                     fee = 0
                                     if transaction.discount:
 
@@ -171,6 +171,7 @@ class AttendeePaymentView(generic.View):
                                     transaction.save()
 
                                     if not transaction.discount:
+                                        print('----------------')
                                         services.UserService().add_bonus(transaction.created_by, transaction.amount)
 
                                 except stripe.error.StripeError:
@@ -501,7 +502,7 @@ class EnrollmentCreateView(generic.View):
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
-
+            
             event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
@@ -509,7 +510,7 @@ class EnrollmentCreateView(generic.View):
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
             services.PaymentService().save_transaction(
-                event.price*100, customer.id, event, attendee, event.created_by, False)
+                int(event.price*100), customer.id, event, attendee, event.created_by, False)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
@@ -558,7 +559,7 @@ class EnrollmentCreateDiscountView(generic.View):
 
             price = float(event.price) + services.PaymentService().fee(
                 float(event.price)*100) / 100
-            services.PaymentService().save_transaction(event.price*100, customer.id, event, attendee, event.created_by, True)
+            services.PaymentService().save_transaction(int(event.price*100), customer.id, event, attendee, event.created_by, True)
 
 
             subject = 'Nueva inscripción a {0}'.format(event.title)

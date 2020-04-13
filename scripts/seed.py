@@ -340,7 +340,7 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
 
 def seed_transaction(event, transmitter, recipient, created_at, amount):
     fields = {
-        'amount': amount*100 + 1.15,
+        'amount': amount*100,
         'created_at': created_at + TIMEZONE,
         'updated_at': created_at + TIMEZONE,
         'event': event,
