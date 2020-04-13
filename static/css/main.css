@@ -298,6 +298,10 @@ nav ul a:hover {
 
 }
 
+#title-delete-profile a{
+	z-index: 10% !important;
+}
+
 #host-detail {
 	margin-top: -569px;
 	padding: 30px 30px 30px 30px;
@@ -327,7 +331,7 @@ nav ul a:hover {
 	line-height: normal;
 	letter-spacing: normal;
 	color: #686969;
-
+	z-index: 1;
 }
 
 .rectangle-info h2 {
@@ -1957,10 +1961,10 @@ puc
 	
 	.delete-btn {
 		font-weight: bolder;
-		font-size: 20px;
+		font-size: 18px;
 		text-align: center;
-		width: 97px;
-		height: 63px;
+		width: 80px;
+		height: 53px;
 		margin-top: 163px!important;
 		position: relative !important;
 		display: block !important;
@@ -1970,35 +1974,37 @@ puc
 		font-weight: bolder;
 		font-size: 20px;
 		text-align: center;
-		width: 77px;
-		height: 53px;
-		margin-top: 195px!important;
+		width: 75px;
+		height: 49px;
+		margin-top: 207px!important;
 		position: relative !important;
 		display: block !important;
 	}
 	
 	.delete-btn-a {
-		width: 97px;
-		height: 63px;
+		width: 80px;
+		height: 53px;
 		font-weight: bold;
 		text-align: center;
-		padding-top: 4px;
-		font-size: 20px;
+		padding-top: 1px;
+		font-size: 18px;
 		margin-top: 166px !important;
 		margin-left: 12% !important;
 		position: relative !important;
 		display: block !important;
 	}
 
+
+
 	.delete-btn-a-profile {
-		width: 77px;
-		height: 53px;
+		width: 75px;
+		height: 49px;
+		margin-top: 211px!important;
 		font-weight: bold;
 		text-align: center;
 		padding-top: 1px;
 		padding-left: 25px;
-		font-size: 20px;
-		margin-top: 198px !important;
+		font-size: 19px;
 		margin-left: 12% !important;
 		position: relative !important;
 		display: block !important;
@@ -2531,17 +2537,18 @@ background: #FFF;
 	margin-left: -7% !important;
 }
 
+
 #title-delete-comi {
-	font-weight: bold;
-	color: #686969;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	text-align: center;
-	width: 285px;
-	margin-bottom: -63% !important;
-	margin-left: -7% !important;
+    font-weight: bold;
+    color: #686969;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 285px;
+    margin-bottom: -71% !important;
+    margin-left: -6% !important;
 }
 
 #title-delete-profile {
@@ -2699,7 +2706,7 @@ background: #FFF;
 		text-align: center;
 		width: 285px;
 		margin-bottom: -63% !important;
-		margin-left: 0% !important;
+		margin-left: 3% !important;
 	}
 
 
@@ -3086,7 +3093,7 @@ background: #FFF;
 		max-height: 45px;
 		height: auto;
 		font-family: Raleway, sans-serif;
-		font-size: 23px;
+		font-size: 21px;
 		font-weight: bold;
 		font-stretch: normal;
 		font-style: normal;
@@ -3169,6 +3176,19 @@ background: #FFF;
 			width: 100%;
 			margin-top: -54% !important;
 			margin-bottom: -35% !important;
+		}
+
+		#title-delete-comi {
+			font-weight: bold;
+			color: #686969;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			width: 285px;
+			margin-bottom: -58% !important;
+			margin-left: 7% !important;
 		}
 
 	}
@@ -3282,9 +3302,39 @@ background: #FFF;
 
 	}
 
+	/*  PIXEL 2XL*/
+	@media only screen and (min-width: 411px) and (max-width: 823px) {
+		#title-delete-comi {
+			font-weight: bold;
+			color: #686969;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			width: 285px;
+			margin-bottom: -57%;
+			margin-left: 7%;
+		}
+	}
+	
+
 
 /* Samsung S5 */
 @media only screen and (min-width: 360px) and (max-width: 640px) {
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -61% !important;
+		margin-left: 1%;
+	}
+
 	.principal-detail {
 		margin-bottom: -109%;
 	}
@@ -3348,3 +3398,16 @@ background: #FFF;
 		margin-bottom: 55%;
 	}
 }
+
+	/* IPHONE 6,7,8 */
+	@media only screen and (min-width: 375px) and (max-width: 667px) {
+		#send-buttons {
+			margin-bottom: 30%;
+			margin-top: -80%;
+			margin-left: 30%;
+		}
+
+		.send-btn {
+			margin-left: 140% !important;
+		}
+	}
