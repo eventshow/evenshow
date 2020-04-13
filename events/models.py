@@ -4,6 +4,7 @@ import uuid
 
 from datetime import datetime, date, timedelta
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -96,7 +97,7 @@ class Profile(models.Model):
 
     @property
     def discount(self):
-        return self.eventpoints * self.EVENTPOINT_VALUE
+        return self.eventpoints * settings.EVENTPOINT_VALUE
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -146,8 +147,8 @@ class Event(Common):
     extra_info = models.TextField(
         'Extra info for the attendee', blank=True, null=True)
 
-    created_by = models.ForeignKey(
-        User, on_delete=models.SET(get_sentinel_user), related_name='host_events', default='')
+    created_by = models.ForeignKey(User, on_delete=models.SET(
+        get_sentinel_user), related_name='host_events', default='')
     category = models.ForeignKey(
         Category, on_delete=models.SET(get_default_category), related_name='category_events')
 
@@ -279,7 +280,7 @@ class Transaction(Common):
         get_sentinel_user), related_name='transmitter_transaction')
     recipient = models.ForeignKey(User, on_delete=models.SET(
         get_sentinel_user), related_name='recipient_transaction')
-    amount = models.PositiveIntegerField('Amount')
+    amount = models.DecimalField('Amount', max_digits=6, decimal_places=2)
     customer_id = models.CharField('Customer_id', max_length=250)
     event = models.ForeignKey(
         Event, on_delete=models.CASCADE, related_name='event_transaction')

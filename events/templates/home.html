@@ -24,62 +24,24 @@
 </style>
 
 
-{% if form.location.errors%}
 
-<style>
-    .location {
-        margin-top: -142%;
-    }
-</style>
-
-{% endif %}
-
-{% if form.start_hour.errors and form.date.errors%}
-
-<style>
-    .location {
-        margin-top: -152%;
-    }
-</style>
-
-{% endif %}
-
-{% if form.start_hour.errors or form.date.errors%}
-
-<style>
-    .location {
-        margin-top: -152%;
-    }
-</style>
-
-{% endif %}
-
-{% if form.location.errors and form.date.errors and form.start_hour.errors %}
-<style>
-    .location {
-        margin-top: -161%;
-    }
-</style>
-{% endif %}
 
 
 <div class="container">
     {% if user.is_authenticated and message %}
-<div class="center">
-  <!-- Modal Trigger -->
-  <a class=" waves-light btn modal-trigger modal-mov" href="#modal2">¡ATENCIÓN {{ message }}!</a>
-</div>
-  <!-- Modal Structure -->
-   <div id="modal2" class="modal modal-evetshow">
-      <div class="modal-content">
-        <h3 class="modal-title">{{message}}</h3><br>
-        <h4>{{message.description}}</h4>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves btn">OK!</a>
-      </div>
+    <div class="center">
+        <a class=" waves-light btn modal-trigger modal-mov" href="#modal2">¡ATENCIÓN {{ message }}!</a>
     </div>
-{% endif %}
+    <div id="modal2" class="modal modal-evetshow">
+        <div class="modal-content">
+            <h3 class="modal-title">{{message}}</h3><br>
+            <h4>{{message.description}}</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves btn">OK!</a>
+        </div>
+    </div>
+    {% endif %}
 
     <div class="row">
         <div class="col s6 form-home">
@@ -90,10 +52,11 @@
                 <div class="row">
                     <div class="col s9 location-prov">
                         <label>UBICACIÓN </label>
-
                         <div class=" form-errors">
                             {{ form.location }}
-                            {{ form.location.errors }}</div>
+                            {{ form.location.errors }}
+                            {{ no_geolocation }}
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -114,27 +77,15 @@
                         </label>
                     </div>
                 </div>
-
-                <button class="waves-effect waves-light btn-large right">Buscar</button>
+                {{form.latitude}}
+                {{form.longitude}}
+                <button class="waves-effect waves-light btn-large right" type="submit" name="search"
+                    value="search">Buscar</button>
+                <button class="waves-effect waves-light btn-large left location left" type="submit" name="nearby"
+                    value="nearby">
+                    <em title="Eventos a 50km de ti" class=" material-icons location2">location_on</em></button>
             </form>
-
-            <form class="" method="POST" action="{% url 'event_nearby_search_home' %}">
-                {% csrf_token %}
-                <input type="hidden" name="longitude">
-                <input type="hidden" name="latitude">
-
-                <button class="waves-effect waves-light btn-small location "><i title="Eventos a 50km de ti"
-                        class="location-em material-icons ">location_on</i></button>
-            </form>
-
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 {% endblock %}

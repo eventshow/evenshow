@@ -8,7 +8,6 @@ from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.timezone import now
 
-
 from .models import Category, Event, Profile, Rating
 
 CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
@@ -35,22 +34,31 @@ class RatingForm(forms.ModelForm):
 
 
 class EventForm(forms.ModelForm):
-    title = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id':'title', 'onkeypress': 'return ValidaLongitud(this, 100);'}))
-    description = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Cata de vino...', 'name': 'description'}))
-    capacity = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}))
-    min_age = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
-    price = forms.DecimalField(required=False, widget=forms.TextInput(attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
-    location_city = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}))
-    location_street = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}))
-    location_number = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}))
+    title = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': 'Cata', 'name': 'title', 'id': 'title',
+               'onkeypress': 'return ValidaLongitud(this, 100);'}))
+    description = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': 'Cata de vino...', 'name': 'description'}))
+    capacity = forms.IntegerField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}))
+    min_age = forms.IntegerField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
+    price = forms.DecimalField(required=False, widget=forms.TextInput(
+        attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
+    location_city = forms.CharField(required=False,
+                                    widget=forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}))
+    location_street = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}))
+    location_number = forms.CharField(required=False,
+                                      widget=forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}))
     start_day = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,
                                 widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
                                                        attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
                                                               'name': 'start_day'}))
     start_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
-                                 'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
+        'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
-                               'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
+        'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
     picture = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'https://'}))
 
@@ -60,10 +68,28 @@ class EventForm(forms.ModelForm):
         extra_info = forms.TextInput(
             attrs={'required': False, 'class': 'form-control', 'name': 'extra_info'})
         widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Cata', 'name': 'title', 'id': 'title',
+                                            'onkeypress': 'return ValidaLongitud(this, 100);'}),
+            'description': forms.TextInput(
+                attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
+            'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
+            'capacity': forms.NumberInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
+            'min_age': forms.NumberInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}),
+            'price': forms.NumberInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '5', 'name': 'price'}),
+            'location_city': forms.TextInput(
+                attrs={'required': False, 'placeholder': 'Sevilla', 'name': 'location_city'}),
+            'location_street': forms.TextInput(
+                attrs={'required': False, 'placeholder': 'Av. Reina Mercerdes', 'name': 'location_street'}),
+            'location_number': forms.TextInput(
+                attrs={'required': False, 'placeholder': '01', 'name': 'location_number'}),
             'pets': forms.Select(choices=CHOICES_YES_NO),
             'lang': forms.Select(choices=CHOICES_LANGUAGES),
             'parking_nearby': forms.Select(choices=CHOICES_YES_NO),
-            'extra_info': forms.TextInput(attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
+            'extra_info': forms.TextInput(
+                attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '...', 'name': 'extra_info'}),
         }
 
     def clean_title(self):
@@ -116,7 +142,7 @@ class EventForm(forms.ModelForm):
         if not start_day:
             raise ValidationError('Introduzca la fecha')
         return start_day
-    
+
     def clean_start_time(self):
         start_time = self.cleaned_data.get('start_time')
         if not start_time:
@@ -128,7 +154,7 @@ class EventForm(forms.ModelForm):
         if not end_time:
             raise ValidationError('Inserte la hora de fin')
         return end_time
-    
+
     def clean_picture(self):
         picture = self.cleaned_data.get('picture')
         if not picture:
@@ -149,12 +175,18 @@ class EventForm(forms.ModelForm):
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
         picture = self.cleaned_data.get('picture')
+        time1 = datetime.strptime("08:00", "%H:%M").time()
 
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
                                                   (isinstance(start_time, type(time)) and
-                                                   (start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+                                                   (
+                                                           start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
+
+        if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (
+                end_time < time1 or start_time < time1):
+            raise ValidationError('Este horario no está permitido, más información en los Términos y Condiciones (Horario)')
 
         if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (start_time >= end_time):
             raise ValidationError(
@@ -314,6 +346,8 @@ class SearchHomeForm(forms.Form):
         ),
         input_formats=('%H:%M',)
     )
+    latitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
+    longitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
