@@ -61,15 +61,15 @@
             {% csrf_token %}
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{% widthratio price_all 1 100|floatformat:'0' %}"
-                data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
+                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_all_cent }}"
+                data-locale="es" data-currency="eur" data-label="{{ price_all }}€">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth");
             </script>
             {% else %}
             <button type="submit"
-                class="aves-effect waves-light btn-large button-detail-auth">{{ event_price}}€</button>
+                class="aves-effect waves-light btn-large button-detail-auth">{{ price_all }}€</button>
             {% endif %}
         </form>
 
@@ -175,7 +175,7 @@
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{% widthratio price_discount 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                data-amount="{{ price_discount_cent }}" data-locale="es" data-currency="eur"
                 data-label="Sí">
                 </script>
             <script>
@@ -193,7 +193,7 @@
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{% widthratio price_all 1 100|floatformat:'0' %}" data-locale="es" data-currency="eur"
+                data-amount="{{ price_all_cent }}" data-locale="es" data-currency="eur"
                 data-label="No">
                 </script>
             <script>

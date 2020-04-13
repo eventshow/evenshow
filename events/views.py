@@ -229,8 +229,12 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 
             context['price_discount'] = (services.PaymentService().fee_discount(
                 float(event.price*100), user, True) + event.price*100)/100
+            context['price_discount_cent'] = (services.PaymentService().fee_discount(
+                float(event.price*100), user, True) + event.price*100)
             context['price_all'] = (services.PaymentService().fee(
                 float(event.price*100)) + event.price*100)/100
+            context['price_all_cent'] = (services.PaymentService().fee(
+                float(event.price*100)) + event.price*100)
 
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
