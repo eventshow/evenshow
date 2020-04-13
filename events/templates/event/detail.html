@@ -150,4 +150,82 @@
       {% endif %}
    </div>
 </div>
+  <div id="modal3" class="modal modal-evetshow-detail">
+                  <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons"> highlight_off</em></button>
+
+ <div class="center modal-content ">
+        <h1> Tienes <strong style="color: #B6244D">{{ user.profile.eventpoints }}</strong> eventpoints ¿Quieres utilizarlos?</h1><br>
+
+      </div>
+
+
+      <div class=" center modal-footer-detail">
+
+
+              <form action="{% url 'enroll_event_discount' object.pk %}" method="POST" id="payment-form">
+            {% csrf_token %}
+
+            {% if not have_creditcard %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada"
+                data-amount="{{ price_discount_cent }}" data-locale="es" data-currency="eur"
+                data-label="Sí">
+                </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", " btn-large discount-yes left ");
+            </script>
+            {% else %}
+            <button class=" btn-large discount-yes-price left " type="submit">Sí ({{price_discount}} €)</button>
+            {% endif %}
+
+        </form>
+
+              <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
+            {% csrf_token %}
+
+            {% if not have_creditcard %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada"
+                data-amount="{{ price_all_cent }}" data-locale="es" data-currency="eur"
+                data-label="No">
+                </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
+            </script>
+            {% else %}
+                <button class=" btn-large discount-no-price right " type="submit">No ({{ price_all }} €)</button>
+            {% endif %}
+
+        </form>
+
+      </div>
+    </div>
+
+<style>
+    body {
+        background-size: cover;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+
+    .page-footer {
+        width: 100%;
+        margin-top: 25%;
+    }
+
+    @media only screen and (min-width: 320px) and (max-width: 568px) {
+
+        .page-footer {
+            width: 100%;
+            margin-top: 308%;
+        }
+    }
+
+</style>
+
 {% endblock %}

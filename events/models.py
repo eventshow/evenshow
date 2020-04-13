@@ -280,11 +280,12 @@ class Transaction(Common):
         get_sentinel_user), related_name='transmitter_transaction')
     recipient = models.ForeignKey(User, on_delete=models.SET(
         get_sentinel_user), related_name='recipient_transaction')
-    amount = models.DecimalField('Amount', max_digits=6, decimal_places=2)
+    amount = models.IntegerField('Amount')
     customer_id = models.CharField('Customer_id', max_length=250)
     event = models.ForeignKey(
         Event, on_delete=models.CASCADE, related_name='event_transaction')
     is_paid_for = models.BooleanField('Is paid for?')
+    discount = models.BooleanField('Discount')
 
     class Meta:
         ordering = ['-created_at']

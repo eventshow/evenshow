@@ -17,6 +17,10 @@
 	margin-bottom: 4%;
 }
 
+.modal-margin{
+margin-left: 34%;
+
+}
 
 .title-category {
 	font-weight: 500;
@@ -309,7 +313,6 @@ nav ul a:hover {
 
 .rectangle-info {
 	position: absolute;
-	z-index: 1;
 	margin-left: 5%;
 	width: 145px;
 	height: 93px;
@@ -1626,8 +1629,45 @@ table {
 	
 }
 
+.discount-no-price{
+		margin-right: 30% !important;
+	}
+
+	.discount-yes-price{
+		margin-left: 30% !important;
+	}
+
 .modal-evetshow {
 	border-radius: 15px !important;
+	margin-top: 15%
+}
+
+.discount-yes{
+	margin-left: 34%;
+	position:relative;
+}
+
+.discount-no{
+	    margin-right: 31%;
+    padding-left: 23px;
+    padding-right: 23px;
+	position: relative;
+
+}
+.modal-evetshow-detail {
+	border-radius: 15px !important;
+	margin-top: 15%
+}
+
+.modal-evetshow-detail h1{
+	font-size: 32px;
+}
+.modal-footer-detail{
+  border-radius: 0 0 2px 2px;
+  background-color: #fafafa;
+  height: 75px;
+  width: 100%;
+  text-align: center;
 }
 
 .modal-title {
@@ -2600,6 +2640,27 @@ background: #FFF;
 	margin-left: -7% !important;
 }
 
+	.discount-no{
+		margin-right: 18%;
+	}
+
+	.discount-yes{
+		margin-left: 18% !important;
+	}
+
+	.discount-no-price{
+		margin-right: 4% !important;
+		padding: 6px;
+	}
+
+	.discount-yes-price{
+		margin-left: 4% !important;
+		padding: 6px;
+	}
+
+
+
+
 
 }
 
@@ -2862,6 +2923,17 @@ background: #FFF;
 	.user-rat {
 		margin-left: 46% !important;
 	}
+
+		.discount-no-price{
+		margin-right: 12% !important;
+	}
+
+	.discount-yes-price{
+		margin-left: 12% !important;
+	}
+
+
+
 
 }
 	/* PIXEL 2 */
