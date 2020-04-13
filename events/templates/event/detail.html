@@ -182,7 +182,7 @@
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", " btn-large discount-yes left ");
             </script>
             {% else %}
-            <button class=" btn-large discount yes modal-margin left " type="submit">Sí</button>
+            <button class=" btn-large discount yes modal-margin left " type="submit">Sí ({{ price_discount }})</button>
             {% endif %}
 
         </form>
@@ -200,7 +200,7 @@
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
             </script>
             {% else %}
-                <button class=" btn-large discount-no right " type="submit">No</button>
+                <button class=" btn-large discount-no right " type="submit">No ({{ price_all }})</button>
             {% endif %}
 
         </form>
