@@ -17,6 +17,10 @@
 	margin-bottom: 4%;
 }
 
+.modal-margin{
+margin-left: 41%;
+
+}
 
 .title-category {
 	font-weight: 500;
@@ -1734,11 +1738,12 @@ table {
 	position:relative;
 }
 
-.discount-no{
-	    margin-right: 20%;
+.discount-no {
+	margin-right: 20%;
 
 
 	position: relative;
+}
 
 	.text-left {
 		margin-left: -10%;
