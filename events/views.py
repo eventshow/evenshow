@@ -152,7 +152,6 @@ class AttendeePaymentView(generic.View):
                             if not is_paid_for:
 
                                 try:
-                                    print(transaction.discount)
                                     fee = 0
                                     if transaction.discount:
 
@@ -170,7 +169,6 @@ class AttendeePaymentView(generic.View):
                                     transaction.save()
 
                                     if not transaction.discount:
-                                        print('----------------')
                                         services.UserService().add_bonus(transaction.created_by, transaction.amount)
 
                                 except stripe.error.StripeError:
@@ -515,7 +513,7 @@ class EnrollmentCreateView(generic.View):
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
             services.PaymentService().save_transaction(
-                int(event.price*100), customer.id, event, attendee, event.created_by, False)
+                int(event.price*100), customer.id, event, attendee, event.created_by, request.POST.get('discount'))
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
@@ -523,53 +521,6 @@ class EnrollmentCreateView(generic.View):
             recipient = event.created_by.email
 
             #services.EmailService().send_email(subject, body, [recipient])
-
-            return render(request, 'enrollment/thanks.html', context)
-        else:
-            return redirect('/')
-
-
-@method_decorator(login_required, name='dispatch')
-class EnrollmentCreateDiscountView(generic.View):
-    model = models.Enrollment
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        event_pk = kwargs.get('pk')
-        event = models.Event.object.get(pk=event_pk)
-        context['event_title'] = event.title
-
-    def post(self, request, *args, **kwargs):
-        attendee = self.request.user
-        event_pk = kwargs.get('pk')
-        event = models.Event.objects.get(pk=event_pk)
-        event_exists = services.EventService().count(event_pk)
-        event_is_full = selectors.UserSelector().event_attendees(
-            event_pk).count() >= event.capacity
-        event_has_started = event.has_started
-        user_can_enroll = services.EnrollmentService().user_can_enroll(
-            event_pk, attendee)
-
-        context = {'event_title': models.Event.objects.get(pk=event_pk)}
-
-        if event_exists and user_can_enroll and not event_is_full and not event_has_started:
-            enrollment = services.EnrollmentService().create(event_pk, attendee)
-
-            event = models.Event.objects.get(pk=event_pk)
-            if not services.PaymentService().is_customer(attendee.email):
-                customer = services.PaymentService().get_or_create_customer(
-                    request.user.email, request.POST['stripeToken'])
-            else:
-                customer = services.PaymentService().get_or_create_customer(request.user.email, None)
-            services.PaymentService().save_transaction(int(event.price*100),
-                                                       customer.id, event, attendee, event.created_by, True)
-
-            subject = 'Nueva inscripción a {0}'.format(event.title)
-            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
-                enrollment.created_by.username, event.title)
-            recipient = event.created_by.email
-
-            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:

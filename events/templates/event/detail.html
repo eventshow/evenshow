@@ -168,47 +168,47 @@
             utilizarlos?</h1><br>
 
     </div>
-
-
     <div class=" center modal-footer-detail">
-
-
-        <form action="{% url 'enroll_event_discount' object.pk %}" method="POST" id="payment-form">
-            {% csrf_token %}
-
-            {% if not have_creditcard %}
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_discount_cent }}"
-                data-locale="es" data-currency="eur" data-label="Sí">
-                </script>
-            <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", " btn-large discount-yes left ");
-            </script>
-            {% else %}
-            <button class=" btn-large discount-yes-price left " type="submit">Sí ({{price_discount}} €)</button>
-            {% endif %}
-
-        </form>
-
         <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
             {% csrf_token %}
-
             {% if not have_creditcard %}
+            <input type="hidden" name="discount" value="True">
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_discount_cent }}"
+                data-locale="es" data-currency="eur" data-label="Sí ({{price_discount}})">
+                </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-yes right");
+            </script>
+            {% else %}
+            <button class=" btn-large discount-yes-price left " type="submit" name="discount" value="True">Sí
+                ({{price_discount}} €)</button>
+            {% endif %}
+        </form>
+        <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
+            {% csrf_token %}
+            {% if not have_creditcard %}
+            <input type="hidden" name="discount" value="False">
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_all_cent }}"
-                data-locale="es" data-currency="eur" data-label="No">
+                data-locale="es" data-currency="eur" data-label="No ({{price_all}})" onclick="apply_discount('False')">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
             </script>
             {% else %}
-            <button class=" btn-large discount-no-price right " type="submit">No ({{ price_all }} €)</button>
+            <button class=" btn-large discount-no-price right " type="submit" name="discount" value="False">No
+                ({{ price_all }} €)</button>
             {% endif %}
-
         </form>
-
     </div>
 </div>
+
+<script>
+    function apply_discount(bool) {
+        document.getElementById("discount-hidden").value = bool;
+    }
+</script>
 
 <style>
     body {
