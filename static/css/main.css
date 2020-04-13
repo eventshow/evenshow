@@ -267,7 +267,9 @@ nav ul a:hover {
     font-weight: 300;
     font-size: 24px;
 	margin-left: 2%;
+	margin-bottom: 6%;
 }
+
 
 
 
@@ -278,8 +280,6 @@ nav ul a:hover {
 	margin-left: 0.5%;
 }
 
-.detail-bio {
-}
 
 .img-bio {
 	margin-left: 3%;
@@ -461,9 +461,6 @@ nav ul a:hover {
 
 
 
-.text-section{
-	margin-bottom: 6%;
-}
 
 .price-detail{
 	color: white;
