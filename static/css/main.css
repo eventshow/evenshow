@@ -13,6 +13,10 @@
 	margin-top: 6%;
 }
 
+.terminos{
+	margin-bottom: 4%;
+}
+
 
 .title-category {
 	font-weight: 500;
@@ -85,6 +89,9 @@
 	margin-top: -1.5% !important;
 }
 
+.list_search_result{
+	margin-left: 42% !important;
+}
 
 /* NAV */
 
@@ -1607,6 +1614,29 @@ table {
 	border-radius: 15px;
 }
 
+.terms{
+	font-size: 20px;
+	margin-bottom: 5%;
+	font-weight: bolder;
+	color: #5d5e5e ;
+	border: 1px solid #5d5e5e !important;
+	border-radius: 15px;
+	margin-right: 50%;
+	padding-bottom: 3%;
+	padding-top: 1%;
+	padding-left: 1%;
+
+}
+.terms h1{
+	font-weight: 600;
+    margin-left: 2%;
+    margin-top: 2%;
+
+}
+.terms li{
+	margin-left: 5%;
+}
+
 #titleThanks, #titleTerms {
 	height: 80px;
 	font-family: Raleway, sans-serif;
@@ -1673,8 +1703,9 @@ table {
 }
 #textTerms{
 	
-	font-size:13px;
-	
+	    font-size: 18px;
+    margin-bottom: 3%;
+    color: black;
 }
 
 .waves-effect.waves-eventshow .waves-ripple{
