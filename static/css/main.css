@@ -3147,7 +3147,7 @@ table {
 	/* 1024x768 */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {}
 	/* iPad Pro */
-	@media only screen and (min-width: 1024px) and (max-width: 1036px) {}
+	@media only screen and (min-width: 1024px) and (max-width: 1336px) {}
 	/*  PIXEL 2XL*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) {
 		#title-delete-comi {
