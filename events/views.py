@@ -532,7 +532,7 @@ class EnrollmentDeleteView(generic.View):
         if enrollment and not event.has_started:
             user = self.request.user
             if (enrollment.is_accepted and (event.start_day - date.today()).days > 3) or not enrollment.is_accepted:
-                services.UserService().return_eventpoints(user, event)
+                services.UserService().return_eventpoints([user], event)
             enrollment.delete()
 
             subject = 'Asistencia a {0} cancelada'.format(event.title)
