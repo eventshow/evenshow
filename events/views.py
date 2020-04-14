@@ -495,7 +495,7 @@ class EnrollmentCreateView(generic.View):
             if request.POST.get('discounted', None):
                 discount = request.session.get(
                     'fee') - request.session.get('discounted_fee')
-                attendee.profile.eventpoints = 0
+                attendee.profile.eventpoints -= discount/settings.EVENTPOINT_VALUE
                 attendee.profile.save()
             else:
                 discount = 0
@@ -529,7 +529,7 @@ class EnrollmentDeleteView(generic.View):
         if enrollment and not event.has_started:
             user = self.request.user
             if (enrollment.is_accepted and (event.start_day - date.today()).days > 3) or not enrollment.is_accepted:
-                selectors.TransactionSelector().user_on_event(user, event).delete()
+                services.UserService().return_eventpoints(user, event)
             enrollment.delete()
 
             subject = 'Asistencia a {0} cancelada'.format(event.title)

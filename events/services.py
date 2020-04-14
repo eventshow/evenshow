@@ -285,7 +285,7 @@ class UserService:
         transaction = selectors.TransactionSelector().user_on_event(attendee, event)
         discount = transaction.discount
         if discount > 0:
-            attendee.profile.eventpoints = discount/settings.EVENTPOINT_VALUE
+            attendee.profile.eventpoints += discount/settings.EVENTPOINT_VALUE
             attendee.profile.save()
         transaction.delete()
 
