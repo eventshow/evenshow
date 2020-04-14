@@ -8,10 +8,6 @@
                 <span class="flow-text">
                     <h1 id="title-delete">¿Estás seguro de que quieres eliminar el evento <strong id="title-del-event">
                             {{object.title}}</strong>?</h1>
-                    {% if not object.can_delete  %}
-                    <h3 id="title-delete-comi">Recibirá una penalización por ello (más información en los términos y
-                        condiciones)</h3>
-                    {% endif %}
                 </span>
 
             </div>
@@ -46,7 +42,7 @@
                 <div class="grid-example col s4 offset-s2">
                     <div class="delete-buttons-delete">
                         <div class="right">
-                            {% if object.can_delete %}
+                            {% if object.can_delete or attendees_count == 0 %}
                             <button class="delete-btn waves-effect waves-light btn-large btn-block"
                                 type="submit">Sí</button>
                             {% else %}

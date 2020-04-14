@@ -17,6 +17,10 @@
 	margin-bottom: 4%;
 }
 
+.modal-margin{
+margin-left: 34%;
+
+}
 
 .title-category {
 	font-weight: 500;
@@ -51,10 +55,10 @@
 }
 
 .map-detail iframe{
-		 width:838px;
+	width:838px;
 	height:346px;
 	border:0;
-
+    
 
 }
 
@@ -196,6 +200,12 @@ nav ul a:hover {
 	margin-bottom: 8%;
 }
 
+.section-detail2-big {
+	height: 900px;
+	width: 100%;
+	margin-top: -46%;
+	margin-bottom: 8%;
+}
 .section-detail3 {
 	height: 900px;
 	width: 100%;
@@ -272,7 +282,6 @@ nav ul a:hover {
 
 .rectangle-info {
 	position: absolute;
-	z-index: 1;
 	margin-left: 5%;
 	width: 145px;
 	height: 93px;
@@ -290,6 +299,10 @@ nav ul a:hover {
 	border-radius: 8px;
 	margin-top: -8%;
 
+}
+
+#title-delete-profile a{
+	z-index: 10% !important;
 }
 
 #host-detail {
@@ -310,6 +323,18 @@ nav ul a:hover {
 
 #detail-info {
 	margin-top: -2%;
+}
+
+#title-delete-profile {
+	font-family: Raleway, sans-serif;
+	font-size: 32px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #686969;
+	z-index: 1;
 }
 
 .rectangle-info h2 {
@@ -620,7 +645,14 @@ background: #FFF;
 }
 
 #send-buttons {
-	margin-bottom: 30% !important;
+    margin-bottom: 30% !important;
+    margin-top: -52% !important;
+    margin-left: -45%;
+}
+
+
+.send-btn{
+	margin-left: 5% !important;
 }
 
 .img-profile-detail {
@@ -732,6 +764,17 @@ background: #FFF;
 	display: block !important;
 }
 
+.delete-btn-profile {
+	font-weight: bolder;
+	font-size: 20px;
+	text-align: center;
+	width: 127px;
+	height: 63px;
+	margin-top: 77px!important;
+	position: relative !important;
+	display: block !important;
+}
+
 
 .delete-btn-a {
 	width: 128px;
@@ -745,6 +788,20 @@ background: #FFF;
 	position: relative !important;
 	display: block !important;
 }
+
+.delete-btn-a-profile {
+	width: 128px;
+	height: 63px;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 4px;
+	font-size: 20px;
+	margin-top: 88px !important;
+	margin-left: 12% !important;
+	position: relative !important;
+	display: block !important;
+}
+
 
 .delete-buttons-big-title {
 	margin-top: 6%;
@@ -1192,25 +1249,6 @@ label {
 	right: 0;
 }
 
-#title-delete-user {
-	max-width: 1149px;
-	width: auto;
-	max-height: 47px;
-	height: auto;
-	font-family: Raleway, sans-serif;
-	font-size: 40px;
-	font-weight: bold;
-	font-stretch: normal;
-	font-style: normal;
-	line-height: normal;
-	letter-spacing: normal;
-	color: #686969;
-	margin: 0% auto;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
 
 #title-delete-comi {
     font-weight: bold;
@@ -1545,8 +1583,45 @@ table {
 	
 }
 
+.discount-no-price{
+		margin-right: 30% !important;
+	}
+
+	.discount-yes-price{
+		margin-left: 30% !important;
+	}
+
 .modal-evetshow {
 	border-radius: 15px !important;
+	margin-top: 15%
+}
+
+.discount-yes{
+	margin-left: 34%;
+	position:relative;
+}
+
+.discount-no{
+	    margin-right: 31%;
+    padding-left: 23px;
+    padding-right: 23px;
+	position: relative;
+
+}
+.modal-evetshow-detail {
+	border-radius: 15px !important;
+	margin-top: 15%
+}
+
+.modal-evetshow-detail h1{
+	font-size: 32px;
+}
+.modal-footer-detail{
+  border-radius: 0 0 2px 2px;
+  background-color: #fafafa;
+  height: 75px;
+  width: 100%;
+  text-align: center;
 }
 
 .modal-title {
@@ -1701,6 +1776,7 @@ table {
 }
 
 
+
 	.text-left {
 		margin-left: -10%;
 		margin-top: 12% !important;
@@ -1721,9 +1797,9 @@ table {
 
 	.modal-mov{
 		margin-top: 6%;
-
-    height: 71px;
-    font-size: 18px;
+		width: 90%;
+    	height: 71px;
+    	font-size: 18px;
 	}
 
  
@@ -1880,20 +1956,8 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 12px;
 	}
+	
 
-	
-	#edit-event input {
-		width: 130% !important;
-		height: 60px !important;
-		color: #5D5E5E !important;
-		border: 1px solid #B6244D !important;
-		border-radius: 12px !important;
-		padding-left: 4% !important;
-		margin-left: -15% !important;
-		font-family: Raleway, sans-serif;
-		font-size: 12px;
-	}
-	
 	#iphone-left{
 		margin-left: -10% !important;
 	}
@@ -1901,6 +1965,11 @@ table {
 	#iphone-right{
 		margin-right: -10% !important;
 	}
+
+	.iphone-right{
+		margin-right: -10% !important;
+	}
+
 
 	#send-buttons{
 		margin-bottom: 30% !important;
@@ -1935,27 +2004,64 @@ table {
 	
 	.delete-btn {
 		font-weight: bolder;
+		font-size: 18px;
+		text-align: center;
+		width: 80px;
+		height: 53px;
+		margin-top: 163px!important;
+		position: relative !important;
+		display: block !important;
+	}
+
+	.delete-btn-profile {
+		font-weight: bolder;
 		font-size: 20px;
 		text-align: center;
-		width: 97px;
-		height: 63px;
-		margin-top: 163px!important;
+		width: 75px;
+		height: 49px;
+		margin-top: 207px!important;
 		position: relative !important;
 		display: block !important;
 	}
 	
 	.delete-btn-a {
-		width: 97px;
-		height: 63px;
+		width: 80px;
+		height: 53px;
 		font-weight: bold;
 		text-align: center;
-		padding-top: 4px;
-		font-size: 20px;
+		padding-top: 1px;
+		font-size: 18px;
 		margin-top: 166px !important;
 		margin-left: 12% !important;
 		position: relative !important;
 		display: block !important;
 	}
+
+
+
+	.delete-btn-a-profile {
+		width: 75px;
+		height: 49px;
+		margin-top: 211px!important;
+		font-weight: bold;
+		text-align: center;
+		padding-top: 1px;
+		padding-left: 25px;
+		font-size: 19px;
+		margin-left: 12% !important;
+		position: relative !important;
+		display: block !important;
+	}
+
+	.sep-title {
+		color: #B6244D;
+		font-size: 44px;
+		border-radius: 9px;
+		text-align: left;
+		background-color: white;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+	}
+	
 	
 	.delete-buttons-big-title {
 		margin-top: 6%;
@@ -2069,8 +2175,9 @@ table {
 	.conf-sep{
 		margin-top: -29%;
 	}
+
 	.user-rat {
-		margin-left: 7% !important;
+		margin-left: 53% !important;
 		margin-top: 5% !important;
 	}
 
@@ -2248,7 +2355,8 @@ table {
 }
 
 .rectangle-info-title {
-    margin-top: -28%;
+	margin-top: -38%;
+	margin-right: 8%;
 }
 .separated1 {
     margin-left: 52%;
@@ -2310,11 +2418,22 @@ table {
 }
 
 .section-detail2{
-	margin-top: -190%;
+	margin-top: -200%;
+	margin-bottom: -215%;
 }
 
-.section-detail3{
-	margin-top: -234%;
+.section-detail2-big {
+    height: 900px;
+    width: 100%;
+    margin-top: -190%;
+    margin-bottom: -205%;
+}
+
+.section-detail3 {
+    height: 900px;
+    width: 100%;
+    margin-top: -54%;
+    margin-bottom: 150%;
 }
 
 .title-text{
@@ -2322,7 +2441,11 @@ table {
 }
 
 .name-host-detail {
-    margin-top: 7%;
+	margin-top: -29%;
+	margin-bottom: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+
 }
 
 .host-bio{
@@ -2342,12 +2465,12 @@ table {
 .map-detail{
 	margin-left: 0%;
 }
+
 .map-detail iframe{
-		 width:278px;
+	width:278px;
 	height:146px;
 	border:0;
 	margin: 3%;
-
 }
 
 
@@ -2375,9 +2498,6 @@ table {
 	margin-top: 10%;
 }
 
-.name-host-detail {
-	margin-top: -29% !important;
-}
 
 .control-panel {
 	z-index: 2 !important;
@@ -2434,6 +2554,7 @@ background: #FFF;
 
 .container-home p{
 	margin-top: 2%;
+	font-family: Arial, sans-serif !important;
 }
 .mar-modal{
 	margin-right: 10%;
@@ -2459,18 +2580,61 @@ background: #FFF;
 	margin-left: -7% !important;
 }
 
+
 #title-delete-comi {
-	font-weight: bold;
-	color: #686969;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	text-align: center;
-	width: 285px;
-	margin-bottom: -63% !important;
-	margin-left: -7% !important;
+    font-weight: bold;
+    color: #686969;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 285px;
+    margin-bottom: -71% !important;
+    margin-left: -6% !important;
 }
+
+#title-delete-profile {
+    max-width: 1149px;
+    width: auto;
+    max-height: 45px;
+    height: auto;
+    font-family: Raleway, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #686969;
+    margin: 0% auto;
+    padding-top: 11% !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+	.discount-no{
+		margin-right: 18%;
+	}
+
+	.discount-yes{
+		margin-left: 18% !important;
+	}
+
+	.discount-no-price{
+		margin-right: 4% !important;
+		padding: 6px;
+	}
+
+	.discount-yes-price{
+		margin-left: 4% !important;
+		padding: 6px;
+	}
+
+
+
 
 
 }
@@ -2500,6 +2664,7 @@ background: #FFF;
 		margin-top: 5% !important;
 		margin-left: -4% !important;
 	}
+
 
 	#name-host-title-del {
 		height: auto;
@@ -2605,8 +2770,9 @@ background: #FFF;
 		text-align: center;
 		width: 285px;
 		margin-bottom: -63% !important;
-		margin-left: 0% !important;
+		margin-left: 3% !important;
 	}
+
 
 
 	.title-share-edit {
@@ -2682,6 +2848,44 @@ background: #FFF;
 		display: block !important;
 	}
 
+	.section-detail2 {
+    	margin-bottom: -190% !important;
+    	margin-top: -180% !important;
+	}
+
+	.section-detail2-big {
+		margin-top: -150% !important;
+		margin-bottom: -180% !important;
+	}
+
+	#title-delete-profile {
+		max-width: 1149px;
+		width: auto;
+		max-height: 45px;
+		height: auto;
+		font-family: Raleway, sans-serif;
+		font-size: 18px;
+		font-weight: bold;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #686969;
+		margin: 0% auto;
+		padding-top: 11% !important;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.button-detail-auth {
+		color: white !important;
+		margin-top: 132% !important;
+		margin-left: -55% !important;
+		font-size: 28px;
+	}
+
 	.delete-btn-a-big {
 		width: 97px;
 		height: 63px;
@@ -2695,16 +2899,6 @@ background: #FFF;
 		display: block !important;
 	}
 
-	.title-share-edit {
-		margin-left: -13%;
-		margin-bottom: 9%;
-		margin-top: 9%;
-	}
-
-	.location {
-		margin-top: -425%;
-		margin-left: 165%;
-	}
 
 	.form-search {
 		margin-top: 111px;
@@ -2724,41 +2918,35 @@ background: #FFF;
 	}
 
 	.principal-detail {
-		margin-bottom: -99%;
+		margin-bottom: -89% !important;
 	}
 
-	.section-detail2 {
-		margin-bottom: 30%;
+	.map-detail iframe {
+		width: 340px;
+		height: 256px;
+		border: 0;
+		margin: 3%;
+	}
+
+	.section-detail3 {
+    	height: 900px;
+    	width: 100%;
+    	margin-top: -54% !important;
+    	margin-bottom: 40% !important;
+	}
+
+	.warning-full {
+		margin-top: 151% !important;
+		margin-left: -73% !important;
+	}
+
+	.warning-own {
+		margin-top: 151% !important;
+		margin-left: -73% !important;
 	}
 
 	.user-rat {
 		margin-left: 46% !important;
-	}
-
-}
-	/* PIXEL 2 */
-	@media only screen and (min-width: 411px) and (max-width: 731px) {
-
-		#eventpoint {
-			bottom: -4%;
-		}
-
-		#titleTerms {
-			margin-top: -9px;
-		}
-	}
-
-
-	/* PIXEL 2 XL */
-	@media only screen and (min-width: 411px) and (max-width: 823px) {
-
-
-	}
-
-	/* IPHONE 6/7/8 PLUS */
-	@media only screen and (min-width: 414px) and (max-width: 736px) {
-
-
 	}
 
 	/* iPad */
@@ -2809,7 +2997,421 @@ background: #FFF;
 			margin-top: 17%;
 			margin-bottom: 20%
 		}	
+		.discount-no-price{
+		margin-right: 12% !important;
 	}
+
+	.discount-yes-price{
+		margin-left: 12% !important;
+	}
+
+
+
+
+}
+	/* PIXEL 2 */
+	@media only screen and (min-width: 411px) and (max-width: 731px) {
+
+	#eventpoint {
+		bottom: -4%;
+	}
+
+	#titleTerms {
+		margin-top: -9px;
+	}
+	
+	#send-buttons-pw {
+		width: 130px;
+		height: 40%;
+		margin-left: -30%;
+		margin-right: 5%;
+		margin-top: 10%;
+		margin-bottom: 65px !important;
+		text-align: center !important;
+		font-size: 15px;
+		padding-top: 0px;
+		padding-bottom: 30%;
+	}
+
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-top: -80% !important;
+		margin-left: 85%;
+	}
+
+	.send-btn{
+		margin-left: 155% !important;
+	}
+
+	.center-profile{
+		width: 96% !important;
+		margin-left: 1% !important;
+	}
+
+
+	#edit-event input {
+		width: 100% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -1% !important;
+		font-family: Raleway, sans-serif;
+		margin-bottom: -5% !important;
+		font-size: 12px;
+	}
+
+	#edit-event textarea {
+		width: 105% !important;
+		height: auto;
+		color: #5D5E5E !important;
+		margin-bottom: -25% !important;
+		border: 1px solid #B6244D;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -1.75% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px !important;
+	}
+
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: -40% !important;
+		margin-top: 60% !important;
+	}
+
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -53% !important;
+		margin-left: 7% !important;
+	}
+
+	#title-delete-comi-sm {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -88% !important;
+		margin-left: 3% !important;
+	}
+
+	.delete-buttons-big-title {
+		margin-top: 35%;
+		align-content: center;
+	}
+
+	.rectangle-info-title {
+		margin-top: -30%;
+		margin-right: 5%;
+	}
+
+	.section-detail {
+		height: 1200px;
+		width: 100%;
+		margin-top: -50% !important;
+		margin-bottom: 8% !important;
+	}
+
+	.section-detail2 {
+    	margin-top: -245% !important;
+    	margin-bottom: -170% !important;
+	}
+
+	.section-detail2-big {
+		margin-top: -225% !important;
+		margin-bottom: -165% !important;
+	}
+
+	.section-detail3 {
+		height: 900px;
+		width: 100%;
+		margin-top: -54% !important;
+		margin-bottom: -18% !important;
+	}
+
+	.button-detail-auth {
+		color: white !important;
+		margin-top: 155% !important;
+		margin-left: -55% !important;
+		font-size: 28px;
+	}
+
+	.separated2 {
+		margin-left: 11%;
+	}
+
+	.separated7 {
+		margin-left: 11%;
+	}
+
+	.date-res {
+		margin-left: 11%;
+	}
+
+	.name-host-detail {
+		margin-top: -26% !important;
+	
+	}
+
+	.user-comment {
+		margin-left: 45.5% !important;
+		margin-bottom: 7% !important;
+	}
+
+
+	.title-section {
+		margin-right: 2%;
+		margin-bottom: 4.5%;
+		margin-top: 8% !important;
+	}
+	.map-detail iframe {
+		width: 364px;
+		height: 216px;
+		border: 0;
+		margin: 3%;
+	}
+
+	.img-bio {
+		margin-top: 3%;
+		margin-left: 25.5%;
+	}
+
+	.rating-bio {
+		margin-left: 37.5%;
+		margin-top: 4%;
+		margin-bottom: 5%;
+	}
+
+	.warning-full {
+		margin-top: 155% !important;
+		height: 70px;
+		margin-left: -73% !important;
+	}
+
+	.warning-own {
+		padding-bottom: 47px;
+		margin-top: 155% !important;
+		margin-left: -58% !important;
+		height: 70px;
+		padding-left: 15px;
+	}
+
+	#title-delete-profile {
+		max-width: 1149px;
+		width: auto;
+		max-height: 45px;
+		height: auto;
+		font-family: Raleway, sans-serif;
+		font-size: 21px;
+		font-weight: bold;
+		font-stretch: normal;
+		font-style: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #686969;
+		margin: 0% auto;
+		padding-top: 11% !important;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.delete-btn-profile {
+		font-weight: bolder;
+		font-size: 20px;
+		text-align: center;
+		width: 97px;
+		height: 63px;
+		margin-top: 293px!important;
+		position: relative !important;
+		display: block !important;
+	}
+
+
+	.delete-btn-a-profile {
+		width: 97px;
+		height: 63px;
+		font-weight: bold;
+		text-align: center;
+		padding-top: 4px;
+		font-size: 20px;
+		margin-top: 297px !important;
+		margin-left: 12% !important;
+		position: relative !important;
+		display: block !important;
+	}
+
+	.principal-detail {
+		margin-bottom: -100% !important;
+	}
+
+
+}
+
+	
+
+	/* IPHONE 6/7/8 PLUS */
+	@media only screen and (min-width: 414px) and (max-width: 736px) {
+		.date-res {
+			margin-top: 45% !important;
+			margin-left: 12% !important;
+		}
+
+		.separated7 {
+			margin-left: 12% !important;
+			margin-top: 78% !important;
+		}
+
+		.separated2 {
+			margin-left: 12% !important;
+			margin-top: 13% !important;
+		}
+
+		.section-detail2 {
+			margin-top: -235% !important;
+			margin-bottom: -170% !important;
+		}
+
+		.map-detail iframe {
+			width: 362px !important;
+			height: 203px !important;
+			border: 0;
+			margin: 3%;
+		}
+
+		.section-detail3 {
+			height: 900px;
+			width: 100%;
+			margin-top: -54% !important;
+			margin-bottom: -35% !important;
+		}
+
+		#title-delete-comi {
+			font-weight: bold;
+			color: #686969;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			width: 285px;
+			margin-bottom: -58% !important;
+			margin-left: 7% !important;
+		}
+
+	}
+
+	/* iPad */
+	@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+	#create-event input {
+		width: 130% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -17.5% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 14px;
+	}
+
+	#send-buttons {
+		margin-left: 80%;
+		margin-bottom: 30% !important;
+		margin-top: -80% !important;
+	}
+
+	.send-btn {
+		margin-left: 155% !important;
+	}
+
+	#send-buttons-pw {
+		width: 130px;
+		height: 40%;
+		margin-left: -32%;
+		margin-right: 5%;
+		margin-top: 10%;
+		margin-bottom: 65px !important;
+		text-align: center !important;
+		font-size: 15px;
+		padding-top: 0px;
+		padding-bottom: 30%;
+	}
+
+	.iphone-right {
+		margin-right: -6% !important;
+	}
+
+	#edit-event textarea {
+		width: 105% !important;
+		height: auto;
+		color: #5D5E5E !important;
+		margin-bottom: -25% !important;
+		border: 1px solid #B6244D;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px !important;
+	}
+
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: -40% !important;
+		margin-top: 70% !important;
+	}
+
+	#title-delete-comi-sm {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -90% !important;
+    	margin-left: 3% !important;
+	}
+	
+
+	
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		margin: 0% auto;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -53% !important;
+		margin-left: 7% !important;
+	}
+
+	.delete-buttons-big-title {
+		margin-top: 56%;
+		align-content: center;
+	}
+}
+	
 
 	/* 1024x768 */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {
@@ -2823,4 +3425,112 @@ background: #FFF;
 
 	}
 
+	/*  PIXEL 2XL*/
+	@media only screen and (min-width: 411px) and (max-width: 823px) {
+		#title-delete-comi {
+			font-weight: bold;
+			color: #686969;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			width: 285px;
+			margin-bottom: -57%;
+			margin-left: 7%;
+		}
+	}
+	
 
+
+/* Samsung S5 */
+@media only screen and (min-width: 360px) and (max-width: 640px) {
+	#title-delete-comi {
+		font-weight: bold;
+		color: #686969;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		width: 285px;
+		margin-bottom: -61% !important;
+		margin-left: 1%;
+	}
+
+	.principal-detail {
+		margin-bottom: -109%;
+	}
+
+	.section-detail2-big {
+		height: 900px;
+		width: 100%;
+		margin-top: -170%;
+		margin-bottom: -205%;
+	}
+
+	.button-detail-auth {
+		color: white !important;
+		margin-top: 146% !important;
+		margin-left: -55% !important;
+		font-size: 28px;
+	}
+
+	.warning-full {
+		margin-top: 137% !important;
+		margin-left: -73% !important;
+	}
+	
+	.warning-own {
+		margin-top: 137% !important;
+		margin-left: -58% !important;
+	
+	}
+
+	.separated2 {
+		margin-left: 7%;
+		margin-top: 13% !important;
+	}
+
+	.separated7 {
+		margin-left: 7%;
+		margin-top: 78% !important;
+	}
+
+	.date-res {
+		margin-top: 45% !important;
+		margin-left: 7%;
+	}
+
+	.map-detail iframe {
+		width: 316px;
+		height: 182px;
+		border: 0;
+		margin: 3%;
+	}
+
+	.section-detail2 {
+		margin-top: -180%;
+		margin-bottom: -211%;
+	}
+
+	.section-detail3 {
+		height: 900px;
+		width: 100%;
+		margin-top: -54%;
+		margin-bottom: 55%;
+	}
+}
+
+	/* IPHONE 6,7,8 */
+	@media only screen and (min-width: 375px) and (max-width: 667px) {
+		#send-buttons {
+			margin-bottom: 30%;
+			margin-top: -80%;
+			margin-left: 30%;
+		}
+
+		.send-btn {
+			margin-left: 140% !important;
+		}
+	}

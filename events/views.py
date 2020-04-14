@@ -29,6 +29,7 @@ from . import forms
 from . import models
 from . import selectors
 from . import services
+from django.utils.datastructures import MultiValueDictKeyError
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -136,6 +137,7 @@ class AttendeePaymentView(generic.View):
                 return redirect('authorize')
             else:
                 if event.has_finished:
+
                     attende_list = selectors.UserSelector().event_attendees(pk)
 
                     for attendee in attende_list:
@@ -150,7 +152,16 @@ class AttendeePaymentView(generic.View):
                             if not is_paid_for:
 
                                 try:
-                                    attendee_amount = transaction.amount
+                                    print(transaction.discount)
+                                    fee = 0
+                                    if transaction.discount:
+
+                                        fee = services.PaymentService().fee_discount(
+                                            transaction.amount, attendee, False)
+                                    else:
+                                        fee = services.PaymentService().fee(transaction.amount)
+
+                                    attendee_amount = fee + transaction.amount
 
                                     services.PaymentService().charge_connect(
                                         attendee_amount, transaction.customer_id, fee, transaction.recipient)
@@ -158,7 +169,8 @@ class AttendeePaymentView(generic.View):
                                     transaction.is_paid_for = True
                                     transaction.save()
 
-                                    services.UserService().add_bonus(transaction.created_by, transaction.amount)
+                                    if not transaction.discount:
+                                        services.UserService().add_bonus(transaction.created_by, transaction.amount)
 
                                 except stripe.error.StripeError:
                                     redirect('payment_error')
@@ -213,16 +225,28 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
 
+            context['price_discount'] = (services.PaymentService().fee_discount(
+                float(event.price*100), user, True) + event.price*100)/100
+            context['price_discount_cent'] = (services.PaymentService().fee_discount(
+                float(event.price*100), user, True) + event.price*100)
+            context['price_all'] = (services.PaymentService().fee(
+                float(event.price*100)) + event.price*100)/100
+            context['price_all_cent'] = (services.PaymentService().fee(
+                float(event.price*100)) + event.price*100)
+
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
         context['gmaps_key'] = settings.GOOGLE_API_KEY
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
         context['event_is_full'] = event_is_full
+        context['points'] = user.profile.eventpoints
         context['attendees'] = selectors.EnrollmentSelector().on_event(
             event.pk, 'ACCEPTED').count()
         context['event_price'] = float(event.price) + services.PaymentService().fee(
             float(event.price)*100) / 100
         context['user_can_enroll'] = not event_is_full and user_can_enroll
+        context['commission'] = services.PaymentService().fee(
+            float(event.price)*100) / 100
 
         return context
 
@@ -270,6 +294,8 @@ class EventDeleteView(generic.DeleteView):
             attendees = selectors.UserSelector().event_attendees(event_pk).count()
             amount_host = services.PaymentService().fee(round(event.price*100))
             context['penalty'] = (amount_host*attendees)
+            context['attendees_count'] = attendees
+            print(context['attendees_count'])
 
         return context
 
@@ -284,7 +310,7 @@ class EventDeleteView(generic.DeleteView):
                 penalty(event, request.POST.get('stripeToken'))
 
             subject = 'Evento cancelado'
-            body = 'El evento ' + event.title + 'en el que estás inscrito ha sido cancelado'
+            body = 'El evento ' + event.title + ' en el que estás inscrito ha sido cancelado'
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
@@ -482,7 +508,53 @@ class EnrollmentCreateView(generic.View):
             enrollment = services.EnrollmentService().create(event_pk, attendee)
 
             event = models.Event.objects.get(pk=event_pk)
+            if not services.PaymentService().is_customer(attendee.email):
+                customer = services.PaymentService().get_or_create_customer(
+                    request.user.email, request.POST['stripeToken'])
+            else:
+                customer = services.PaymentService().get_or_create_customer(request.user.email, None)
+            services.PaymentService().save_transaction(
+                int(event.price*100), customer.id, event, attendee, event.created_by, False)
 
+            subject = 'Nueva inscripción a {0}'.format(event.title)
+            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
+                enrollment.created_by.username, event.title)
+            recipient = event.created_by.email
+
+            services.EmailService().send_email(subject, body, [recipient])
+
+            return render(request, 'enrollment/thanks.html', context)
+        else:
+            return redirect('/')
+
+
+@method_decorator(login_required, name='dispatch')
+class EnrollmentCreateDiscountView(generic.View):
+    model = models.Enrollment
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        event_pk = kwargs.get('pk')
+        event = models.Event.object.get(pk=event_pk)
+        context['event_title'] = event.title
+
+    def post(self, request, *args, **kwargs):
+        attendee = self.request.user
+        event_pk = kwargs.get('pk')
+        event = models.Event.objects.get(pk=event_pk)
+        event_exists = services.EventService().count(event_pk)
+        event_is_full = selectors.UserSelector().event_attendees(
+            event_pk).count() >= event.capacity
+        event_has_started = event.has_started
+        user_can_enroll = services.EnrollmentService().user_can_enroll(
+            event_pk, attendee)
+
+        context = {'event_title': models.Event.objects.get(pk=event_pk)}
+
+        if event_exists and user_can_enroll and not event_is_full and not event_has_started:
+            enrollment = services.EnrollmentService().create(event_pk, attendee)
+
+            event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
                     request.user.email, request.POST['stripeToken'])
@@ -491,8 +563,8 @@ class EnrollmentCreateView(generic.View):
 
             price = float(event.price) + services.PaymentService().fee(
                 float(event.price)*100) / 100
-            services.PaymentService().save_transaction(
-                price, customer.id, event, attendee, event.created_by)
+            services.PaymentService().save_transaction(int(event.price*100),
+                                                       customer.id, event, attendee, event.created_by, True)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
@@ -770,10 +842,6 @@ class StripeAuthorizeCallbackView(generic.View):
             stripe_access_token = resp.json()['access_token']
             usuario = request.session['usuario']
             user = User.objects.filter(pk=usuario).first()
-            try:
-                login(request, user)
-            except ValueError:
-                pass
 
             profile = user.profile
             profile.stripe_access_token = stripe_access_token
@@ -800,6 +868,7 @@ class StripeAuthorizeView(generic.View):
             'redirect_uri': settings.STRIPE_REQUEST_URI
         }
         url = f'{url}?{urllib.parse.urlencode(params)}'
+        request.session.modified = True
         return redirect(url)
 
 
@@ -835,6 +904,7 @@ class UserDeleteView(generic.DeleteView):
     def dispatch(self, request, *args, **kwargs):
         self.penalized_events = self.get_penalized_events()
         self.is_penalized = self.penalized_events.count()
+        self.price_sum = None
         if self.is_penalized:
             aux = self.penalized_events.aggregate(
                 Sum('event__price'), Sum('count'))
