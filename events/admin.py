@@ -51,11 +51,3 @@ admin.site.register(models.Event, EventAdmin)
 admin.site.register(models.Message, MessageAdmin)
 admin.site.register(models.Profile, ProfileAdmin)
 admin.site.register(models.Rating, RatingAdmin)
-
-""" models = apps.get_models()
-print(models)
-for model in models:
-    try:
-        admin.site.register(model)
-    except admin.sites.AlreadyRegistered:
-        pass """

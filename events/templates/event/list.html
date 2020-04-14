@@ -106,7 +106,7 @@
           <td><strong><a href="{% url 'detail_event' object.pk %}">{{object.title}}</a></strong></td>
           <td>{{object.start_day}}</td>
           <td>{{object.location_city}}, {{object.location_street}}, {{object.location_number}}</td>
-          <td>
+          <td id="noPaddinIpad">
             <button type="button" onclick="location.href='{% url 'list_attendees' object.pk %}'"
               title="Lista de asistentes"> <em id="title-name" class="small material-icons">people</em></button>
 
