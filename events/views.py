@@ -152,7 +152,6 @@ class AttendeePaymentView(generic.View):
                             if not is_paid_for:
 
                                 try:
-                                    print(transaction.discount)
                                     fee = 0
                                     if transaction.discount:
 
@@ -233,13 +232,14 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
                 float(event.price*100)) + event.price*100)/100
             context['price_all_cent'] = (services.PaymentService().fee(
                 float(event.price*100)) + event.price*100)
+            context['points'] = user.profile.eventpoints
 
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
         context['gmaps_key'] = settings.GOOGLE_API_KEY
         context['stripe_key'] = settings.STRIPE_PUBLISHABLE_KEY
         context['event_is_full'] = event_is_full
-        context['points'] = user.profile.eventpoints
+
         context['attendees'] = selectors.EnrollmentSelector().on_event(
             event.pk, 'ACCEPTED').count()
         context['event_price'] = float(event.price) + services.PaymentService().fee(
@@ -295,7 +295,6 @@ class EventDeleteView(generic.DeleteView):
             amount_host = services.PaymentService().fee(round(event.price*100))
             context['penalty'] = (amount_host*attendees)
             context['attendees_count'] = attendees
-            print(context['attendees_count'])
 
         return context
 
