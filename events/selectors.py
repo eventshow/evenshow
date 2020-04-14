@@ -117,6 +117,7 @@ class EventSelector:
 
         return events_distances_oredered
 
+
 class RatingSelector:
     def on_user(self, reviewed: User, on='HOST') -> QuerySet:
         return models.Rating.objects.filter(reviewed=reviewed, on=on)
@@ -149,9 +150,9 @@ class TransactionSelector:
     def user_on_event(self, user: User, event: models.Event) -> models.Event:
         return models.Transaction.objects.filter(created_by=user, event=event).first()
 
-    def my_transaction(self, user: User) -> QuerySet:
+    def user_transactions(self, user: User) -> QuerySet:
         transaction_list = models.Transaction.objects.filter(
-            created_by=user).order_by('amount')
+            created_by=user, is_paid_for=True)
         return transaction_list
 
 

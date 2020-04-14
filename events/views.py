@@ -825,7 +825,7 @@ class TransactionListView(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = selectors.TransactionSelector().my_transaction(
+        queryset = selectors.TransactionSelector().user_transactions(
             self.request.user).order_by('-created_at')
         return queryset
 
