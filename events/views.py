@@ -147,7 +147,7 @@ class AttendeePaymentView(generic.View):
                                 try:
                                     attendee_amount = transaction.actual_amount
                                     services.PaymentService().charge_connect(
-                                        attendee_amount, transaction.customer_id, fee, transaction.recipient)
+                                        attendee_amount, transaction.customer_id, transaction.discounted_fee, transaction.recipient)
                                     transaction.is_paid_for = True
                                     transaction.save()
                                     if not transaction.discount:

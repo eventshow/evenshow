@@ -222,7 +222,6 @@ class PaymentService():
         return round(res - amount_host)
 
     def charge_connect(self, amount: int, customer_id: int, application_fee_amount: int, host: User) -> None:
-
         stripe.Charge.create(
             amount=amount,
             currency='eur',
