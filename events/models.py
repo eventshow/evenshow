@@ -288,6 +288,14 @@ class Transaction(Common):
         Event, on_delete=models.CASCADE, related_name='event_transaction')
     is_paid_for = models.BooleanField('Is paid for?')
 
+    @property
+    def actual_amount(self):
+        return self.amount + self.fee - self.discount
+
+    @property
+    def discounted_fee(self):
+        return self.fee - self.discount
+
     class Meta:
         ordering = ['-created_at']
         verbose_name = 'Transaction'

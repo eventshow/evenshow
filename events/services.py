@@ -194,38 +194,29 @@ class PaymentService():
 
         return round(res - amount_host)
 
-    def fee_discount(self, amount_host: int, attendee: User, info: bool) -> int:
+    def fee_discount(self, amount_host: int, attendee: User) -> int:
         res = 0
         const_stripe = 25
         var_stripe = 1.029
-        eventpoints_eur = attendee.profile.eventpoints*0.5
-        eventpoints = attendee.profile.eventpoints
+        discount = attendee.profile.discount
 
         amount_company = 0
 
         if (amount_host >= 0) and amount_host <= 50:
-            amount_company = 15-eventpoints_eur
+            amount_company = 15-discount
         elif (amount_host > 50) and (amount_host <= 150):
-            amount_company = (amount_host * 0.25)-eventpoints_eur
+            amount_company = (amount_host * 0.25)-discount
         elif (amount_host > 150) and (amount_host <= 300):
-            amount_company = (amount_host * 0.2)-eventpoints_eur
+            amount_company = (amount_host * 0.2)-discount
         elif (amount_host > 300) and (amount_host <= 500):
-            amount_company = (amount_host * 0.15)-eventpoints_eur
+            amount_company = (amount_host * 0.15)-discount
         elif (amount_host > 500):
-            amount_company = (amount_host * 0.10)-eventpoints_eur
+            amount_company = (amount_host * 0.10)-discount
 
         if amount_company < 0:
             res = amount_host * var_stripe + const_stripe
-            if not info:
-                attendee.profile.eventpoints = - (round(amount_company * 2))
         else:
             res = (amount_host + amount_company) * var_stripe + const_stripe
-            if not info:
-                attendee.profile.eventpoints = 0
-
-        if not info:
-            attendee.profile.save()
-
         return round(res - amount_host)
 
     def charge_connect(self, amount: int, customer_id: int, application_fee_amount: int, host: User) -> None:
@@ -249,8 +240,8 @@ class PaymentService():
             source=source
         )
 
-    def save_transaction(self, amount: int, customer_id: int, event: models.Event, created_by: User, recipient: User, discount: bool) -> None:
-        models.Transaction.objects.create(amount=amount, created_by=created_by, recipient=recipient,
+    def save_transaction(self, amount: int, fee: int, customer_id: int, event: models.Event, created_by: User, recipient: User, discount=0):
+        models.Transaction.objects.create(amount=amount, fee=fee, created_by=created_by, recipient=recipient,
                                           customer_id=customer_id, event=event, is_paid_for=False, discount=discount)
 
     def get_or_create_customer(self, email: str, source: str) -> stripe.Customer:
