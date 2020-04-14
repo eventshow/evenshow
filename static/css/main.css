@@ -3004,6 +3004,7 @@ background: #FFF;
 
 		#send-buttons {
 			margin-left: -40%;
+			margin-top: -16% !important;
 			margin-bottom: 37% !important;
 		}
 
@@ -3095,8 +3096,8 @@ background: #FFF;
 		.section-detail2 {
 			height: 900px;
 			width: 100%;
-			margin-top: -94%;
-			margin-bottom: -90%;
+			margin-top: -94% !important;
+			margin-bottom: -90% !important;
 		}
 
 		#info_extra{
@@ -3106,8 +3107,8 @@ background: #FFF;
 		.section-detail3 {
 			height: 900px;
 			width: 100%;
-			margin-top: -39%;
-			margin-bottom: 40%;
+			margin-top: -39% !important;
+			margin-bottom: 40% !important;
 		}
 
 		.img-bio {
@@ -3145,6 +3146,305 @@ background: #FFF;
 			margin-top: -5.75% !important;
 		}
 
+		#ipad-rate {
+			margin-left: 23% !important;
+			margin-top: 10% !important;
+		}
+
+		.panel-resp {
+			opacity: 1;
+			margin-top: 3%;
+			margin-left: 4%;
+		}
+
+		.sidenav.sidenav-fixed {
+			-webkit-transform: translateX(-105%);
+			transform: translateX(-105%);
+			margin-top: 8%;
+		}
+
+		.delete-btn-a {
+			width: 97px;
+			height: 63px;
+			font-weight: bold;
+			text-align: center;
+			padding-top: 4px;
+			font-size: 20px;
+			margin-top: 199px !important;
+			margin-left: 12% !important;
+			position: relative !important;
+			display: block !important;
+		}
+
+		.delete-btn-big {
+			font-weight: bolder;
+			font-size: 20px;
+			text-align: center;
+			width: 97px;
+			height: 63px;
+			margin-left: 41% !important;
+			margin-top: 260% !important;
+			margin-bottom: 30% !important;
+			position: relative !important;
+			display: block !important;
+		}
+
+		.delete-btn-a-big {
+			width: 97px;
+			height: 63px;
+			font-weight: bold;
+			text-align: center;
+			font-size: 20px;
+			margin-top: -96% !important;
+			margin-left: 140% !important;
+			margin-bottom: 30% !important;
+			position: relative !important;
+			display: block !important;
+		}
+
+		#title-delete-comi {
+			font-size: 22px;
+			margin-bottom: -31% !important;
+			margin-left: 25% !important;
+		}
+
+		#title-delete-comi-sm {
+			font-weight: bold;
+			color: #686969;
+			margin: 0% auto;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			width: 285px;
+			margin-bottom: -45% !important;
+			margin-left: 23% !important;
+		}
+
+		.title-share-edit {
+			margin-left: -8%;
+			margin-bottom: 9%;
+			margin-top: 2%;
+		}
+
+		#name-host-serg {
+			height: 40px;
+			font-family: Raleway, sans-serif;
+			font-size: 32px;
+			font-weight: bold;
+			font-stretch: normal;
+			font-style: normal;
+			line-height: normal;
+			letter-spacing: normal;
+			margin-top: 10px;
+			margin-bottom: -14%;
+			color: #5D5E5E;
+			width: 520px;
+		}
+
+		.container-edit {
+			background: #FFF;
+			margin-top: 3%;
+			margin-left: -6%;
+			margin-bottom: 7%;
+			width: 100%;
+			max-width: 600px;
+			border-radius: 15px;
+			border: 1px solid #B6244D;
+			padding: 5% 5% 5% 5%;
+			padding-bottom: -5% !important;
+		}
+
+		#send-buttons-pw {
+			width: 143px;
+			height: 34%;
+			margin-left: 4%;
+			margin-right: 5%;
+			margin-top: 5%;
+			margin-bottom: 65px !important;
+			text-align: center !important;
+			font-size: 15px;
+			padding-top: 0px;
+			padding-bottom: 30%;
+		}
+
+		.conf-sep {
+			margin-top: -19%;
+		}
+
+		.ipad-input{
+			margin-top: -33% !important;
+			margin-left: 0% !important;
+		}
+
+		.ipad-birth-label{
+			width: 140%;
+		}
+
+		#edit-event label{
+			margin-left: -12% !important;
+		}
+
+		.ipad-bio{
+			margin-left: -3% !important;
+			width: 156% !important;
+			margin-top: -10% !important;
+		}
+
+		.ipad-label-bio{
+			padding-left: 43px !important;
+		}
+
+		#send-buttons-data {
+			margin-bottom: 3% !important;
+			margin-left: 30% !important;
+			margin-top: 55% !important;
+		}
+
+		#name-host-title-del {
+			height: auto;
+			font-family: Raleway, sans-serif;
+			font-size: 30px;
+			font-weight: bold;
+			font-stretch: normal;
+			font-style: normal;
+			line-height: normal;
+			letter-spacing: normal;
+			margin-top: 21px;
+			margin-bottom: 9%;
+			color: #5D5E5E;
+			width: 620px;
+		}
+
+		.form-eventshow-password {
+			background: #FFF;
+			width: 85%;
+			max-width: 800px;
+			border-radius: 15px;
+			border: 1px solid #FFF;
+			padding: 25px 40px 70px;
+			padding-bottom: 5%;
+			align-items: center;
+			align-content: center;
+			margin-bottom: 7%;
+		}
+		#edit-password {
+			margin-top: -3% !important;
+			padding-right: 20% !important;
+			margin-left: -40%;
+    		margin-right: 25%;
+		}
+
+		#send-buttons-conf {
+			margin-left: -56%;
+			margin-bottom: 3% !important;
+		}
+
+		#send-buttons-pw-conf {
+			width: 143px;
+			height: 34%;
+			margin-left: -1%;
+			margin-top: 4%;
+			padding-bottom: 30%;
+			margin-bottom: 65px !important;
+			align-content: center;
+			font-size: 15px;
+			padding-top: 0px;
+		}
+
+		.form-eventshow-edit {
+			background: #FFF;
+			width: 100%;
+			margin-top: -1%;
+			max-width: 800px;
+			border-radius: 15px;
+			border: 1px solid #B6244D;
+			padding: 25px 40px 70px;
+			align-items: center;
+			align-content: center;
+			margin-left: -6%;
+			margin-bottom: 15%;
+		}
+
+		#edit-event input {
+			width: 121% !important;
+			height: 60px !important;
+			margin-bottom: 8px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -16.5% !important;
+			font-family: Raleway, sans-serif;
+		}
+
+		label {
+			display: block;
+			margin-left: -7px;
+		}
+
+		.center-profile{
+			width:90%;
+			margin-left: -5%;
+		}
+
+		.delete-btn-profile {
+			font-weight: bolder;
+			font-size: 20px;
+			text-align: center;
+			width: 127px;
+			height: 63px;
+			margin-top: 177px!important;
+			position: relative !important;
+			display: block !important;
+		}
+
+		.delete-btn-a-profile {
+			width: 128px;
+			height: 63px;
+			font-weight: bold;
+			text-align: center;
+			padding-top: 4px;
+			font-size: 20px;
+			margin-top: 184px !important;
+			margin-left: 12% !important;
+			position: relative !important;
+			display: block !important;
+		}
+
+		.ipad-update-title{
+			margin-bottom: 5px !important;
+		}
+
+		.login100-form {
+			width: 80% !important;
+			margin-left: -55%;
+			margin-top: 5%;
+			margin-right: 10%;
+			padding-left: 30px;
+			margin-bottom: 4% !important;
+			padding-right: 50px !important;
+		}
+
+		.form-eventshow {
+			background: #FFF;
+			width: 150%;
+			margin-left: 5% !important;
+			border-radius: 15px;
+			border: 1px solid #B6244D;
+		}
+
+		.form-home {
+			margin-left: 9% !important;
+			margin-top: 9%;
+		}
+	
+
+		.modal-mov {
+   	 		margin-left: -5%;
+  	  		margin-top: 3%;
+		}
 	}
 
 	/* PIXEL 2 */
@@ -3448,108 +3748,8 @@ background: #FFF;
 
 	}
 
-	/* iPad */
-	@media only screen and (min-width: 768px) and (max-width: 1024px) {
-
-	#create-event input {
-		width: 130% !important;
-		height: 60px !important;
-		color: #5D5E5E !important;
-		border: 1px solid #B6244D !important;
-		border-radius: 12px !important;
-		padding-left: 4% !important;
-		margin-left: -17.5% !important;
-		font-family: Raleway, sans-serif;
-		font-size: 14px;
-	}
-
-	#send-buttons {
-		margin-left: 80%;
-		margin-bottom: 30% !important;
-		margin-top: -80% !important;
-	}
-
-	.send-btn {
-		margin-left: 155% !important;
-	}
-
-	#send-buttons-pw {
-		width: 130px;
-		height: 40%;
-		margin-left: -32%;
-		margin-right: 5%;
-		margin-top: 10%;
-		margin-bottom: 65px !important;
-		text-align: center !important;
-		font-size: 15px;
-		padding-top: 0px;
-		padding-bottom: 30%;
-	}
-
-	.iphone-right {
-		margin-right: -6% !important;
-	}
-
-	#edit-event textarea {
-		width: 105% !important;
-		height: auto;
-		color: #5D5E5E !important;
-		margin-bottom: -25% !important;
-		border: 1px solid #B6244D;
-		border-radius: 12px !important;
-		padding-left: 4% !important;
-		font-family: Raleway, sans-serif;
-		font-size: 12px !important;
-	}
-
-	#send-buttons-data {
-		margin-bottom: 3% !important;
-		margin-left: -40% !important;
-		margin-top: 70% !important;
-	}
-
-	#title-delete-comi-sm {
-		font-weight: bold;
-		color: #686969;
-		margin: 0% auto;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		text-align: center;
-		width: 285px;
-		margin-bottom: -90% !important;
-    	margin-left: 3% !important;
-	}
-	
 
 	
-	#title-delete-comi {
-		font-weight: bold;
-		color: #686969;
-		margin: 0% auto;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		text-align: center;
-		width: 285px;
-		margin-bottom: -53% !important;
-		margin-left: 7% !important;
-	}
-
-	.delete-buttons-big-title {
-		margin-top: 56%;
-		align-content: center;
-	}
-}
-	
-
-	/* 1024x768 */
-	@media only screen and (min-width: 768px) and (max-width: 1024px) {
-
-
-	}
 
 	/* iPad Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1036px) {
