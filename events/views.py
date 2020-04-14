@@ -177,6 +177,8 @@ class AttendeePaymentView(generic.View):
                             else:
 
                                 return redirect('/')
+                            
+                        event.is_paid_for = True
 
                     return redirect('hosted_events')
 
