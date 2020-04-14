@@ -1873,9 +1873,9 @@ table {
 
 }
 
-	.sep-title{
-		margin-left: 10%;
-	}
+
+
+
 
 	.commission{
 		margin-left: -27%;
@@ -2226,6 +2226,8 @@ table {
 		text-align: left;
 		background-color: white;
 		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+		margin-left: 10%;
+
 	}
 	
 	
@@ -2577,6 +2579,9 @@ table {
 .name-host-detail{
 	    margin-left: 39% !important;
     margin-top: -30% !important;
+	margin-bottom: 2%;
+
+	margin-right: 2%;
 }
 
 
@@ -2610,13 +2615,6 @@ table {
 }
 
 
-.name-host-detail {
-	margin-top: -29%;
-	margin-bottom: 2%;
-	margin-left: 2%;
-	margin-right: 2%;
-
-}
 
 .host-bio{
 	margin-top: 4%;

@@ -117,7 +117,7 @@
       <h3 class="title-section-h3">{{object.location_street}} {{object.location_number}} <br> <a>{{object.location_city}}</a></h3>
    </div>
    <div class="col s12 m8 l9 map-detail">
-      <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
+      <iframe title="map" src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
    </div>
 </div>
 <hr>
@@ -144,7 +144,7 @@
          <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture}}">
          <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
          <div class="user-rat">
-            <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score}}</i></i>
+            <em class="fa fa-star"><em class="rating-search">&nbsp{{rating.score}}</em></em>
          </div>
          <h3 class="comment-detail">{{rating.comment}}</h3>
       </div>
