@@ -1686,6 +1686,18 @@ table {
 	color: #5d5e5e;
 }
 
+.title-about{
+	color: #cf2a6e;
+	height: 80px;
+	font-family: Raleway, sans-serif;
+	font-size: 42px;
+	font-weight: bold;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+}
+
 #text2Thanks {
 	width: 1171px;
 	height: 70px;
