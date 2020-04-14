@@ -163,7 +163,6 @@ class AttendeePaymentView(generic.View):
 
                                     attendee_amount = fee + transaction.amount
 
-
                                     services.PaymentService().charge_connect(
                                         attendee_amount, transaction.customer_id, fee, transaction.recipient)
 
@@ -171,7 +170,6 @@ class AttendeePaymentView(generic.View):
                                     transaction.save()
 
                                     if not transaction.discount:
-                                        print('----------------')
                                         services.UserService().add_bonus(transaction.created_by, transaction.amount)
 
                                 except stripe.error.StripeError:
@@ -247,7 +245,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['event_price'] = float(event.price) + services.PaymentService().fee(
             float(event.price)*100) / 100
         context['user_can_enroll'] = not event_is_full and user_can_enroll
-        context['commission'] = services.PaymentService().fee(float(event.price)*100) / 100
+        context['commission'] = services.PaymentService().fee(
+            float(event.price)*100) / 100
 
         return context
 
@@ -507,7 +506,7 @@ class EnrollmentCreateView(generic.View):
 
         if event_exists and user_can_enroll and not event_is_full and not event_has_started:
             enrollment = services.EnrollmentService().create(event_pk, attendee)
-            
+
             event = models.Event.objects.get(pk=event_pk)
             if not services.PaymentService().is_customer(attendee.email):
                 customer = services.PaymentService().get_or_create_customer(
@@ -564,8 +563,8 @@ class EnrollmentCreateDiscountView(generic.View):
 
             price = float(event.price) + services.PaymentService().fee(
                 float(event.price)*100) / 100
-            services.PaymentService().save_transaction(int(event.price*100), customer.id, event, attendee, event.created_by, True)
-
+            services.PaymentService().save_transaction(int(event.price*100),
+                                                       customer.id, event, attendee, event.created_by, True)
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
@@ -905,6 +904,7 @@ class UserDeleteView(generic.DeleteView):
     def dispatch(self, request, *args, **kwargs):
         self.penalized_events = self.get_penalized_events()
         self.is_penalized = self.penalized_events.count()
+        self.price_sum = None
         if self.is_penalized:
             aux = self.penalized_events.aggregate(
                 Sum('event__price'), Sum('count'))
