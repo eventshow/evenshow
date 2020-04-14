@@ -955,10 +955,11 @@ class UserUpdateView(generic.UpdateView):
         form = self.form_class(request.POST, instance=self.object)
         profile_form = self.profile_form_class(
             request.POST, instance=self.object.profile)
-
         if form.is_valid() and profile_form.is_valid():
+
             user = form.save()
             profile_form.save(user)
+
             return redirect(self.get_success_url())
         else:
             return self.render_to_response(

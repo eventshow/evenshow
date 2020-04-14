@@ -298,8 +298,7 @@ class ProfileForm(forms.ModelForm):
     )
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
-    picture = forms.URLField(required=False, widget=forms.URLInput(
-        attrs={'placeholder': "https://"}))
+    picture = forms.FileField(required=False)
 
     class Meta:
         model = Profile
@@ -321,6 +320,8 @@ class ProfileForm(forms.ModelForm):
 
     def save(self, user=None):
         profile = super(ProfileForm, self).save(commit=False)
+        print('----------')
+        print(profile.picture)
         if user:
             profile.user = user
         profile.save()

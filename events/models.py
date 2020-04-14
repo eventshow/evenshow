@@ -7,6 +7,7 @@ from datetime import datetime, date, timedelta
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.core.files import File
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg, Q
@@ -67,8 +68,8 @@ class Profile(models.Model):
         User, related_name="profile", on_delete=models.CASCADE)
     location = models.CharField(
         'Location', max_length=250, blank=True, null=True)
-    picture = models.URLField(
-        'Picture url', blank=True, null=True, default=random.choice(PROFILE_IMAGE_FILES))
+    picture = models.FileField(
+        'Picture url', blank=True, null=True)
     birthdate = models.DateField('Birthdate')
     token = models.CharField('Personal token', max_length=8, editable=False)
     eventpoints = models.PositiveIntegerField(
