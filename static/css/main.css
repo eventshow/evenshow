@@ -2702,10 +2702,6 @@ table {
 			margin-left: 12% !important;
 		}
 
-		.modal-mov{
-			margin-left: 0;
-		}
-
 		.form-eventshow {
 			background: #FFF;
 			width: 150%;
@@ -3194,9 +3190,7 @@ table {
 		#eventpoint {
 			bottom: -4%;
 		}
-		#titleTerms {
-			margin-top: -9px;
-		}
+
 		#send-buttons-pw {
 			width: 130px;
 			height: 40%;
@@ -3209,18 +3203,7 @@ table {
 			padding-top: 0px;
 			padding-bottom: 30%;
 		}
-		#send-buttons {
-			margin-bottom: 30% !important;
-			margin-top: -80% !important;
-			margin-left: 85%;
-		}
-		.send-btn {
-			margin-left: 155% !important;
-		}
-		.center-profile {
-			width: 96% !important;
-			margin-left: 1% !important;
-		}
+		
 		#edit-event input {
 			width: 100% !important;
 			height: 60px !important;
@@ -3233,6 +3216,7 @@ table {
 			margin-bottom: -5% !important;
 			font-size: 12px;
 		}
+
 		#edit-event textarea {
 			width: 105% !important;
 			height: auto;
@@ -3245,51 +3229,30 @@ table {
 			font-family: Raleway, sans-serif;
 			font-size: 12px !important;
 		}
+
 		#send-buttons-data {
 			margin-bottom: 3% !important;
 			margin-left: -40% !important;
 			margin-top: 60% !important;
 		}
-		#title-delete-comi {
-			font-weight: bold;
-			color: #686969;
-			margin: 0% auto;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			text-align: center;
-			width: 285px;
-			margin-bottom: -53% !important;
-			margin-left: 7% !important;
-		}
-		#title-delete-comi-sm {
-			font-weight: bold;
-			color: #686969;
-			margin: 0% auto;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			text-align: center;
-			width: 285px;
-			margin-bottom: -88% !important;
-			margin-left: 3% !important;
-		}
+
 		.delete-buttons-big-title {
 			margin-top: 35%;
 			align-content: center;
 		}
+
 		.rectangle-info-title {
 			margin-top: -30%;
 			margin-right: 5%;
 		}
+
 		.section-detail {
 			height: 1200px;
 			width: 100%;
 			margin-top: -50% !important;
 			margin-bottom: 8% !important;
 		}
+
 		.section-detail2 {
 			margin-top: -245% !important;
 			margin-bottom: -170% !important;
@@ -3298,39 +3261,14 @@ table {
 			margin-top: -225% !important;
 			margin-bottom: -165% !important;
 		}
+
 		.section-detail3 {
 			height: 900px;
 			width: 100%;
 			margin-top: -54% !important;
 			margin-bottom: -18% !important;
 		}
-		.button-detail-auth {
-			color: white !important;
-			margin-top: 155% !important;
-			margin-left: -55% !important;
-			font-size: 28px;
-		}
-		.separated2 {
-			margin-left: 11%;
-		}
-		.separated7 {
-			margin-left: 11%;
-		}
-		.date-res {
-			margin-left: 11%;
-		}
-		.name-host-detail {
-			margin-top: -26% !important;
-		}
-		.user-comment {
-			margin-left: 45.5% !important;
-			margin-bottom: 7% !important;
-		}
-		.title-section {
-			margin-right: 2%;
-			margin-bottom: 4.5%;
-			margin-top: 8% !important;
-		}
+
 		.map-detail iframe {
 			width: 364px;
 			height: 216px;
@@ -3404,24 +3342,10 @@ table {
 			margin-bottom: -100% !important;
 		}
 
-		#eventpoint {
-			bottom: -4%;
-		}
 		#titleTerms {
 			margin-top: -9px;
 		}
-		#send-buttons-pw {
-			width: 130px;
-			height: 40%;
-			margin-left: -30%;
-			margin-right: 5%;
-			margin-top: 10%;
-			margin-bottom: 65px !important;
-			text-align: center !important;
-			font-size: 15px;
-			padding-top: 0px;
-			padding-bottom: 30%;
-		}
+		
 		#send-buttons {
 			margin-bottom: 30% !important;
 			margin-top: -80% !important;
@@ -3434,89 +3358,7 @@ table {
 			width: 96% !important;
 			margin-left: 1% !important;
 		}
-		#edit-event input {
-			width: 100% !important;
-			height: 60px !important;
-			color: #5D5E5E !important;
-			border: 1px solid #B6244D !important;
-			border-radius: 12px !important;
-			padding-left: 4% !important;
-			margin-left: -1% !important;
-			font-family: Raleway, sans-serif;
-			margin-bottom: -5% !important;
-			font-size: 12px;
-		}
-		#edit-event textarea {
-			width: 105% !important;
-			height: auto;
-			color: #5D5E5E !important;
-			margin-bottom: -25% !important;
-			border: 1px solid #B6244D;
-			border-radius: 12px !important;
-			padding-left: 4% !important;
-			margin-left: -1.75% !important;
-			font-family: Raleway, sans-serif;
-			font-size: 12px !important;
-		}
-		#send-buttons-data {
-			margin-bottom: 3% !important;
-			margin-left: -40% !important;
-			margin-top: 60% !important;
-		}
-		#title-delete-comi {
-			font-weight: bold;
-			color: #686969;
-			margin: 0% auto;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			text-align: center;
-			width: 285px;
-			margin-bottom: -53% !important;
-			margin-left: 7% !important;
-		}
-		#title-delete-comi-sm {
-			font-weight: bold;
-			color: #686969;
-			margin: 0% auto;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			text-align: center;
-			width: 285px;
-			margin-bottom: -88% !important;
-			margin-left: 3% !important;
-		}
-		.delete-buttons-big-title {
-			margin-top: 35%;
-			align-content: center;
-		}
-		.rectangle-info-title {
-			margin-top: -30%;
-			margin-right: 5%;
-		}
-		.section-detail {
-			height: 1200px;
-			width: 100%;
-			margin-top: -50% !important;
-			margin-bottom: 8% !important;
-		}
-		.section-detail2 {
-			margin-top: -245% !important;
-			margin-bottom: -170% !important;
-		}
-		.section-detail2-big {
-			margin-top: -225% !important;
-			margin-bottom: -165% !important;
-		}
-		.section-detail3 {
-			height: 900px;
-			width: 100%;
-			margin-top: -54% !important;
-			margin-bottom: -18% !important;
-		}
+
 		.button-detail-auth {
 			color: white !important;
 			margin-top: 155% !important;
@@ -3529,6 +3371,7 @@ table {
 		.separated7 {
 			margin-left: 11%;
 		}
+
 		.date-res {
 			margin-left: 11%;
 		}
@@ -3544,78 +3387,7 @@ table {
 			margin-bottom: 4.5%;
 			margin-top: 8% !important;
 		}
-		.map-detail iframe {
-			width: 364px;
-			height: 216px;
-			border: 0;
-			margin: 3%;
-		}
-		.img-bio {
-			margin-top: 3%;
-			margin-left: 25.5%;
-		}
-		.rating-bio {
-			margin-left: 37.5%;
-			margin-top: 4%;
-			margin-bottom: 5%;
-		}
-		.warning-full {
-			margin-top: 155% !important;
-			height: 70px;
-			margin-left: -73% !important;
-		}
-		.warning-own {
-			padding-bottom: 47px;
-			margin-top: 155% !important;
-			margin-left: -58% !important;
-			height: 70px;
-			padding-left: 15px;
-		}
-		#title-delete-profile {
-			max-width: 1149px;
-			width: auto;
-			max-height: 45px;
-			height: auto;
-			font-family: Raleway, sans-serif;
-			font-size: 21px;
-			font-weight: bold;
-			font-stretch: normal;
-			font-style: normal;
-			line-height: normal;
-			letter-spacing: normal;
-			color: #686969;
-			margin: 0% auto;
-			padding-top: 11% !important;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-		}
-		.delete-btn-profile {
-			font-weight: bolder;
-			font-size: 20px;
-			text-align: center;
-			width: 97px;
-			height: 63px;
-			margin-top: 293px!important;
-			position: relative !important;
-			display: block !important;
-		}
-		.delete-btn-a-profile {
-			width: 97px;
-			height: 63px;
-			font-weight: bold;
-			text-align: center;
-			padding-top: 4px;
-			font-size: 20px;
-			margin-top: 297px !important;
-			margin-left: 12% !important;
-			position: relative !important;
-			display: block !important;
-		}
-		.principal-detail {
-			margin-bottom: -100% !important;
-		}
+
 	}
 	/* IPHONE 6/7/8 PLUS */
 	@media only screen and (min-width: 414px) and (max-width: 736px) {
