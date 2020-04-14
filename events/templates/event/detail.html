@@ -50,14 +50,9 @@
         <h3 class="warning-full" href="">No disponible</h3>
         {% elif user_can_enroll and not event.has_started %}
         {% if points > 0 %}
-
         <a class=" waves-light btn-large modal-trigger modal-mov button-detail-auth"
             href="#modal3">{{ object.price }}€</a>
-
-
         {% else %}
-
-
         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
             {% if not have_creditcard %}
@@ -70,15 +65,10 @@
             </script>
             {% else %}
             <button type="submit" class="aves-effect waves-light btn-large button-detail-auth">{{ object.price }}€ +
-                {{commission}}</button>
+                {{fee}}</button>
             {% endif %}
         </form>
-
         {% endif %}
-
-
-
-
         {% endif %}
         {% elif event.created_by.username == 'deleted' %}
         <h3 class="warning-full" href="">No disponible</h3>

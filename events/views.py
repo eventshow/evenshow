@@ -219,11 +219,9 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['points'] = user.profile.eventpoints
         context['attendees'] = selectors.EnrollmentSelector().on_event(
             event.pk, 'ACCEPTED').count()
-        context['event_price'] = float(event.price) + services.PaymentService().fee(
-            float(event.price)*100) / 100
         context['user_can_enroll'] = not event_is_full and user_can_enroll
-        context['commission'] = services.PaymentService().fee(
-            float(event.price)*100) / 100
+        context['fee'] = services.PaymentService().fee(
+            int(event.price)*100) / 100
 
         return context
 
@@ -281,6 +279,7 @@ class EventDeleteView(generic.DeleteView):
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
             event = models.Event.objects.get(pk=event_pk)
+            attendees = selectors.UserSelector().event_attendees(event_pk)
 
             if not event.can_delete:
                 penalty(event, request.POST.get('stripeToken'))
@@ -288,7 +287,7 @@ class EventDeleteView(generic.DeleteView):
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + \
                 ' en el que estás inscrito ha sido cancelado. Si has gastado Eventpoints se te devolverán'
-            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            recipient_list_queryset = attendees
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
             services.EmailService().send_email(subject, body, recipient_list)
@@ -576,11 +575,14 @@ class EnrollmentUpdateView(generic.View):
                 status == 'ACCEPTED' or status == 'REJECTED'):
             services.EnrollmentService().update(
                 enrollment_pk, host, status)
-            event = models.Enrollment.objects.get(pk=enrollment_pk).event
+            enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
+            event = enrollment.event
 
             if status == 'ACCEPTED':
                 status_txt = 'aceptada'
             else:
+                attendee = enrollment.created_by
+                services.UserService().return_eventpoints(attendee, event)
                 status_txt = 'rechazada'
 
             subject = 'Solicitud para {0} {1}'.format(event.title, status_txt)
