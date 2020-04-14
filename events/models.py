@@ -281,11 +281,12 @@ class Transaction(Common):
     recipient = models.ForeignKey(User, on_delete=models.SET(
         get_sentinel_user), related_name='recipient_transaction')
     amount = models.PositiveIntegerField('Amount')
+    discount = models.PositiveIntegerField('Discount')
+    fee = models.PositiveIntegerField('Fee')
     customer_id = models.CharField('Customer_id', max_length=250)
     event = models.ForeignKey(
         Event, on_delete=models.CASCADE, related_name='event_transaction')
     is_paid_for = models.BooleanField('Is paid for?')
-    discount = models.BooleanField('Discount')
 
     class Meta:
         ordering = ['-created_at']
