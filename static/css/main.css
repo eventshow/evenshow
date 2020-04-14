@@ -1435,6 +1435,15 @@ label {
 	line-height: 1.5;
 }
 
+.active{
+	color: #5D5E5E;
+}
+
+.sep-pag{
+	color: #b6244d !important;
+	margin-left: 5px !important;
+}
+
 .name-host-ref {
 	height: 40px;
 	max-width: 663px;
