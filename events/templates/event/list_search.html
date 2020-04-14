@@ -1,5 +1,16 @@
 {%extends 'base.html'%}
 {% block content %}
+    {% if not user.is_authenticated %}
+    <style>
+    .form-search{
+        margin-left: -10% !important;
+    }
+    .search{
+        margin-right: 32%;
+    }
+    </style>
+    {% endif %}
+
 <div class="row">
     <div class="wrapper wrapper--w1070">
         <div class="card-body">
