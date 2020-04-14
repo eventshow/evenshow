@@ -279,7 +279,7 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
             'fields': fields
         }
 
-        if event_date < datetime.now().date():
+        if status != 'REJECTED':
             seed_transaction(event, enroller, host, updated_at, price)
         if status == 'ACCEPTED':
             ac += 1

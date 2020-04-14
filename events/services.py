@@ -8,6 +8,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
+from django.db import transaction as db_transaction
+from django.db.models import F, Subquery, OuterRef
 from django.utils.timezone import now
 
 from . import models
@@ -281,13 +283,15 @@ class UserService:
             user.profile.save()
         return points
 
-    def return_eventpoints(self, attendee: User, event: models.Event):
-        transaction = selectors.TransactionSelector().user_on_event(attendee, event)
-        discount = transaction.discount
-        if discount > 0:
-            attendee.profile.eventpoints += discount/settings.EVENTPOINT_VALUE
-            attendee.profile.save()
-        transaction.delete()
+    def return_eventpoints(self, attendees, event: models.Event):
+        with db_transaction.atomic():
+            for attendee in attendees:
+                transaction = selectors.TransactionSelector().user_on_event(attendee, event)
+                discount = transaction.discount
+                if discount > 0:
+                    attendee.profile.eventpoints += discount/settings.EVENTPOINT_VALUE
+                    attendee.profile.save()
+                transaction.delete()
 
     def exist_user(self, user_id: int) -> bool:
         exist = models.User.objects.filter(id=user_id).exists()
