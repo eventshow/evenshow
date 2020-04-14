@@ -194,7 +194,7 @@ class PaymentService():
         elif (amount_host > 500):
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
-        return round(res - amount_host)
+        return int(round(res - amount_host, 2))
 
     def fee_discount(self, amount_host: int, attendee: User) -> int:
         res = 0
@@ -219,7 +219,7 @@ class PaymentService():
             res = amount_host * var_stripe + const_stripe
         else:
             res = (amount_host + amount_company) * var_stripe + const_stripe
-        return round(res - amount_host)
+        return int(round(res - amount_host, 2))
 
     def charge_connect(self, amount: int, customer_id: int, application_fee_amount: int, host: User) -> None:
         stripe.Charge.create(

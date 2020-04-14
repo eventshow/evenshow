@@ -201,7 +201,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
 
-            price = int(event.price*100)
+            price = float(event.price*100)
             discounted_fee = services.PaymentService().fee_discount(price, user)
             fee = services.PaymentService().fee(price)
 
@@ -498,7 +498,9 @@ class EnrollmentCreateView(generic.View):
             if request.POST.get('discounted', None):
                 discount = request.session.get(
                     'fee') - request.session.get('discounted_fee')
-                attendee.profile.eventpoints -= discount/settings.EVENTPOINT_VALUE
+                eventpoints = int(
+                    round(discount/settings.EVENTPOINT_VALUE/1.029))
+                attendee.profile.eventpoints -= max(0, eventpoints)
                 attendee.profile.save()
             else:
                 discount = 0
