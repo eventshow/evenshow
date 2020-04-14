@@ -117,6 +117,7 @@ class EventSelector:
 
         return events_distances_oredered
 
+
 class RatingSelector:
     def on_user(self, reviewed: User, on='HOST') -> QuerySet:
         return models.Rating.objects.filter(reviewed=reviewed, on=on)
