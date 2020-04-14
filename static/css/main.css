@@ -2942,9 +2942,17 @@ table {
 		}
 
 		#title-delete-comi {
-			font-size: 22px;
-			margin-bottom: -31% !important;
-			margin-left: 25% !important;
+			font-weight: bold;
+			color: #686969;
+			position: absolute;
+			font-size: 25px;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			width: 600px !important;
+			margin-bottom: -29% !important;
+			margin-left: -2% !important;
 		}
 
 		#title-delete-comi-sm {
@@ -2956,9 +2964,10 @@ table {
 			left: 0;
 			right: 0;
 			text-align: center;
-			width: 285px;
-			margin-bottom: -45% !important;
-			margin-left: 23% !important;
+			width: 600px !important;
+			font-size: 25px;
+			margin-bottom: -43% !important;
+			margin-left: -4% !important;
 		}
 
 		.title-share-edit {
