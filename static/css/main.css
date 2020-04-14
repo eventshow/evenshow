@@ -2779,7 +2779,8 @@ background: #FFF;
 
 		}
 		#panel{
-			width: 54%;
+			width: 90%;
+			margin-left: 53px;
 		}
 		#titleThanks{
 			margin-bottom: 56px;
@@ -2809,6 +2810,10 @@ background: #FFF;
 			margin-top: 17%;
 			margin-bottom: 20%
 		}	
+		#eventpoint{
+			bottom: 7%;
+    margin-left: -10% !important;
+		}
 	}
 
 	/* 1024x768 */
