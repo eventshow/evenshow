@@ -285,7 +285,7 @@ class EventDeleteView(generic.DeleteView):
                 penalty(event, request.POST.get('stripeToken'))
             services.UserService().return_eventpoints(attendees, event)
 
-            """ subject = 'Evento cancelado'
+            subject = 'Evento cancelado'
             body = 'El evento ' + event.title + \
                 ' en el que estás inscrito ha sido cancelado. Si has gastado Eventpoints se te devolverán'
             recipient_list_queryset = attendees
@@ -293,7 +293,7 @@ class EventDeleteView(generic.DeleteView):
                 recipient_list_queryset.values_list('email', flat=True))
             services.EmailService().send_email(subject, body, recipient_list)
 
-            self.object.delete() """
+            self.object.delete()
             return redirect('hosted_events')
         else:
             return redirect('/')
