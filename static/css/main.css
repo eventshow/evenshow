@@ -2381,11 +2381,11 @@ table {
 		.form-eventshow {
 			background: #FFF;
 			width: 150%;
-			margin-left: 25%;
+			margin-left: 5% !important;
 			border-radius: 15px;
 			border: 1px solid #B6244D;
-			padding: 25px 40px 90px;
 		}
+		
 
 		.location {
 			margin-top: 0%;
@@ -2842,13 +2842,6 @@ table {
 			padding-right: 50px !important;
 		}
 
-		.form-eventshow {
-			background: #FFF;
-			width: 150%;
-			margin-left: 5% !important;
-			border-radius: 15px;
-			border: 1px solid #B6244D;
-		}
 
 		.form-home {
 			margin-left: 9% !important;
