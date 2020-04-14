@@ -3484,3 +3484,13 @@ background: #FFF;
 			margin-left: 140% !important;
 		}
 	}
+
+/* 1680x1050 */
+@media  screen and (max-width: 1680px) {
+    /* insert styles here */
+}
+
+/* 1920x1080*/
+@media  screen and (max-width: 1920px) {
+    /* insert styles here */
+}
