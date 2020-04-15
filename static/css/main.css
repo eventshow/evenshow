@@ -3537,10 +3537,9 @@ background: #FFF;
 			margin-top: 5%;
 			margin-right: 10%;
 			margin-bottom: 4% !important;
-			padding-right: 50px !important;
 			min-height: 81vh !important;
 			display: block;
-			padding: 152px 55px 55px 55px;
+			padding: 152px 55px 55px 55px !important;
 		}
 
 
