@@ -54,7 +54,7 @@
           class="material-icons">create</em></a>
 {% if request.get_full_path == '/events/create' %}
 
-<div class="container">
+<div class="container ipad-pro-update">
   <div class="center-form-create">
     <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
       {% csrf_token %}
@@ -65,7 +65,7 @@
       </div>
       {% else %}
 
-      <div class="container">
+      <div class="container r ipad-pro-update">
         <div class="center-form-create">
           <form class="form-eventshow-create" id="create-event" method="post"
             action="{% url 'update_event' event.pk %}">
