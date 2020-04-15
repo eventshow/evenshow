@@ -3530,12 +3530,32 @@ background: #FFF;
 
 		.login100-form {
 			width: 80% !important;
-			margin-left: -55%;
 			margin-top: 5%;
 			margin-right: 10%;
-			padding-left: 30px;
 			margin-bottom: 4% !important;
 			padding-right: 50px !important;
+			min-height: 81vh !important;
+			display: block;
+			padding: 152px 55px 55px 55px;
+		}
+
+
+		.container-login100 {
+			width: 100%;
+			min-height: 85vh !important;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			background: #ffffff !important;
+		}
+
+		#login-res{
+			min-height: 72vh !important;
 		}
 
 
