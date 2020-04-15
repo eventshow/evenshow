@@ -3482,12 +3482,15 @@ table {
 
 	/* iPad Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		#onlyIpadPro{
+			margin-left: 29px!important;
+		}
 		#panel {
 			width: 68%;
 			margin-left: 358px;
 		}
 		.table-generic {
-			width: 104%;
+			width: 112%;
 		}
 		.title-search {
 			margin-left: 18%;
