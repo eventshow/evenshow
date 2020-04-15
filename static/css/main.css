@@ -959,17 +959,14 @@ p.description {
 	font-family: Raleway, sans-serif;
 }
 
-.form-search {
-	margin-top: 80px;
-	margin-right: -65%;
-	margin-left: 10%;
-}
-
-.search {
-	margin-top: 9px !important;
-	margin-right: 17%;
-}
-
+    .form-search{
+        margin-top: 2% !important;
+        margin-left: -10% !important;
+    }
+    .search{
+            margin-right: -6%;
+    margin-top: 1%;
+    }
 
 /* FOOTER */
 
