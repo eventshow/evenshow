@@ -3467,7 +3467,19 @@ table {
 	
 
 	/* iPad Pro */
-	@media only screen and (min-width: 1024px) and (max-width: 1336px) {}
+	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		.title-search {
+			margin-left: 18%;
+		}
+		.form-search {
+			margin-left: 16%;
+			margin-right: 11%;
+		}
+		#results-ipad {
+			margin-left: 155px;
+			margin-top: 33px;
+		}
+	}
 	/*  PIXEL 2XL*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) {
 		#title-delete-comi {
