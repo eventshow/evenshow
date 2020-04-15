@@ -51,10 +51,11 @@
 				<label>
 					{{ form.terms }}
 					<span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
-					<div class="form-errors">
+
+				</label>
+                	<div class="form-errors">
 						{{ form.terms.errors }}
 					</div>
-				</label>
 				<br>
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn">
