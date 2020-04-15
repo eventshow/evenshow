@@ -3,20 +3,23 @@
 <div class="limiter">
 	<div class="container-login100">
 		<div class="wrap-login100">
-			<form class="login100-form form-eventshow login validate-form" id="login-res" method="POST" action="{% url 'login' %}">
+			<form class="login100-form form-eventshow login validate-form" id="login-res" method="POST"
+				action="{% url 'login' %}">
 				{% csrf_token %}
 				<h1>
 					Iniciar Sesión
 				</h1>
 				<br>
 				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
+					{{form.username}}
 					<div class="form-errors">
-						{{form.username}}
+						{{form.username.errors}}
 					</div>
 				</div>
 				<div class="validate-input" data-validate="Password is required">
+					{{form.password}}
 					<div class="form-errors">
-						{{form.password}}
+						{{form.password.errors}}
 					</div>
 				</div>
 				<div class="form-errors">
@@ -41,5 +44,4 @@
 		</div>
 	</div>
 </div>
-
 {% endblock %}
