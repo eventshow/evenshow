@@ -46,7 +46,10 @@
 					<div class="form-errors">
 						{{ form.friend_token.errors }}
 					</div>
-                    <p>Al registrarse automáticamente está aceptando los <a href="{% url 'terms' %}">términos y condiciones</a></p>
+                     <label>
+        <input type="checkbox" />
+        <span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
+      </label>
 
 				</div>
 				<br>
