@@ -1523,15 +1523,6 @@ label {
 	line-height: 1.5;
 }
 
-.active{
-	color: #5D5E5E;
-}
-
-.sep-pag{
-	color: #b6244d !important;
-	margin-left: 5px !important;
-}
-
 .name-host-ref {
 	height: 40px;
 	max-width: 663px;
@@ -1782,18 +1773,6 @@ table {
 	color: #5d5e5e;
 }
 
-.title-about{
-	color: #B6244D;
-	height: 80px;
-	font-family: Raleway, sans-serif;
-	font-size: 42px;
-	font-weight: bold;
-	font-stretch: normal;
-	font-style: normal;
-	line-height: normal;
-	letter-spacing: normal;
-}
-
 #text2Thanks {
 	width: 1171px;
 	height: 70px;
@@ -1861,14 +1840,14 @@ table {
 	padding-right: 80%;
 }
 
-
 /* RESPONSIVE */
 
 
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
-.img-detail{
+	
+	.img-detail{
 		margin-top: -21%;
 	width: 100% !important;
 	height: 518px;
@@ -1923,7 +1902,7 @@ table {
 		margin-top: 0;
 	}
 	.title-section-h3{
-		margin-left: -20% !important;
+		margin-left: -2% !important;
     margin-bottom: 10%;
 	}
 
@@ -2511,7 +2490,7 @@ table {
 
 }
 .name-host-detail{
-	    margin-left: 39% !important;
+	margin-left: 36% !important;
     margin-top: -30% !important;
 	margin-bottom: 2%;
 
@@ -2733,177 +2712,6 @@ background: #FFF;
 	}
 
 
-
-
-
-}
-
-/* IPHONE X */
-
-@media only screen and (min-width: 375px) and (max-width: 812px) {
-	#noPaddin {
-		padding: 0px;
-	}
-
-	#titleTerms {
-		margin-top: -9px;
-	}
-
-	#eventpoint {
-		font-style: italic;
-		font-family: Raleway, sans-serif;
-		position: absolute;
-		width: auto;
-		height: auto;
-		bottom: 10%;
-		margin-left: 3% !important;}
-	.btn-submit {
-		width: 69% !important;
-	}
-	.rating-search {
-		margin-left: 0% !important;
-		margin-bottom: 6%;
-	}
-	.img-detail-auth {
-		margin-top: -66px !important;
-		width: 100% !important;
-		height: 457px;
-		object-fit: cover;
-	}
-	.img-detail {
-		margin-top: -65px !important;
-		width: 100% !important;
-		height: 457px;
-		object-fit: cover;
-	}
-	.date-res {
-		margin-top: 45% !important;
-		margin-left: 3.5%;
-	}
-	#host-detail {
-		margin-top: -339px;
-		padding: 30px 30px 30px 30px;
-	}
-	.rectangle-info-title {
-		margin-top: -38%;
-		margin-right: 8%;
-	}
-	.separated1 {
-		margin-left: 52%;
-		margin-top: 13% !important;
-	}
-	.separated2 {
-		margin-left: 3%;
-		margin-top: 13% !important;
-	}
-	.separated4 {
-		margin-left: 52%;
-		margin-top: 45% !important;
-	}
-	.separated7 {
-		margin-left: 10px;
-		margin-top: 78% !important;
-	}
-	.separated6 {
-		margin-left: 52%;
-		margin-top: 78% !important;
-	}
-	.button-detail {
-		color: white !important;
-		margin-top: 132% !important;
-		margin-left: -84% !important;
-		font-size: 28px;
-	}
-	.button-detail-auth {
-		color: white !important;
-		margin-top: 132% !important;
-		margin-left: -55% !important;
-		font-size: 28px;
-	}
-	.warning-full {
-		margin-top: 132% !important;
-		margin-left: -73% !important;
-	}
-	.warning-own {
-		margin-top: 131% !important;
-		margin-left: -58% !important;
-	}
-	.principal-detail {
-		margin-bottom: -129%;
-	}
-	.title-section {
-		margin-right: 2%;
-	}
-	.section-detail2 {
-		margin-top: -200%;
-		margin-bottom: -215%;
-	}
-	.section-detail2-big {
-		height: 900px;
-		width: 100%;
-		margin-top: -190%;
-		margin-bottom: -205%;
-	}
-	.section-detail3 {
-		height: 900px;
-		width: 100%;
-		margin-top: -54%;
-		margin-bottom: 150%;
-	}
-	.title-text {
-		margin: 3%;
-	}
-	.name-host-detail {
-		margin-top: -29%;
-		margin-bottom: 2%;
-		margin-left: 2%;
-		margin-right: 2%;
-	}
-	.host-bio {
-		margin-top: 4%;
-	}
-	.rating-bio {
-		margin-left: 37.5%;
-	}
-	.img-bio {
-		margin-top: 4%;
-		margin-left: 23%;
-	}
-	.map-detail {
-		margin-left: 0%;
-	}
-	.map-detail iframe {
-		width: 278px;
-		height: 146px;
-		border: 0;
-		margin: 3%;
-	}
-	#copy {
-		margin-left: -65%;
-	}
-	#login-res {
-		border: transparent;
-		margin-top: 7%;
-	}
-	#login-res input {
-		margin-left: -1%;
-		padding-left: 5px !important;
-	}
-	#name-res {
-		margin-top: 10% !important;
-		font-weight: 500;
-		color: #B6244D;
-	}
-	.img-comment {
-		margin-left: 7%;
-		margin-top: 10%;
-	}
-	.control-panel {
-		z-index: 2 !important;
-		color: white !important;
-		text-align: center;
-		margin-bottom: 12%;
-	}
 }
 
 
@@ -2968,6 +2776,20 @@ background: #FFF;
 		font-family: Raleway, sans-serif;
 		font-size: 95% !important;
 	}
+
+	.title-detail {
+		margin-left: -31%;
+	}
+
+	.img-detail-bio {
+		margin-top: 0;
+		margin-left: 28%;
+	}
+
+	.rating-host-detail {
+		margin-left: 40% !important;
+	}
+
 	#title-name-terms {
 		font-size: 30px;
 	}
@@ -3155,8 +2977,8 @@ background: #FFF;
 		margin-bottom: -89% !important;
 	}
 	.map-detail iframe {
-		width: 340px;
-		height: 256px;
+		width: 336px !important;
+		height: 256px !important;
 		border: 0;
 		margin: 3%;
 	}
@@ -3175,7 +2997,14 @@ background: #FFF;
 		margin-left: -73% !important;
 	}
 	.user-rat {
-		margin-left: 46% !important;
+		margin-top: -9% !important;
+		margin-left: 84.5% !important;
+		margin-bottom: 8%;
+	}
+
+	.comment-detail {
+		margin-left: 39% !important;
+		margin-bottom: 8%;
 	}
 }
 	/* iPad */
@@ -3236,32 +3065,13 @@ background: #FFF;
 		.discount-yes-price {
 			margin-left: 12% !important;
 		}
-	}
 
-	/* PIXEL 2 */
-	@media only screen and (min-width: 411px) and (max-width: 731px) {
-		#eventpoint {
-			bottom: -4%;
-		}
-		#titleTerms {
-			margin-top: -9px;
-		}
-		#send-buttons-pw {
-			width: 130px;
-			height: 40%;
-			margin-left: -30%;
-			margin-right: 5%;
-			margin-top: 10%;
-			margin-bottom: 65px !important;
-			text-align: center !important;
-			font-size: 15px;
-			padding-top: 0px;
-			padding-bottom: 30%;
-		}
-		#send-buttons {
-			margin-bottom: 30% !important;
-			margin-top: -80% !important;
-			margin-left: 85%;
+		.form-eventshow {
+			background: #FFF;
+			width: 150%;
+			margin-left: 5% !important;
+			border-radius: 15px;
+			border: 1px solid #B6244D;
 		}
 		
 
@@ -3321,14 +3131,13 @@ background: #FFF;
 			height: 767px;
 			object-fit: cover;
 		}
-
 		.rectangle-info-title {
 			position: absolute;
 			z-index: 1;
-			margin-left: 5%;
+			margin-left: -4%;
 			height: 93px;
 			border-radius: 8px;
-			margin-top: -30%;
+			margin-top: -33%;
 		}
 
 		#detail-info {
@@ -3366,17 +3175,8 @@ background: #FFF;
 			height: 70px;
 		}
 
-		.button-detail-auth-price {
-			margin-top: 12%;
-			margin-left: -50%;
-			margin-bottom: 10%;
-		}
-		
-		.separated2 {
-			margin-left: 11%;
-		}
-		.separated7 {
-			margin-left: 11%;
+		.principal-detail {
+			margin-bottom: -104%;
 		}
 
 		.title-section {
@@ -3401,24 +3201,18 @@ background: #FFF;
 			margin-top: -94% !important;
 			margin-bottom: -90% !important;
 		}
-		.title-section {
-    		margin-right: 2%;
-    		margin-bottom: 4.5%;
-    		margin-top: 3% !important;
+
+		#info_extra{
+			width: 10%;
 		}
 
-		.title-section-h3 {
-			margin-left: -2% !important;
-			margin-bottom: 5%;
-			margin-top: 0%;
+		.section-detail3 {
+			height: 900px;
+			width: 100%;
+			margin-top: -39% !important;
+			margin-bottom: 40% !important;
 		}
-		.map-detail iframe {
-			width: 366px;
-			height: 222px;
-			border: 0;
-			margin: 3%;
-		}
-		
+
 		.img-bio {
 			margin-left: 3%;
 			margin-top: -16%;
@@ -3431,13 +3225,6 @@ background: #FFF;
 			margin-bottom: 25%;
 		}
 
-		.map-detail iframe {
-			margin-left: -20%;
-			width: 493px;
-			height: 346px;
-			border: 0;
-		}
-
 		.img-comment {
 			margin-left: 29%;
 			margin-top: 4%;
@@ -3445,13 +3232,21 @@ background: #FFF;
 		}
 
 		.user-comment {
-			margin-left: 46% !important;
+			margin-left: 60% !important;
 			margin-top: -14.5% !important;
 		}
 
 		.user-rat {
-			margin-left: 63% !important;
-			margin-top: -5.75% !important;
+			margin-left: 60% !important;
+			margin-top: 2.25% !important;
+		}
+
+		.name-host-bio-detail {
+			color: #B7234D;
+			font-weight: 600;
+			margin-bottom: 5%;
+			margin-left: 2%;
+			margin-top: 0;
 		}
 
 		#ipad-rate {
@@ -3762,7 +3557,49 @@ background: #FFF;
    	 		margin-left: -5%;
   	  		margin-top: 3%;
 		}
+
+		.details-event-principal {
+			margin-top: -2%;
+			width: 70% !important;
+		}
+
+		.title-detail {
+			margin-left: -6% !important;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -47%;
+			margin-bottom: 11%;
+		}
+
+		#img-detail {
+			margin-top: 11px !important;
+			margin-left: 4% !important;
+		}
+
+		.ipad-rating-detail {
+			margin-left: -33% !important;
+		}
+
+		.ipad-host-title{
+			margin-top: 0% !important;
+		}
+
+		#title-section-h3-ipad {
+			margin-left: 1% !important;
+			margin-bottom: 4%;
+			margin-top: 13%;
+		}
+
+		.map-detail iframe {
+			margin-left: 1% !important;
+			width: 480px !important;
+			height: 346px !important;
+			border: 0;
+		}
 	}
+
 	/* PIXEL 2 */
 	@media only screen and (min-width: 411px) and (max-width: 731px) {
 		#eventpoint {
@@ -3847,12 +3684,6 @@ background: #FFF;
 			margin-bottom: -18% !important;
 		}
 
-		.map-detail iframe {
-			width: 364px;
-			height: 216px;
-			border: 0;
-			margin: 3%;
-		}
 		.img-bio {
 			margin-top: 3%;
 			margin-left: 25.5%;
@@ -3862,18 +3693,18 @@ background: #FFF;
 			margin-top: 4%;
 			margin-bottom: 5%;
 		}
-		.warning-full {
-			margin-top: 155% !important;
-			height: 70px;
-			margin-left: -73% !important;
+
+		.user-rat {
+			margin-left: 84.5% !important;
+			margin-top: -8% !important;
+			margin-bottom: 8%;
 		}
-		.warning-own {
-			padding-bottom: 47px;
-			margin-top: 155% !important;
-			margin-left: -58% !important;
-			height: 70px;
-			padding-left: 15px;
+
+		.comment-detail {
+			margin-left: 39% !important;
+			margin-bottom: 7%;
 		}
+
 		#title-delete-profile {
 			max-width: 1149px;
 			width: auto;
@@ -3956,14 +3787,40 @@ background: #FFF;
 		.name-host-detail {
 			margin-top: -26% !important;
 		}
-		.user-comment {
-			margin-left: 45.5% !important;
-			margin-bottom: 7% !important;
-		}
+
 		.title-section {
-			margin-right: 2%;
-			margin-bottom: 4.5%;
-			margin-top: 8% !important;
+    		margin-right: 2%;
+    		margin-bottom: 4.5%;
+    		margin-top: 3% !important;
+		}
+		.title-section-h3 {
+			margin-left: -2% !important;
+			margin-bottom: 5%;
+			margin-top: 0%;
+		}
+		.map-detail iframe {
+			width: 370px !important;
+			height: 266px !important;
+			border: 0;
+			margin: 3%;
+		}
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -50%;
+			margin-bottom: 10%;
+		}
+
+		.img-detail-auth {
+			width: 100% !important;
+			object-fit: cover;
+			z-index: -1;
+			margin-top: -68px;
+			height: 512px;
+		}
+
+		.img-detail-bio {
+			margin-top: 11px;
+			margin-left: 27%;
 		}
 
 	}
@@ -3986,8 +3843,8 @@ background: #FFF;
 			margin-bottom: -170% !important;
 		}
 		.map-detail iframe {
-			width: 362px !important;
-			height: 203px !important;
+			width: 370px !important;
+			height: 240px !important;
 			border: 0;
 			margin: 3%;
 		}
@@ -4029,6 +3886,37 @@ background: #FFF;
 			width: 285px;
 			margin-bottom: -57%;
 			margin-left: 7%;
+		}
+		.map-detail iframe {
+			width: 370px;
+			height: 242px;
+			border: 0;
+			margin: 3%;
+		}
+		
+		.title-section-h3 {
+			margin-left: -2% !important;
+			margin-bottom: 4%;
+			margin-top: 7%;
+		}
+
+		.img-detail-bio {
+			margin-top: 11px !important;
+			margin-left: 29.5% !important;
+		}
+
+		.rating-host-detail {
+			margin-left: 41% !important;
+		}
+
+		.title-detail {
+			margin-left: -25%;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -37%;
+			margin-bottom: 11%;
 		}
 	}
 	/* Samsung S5 */
@@ -4096,7 +3984,18 @@ background: #FFF;
 			margin-top: -54%;
 			margin-bottom: 55%;
 		}
+
+		.button-detail-auth-price {
+			margin-left: -40%;
+			margin-bottom: 9%;
+		}
+
+		.img-detail-bio {
+			margin-top: 4px;
+			margin-left: 26%;
+		}
 	}
+
 	/* IPHONE 6,7,8 */
 	@media only screen and (min-width: 375px) and (max-width: 667px) {
 		#send-buttons {
@@ -4106,6 +4005,16 @@ background: #FFF;
 		}
 		.send-btn {
 			margin-left: 140% !important;
+		}
+
+		.button-detail-auth-price {
+			margin-left: -35%;
+			margin-bottom: 9%;
+		}
+
+		.img-detail-bio {
+			margin-top: 4px;
+			margin-left: 28%;
 		}
 	}
 
