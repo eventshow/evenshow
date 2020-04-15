@@ -220,6 +220,7 @@ def seed_events(event_pks, future=False):
             'price': price,
             'created_by': host,
             'category': category,
+            'is_paid_for': False,
         }
         event = {
             'pk': event_pk,
