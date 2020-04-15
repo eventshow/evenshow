@@ -41,6 +41,10 @@ class EventSelector:
             event_enrollments__created_by=attendee)
         return not_enrolled_events
 
+    def not_started(self, events):
+        now = datetime.now()
+        return events.filter(Q(start_day__gte=now.date(), start_time__gte=now.time()) | Q(start_day__gte=now.date()))
+
     def penalized(self, user: User) -> int:
         today = datetime.now().date()
         return models.Enrollment.objects.filter(
@@ -139,6 +143,9 @@ class UserSelector:
             attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED')
         return event_attendees
 
+    def events_attendees(self, events) -> QuerySet:
+        return User.objects.filter(attendee_enrollments__event__in=events, attendee_enrollments__status='ACCEPTED')
+
     def rated_on_event(self, event_pk: int) -> QuerySet:
         return User.objects.filter(reviewed_ratings__event=event_pk)
 
@@ -147,8 +154,8 @@ class UserSelector:
 
 
 class TransactionSelector:
-    def user_on_event(self, user: User, event: models.Event) -> models.Event:
-        return models.Transaction.objects.filter(created_by=user, event=event).first()
+    def users_on_events(self, users, events) -> QuerySet:
+        return models.Transaction.objects.filter(created_by__in=users, event__in=events)
 
     def user_transactions(self, user: User) -> QuerySet:
         transaction_list = models.Transaction.objects.filter(

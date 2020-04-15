@@ -282,16 +282,25 @@ class UserService:
             user.profile.save()
         return points
 
-    def return_eventpoints(self, attendees, event: models.Event):
+    def return_eventpoints(self, attendees, events):
         with db_transaction.atomic():
-            for attendee in attendees:
-                transaction = selectors.TransactionSelector().user_on_event(attendee, event)
-                discount = transaction.discount
-                if discount > 0:
-                    attendee.profile.eventpoints += int(
-                        round(discount/settings.EVENTPOINT_VALUE/settings.STRIPE_VARIABLE_FEE))
-                    attendee.profile.save()
-                transaction.delete()
+            if isinstance(attendees, User):
+                attendees = [attendees]
+            else:
+                attendees = attendees.exclude(username='deleted')
+
+            if isinstance(events, models.Event):
+                events = [events]
+
+            transactions = selectors.TransactionSelector().users_on_events(attendees, events)
+            discounts = transactions.filter(
+                discount__gt=0).values_list('created_by', 'discount')
+            for pk, discount in discounts:
+                returned = int(
+                    round(discount/settings.EVENTPOINT_VALUE/settings.STRIPE_VARIABLE_FEE))
+                models.Profile.objects.filter(user__pk=pk).update(
+                    eventpoints=F('eventpoints')+returned)
+            transactions.delete()
 
     def exist_user(self, user_id: int) -> bool:
         exist = models.User.objects.filter(id=user_id).exists()

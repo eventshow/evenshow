@@ -222,7 +222,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['user_can_enroll'] = not event_is_full and user_can_enroll
         context['fee'] = services.PaymentService().fee(
             int(event.price)*100) / 100
-        
+
         return context
 
 
@@ -534,7 +534,7 @@ class EnrollmentDeleteView(generic.View):
         if enrollment and not event.has_started:
             user = self.request.user
             if (enrollment.is_accepted and (event.start_day - date.today()).days > 3) or not enrollment.is_accepted:
-                services.UserService().return_eventpoints([user], event)
+                services.UserService().return_eventpoints(user, event)
             enrollment.delete()
 
             subject = 'Asistencia a {0} cancelada'.format(event.title)
@@ -845,12 +845,18 @@ class UserDeleteView(generic.DeleteView):
                     round(self.fee)*self.attendee_sum,
                     request.POST.get('stripeToken')
                 )
-            user.delete()
+            services.UserService().return_eventpoints(
+                self.not_started_attendees, self.hosted_not_started_events)
+            # user.delete()
             return redirect('home')
         except stripe.error.StripeError:
             return redirect('payment_error')
 
     def dispatch(self, request, *args, **kwargs):
+        self.hosted_not_started_events = self.get_hosted_not_started_events()
+        self.not_started_attendees = selectors.UserSelector(
+        ).events_attendees(self.hosted_not_started_events)
+
         self.penalized_events = self.get_penalized_events()
         self.is_penalized = self.penalized_events.count()
         self.price_sum = None
@@ -873,6 +879,10 @@ class UserDeleteView(generic.DeleteView):
 
     def get_object(self):
         return self.request.user
+
+    def get_hosted_not_started_events(self):
+        event_selector = selectors.EventSelector()
+        return event_selector.not_started(event_selector.hosted(self.get_object()))
 
     def get_penalized_events(self):
         return selectors.EventSelector().penalized(self.get_object())
