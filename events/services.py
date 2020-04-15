@@ -267,9 +267,9 @@ class PaymentService():
 
 
 class UserService:
-    def add_bonus(self, user: User, price: int):
-        points = (float(price) *
-                  settings.EVENTPOINT_BONUS) // settings.EVENTPOINT_VALUE
+    def add_bonus(self, user: User, price):
+        points = int(round((float(price) * 100 *
+                            settings.EVENTPOINT_BONUS) / settings.EVENTPOINT_VALUE))
         user.profile.eventpoints += points
         user.profile.save()
 
