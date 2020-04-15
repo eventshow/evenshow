@@ -68,6 +68,9 @@ urlpatterns = [
 
     path('terms', TemplateView.as_view(template_name='terms.html'),
          name='terms'),
+path('about_us', TemplateView.as_view(template_name='about_us.html'),
+         name='about_us'),
+
 
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
