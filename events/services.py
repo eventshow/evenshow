@@ -198,8 +198,8 @@ class PaymentService():
 
     def fee_discount(self, amount_host: int, attendee: User) -> int:
         res = 0
-        const_stripe = 25
-        var_stripe = 1.029
+        const_stripe = settings.STRIPE_CONST_FEE
+        var_stripe = settings.STRIPE_VARIABLE_FEE
         discount = attendee.profile.discount
 
         amount_company = 0
@@ -288,7 +288,8 @@ class UserService:
                 transaction = selectors.TransactionSelector().user_on_event(attendee, event)
                 discount = transaction.discount
                 if discount > 0:
-                    attendee.profile.eventpoints += discount/settings.EVENTPOINT_VALUE
+                    attendee.profile.eventpoints += int(
+                        round(discount/settings.EVENTPOINT_VALUE/settings.STRIPE_VARIABLE_FEE))
                     attendee.profile.save()
                 transaction.delete()
 

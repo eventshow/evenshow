@@ -28,8 +28,9 @@ SECRET_KEY = '-9x776!@a8$%5jxgt!la$o0mn()cc2xf4so4_95_-bc33w(wka'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_2VnijOUd5sd8e2PZ41h83HIn00gkxo4bFs'
 STRIPE_SECRET_KEY = 'sk_test_CAG7jbyKGW8SNOQCIeQJwF9w00Kcv8oVN7'
 STRIPE_CONNECT_CLIENT_ID = 'ca_GvXb5KbNOFxZC6nccjrcsyVjjj4uWaiN'
-
 STRIPE_REQUEST_URI = 'https://eventshow.herokuapp.com/oauth/callback'
+STRIPE_CONST_FEE = 25
+STRIPE_VARIABLE_FEE = 1.029
 
 # Google Maps
 GOOGLE_API_KEY = 'AIzaSyBY0HRt8y_5IBwScjIUqFT6nXmNs2gvhhQ'

@@ -499,7 +499,7 @@ class EnrollmentCreateView(generic.View):
                 discount = request.session.get(
                     'fee') - request.session.get('discounted_fee')
                 eventpoints = int(
-                    round(discount/settings.EVENTPOINT_VALUE/1.029))
+                    round(discount/settings.EVENTPOINT_VALUE/settings.STRIPE_VARIABLE_FEE))
                 attendee.profile.eventpoints -= max(0, eventpoints)
                 attendee.profile.save()
             else:
