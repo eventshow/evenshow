@@ -16,46 +16,57 @@
 					{{ form.username }}
 					<div class="form-errors">
 						{{ form.username.errors }}
+						<br>
+
 					</div>
 				</div>
 				<div class="validate-input">
 					{{ form.email }}
 					<div class="form-errors">
 						{{ form.email.errors }}
+						<br>
+
 					</div>
 				</div>
 				<div class="validate-input">
 					{{ form.birthdate }}
 					<div class="form-errors">
 						{{ form.birthdate.errors }}
+						<br>
+
 					</div>
 				</div>
 				<div class=" validate-input">
 					{{ form.password1 }}
 					<div class="form-errors">
 						{{ form.password1.errors }}
+						<br>
+
 					</div>
 				</div>
 				<div class=" validate-input">
 					{{ form.password2 }}
 					<div class="form-errors">
 						{{ form.password2.errors }}
+						<br>
+
 					</div>
 				</div>
-				<div class="validate-input">
+				<div class=" validate-input">
 					{{ form.friend_token }}
 					<div class="form-errors">
 						{{ form.friend_token.errors }}
+						<br>
 					</div>
+					<label>
+						{{form.terms}}
+						<span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
+					</label>
 				</div>
-				<label>
-					{{ form.terms }}
-					<span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
-
-				</label>
-                	<div class="form-errors">
-						{{ form.terms.errors }}
-					</div>
+				<br>
+				<div class="form-errors">
+					{{ form.terms.errors }}
+				</div>
 				<br>
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn">
