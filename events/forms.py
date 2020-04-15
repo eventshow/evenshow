@@ -60,7 +60,8 @@ class EventForm(forms.ModelForm):
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-    picture = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'https://'}))
+    picture = forms.CharField(required=False, widget=forms.TextInput(
+        attrs={'placeholder': 'https://'}))
 
     class Meta:
         model = Event
@@ -180,13 +181,14 @@ class EventForm(forms.ModelForm):
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
                                                   (isinstance(start_time, type(time)) and
                                                    (
-                                                           start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+                                                      start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
         if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (
                 end_time < time1 or start_time < time1):
-            raise ValidationError('Este horario no está permitido, más información en los Términos y Condiciones (Horario)')
+            raise ValidationError(
+                'Este horario no está permitido, más información en los Términos y Condiciones (Horario)')
 
         if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (start_time >= end_time):
             raise ValidationError(
@@ -226,6 +228,7 @@ class RegistrationForm(UserCreationForm):
         attrs={'placeholder': "confirmación contraseña"}))
     friend_token = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "código amigo"}))
+    terms = forms.BooleanField(required=False)
 
     class Meta:
         model = User
@@ -235,7 +238,8 @@ class RegistrationForm(UserCreationForm):
             'birthdate',
             'password1',
             'password2',
-            'friend_token'
+            'friend_token',
+            'terms'
         )
 
     def clean_birthdate(self):
@@ -264,6 +268,12 @@ class RegistrationForm(UserCreationForm):
         elif deleted_token and deleted_token['token'] == friend_token:
             raise ValidationError(';)')
         return friend_token
+
+    def clean_terms(self):
+        terms = self.cleaned_data.get('terms')
+        if not terms:
+            raise ValidationError('Se deben aceptar lo términos y condiciones')
+        return terms
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
