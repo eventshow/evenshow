@@ -1674,7 +1674,7 @@ table {
 }
 
 #titleThanks,
-#titleTerms {
+#titleTerms, #titleTermsAbout {
 	height: 80px;
 	font-family: Raleway, sans-serif;
 	font-size: 42px;
@@ -1772,6 +1772,11 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	
+	#titleTermsAbout {
+		margin-top: -2px;
+		margin-bottom: -22px;
+	}
 	.button-enrolls-mov {
 		margin-right: 3%;
 	}
@@ -1799,6 +1804,7 @@ table {
 		margin-top: -2px;
 		margin-bottom: 75px;
 	}
+	
 	#textTerms {
 		color: black;
 		font-size: 16px;
