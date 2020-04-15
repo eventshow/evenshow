@@ -42,20 +42,19 @@
 						{{ form.password2.errors }}
 					</div>
 				</div>
-				<div class="validate-input">
+				<div class=" validate-input">
 					{{ form.friend_token }}
 					<div class="form-errors">
 						{{ form.friend_token.errors }}
 					</div>
+					<label>
+						{{ form.terms }}
+						<div class="form-errors">
+							{{ form.terms.errors }}
+						</div>
+						<span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
+					</label>
 				</div>
-				<label>
-					{{ form.terms }}
-					<span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
-
-				</label>
-                	<div class="form-errors">
-						{{ form.terms.errors }}
-					</div>
 				<br>
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn">
