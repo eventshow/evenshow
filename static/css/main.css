@@ -2903,9 +2903,9 @@ table {
 		}
 
 		.map-detail iframe {
-			margin-left: -20%;
-			width: 493px;
-			height: 346px;
+			margin-left: 1% !important;
+			width: 480px !important;
+			height: 346px !important;
 			border: 0;
 		}
 
@@ -3296,12 +3296,7 @@ table {
 			margin-top: 13%;
 		}
 
-		.map-detail iframe {
-			margin-left: 1% !important;
-			width: 480px !important;
-			height: 346px !important;
-			border: 0;
-		}
+		
 	
 	}
 
@@ -3530,6 +3525,7 @@ table {
 			border: 0;
 			margin: 3%;
 		}
+
 		.button-detail-auth-price {
 			margin-top: 12%;
 			margin-left: -50%;
