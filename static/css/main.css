@@ -1777,6 +1777,10 @@ table {
 		margin-top: -2px;
 		margin-bottom: -22px;
 	}
+	.title-about{
+		margin-top: -52px;
+		margin-bottom: 50px;
+	}
 	.button-enrolls-mov {
 		margin-right: 3%;
 	}
@@ -2403,6 +2407,10 @@ table {
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
+	.title-about{
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
 	#noPaddin {
 		padding: 0px;
 	}
@@ -3474,6 +3482,13 @@ table {
 
 	/* iPad Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		#panel {
+			width: 68%;
+			margin-left: 358px;
+		}
+		.table-generic {
+			width: 104%;
+		}
 		.title-search {
 			margin-left: 18%;
 		}
@@ -3503,6 +3518,10 @@ table {
 	}
 	/* Samsung S5 */
 	@media only screen and (min-width: 360px) and (max-width: 640px) {
+		.title-about{
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
 		#title-delete-comi {
 			font-weight: bold;
 			color: #686969;
