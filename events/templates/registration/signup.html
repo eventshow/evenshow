@@ -5,54 +5,43 @@
 		<div class="wrap-login100">
 			<div class="login100-more1">
 			</div>
-			<form class="login100-form form-eventshow login validate-form" id="login-res" method="POST"
-				action="{% url 'signup' %}">
+			<form class="login100-form form-eventshow login validate-form" id="login-res" method="POST" action="{% url 'signup' %}">
 				{% csrf_token %}
 				<h1>
 					Regístrate
 				</h1>
 				<br>
-				<div class="validate-input">
+				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.username }}
 					<div class="form-errors">
 						{{ form.username.errors }}
-						<br>
-
 					</div>
 				</div>
-				<div class="validate-input">
+				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.email }}
 					<div class="form-errors">
 						{{ form.email.errors }}
-						<br>
-
 					</div>
 				</div>
-				<div class="validate-input">
+				<div class="validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.birthdate }}
 					<div class="form-errors">
 						{{ form.birthdate.errors }}
-						<br>
-
 					</div>
 				</div>
-				<div class=" validate-input">
+				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.password1 }}
 					<div class="form-errors">
 						{{ form.password1.errors }}
-						<br>
-
 					</div>
 				</div>
-				<div class=" validate-input">
+				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.password2 }}
 					<div class="form-errors">
 						{{ form.password2.errors }}
-						<br>
-
 					</div>
 				</div>
-				<div class=" validate-input">
+				<div class=" validate-input" data-validate="Valid email is required: ex@abc.xyz">
 					{{ form.friend_token }}
 					<div class="form-errors">
 						{{ form.friend_token.errors }}
@@ -62,10 +51,6 @@
 						{{form.terms}}
 						<span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
 					</label>
-				</div>
-				<br>
-				<div class="form-errors">
-					{{ form.terms.errors }}
 				</div>
 				<br>
 				<div class="container-login100-form-btn">
