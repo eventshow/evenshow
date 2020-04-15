@@ -1,6 +1,7 @@
 {%extends 'base.html' %}
 {% block content %}
 {% load ratings %}
+{% load enrollments %}
 <style>
   body {
 
@@ -125,13 +126,15 @@
             <form action="{% url 'attendee_payment' object.pk %}" method="POST">
               {% csrf_token %}
               {% if object.has_finished %}
-                {% if not object.is_paid_for %}
-                  <button type="submit" title="Cobrar">
-                    <em id="title-name" class="small material-icons">attach_money</em>
-                  </button>
-                {% else %}
-                  <p class="request-fail">Ya ha sido cobrado</p>
-                {% endif%}
+              {% if not object.is_paid_for %}
+              <button type="submit" title="Cobrar">
+                <em id="title-name" class="small material-icons">attach_money</em>
+              </button>
+              {% elif not object.event_enrollments.all|accepted|length %}
+              <p class="request-fail">Evento sin huéspedes</p>
+              {% else %}
+              <p class="request-fail">Evento cobrado</p>
+              {% endif%}
               {% endif %}
             </form>
           </td>
