@@ -57,7 +57,7 @@
             {% csrf_token %}
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_all_cent }}"
+                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price }}"
                 data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
                 </script>
             <script>
@@ -71,7 +71,7 @@
         {% endif %}
         {% endif %}
         {% elif event.created_by.username == 'deleted' %}
-        <h3 class="warning-full" href="">No disponible</h3>
+        <h3 class=" warning-full" href="">No disponible</h3>
         {% else %}
         <a class="waves-effect waves-light btn-large button-detail btn-large" id="enroll"
             href="{% url 'login' %}">INSCRIBIRSE</a>
@@ -162,7 +162,8 @@
         </h3>
         <div class="col-md-7 map-detail">
             <br>
-            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}" tabindex ="0" aria-hidden="false" allowfullscreen ></iframe>
+            <iframe src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"
+                tabindex="0" aria-hidden="false" allowfullscreen></iframe>
             <br>
         </div>
     </div>
