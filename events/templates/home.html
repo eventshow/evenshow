@@ -5,28 +5,6 @@
 
 {% block content %}
 
-<style>
-    body {
-        background-image: url("{% static 'css/images/cena.jpg'%}");
-        background-size: cover;
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-    }
-
-    main {
-        flex: 1 0 auto;
-    }
-
-    .page-footer {
-        width: 100%;
-    }
-</style>
-
-
-
-
-
 <div class="container">
     {% if user.is_authenticated and message %}
     <div class="center">
@@ -88,4 +66,55 @@
         </div>
     </div>
 </div>
+
+    <script>
+ (function(){
+
+   var images = [
+
+       "https://i.imgur.com/NBIj7YP.jpg",
+       "https://i.imgur.com/Z8S5ko9.jpg",
+       "https://i.imgur.com/QjGWSnO.jpg",
+       "https://i.imgur.com/dfrvPp5.jpg",
+       "https://i.imgur.com/vtoxF06.jpg",
+       "https://i.imgur.com/TvlzFn1.jpg",
+       "https://i.imgur.com/O9oxLop.jpg",
+       "https://i.imgur.com/QLl4b2R.jpg",
+       "https://i.imgur.com/oSFzLmZ.jpg",
+       "https://i.imgur.com/XqaMFTA.jpg"
+
+   ];
+
+   var imgCount = images.length;
+
+   var randNumber=Math.floor((Math.random() * imgCount) + 1);
+
+   imgURL = "url('" + images[randNumber-1] + "')";
+
+   var body=document.body;
+   body.style.backgroundImage=imgURL;
+ }());
+</script>
+
+
+<style>
+    body {
+        background-size: cover;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+
+    .page-footer {
+        width: 100%;
+    }
+</style>
+
+
+
 {% endblock %}
