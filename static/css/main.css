@@ -960,7 +960,7 @@ p.description {
 }
 
     .form-search{
-        margin-top: 2% !important;
+        margin-top: 7% !important;
         margin-left: -10% !important;
     }
     .search{
@@ -1769,6 +1769,14 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	.title-name-terms {
+		font-size: 24px;
+	}
+
+	.terms{
+		width: 100%;
+		margin-right: 26% !important;
+	}
 	
 	#titleTermsAbout {
 		margin-top: -2px;
@@ -2465,8 +2473,8 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 95% !important;
 	}
-	#title-name-terms {
-		font-size: 30px;
+	.title-name-terms {
+		font-size: 24px;
 	}
 	#textTerms {
 		color: black;
@@ -3893,6 +3901,9 @@ table {
 	}
 	/* Samsung S5 */
 	@media only screen and (min-width: 360px) and (max-width: 640px) {
+		.title-name-terms {
+			font-size: 24px;
+		}
 		.title-about{
 			margin-top: 0px;
 			margin-bottom: 0px;
