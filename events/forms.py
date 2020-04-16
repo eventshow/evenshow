@@ -240,7 +240,7 @@ class RegistrationForm(UserCreationForm):
             'birthdate',
             'password1',
             'password2',
-            'friend_token'
+            'friend_token',
             'terms'
         )
 
