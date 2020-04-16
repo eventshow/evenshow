@@ -137,52 +137,28 @@ class AttendeePaymentView(generic.View):
                 return redirect('authorize')
             else:
                 if event.has_finished:
-
                     attende_list = selectors.UserSelector().event_attendees(pk)
-
                     for attendee in attende_list:
-
                         transaction = models.Transaction.objects.filter(
                             created_by=attendee, event=event).first()
-
                         if transaction:
-
                             is_paid_for = transaction.is_paid_for
-
                             if not is_paid_for:
-
                                 try:
-                                    fee = 0
-                                    if transaction.discount:
-
-                                        fee = services.PaymentService().fee_discount(
-                                            transaction.amount, attendee, False)
-                                    else:
-                                        fee = services.PaymentService().fee(transaction.amount)
-
-                                    attendee_amount = fee + transaction.amount
-
+                                    attendee_amount = transaction.actual_amount
                                     services.PaymentService().charge_connect(
-                                        attendee_amount, transaction.customer_id, fee, transaction.recipient)
-
+                                        attendee_amount, transaction.customer_id, transaction.discounted_fee, transaction.recipient)
                                     transaction.is_paid_for = True
                                     transaction.save()
-
                                     if not transaction.discount:
                                         services.UserService().add_bonus(transaction.created_by, transaction.amount)
-
                                 except stripe.error.StripeError:
                                     redirect('payment_error')
-
                             else:
-
                                 return redirect('/')
-                            
                         event.is_paid_for = True
                         event.save()
-
                     return redirect('hosted_events')
-
                 else:
                     return redirect('/')
         else:
@@ -227,15 +203,15 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
 
-            context['price_discount'] = (services.PaymentService().fee_discount(
-                float(event.price*100), user, True) + event.price*100)/100
-            context['price_discount_cent'] = (services.PaymentService().fee_discount(
-                float(event.price*100), user, True) + event.price*100)
-            context['price_all'] = (services.PaymentService().fee(
-                float(event.price*100)) + event.price*100)/100
-            context['price_all_cent'] = (services.PaymentService().fee(
-                float(event.price*100)) + event.price*100)
-            context['points'] = user.profile.eventpoints
+            price = float(event.price*100)
+            discounted_fee = services.PaymentService().fee_discount(price, user)
+            fee = services.PaymentService().fee(price)
+
+            self.request.session['discounted_fee'] = discounted_fee
+            self.request.session['fee'] = fee
+
+            context['price'] = price + fee
+            context['discounted_price'] = price + discounted_fee
 
         hours, minutes = divmod(duration, 60)
         context['duration'] = '{0}h {1}min'.format(hours, minutes)
@@ -245,11 +221,8 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
 
         context['attendees'] = selectors.EnrollmentSelector().on_event(
             event.pk, 'ACCEPTED').count()
-        context['event_price'] = float(event.price) + services.PaymentService().fee(
-            float(event.price)*100) / 100
         context['user_can_enroll'] = not event_is_full and user_can_enroll
-        context['commission'] = services.PaymentService().fee(
-            float(event.price)*100) / 100
+        context['fee'] = fee/100
 
         return context
 
@@ -307,16 +280,23 @@ class EventDeleteView(generic.DeleteView):
         if services.EventService().count(event_pk) and services.EventService().user_is_owner(host, kwargs.get('pk')):
             self.object = self.get_object()
             event = models.Event.objects.get(pk=event_pk)
+            attendees = selectors.UserSelector().event_attendees(event_pk)
 
             if not event.can_delete:
                 penalty(event, request.POST.get('stripeToken'))
 
+            if not event.has_started:
+                enrolled_users = selectors.UserSelector().event_enrolled(event)
+                services.UserService().return_eventpoints(enrolled_users, event)
+
             subject = 'Evento cancelado'
-            body = 'El evento ' + event.title + ' en el que estás inscrito ha sido cancelado'
-            recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
+            body = 'El evento ' + event.title + \
+                ' en el que estás inscrito ha sido cancelado. Si has gastado Eventpoints se te devolverán'
+            recipient_list_queryset = attendees
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
             services.EmailService().send_email(subject, body, recipient_list)
+
             self.object.delete()
             return redirect('hosted_events')
         else:
@@ -515,65 +495,30 @@ class EnrollmentCreateView(generic.View):
                     request.user.email, request.POST['stripeToken'])
             else:
                 customer = services.PaymentService().get_or_create_customer(request.user.email, None)
-            services.PaymentService().save_transaction(
-                int(event.price*100), customer.id, event, attendee, event.created_by, False)
 
-            subject = 'Nueva inscripción a {0}'.format(event.title)
-            body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
-                enrollment.created_by.username, event.title)
-            recipient = event.created_by.email
-
-            services.EmailService().send_email(subject, body, [recipient])
-
-            return render(request, 'enrollment/thanks.html', context)
-        else:
-            return redirect('/')
-
-
-@method_decorator(login_required, name='dispatch')
-class EnrollmentCreateDiscountView(generic.View):
-    model = models.Enrollment
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        event_pk = kwargs.get('pk')
-        event = models.Event.object.get(pk=event_pk)
-        context['event_title'] = event.title
-
-    def post(self, request, *args, **kwargs):
-        attendee = self.request.user
-        event_pk = kwargs.get('pk')
-        event = models.Event.objects.get(pk=event_pk)
-        event_exists = services.EventService().count(event_pk)
-        event_is_full = selectors.UserSelector().event_attendees(
-            event_pk).count() >= event.capacity
-        event_has_started = event.has_started
-        user_can_enroll = services.EnrollmentService().user_can_enroll(
-            event_pk, attendee)
-
-        context = {'event_title': models.Event.objects.get(pk=event_pk)}
-
-        if event_exists and user_can_enroll and not event_is_full and not event_has_started:
-            enrollment = services.EnrollmentService().create(event_pk, attendee)
-
-            event = models.Event.objects.get(pk=event_pk)
-            if not services.PaymentService().is_customer(attendee.email):
-                customer = services.PaymentService().get_or_create_customer(
-                    request.user.email, request.POST['stripeToken'])
+            fee = request.session.get('fee')
+            if request.POST.get('discounted', None):
+                discount = request.session.get(
+                    'fee') - request.session.get('discounted_fee')
+                eventpoints = int(
+                    round(discount/settings.EVENTPOINT_VALUE/settings.STRIPE_VARIABLE_FEE))
+                attendee.profile.eventpoints -= max(0, eventpoints)
+                attendee.profile.save()
             else:
-                customer = services.PaymentService().get_or_create_customer(request.user.email, None)
+                discount = 0
 
-            price = float(event.price) + services.PaymentService().fee(
-                float(event.price)*100) / 100
-            services.PaymentService().save_transaction(int(event.price*100),
-                                                       customer.id, event, attendee, event.created_by, True)
+            services.PaymentService().save_transaction(
+                int(event.price*100), fee, customer.id, event, attendee, event.created_by, discount)
+
+            del request.session['discounted_fee']
+            del request.session['fee']
 
             subject = 'Nueva inscripción a {0}'.format(event.title)
             body = 'El usuario {0} se ha inscrito a tu evento {1} en Eventshow'.format(
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            #services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -591,7 +536,7 @@ class EnrollmentDeleteView(generic.View):
         if enrollment and not event.has_started:
             user = self.request.user
             if (enrollment.is_accepted and (event.start_day - date.today()).days > 3) or not enrollment.is_accepted:
-                selectors.TransactionSelector().user_on_event(user, event).delete()
+                services.UserService().return_eventpoints(user, event)
             enrollment.delete()
 
             subject = 'Asistencia a {0} cancelada'.format(event.title)
@@ -637,11 +582,14 @@ class EnrollmentUpdateView(generic.View):
                 status == 'ACCEPTED' or status == 'REJECTED'):
             services.EnrollmentService().update(
                 enrollment_pk, host, status)
-            event = models.Enrollment.objects.get(pk=enrollment_pk).event
+            enrollment = models.Enrollment.objects.get(pk=enrollment_pk)
+            event = enrollment.event
 
             if status == 'ACCEPTED':
                 status_txt = 'aceptada'
             else:
+                attendee = enrollment.created_by
+                services.UserService().return_eventpoints(attendee, event)
                 status_txt = 'rechazada'
 
             subject = 'Solicitud para {0} {1}'.format(event.title, status_txt)
@@ -881,7 +829,8 @@ class TransactionListView(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = selectors.TransactionSelector().my_transaction(self.request.user)
+        queryset = selectors.TransactionSelector().user_transactions(
+            self.request.user).order_by('-created_at')
         return queryset
 
 
@@ -898,12 +847,18 @@ class UserDeleteView(generic.DeleteView):
                     round(self.fee)*self.attendee_sum,
                     request.POST.get('stripeToken')
                 )
+            services.UserService().return_eventpoints(
+                self.not_started_attendees, self.hosted_not_started_events)
             user.delete()
             return redirect('home')
         except stripe.error.StripeError:
             return redirect('payment_error')
 
     def dispatch(self, request, *args, **kwargs):
+        self.hosted_not_started_events = self.get_hosted_not_started_events()
+        self.not_started_attendees = selectors.UserSelector(
+        ).events_enrolleds(self.hosted_not_started_events)
+
         self.penalized_events = self.get_penalized_events()
         self.is_penalized = self.penalized_events.count()
         self.price_sum = None
@@ -926,6 +881,10 @@ class UserDeleteView(generic.DeleteView):
 
     def get_object(self):
         return self.request.user
+
+    def get_hosted_not_started_events(self):
+        event_selector = selectors.EventSelector()
+        return event_selector.not_started(event_selector.hosted(self.get_object()))
 
     def get_penalized_events(self):
         return selectors.EventSelector().penalized(self.get_object())

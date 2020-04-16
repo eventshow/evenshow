@@ -28,8 +28,9 @@ SECRET_KEY = '-9x776!@a8$%5jxgt!la$o0mn()cc2xf4so4_95_-bc33w(wka'
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 STRIPE_CONNECT_CLIENT_ID = os.environ.get('STRIPE_CONNECT_CLIENT_ID', '')
-
 STRIPE_REQUEST_URI = 'https://eventshow.herokuapp.com/oauth/callback'
+STRIPE_CONST_FEE = 25
+STRIPE_VARIABLE_FEE = 1.029
 
 # Google Maps
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')

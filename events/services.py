@@ -8,6 +8,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
+from django.db import transaction as db_transaction
+from django.db.models import F, Subquery, OuterRef
 from django.utils.timezone import now
 
 from . import models
@@ -192,45 +194,34 @@ class PaymentService():
         elif (amount_host > 500):
             res = (amount_host * 1.10) * var_stripe + const_stripe
 
-        return round(res - amount_host)
+        return int(round(res - amount_host, 2))
 
-    def fee_discount(self, amount_host: int, attendee:User, info:bool) -> int:
+    def fee_discount(self, amount_host: int, attendee: User) -> int:
         res = 0
-        const_stripe = 25
-        var_stripe = 1.029
-        eventpoints_eur = attendee.profile.eventpoints*0.5
-        eventpoints = attendee.profile.eventpoints
-    
+        const_stripe = settings.STRIPE_CONST_FEE
+        var_stripe = settings.STRIPE_VARIABLE_FEE
+        discount = attendee.profile.discount
+
         amount_company = 0
 
         if (amount_host >= 0) and amount_host <= 50:
-            amount_company = 15-eventpoints_eur
+            amount_company = 15-discount
         elif (amount_host > 50) and (amount_host <= 150):
-            amount_company = (amount_host * 0.25)-eventpoints_eur  
+            amount_company = (amount_host * 0.25)-discount
         elif (amount_host > 150) and (amount_host <= 300):
-            amount_company = (amount_host * 0.2)-eventpoints_eur 
+            amount_company = (amount_host * 0.2)-discount
         elif (amount_host > 300) and (amount_host <= 500):
-            amount_company = (amount_host * 0.15)-eventpoints_eur 
+            amount_company = (amount_host * 0.15)-discount
         elif (amount_host > 500):
-            amount_company = (amount_host * 0.10)-eventpoints_eur
+            amount_company = (amount_host * 0.10)-discount
 
         if amount_company < 0:
             res = amount_host * var_stripe + const_stripe
-            if not info:
-                attendee.profile.eventpoints = - (round(amount_company * 2))
         else:
             res = (amount_host + amount_company) * var_stripe + const_stripe
-            if not info:
-                attendee.profile.eventpoints = 0
-        
-        if not info:
-            attendee.profile.save()
+        return int(round(res - amount_host, 2))
 
-        return round(res - amount_host)
-
-   
-    def charge_connect(self, amount:int, customer_id:int, application_fee_amount:int, host:User) -> None:
-
+    def charge_connect(self, amount: int, customer_id: int, application_fee_amount: int, host: User) -> None:
         stripe.Charge.create(
             amount=amount,
             currency='eur',
@@ -242,7 +233,6 @@ class PaymentService():
             }
         )
 
-
     def charge(self, amount: int, source: str) -> None:
         stripe.Charge.create(
             amount=amount,
@@ -251,10 +241,9 @@ class PaymentService():
             source=source
         )
 
-
-    def save_transaction(self, amount:int, customer_id:int, event:models.Event, created_by:User, recipient:User, discount:bool) -> None:
-        
-        models.Transaction.objects.create(amount = amount, created_by=created_by, recipient=recipient, customer_id=customer_id, event=event, is_paid_for=False, discount=discount)
+    def save_transaction(self, amount: int, fee: int, customer_id: int, event: models.Event, created_by: User, recipient: User, discount=0):
+        models.Transaction.objects.create(amount=amount, fee=fee, created_by=created_by, recipient=recipient,
+                                          customer_id=customer_id, event=event, is_paid_for=False, discount=discount)
 
     def get_or_create_customer(self, email: str, source: str) -> stripe.Customer:
         stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -278,9 +267,9 @@ class PaymentService():
 
 
 class UserService:
-    def add_bonus(self, user: User, price: int):
-        points = (float(price) *
-                  settings.EVENTPOINT_BONUS) // settings.EVENTPOINT_VALUE
+    def add_bonus(self, user: User, price):
+        points = int(round((float(price) * 100 *
+                            settings.EVENTPOINT_BONUS) / settings.EVENTPOINT_VALUE))
         user.profile.eventpoints += points
         user.profile.save()
 
@@ -292,6 +281,26 @@ class UserService:
             user.profile.eventpoints += points
             user.profile.save()
         return points
+
+    def return_eventpoints(self, attendees, events):
+        with db_transaction.atomic():
+            if isinstance(attendees, User):
+                attendees = [attendees]
+            else:
+                attendees = attendees.exclude(username='deleted')
+
+            if isinstance(events, models.Event):
+                events = [events]
+
+            transactions = selectors.TransactionSelector().users_on_events(attendees, events)
+            discounts = transactions.filter(
+                discount__gt=0).values_list('created_by', 'discount')
+            for pk, discount in discounts:
+                returned = int(
+                    round(discount/settings.EVENTPOINT_VALUE/settings.STRIPE_VARIABLE_FEE))
+                models.Profile.objects.filter(user__pk=pk).update(
+                    eventpoints=F('eventpoints')+returned)
+            transactions.delete()
 
     def exist_user(self, user_id: int) -> bool:
         exist = models.User.objects.filter(id=user_id).exists()
