@@ -156,17 +156,24 @@ nav ul a:hover {
 /* IMG */
 
 .img-detail {
-	margin-top: 0px !important;
-	width: 100% !important;
-	height: 767px;
+	width: 72% !important;
+	height: 758px;
 	object-fit: cover;
+	z-index: -1;
 }
 
 .img-detail-auth {
-	margin-top: -10px !important;
-	width: 100% !important;
-	height: 767px;
+	width: 72% !important;
+	height: 758px;
 	object-fit: cover;
+	z-index: -1;
+	margin-top: -11px;
+}
+
+.img-detail-bio {
+	margin-left: 3%;
+	margin-top: 16%;
+	width: 150px;
 }
 
 .objetfitcover>.img-detail {
@@ -2272,7 +2279,7 @@ table {
 		object-fit: cover;
 	}
 	.img-detail {
-		margin-top: -65px !important;
+		margin-top: -68px !important;
 		width: 100% !important;
 		height: 457px;
 		object-fit: cover;
