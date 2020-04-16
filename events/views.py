@@ -857,7 +857,7 @@ class UserDeleteView(generic.DeleteView):
     def dispatch(self, request, *args, **kwargs):
         self.hosted_not_started_events = self.get_hosted_not_started_events()
         self.not_started_attendees = selectors.UserSelector(
-        ).events_attendees(self.hosted_not_started_events)
+        ).events_enrolleds(self.hosted_not_started_events)
 
         self.penalized_events = self.get_penalized_events()
         self.is_penalized = self.penalized_events.count()
