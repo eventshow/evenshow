@@ -43,3 +43,15 @@ $(document).ready(function () {
     $('.modal').modal();
 });
 
+(function() {
+    document.getElementById("id_picture").onchange = function(){
+      var files = document.getElementById("id_picture").files;
+      var file = files[0];
+      console.log(file.size)
+      if(file.size > 5000000){
+        document.getElementById("id_picture").value = '';
+        return alert("Archivo demasido grande. No puede sobrepasar los cinco MiB.");
+      }
+    };
+  })();
+
