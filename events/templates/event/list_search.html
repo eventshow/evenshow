@@ -2,12 +2,7 @@
 {% block content %}
     {% if not user.is_authenticated %}
     <style>
-    .form-search{
-        margin-left: -10% !important;
-    }
-    .search{
-        margin-right: 32%;
-    }
+
     </style>
     {% endif %}
 
@@ -111,4 +106,19 @@
     <hr class="hr-sep">
     {% include 'pagination.html' %}
 </div>
+
+    <style>
+    body {
+        background-size: cover;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+
+
+</style>
 {% endblock %}
