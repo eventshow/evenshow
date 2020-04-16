@@ -286,7 +286,8 @@ class EventDeleteView(generic.DeleteView):
                 penalty(event, request.POST.get('stripeToken'))
 
             if not event.has_started:
-                services.UserService().return_eventpoints(attendees, event)
+                enrolled_users = selectors.UserSelector().event_enrolled(event)
+                services.UserService().return_eventpoints(enrolled_users, event)
 
             subject = 'Evento cancelado'
             body = 'El evento ' + event.title + \

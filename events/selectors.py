@@ -143,6 +143,9 @@ class UserSelector:
             attendee_enrollments__event__pk=event_pk, attendee_enrollments__status='ACCEPTED')
         return event_attendees
 
+    def event_enrolled(self, event: int) -> QuerySet:
+        return User.objects.filter(attendee_enrollments__event=event).exclude(attendee_enrollments__status='REJECTED')
+
     def events_attendees(self, events) -> QuerySet:
         return User.objects.filter(attendee_enrollments__event__in=events, attendee_enrollments__status='ACCEPTED')
 
