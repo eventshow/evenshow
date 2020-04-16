@@ -171,7 +171,7 @@
                 data-locale="es" data-currency="eur" data-label="Sí ({{euros_price}}€)">
                 </script>
             <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-yes right");
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "btn-large discount-yes-price left");
             </script>
             {% else %}
             <button class=" btn-large discount-yes-price left " type="submit" name="discounted" value="discounted">Sí
@@ -184,11 +184,10 @@
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price }}"
-                data-locale="es" data-currency="eur" data-label="No ({{ euros_price }}€)"
-                onclick="apply_discount('False')">
+                data-locale="es" data-currency="eur" data-label="No ({{ euros_price }}€)">
                 </script>
             <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "btn-large discount-no-price right");
             </script>
             {% else %}
             <button class=" btn-large discount-no-price right " type="submit">No
@@ -198,9 +197,5 @@
     </div>
 </div>
 
-<script>
-    function apply_discount(bool) {
-        document.getElementById("discount-hidden").value = bool;
-    }
-</script>
+
 {% endblock %}
