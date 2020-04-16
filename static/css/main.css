@@ -3790,6 +3790,9 @@ table {
 	/* 1920x1080*/
 
 	@media screen and (max-width: 1920px) {
+        .delete-buttons-delete-no {
+            margin-top: 1.2%;
+        }
 		
 	}
 
