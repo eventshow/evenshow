@@ -49,18 +49,18 @@ def get_sentinel_user():
 
 class Profile(models.Model):
     PROFILE_IMAGE_FILES = [
-        'https://i.imgur.com/DHM869r.png',
-        'https://i.imgur.com/nPuyNCw.png',
-        'https://i.imgur.com/zcvvJuz.png',
-        'https://i.imgur.com/JoIFIzC.png',
-        'https://i.imgur.com/q5WVAgm.png',
-        'https://i.imgur.com/L8OjFOg.png',
-        'https://i.imgur.com/V0Vx876.png',
-        'https://i.imgur.com/yejzBet.png',
-        'https://i.imgur.com/Gcw4VIN.png',
-        'https://i.imgur.com/Kt7wGfh.png',
-        'https://i.imgur.com/bq3Bb34.png',
-        'https://i.imgur.com/smMeZJA.png',
+        'seed/profile/DHM869r.png',
+        'seed/profile/nPuyNCw.png',
+        'seed/profile/zcvvJuz.png',
+        'seed/profile/JoIFIzC.png',
+        'seed/profile/q5WVAgm.png',
+        'seed/profile/L8OjFOg.png',
+        'seed/profile/V0Vx876.png',
+        'seed/profile/yejzBet.png',
+        'seed/profile/Gcw4VIN.png',
+        'seed/profile/Kt7wGfh.png',
+        'seed/profile/bq3Bb34.png',
+        'seed/profile/smMeZJA.png',
     ]
     TOKEN_LENGTH = 8
 
@@ -69,7 +69,7 @@ class Profile(models.Model):
     location = models.CharField(
         'Location', max_length=250, blank=True, null=True)
     picture = models.ImageField(
-        'Picture url', blank=True, null=True)
+        'Picture url', upload_to='profile', default=random.choice(PROFILE_IMAGE_FILES), blank=True, null=True)
     birthdate = models.DateField('Birthdate')
     token = models.CharField('Personal token', max_length=8, editable=False)
     eventpoints = models.PositiveIntegerField(
@@ -129,7 +129,7 @@ class Category(models.Model):
 class Event(Common):
     title = models.CharField('Title', max_length=250)
     description = models.TextField('Description')
-    picture = models.ImageField('Picture url')
+    picture = models.ImageField('Picture url', upload_to='event')
 
     location_city = models.CharField('City', max_length=250)
     location_street = models.CharField('Street', max_length=250)

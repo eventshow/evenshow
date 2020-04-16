@@ -37,16 +37,16 @@
           <img class="logo" src="{% static 'img/eventshow_logo_w.png' %}" alt="eventshow">
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-        	
-        {%if user.is_authenticated %}
+
+          {%if user.is_authenticated %}
           {% if not user.first_name or not user.last_name or  not user.profile.bio %}
           <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
           {% else %}
           <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
           {% endif %}
-		{% else %}
-		<li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
-        {% endif %}
+          {% else %}
+          <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+          {% endif %}
 
           {% if not user.is_authenticated %}
 
@@ -62,7 +62,7 @@
             </ul>
           </li>
           <li>
-            <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="https://ispp20.s3.amazonaws.com/{{ user.profile.picture }}"
+            <a class='dropdown-trigger' href='#' data-target='dropdown2'><img src="{{ user.profile.picture.url }}"
                 alt="Avatar" class="avatar"></a>
             <ul id='dropdown2' class='dropdown-content'>
 
@@ -98,30 +98,29 @@
         <li>
           <div class="divider"></div>
         </li>
-          {%if user.is_authenticated %}
-          {% if not user.first_name or not user.last_name or  not user.profile.bio %}
-          <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
-          {% else %}
-          <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
-          {% endif %}
-		{% else %}
-		<li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+        {%if user.is_authenticated %}
+        {% if not user.first_name or not user.last_name or  not user.profile.bio %}
+        <li> <a data-target="modal1" class=" modal-trigger ">Ofrece una experiencia</a></li>
+        {% else %}
+        <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
+        {% endif %}
+        {% else %}
+        <li><a href="{% url 'create_event' %}">Ofrece una experiencia</a></li>
         {% endif %}
         <li>
           <div class="divider"></div>
         </li>
-          {%if user.is_authenticated %}
+        {%if user.is_authenticated %}
 
         <li><a class="sh-eventshow">Mis experiencias</a></li>
         <li><a href="{% url 'hosted_events' %}">Anfitrión</a></li>
         <li><a href="{% url 'enrolled_events' %}">Huésped</a></li>
-              {% endif %}
+        {% endif %}
 
 
       </ul>
-      <a id="movil" href="#" data-target="slide-out"
-        class="btn-floating btn-large t waves-light sidenav-trigger"><em id="menu-movil"
-          class="material-icons">menu</em></a>
+      <a id="movil" href="#" data-target="slide-out" class="btn-floating btn-large t waves-light sidenav-trigger"><em
+          id="menu-movil" class="material-icons">menu</em></a>
     </nav>
   </header>
   <main>
@@ -165,15 +164,15 @@
   <script src="{% static 'js/materialize.min.js' %}"></script>
   <script src="{% static 'js/util.js' %}"></script>
 
-     <script>//Autocompletado
+  <script>//Autocompletado
 
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
 
-       var options = {
-           data: {
+      var options = {
+        data: {
     {% for l in locations %}
-            "{{ l }}":null,
-    {% endfor %}
+      "{{ l }}": null,
+        {% endfor %}
 
            }
        }
@@ -182,16 +181,16 @@ document.addEventListener('DOMContentLoaded', function() {
     instances.close();
 
   });
-</script>
+  </script>
 
 
   {% endblock javascript %}
 
-<style>
-    .autocomplete-content{
-        margin-top: 12%;
+  <style>
+    .autocomplete-content {
+      margin-top: 12%;
     }
-</style>
+  </style>
 
 </body>
 
