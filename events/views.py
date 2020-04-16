@@ -848,7 +848,7 @@ class UserDeleteView(generic.DeleteView):
                 )
             services.UserService().return_eventpoints(
                 self.not_started_attendees, self.hosted_not_started_events)
-            # user.delete()
+            user.delete()
             return redirect('home')
         except stripe.error.StripeError:
             return redirect('payment_error')
