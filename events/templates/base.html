@@ -84,7 +84,7 @@
         <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img src="{{ user.profile.picture }}"
               alt="Avatar" class="avatar"></a></li>
         <li><a href="{% url 'detail_profile' %}">{{ user.username }}</a></li>
-        <li><a href="{% url 'receipts' %}">Panel de control</a></li>
+        <li><a href="{% url 'referred' %}">Panel de control</a></li>
 
 
         <li><a href=" {% url 'logout' %}">Cerrar sesión</a></li>
@@ -148,7 +148,7 @@
       <div class="container">
         &copy;2020 eventshow, Inc. Todos los derechos reservados
         <a class="right" href="{% url 'terms' %}">Términos y Condiciones &nbsp</a>
-        <a class="right" href="{% url 'not_impl' %}">Sobre nosotros &nbsp</a>
+        <a class="right" href="{% url 'about_us' %}">Sobre nosotros &nbsp</a>
       </div>
     </div>
   </footer>

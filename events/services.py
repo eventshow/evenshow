@@ -117,7 +117,7 @@ class EventService():
 
     def locations(self):
         locations = models.Event.objects.values_list(
-            'location_city', flat=True).order_by('location_city').distinct('location_city')
+            'location_city', flat=True).order_by('location_city').distinct('location_city').exclude(location_city='No disponible')
         return locations
 
     def can_update(self, event_pk):

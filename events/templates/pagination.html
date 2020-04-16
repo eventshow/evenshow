@@ -8,7 +8,7 @@
     {% endif %}
     {% for i in page_obj.paginator.page_range %}
     {% if page_obj.number == i %}
-    <a class="active"><span>{{ i }} |<span class="sr-only">(actual)</span></span></a>
+    <a class="active"><span>{{ i }} <a class="sep-pag">|</a><span class="sr-only">(actual)</span></span></a>
     {% else %}
     <a href="?page={{ i }}">{{ i }} |</a>
     {% endif %}

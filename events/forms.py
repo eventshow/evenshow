@@ -261,6 +261,13 @@ class RegistrationForm(UserCreationForm):
             raise ValidationError(';)')
         return friend_token
 
+    def clean_terms(self):
+        terms = self.cleaned_data.get('terms')
+        if not terms:
+            raise ValidationError(
+                'Se deben aceptar los términos y condiciones')
+        return terms
+
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if not username:

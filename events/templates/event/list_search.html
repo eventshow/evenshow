@@ -1,5 +1,11 @@
 {%extends 'base.html'%}
 {% block content %}
+    {% if not user.is_authenticated %}
+    <style>
+
+    </style>
+    {% endif %}
+
 <div class="row">
     <div class="wrapper wrapper--w1070">
         <div class="card-body">
@@ -100,4 +106,19 @@
     <hr class="hr-sep">
     {% include 'pagination.html' %}
 </div>
+
+    <style>
+    body {
+        background-size: cover;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+
+
+</style>
 {% endblock %}

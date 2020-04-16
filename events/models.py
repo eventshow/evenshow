@@ -147,7 +147,7 @@ class Event(Common):
     parking_nearby = models.BooleanField('Parking nearby')
     extra_info = models.TextField(
         'Extra info for the attendee', blank=True, null=True)
-
+    is_paid_for = models.BooleanField('Is paid for?')
     created_by = models.ForeignKey(User, on_delete=models.SET(
         get_sentinel_user), related_name='host_events', default='')
     category = models.ForeignKey(
