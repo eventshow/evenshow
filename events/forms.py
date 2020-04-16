@@ -132,8 +132,10 @@ class EventForm(forms.ModelForm):
         return price
 
     def clean_location_number(self):
+        location_city = self.cleaned_data.get('location_city')
+        location_street = self.cleaned_data.get('location_street')
         location_number = self.cleaned_data.get('location_number')
-        if not location_number:
+        if not location_city or not location_street or not location_number:
             raise ValidationError('Complete la ubicación')
         return location_number
 
