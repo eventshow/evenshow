@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="grid-example col s6">
-                            <div class="validate-input" id="edit-event">
+                            <div class="validate-input iphone-right" id="edit-event">
                                 <label>EMAIL</label>
                                 {{form.email}}
                                 <div class="form-errors">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="grid-example col s6">
-                            <div class="validate-input" id="edit-event">
+                            <div class="validate-input iphone-right" id="edit-event">
                                 <label>APELLIDOS</label>
                                 {{form.last_name}}
                                 <div class="form-errors">
@@ -59,9 +59,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="grid-example col s12 center-profile">
+                        <div class="grid-example col m6 s12 center-profile">
                             <div class="validate-input" id="edit-event">
-                                <label>FECHA DE NACIMIENTO</label>
+                                <label class="ipad-birth-label">FECHA DE NACIMIENTO</label>
                                 {{ profile_form.birthdate }}
                                 <div class="form-errors">
                                     {{ profile_form.birthdate.errors }}
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="grid-example col s12 center-profile">
+                        <div class="grid-example col m6 s12 center-profile ipad-input">
                             <div class="validate-input" id="edit-event">
                                 <label>IMAGEN</label>
                                 {{profile_form.picture}}
@@ -81,9 +81,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="grid-example col s12 center-profile">
+                        <div class="grid-example col s12 center-profile ipad-bio">
                             <div class="validate-input" id="edit-event">
-                                <label>SOBRE MÍ</label>
+                                <label class="ipad-label-bio">SOBRE MÍ</label>
                                 {{profile_form.bio}}
                                 <div class="form-errors">
                                     {{ profile_form.bio.errors }}

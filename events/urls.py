@@ -18,9 +18,9 @@ urlpatterns = [
     path('enrollments/<int:pk>/update',
          views.EnrollmentUpdateView.as_view(), name='update_enrollment'),
 
-    path('events/enrolled',
-         views.EventEnrolledListView.as_view(), name='enrolled_events'),
-    path('events/hosted', views.EventHostedListView.as_view(),
+    path('events/enrolled', views.EventEnrolledListView.as_view(),
+         name='enrolled_events'),
+    path('events/hosted/', views.EventHostedListView.as_view(),
          name='hosted_events'),
     path('events/filter', views.EventFilterFormView.as_view(), name='event_filter'),
     re_path(r'^events/(?:(?P<date>\d{4}-\d{2}-\d{2})/)?(?:(?P<location>[a-zA-Z\u00C0-\u00FF\s]*)/)?(?:(?P<start_hour>\d{2}:\d{2}:\d{2})/)?(?:min(?P<min_price>\d*.?(.\d{1,2})?)/)?(?:max(?P<max_price>\d*.?(.\d{1,2})?)/)?(?:c(?P<category>\d*)/)?$',
@@ -37,6 +37,8 @@ urlpatterns = [
          views.EnrollmentListView.as_view(), name='list_enrollments'),
     path('events/<int:pk>/enroll',
          views.EnrollmentCreateView.as_view(), name='enroll_event'),
+    path('events/<int:pk>/enroll/discount',
+         views.EnrollmentCreateDiscountView.as_view(), name='enroll_event_discount'),
     path('events/<int:pk>/delete', views.EventDeleteView.as_view(),
          name='delete_event'),
     path('events/<int:pk>/update', views.EventUpdateView.as_view(),
@@ -63,16 +65,13 @@ urlpatterns = [
          views.RateHostView.as_view(), name='create_rating_host'),
     re_path(r'^ratings/new/attendee/(?P<event_pk>\d+)?/(?P<attendee_pk>\d+)?/?$',
             views.RateAttendeeView.as_view(), name='create_rating_attendee'),
-    
-    path('terms', TemplateView.as_view(template_name='terms.html'),
-     name='terms'),
-  
-    path('ups', TemplateView.as_view(template_name='not_impl.html'),
-         name='not_impl'),
 
     path('terms', TemplateView.as_view(template_name='terms.html'),
          name='terms'),
-      path('thanks', TemplateView.as_view(template_name='enrollment/thanks.html'),
-         name='thanks'),
+path('about_us', TemplateView.as_view(template_name='about_us.html'),
+         name='about_us'),
 
+
+    path('ups', TemplateView.as_view(template_name='not_impl.html'),
+         name='not_impl'),
 ]
