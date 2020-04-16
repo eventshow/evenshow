@@ -3859,6 +3859,22 @@ table {
 			margin-left: 155px;
 			margin-top: 33px;
 		}
+
+		#login-res{
+			min-height: 42vh !important;
+		}
+
+		.panel-resp{
+			margin-top: 16% !important;
+		}
+
+		.center-form-create{
+			margin-top: -26% !important;
+		}
+
+		.sidenav.sidenav-fixed{
+			height: 119% !important;
+		}
 	}
 	/*  PIXEL 2XL*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) {
@@ -3911,6 +3927,10 @@ table {
 			margin-top: 12%;
 			margin-left: -37%;
 			margin-bottom: 11%;
+		}
+
+		.panel-resp{
+			margin-top: 16% !important;
 		}
 	}
 	/* Samsung S5 */
