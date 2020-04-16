@@ -156,17 +156,24 @@ nav ul a:hover {
 /* IMG */
 
 .img-detail {
-	margin-top: 0px !important;
-	width: 100% !important;
-	height: 767px;
+	width: 72% !important;
+	height: 758px;
 	object-fit: cover;
+	z-index: -1;
 }
 
 .img-detail-auth {
-	margin-top: -10px !important;
-	width: 100% !important;
-	height: 767px;
+	width: 72% !important;
+	height: 758px;
 	object-fit: cover;
+	z-index: -1;
+	margin-top: -11px;
+}
+
+.img-detail-bio {
+	margin-left: 3%;
+	margin-top: 16%;
+	width: 150px;
 }
 
 .objetfitcover>.img-detail {
@@ -959,17 +966,14 @@ p.description {
 	font-family: Raleway, sans-serif;
 }
 
-.form-search {
-	margin-top: 80px;
-	margin-right: -65%;
-	margin-left: 10%;
-}
-
-.search {
-	margin-top: 9px !important;
-	margin-right: 17%;
-}
-
+    .form-search{
+        margin-top: 7% !important;
+        margin-left: -10% !important;
+    }
+    .search{
+            margin-right: -6%;
+    margin-top: 1%;
+    }
 
 /* FOOTER */
 
@@ -1674,7 +1678,7 @@ table {
 }
 
 #titleThanks,
-#titleTerms {
+#titleTerms, #titleTermsAbout {
 	height: 80px;
 	font-family: Raleway, sans-serif;
 	font-size: 42px;
@@ -1772,6 +1776,23 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	.title-name-terms {
+		font-size: 24px;
+	}
+
+	.terms{
+		width: 100%;
+		margin-right: 26% !important;
+	}
+	
+	#titleTermsAbout {
+		margin-top: -2px;
+		margin-bottom: -22px;
+	}
+	.title-about{
+		margin-top: -52px;
+		margin-bottom: 50px;
+	}
 	.button-enrolls-mov {
 		margin-right: 3%;
 	}
@@ -1799,6 +1820,7 @@ table {
 		margin-top: -2px;
 		margin-bottom: 75px;
 	}
+	
 	#textTerms {
 		color: black;
 		font-size: 16px;
@@ -2257,7 +2279,7 @@ table {
 		object-fit: cover;
 	}
 	.img-detail {
-		margin-top: -65px !important;
+		margin-top: -68px !important;
 		width: 100% !important;
 		height: 457px;
 		object-fit: cover;
@@ -2397,6 +2419,10 @@ table {
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
+	.title-about{
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
 	#noPaddin {
 		padding: 0px;
 	}
@@ -2454,8 +2480,8 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 95% !important;
 	}
-	#title-name-terms {
-		font-size: 30px;
+	.title-name-terms {
+		font-size: 24px;
 	}
 	#textTerms {
 		color: black;
@@ -2663,7 +2689,13 @@ table {
 	.user-rat {
 		margin-left: 46% !important;
 	}
+
+	.comment-detail {
+		margin-left: 39% !important;
+		margin-bottom: 8%;
+	}
 }
+
 	/* iPad */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {
 		#results-ipad {
@@ -2788,14 +2820,13 @@ table {
 			height: 767px;
 			object-fit: cover;
 		}
-
 		.rectangle-info-title {
 			position: absolute;
 			z-index: 1;
-			margin-left: 5%;
+			margin-left: -4%;
 			height: 93px;
 			border-radius: 8px;
-			margin-top: -30%;
+			margin-top: -33%;
 		}
 
 		#detail-info {
@@ -2884,9 +2915,9 @@ table {
 		}
 
 		.map-detail iframe {
-			margin-left: -20%;
-			width: 493px;
-			height: 346px;
+			margin-left: 1% !important;
+			width: 480px !important;
+			height: 346px !important;
 			border: 0;
 		}
 
@@ -2897,13 +2928,21 @@ table {
 		}
 
 		.user-comment {
-			margin-left: 46% !important;
+			margin-left: 60% !important;
 			margin-top: -14.5% !important;
 		}
 
 		.user-rat {
-			margin-left: 63% !important;
-			margin-top: -5.75% !important;
+			margin-left: 60% !important;
+			margin-top: 2.25% !important;
+		}
+
+		.name-host-bio-detail {
+			color: #B7234D;
+			font-weight: 600;
+			margin-bottom: 5%;
+			margin-left: 2%;
+			margin-top: 0;
 		}
 
 		#ipad-rate {
@@ -3195,12 +3234,31 @@ table {
 
 		.login100-form {
 			width: 80% !important;
-			margin-left: -55%;
 			margin-top: 5%;
 			margin-right: 10%;
-			padding-left: 30px;
 			margin-bottom: 4% !important;
-			padding-right: 50px !important;
+			min-height: 81vh !important;
+			display: block;
+			padding: 152px 55px 55px 55px !important;
+		}
+
+
+		.container-login100 {
+			width: 100%;
+			min-height: 85vh !important;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			background: #ffffff !important;
+		}
+
+		#login-res{
+			min-height: 72vh !important;
 		}
 
 
@@ -3214,7 +3272,46 @@ table {
    	 		margin-left: -5%;
   	  		margin-top: 3%;
 		}
+	
+
+		.details-event-principal {
+			margin-top: -2%;
+			width: 70% !important;
+		}
+
+		.title-detail {
+			margin-left: -6% !important;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -47%;
+			margin-bottom: 11%;
+		}
+
+		#img-detail {
+			margin-top: 11px !important;
+			margin-left: 4% !important;
+		}
+
+		.ipad-rating-detail {
+			margin-left: -33% !important;
+		}
+
+		.ipad-host-title{
+			margin-top: 0% !important;
+		}
+
+		#title-section-h3-ipad {
+			margin-left: 1% !important;
+			margin-bottom: 4%;
+			margin-top: 13%;
+		}
+
+		
+	
 	}
+
 	/* PIXEL 2 */
 	@media only screen and (min-width: 411px) and (max-width: 731px) {
 		#eventpoint {
@@ -3299,12 +3396,6 @@ table {
 			margin-bottom: -18% !important;
 		}
 
-		.map-detail iframe {
-			width: 364px;
-			height: 216px;
-			border: 0;
-			margin: 3%;
-		}
 		.img-bio {
 			margin-top: 3%;
 			margin-left: 25.5%;
@@ -3326,6 +3417,17 @@ table {
 			height: 70px;
 			padding-left: 15px;
 		}
+
+		.user-rat {
+			margin-left: 40.5% !important;
+			margin-bottom: 8%;
+		}
+
+		.comment-detail {
+			margin-left: 39% !important;
+			margin-bottom: 7%;
+		}
+
 		#title-delete-profile {
 			max-width: 1149px;
 			width: auto;
@@ -3412,10 +3514,41 @@ table {
 			margin-left: 45.5% !important;
 			margin-bottom: 7% !important;
 		}
+		
 		.title-section {
-			margin-right: 2%;
-			margin-bottom: 4.5%;
-			margin-top: 8% !important;
+    		margin-right: 2%;
+    		margin-bottom: 4.5%;
+    		margin-top: 3% !important;
+		}
+		.title-section-h3 {
+			margin-left: -2% !important;
+			margin-bottom: 5%;
+			margin-top: 0%;
+		}
+		.map-detail iframe {
+			width: 370px !important;
+			height: 266px !important;
+			border: 0;
+			margin: 3%;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -50%;
+			margin-bottom: 10%;
+		}
+
+		.img-detail-auth {
+			width: 100% !important;
+			object-fit: cover;
+			z-index: -1;
+			margin-top: -68px;
+			height: 512px;
+		}
+
+		.img-detail-bio {
+			margin-top: 11px;
+			margin-left: 27%;
 		}
 
 	}
@@ -3438,8 +3571,8 @@ table {
 			margin-bottom: -170% !important;
 		}
 		.map-detail iframe {
-			width: 362px !important;
-			height: 203px !important;
+			width: 370px !important;
+			height: 240px !important;
 			border: 0;
 			margin: 3%;
 		}
@@ -3467,7 +3600,29 @@ table {
 	
 
 	/* iPad Pro */
-	@media only screen and (min-width: 1024px) and (max-width: 1336px) {}
+	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		#onlyIpadPro{
+			margin-left: 29px!important;
+		}
+		#panel {
+			width: 68%;
+			margin-left: 358px;
+		}
+		.table-generic {
+			width: 112%;
+		}
+		.title-search {
+			margin-left: 18%;
+		}
+		.form-search {
+			margin-left: 16%;
+			margin-right: 11%;
+		}
+		#results-ipad {
+			margin-left: 155px;
+			margin-top: 33px;
+		}
+	}
 	/*  PIXEL 2XL*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) {
 		#title-delete-comi {
@@ -3481,6 +3636,47 @@ table {
 			width: 285px;
 			margin-bottom: -57%;
 			margin-left: 7%;
+		}
+	}
+	/* Samsung S5 */
+	@media only screen and (min-width: 360px) and (max-width: 640px) {
+		.title-name-terms {
+			font-size: 24px;
+		}
+		.title-about{
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+		.map-detail iframe {
+			width: 370px;
+			height: 242px;
+			border: 0;
+			margin: 3%;
+		}
+		
+		.title-section-h3 {
+			margin-left: -2% !important;
+			margin-bottom: 4%;
+			margin-top: 7%;
+		}
+
+		.img-detail-bio {
+			margin-top: 11px !important;
+			margin-left: 29.5% !important;
+		}
+
+		.rating-host-detail {
+			margin-left: 41% !important;
+		}
+
+		.title-detail {
+			margin-left: -25%;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -37%;
+			margin-bottom: 11%;
 		}
 	}
 	/* Samsung S5 */
@@ -3548,7 +3744,18 @@ table {
 			margin-top: -54%;
 			margin-bottom: 55%;
 		}
+
+		.button-detail-auth-price {
+			margin-left: -40%;
+			margin-bottom: 9%;
+		}
+
+		.img-detail-bio {
+			margin-top: 4px;
+			margin-left: 26%;
+		}
 	}
+
 	/* IPHONE 6,7,8 */
 	@media only screen and (min-width: 375px) and (max-width: 667px) {
 		#send-buttons {
@@ -3558,6 +3765,16 @@ table {
 		}
 		.send-btn {
 			margin-left: 140% !important;
+		}
+
+		.button-detail-auth-price {
+			margin-left: -35%;
+			margin-bottom: 9%;
+		}
+
+		.img-detail-bio {
+			margin-top: 4px;
+			margin-left: 28%;
 		}
 	}
 
@@ -3575,3 +3792,4 @@ table {
 	@media screen and (max-width: 1920px) {
 		
 	}
+

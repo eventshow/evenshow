@@ -156,6 +156,8 @@ class AttendeePaymentView(generic.View):
                                     redirect('payment_error')
                             else:
                                 return redirect('/')
+                        event.is_paid_for = True
+                        event.save()
                     return redirect('hosted_events')
                 else:
                     return redirect('/')
