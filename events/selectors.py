@@ -144,10 +144,10 @@ class UserSelector:
         return event_attendees
 
     def event_enrolled(self, event: int) -> QuerySet:
-        return User.objects.filter(attendee_enrollments__event=event).exclude(attendee_enrollments__status='REJECTED')
+        return User.objects.filter(Q(attendee_enrollments__event=event) & ~Q(attendee_enrollments__status='REJECTED'))
 
     def events_enrolleds(self, events) -> QuerySet:
-        return User.objects.filter(attendee_enrollments__event__in=events).exclude(attendee_enrollments__status='REJECTED')
+        return User.objects.filter(Q(attendee_enrollments__event__in=events) & ~Q(attendee_enrollments__status='REJECTED'))
 
     def events_attendees(self, events) -> QuerySet:
         return User.objects.filter(attendee_enrollments__event__in=events, attendee_enrollments__status='ACCEPTED')
