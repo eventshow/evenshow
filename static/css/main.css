@@ -3616,7 +3616,10 @@ table {
 		.sidenav.sidenav-fixed {
 			-webkit-transform: translateX(-105%);
 			transform: translateX(-105%);
-			margin-top: 6%;
+			margin-top: 5%;
+			height: 110%;
+    		margin-bottom: -45%;
+   			 position: absolute;
 		}
 
 		.ipad-pro-update{
@@ -3802,6 +3805,37 @@ table {
 			min-height: 81vh !important;
 			display: block;
 			padding: 242px 55px 55px 55px !important;
+		}
+
+		.title-share-edit {
+			margin-left: 11%;
+			margin-bottom: 9%;
+			margin-top: 2%;
+		}
+
+		.center-form {
+			margin-left: 27.5%;
+			margin-right: -20.5%;
+		}
+
+		#label-picture{
+			margin-top: 10% !important;
+		}
+
+		#name-host-title-del {
+			height: auto;
+			font-family: Raleway, sans-serif;
+			font-size: 30px;
+			margin-left: 20%;
+			font-weight: bold;
+			font-stretch: normal;
+			font-style: normal;
+			line-height: normal;
+			letter-spacing: normal;
+			margin-top: 21px;
+			margin-bottom: 9%;
+			color: #5D5E5E;
+			width: 620px;
 		}
 
 		#onlyIpadPro{
