@@ -13,27 +13,27 @@
             </div>
 
         </div>
-
-        {% if not object.can_delete and object.title|length <= 50 %}
-        <div class="container">
-            <div class="row">
-                <div class="grid-example col s12">
-                    <h4 id="title-delete-comi">Recibirá una penalización por ello  (más información en  <a href="{% url 'terms' %}"> términos y
-                        condiciones</a>)</h4>
+        {% if not attendees_count == 0 %}
+            {% if not object.can_delete and object.title|length <= 50 %}
+            <div class="container">
+                <div class="row">
+                    <div class="grid-example col s12">
+                        <h4 id="title-delete-comi">Recibirá una penalización por ello  (más información en  <a href="{% url 'terms' %}"> términos y
+                            condiciones</a>)</h4>
+                    </div>
                 </div>
             </div>
-        </div>
-        {% elif not object.can_delete and object.title|length > 50 %}
+            {% elif not object.can_delete and object.title|length > 50 %}
 
-        <div class="container">
-            <div class="row">
-                <div class="grid-example col s12">
-                    <h4 id="title-delete-comi-sm">Recibirá una penalización por ello (más información en <a href="{% url 'terms' %}">términos y
-                        condiciones</a>)</h4>
+            <div class="container">
+                <div class="row">
+                    <div class="grid-example col s12">
+                        <h4 id="title-delete-comi-sm">Recibirá una penalización por ello (más información en <a href="{% url 'terms' %}">términos y
+                            condiciones</a>)</h4>
+                    </div>
                 </div>
             </div>
-        </div>
-
+            {% endif %}
         {% endif %}
 
         <div class="container">

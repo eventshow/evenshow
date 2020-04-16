@@ -132,8 +132,10 @@ class EventForm(forms.ModelForm):
         return price
 
     def clean_location_number(self):
+        location_city = self.cleaned_data.get('location_city')
+        location_street = self.cleaned_data.get('location_street')
         location_number = self.cleaned_data.get('location_number')
-        if not location_number:
+        if not location_city or not location_street or not location_number:
             raise ValidationError('Complete la ubicación')
         return location_number
 
@@ -176,13 +178,14 @@ class EventForm(forms.ModelForm):
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
                                                   (isinstance(start_time, type(time)) and
                                                    (
-                                                           start_day == datetime.now().date() and start_time <= datetime.now().time()))):
+                                                      start_day == datetime.now().date() and start_time <= datetime.now().time()))):
             raise ValidationError(
                 'El evento no puede comenzar en el pasado')
 
         if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (
                 end_time < time1 or start_time < time1):
-            raise ValidationError('Este horario no está permitido, más información en los Términos y Condiciones (Horario)')
+            raise ValidationError(
+                'Este horario no está permitido, más información en los Términos y Condiciones (Horario)')
 
         if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (start_time >= end_time):
             raise ValidationError(
@@ -222,6 +225,7 @@ class RegistrationForm(UserCreationForm):
         attrs={'placeholder': "confirmación contraseña"}))
     friend_token = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "código amigo"}))
+    terms = forms.BooleanField(required=False)
 
     class Meta:
         model = User
@@ -231,7 +235,8 @@ class RegistrationForm(UserCreationForm):
             'birthdate',
             'password1',
             'password2',
-            'friend_token'
+            'friend_token',
+            'terms'
         )
 
     def clean_birthdate(self):
