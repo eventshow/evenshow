@@ -73,7 +73,13 @@
                         <div class="grid-example col m6 s12 center-profile ipad-input">
                             <div class="validate-input" id="edit-event">
                                 <label>IMAGEN</label>
-                                {{profile_form.picture}}
+                                <div id="picture-box">
+                                    <label for="id_picture" class="subir-prof">
+                                      <i class="fas fa-cloud-upload-alt"></i> Subir imagen
+                                  </label>
+                                  {{profile_form.picture}}
+                                  <div id="info"></div>
+                                </div>    
                                 <div class="form-errors">
                                     {{ profile_form.picture.errors }}
                                 </div>
