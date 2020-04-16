@@ -3784,11 +3784,11 @@ table {
 
 	@media  only screen and (min-width: 1680px) and (max-width:1920px){
 	    .delete-buttons-delete-no {
-            margin-top: 1.2%;
+            margin-top: 1.2% !important;
         }
 
         #title-delete-comi {
-            margin-left: 12¡%;
+            margin-left: 15% !important;
         }
 
 	}
@@ -3802,7 +3802,7 @@ table {
         }
 
         #title-delete-comi {
-            margin-left: 14%;
+            margin-left: 18% !important;
         }
 
 
