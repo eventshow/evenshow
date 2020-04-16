@@ -2945,6 +2945,7 @@ table {
 			-webkit-transform: translateX(-105%);
 			transform: translateX(-105%);
 			margin-top: 8%;
+
 		}
 
 		.delete-btn-a {
@@ -3617,8 +3618,8 @@ table {
 			-webkit-transform: translateX(-105%);
 			transform: translateX(-105%);
 			margin-top: 5%;
-			height: 110%;
-    		margin-bottom: -45%;
+			height: 119% !important;
+			margin-bottom: -45%;
    			 position: absolute;
 		}
 
@@ -3870,10 +3871,6 @@ table {
 
 		.center-form-create{
 			margin-top: -26% !important;
-		}
-
-		.sidenav.sidenav-fixed{
-			height: 119% !important;
 		}
 	}
 	/*  PIXEL 2XL*/
