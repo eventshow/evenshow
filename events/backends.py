@@ -1,6 +1,8 @@
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 
+from storages.backends.s3boto3 import S3Boto3Storage
+
 User = get_user_model()
 
 
@@ -23,3 +25,9 @@ class EmailAuthBackend(ModelBackend):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
+
+
+class MediaStorageBackend(S3Boto3Storage):
+    location = 'media'
+    default_acl = 'public-read'
+    file_overwrite = False

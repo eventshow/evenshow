@@ -3,18 +3,18 @@
 {% load static %}
 {% load transactions %}
 
-      <link rel="stylesheet" href="{% static 'css/style.css'%}" />
+<link rel="stylesheet" href="{% static 'css/style.css'%}" />
 
 
-    {% if user.is_authenticated %}
-            <img class="img-detail-auth" alt="imagen del evento" src="https://ispp20.s3.amazonaws.com/{{object.picture}}">
-        {% else %}
-                <img class="img-detail" alt="imagen del evento" src="https://ispp20.s3.amazonaws.com/{{object.picture}}">
-    {% endif %}
+{% if user.is_authenticated %}
+<img class="img-detail-auth" alt="imagen del evento" src="{{object.picture.url}}">
+{% else %}
+<img class="img-detail" alt="imagen del evento" src="{{object.picture.url}}">
+{% endif %}
 
-      <div class="col m6  rectangle-info-title">
-             <h1 class="sep-title left">{{object.title}}</h1>
-          </div>
+<div class="col m6  rectangle-info-title">
+   <h1 class="sep-title left">{{object.title}}</h1>
+</div>
 
 <div class="row">
 
@@ -32,58 +32,60 @@
          <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
       </div>
       <div class="col s12 center">
-            {% if user.is_authenticated %}
-        {% if user_is_owner %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Propietario</h3>
-        {% elif not user_is_old_enough %}
-        <h3 class=" btn-large button-detail-auth-price">No tienes la edad suficiente</h3>
-        {% elif event_is_full %}
-        <h3 class=" btn-large button-detail-auth-price ">Aforo Completo</h3>
-        {% elif event.has_started %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Ya ha empezado</h3>
-        {% elif event.has_finished %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Ya ha terminado</h3>
-        {% elif user_is_enrolled %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Ya estás inscrito</h3>
-        {% elif event.created_by.username == 'deleted' %}
-        <h3 class=" btn-large button-detail-auth-price" href="">No disponible</h3>
-        {% elif user_can_enroll and not event.has_started %}
-             {% if points > 0 %}
+         {% if user.is_authenticated %}
+         {% if user_is_owner %}
+         <h3 class=" btn-large button-detail-auth-price " href="">Propietario</h3>
+         {% elif not user_is_old_enough %}
+         <h3 class=" btn-large button-detail-auth-price">No tienes la edad suficiente</h3>
+         {% elif event_is_full %}
+         <h3 class=" btn-large button-detail-auth-price ">Aforo Completo</h3>
+         {% elif event.has_started %}
+         <h3 class=" btn-large button-detail-auth-price " href="">Ya ha empezado</h3>
+         {% elif event.has_finished %}
+         <h3 class=" btn-large button-detail-auth-price " href="">Ya ha terminado</h3>
+         {% elif user_is_enrolled %}
+         <h3 class=" btn-large button-detail-auth-price " href="">Ya estás inscrito</h3>
+         {% elif event.created_by.username == 'deleted' %}
+         <h3 class=" btn-large button-detail-auth-price" href="">No disponible</h3>
+         {% elif user_can_enroll and not event.has_started %}
+         {% if points > 0 %}
 
-             <a class=" waves-light btn-large modal-trigger modal-mov price-detail" href="#modal3">{{ object.price }} €</a>
-
-
-            {% else %}
+         <a class=" waves-light btn-large modal-trigger modal-mov price-detail" href="#modal3">{{ object.price }} €</a>
 
 
-                 <form action="{% url 'enroll_event' object.pk %}" method="POST">
+         {% else %}
+
+
+         <form action="{% url 'enroll_event' object.pk %}" method="POST">
             {% csrf_token %}
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_all_cent }}"
-                data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
-                </script>
+               data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_all_cent }}"
+               data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
+               </script>
             <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth-price  price-detail");
+               document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth-price  price-detail");
             </script>
             {% else %}
             <button type="submit"
-                class="waves-effect waves-light btn-large button-detail-auth-price price-detail">{{ object.price }}€ </button>
-                <p class="commission">Se cobrarán {{commission}}€ en concepto de gastos de gestión.</p>
+               class="waves-effect waves-light btn-large button-detail-auth-price price-detail">{{ object.price }}€
+            </button>
+            <p class="commission">Se cobrarán {{commission}}€ en concepto de gastos de gestión.</p>
             {% endif %}
-        </form>
+         </form>
 
-            {% endif %}
-
-
+         {% endif %}
 
 
-        {% endif %}
-        {% elif event.created_by.username == 'deleted' %}
-        <h3 class="price-detail" href="">No disponible</h3>
-        {% else %}
-        <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll" href="{% url 'login' %}">INSCRIBIRSE</a>
-        {% endif %}
+
+
+         {% endif %}
+         {% elif event.created_by.username == 'deleted' %}
+         <h3 class="price-detail" href="">No disponible</h3>
+         {% else %}
+         <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll"
+            href="{% url 'login' %}">INSCRIBIRSE</a>
+         {% endif %}
       </div>
    </div>
 </div>
@@ -106,11 +108,11 @@
    </div>
    <div class="col s12 m4 l3">
       <h1 class="title-section ipad-host-title">Anfitrión</h1>
-      <img class="img-detail-bio" id="img-detail" alt='anfitrion' src="https://ispp20.s3.amazonaws.com/{{object.created_by.profile.picture}}">
+      <img class="img-detail-bio" id="img-detail" alt='anfitrion' src="{{object.created_by.profile.picture.url}}">
 
       <div class="rating-host-detail">
          <em class="fa fa-star ipad-rating-detail"><em
-            class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
+               class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
       </div>
    </div>
 </div>
@@ -118,15 +120,17 @@
 <div class="row sep-detail">
    <div class="col s12 m4 l3">
       <h1 class="title-section">Dirección</h1>
-      <h3 class="title-section-h3" id="title-section-h3-ipad">{{object.location_street}} {{object.location_number}} <br> <a>{{object.location_city}}</a></h3>
+      <h3 class="title-section-h3" id="title-section-h3-ipad">{{object.location_street}} {{object.location_number}} <br>
+         <a>{{object.location_city}}</a></h3>
    </div>
    <div class="col s12 m8 l9 map-detail">
-      <iframe title="map" src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
+      <iframe title="map"
+         src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
    </div>
 </div>
 <hr>
 <div class="row sep-detail">
-<div class="col s12 m4 l3">
+   <div class="col s12 m4 l3">
       <h1 class="title-section">Información extra</h1>
    </div>
    <div class="col s12 m8 l9 ">
@@ -135,17 +139,18 @@
 
 
 </div>
-    <hr>
+<hr>
 
 <div class="row sep-detail">
    <div class="col s12 m4 l3">
-      <h1 class="title-section comments-title ">Comentarios de húespedes <br> que asistieron a algún evento de este anfitrión</h1>
+      <h1 class="title-section comments-title ">Comentarios de húespedes <br> que asistieron a algún evento de este
+         anfitrión</h1>
    </div>
    {% if event.created_by.username != 'deleted' %}
    <div class="col s12 m8 l9">
       {% for rating in object_list %}
       <div class="comments">
-         <img class="img-comment-detail" alt='' src="https://ispp20.s3.amazonaws.com/{{rating.created_by.profile.picture}}">
+         <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture.url}}">
          <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
          <div class="user-rat">
             <em class="fa fa-star"><em class="rating-search">&nbsp{{rating.score}}</em></em>
@@ -159,56 +164,56 @@
       {% endif %}
    </div>
 </div>
-  <div id="modal3" class="modal modal-evetshow-detail">
-                  <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons"> highlight_off</em></button>
+<div id="modal3" class="modal modal-evetshow-detail">
+   <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons">
+         highlight_off</em></button>
 
- <div class="center modal-content ">
-        <h1> Tienes <strong style="color: #B6244D">{{ user.profile.eventpoints }}</strong> eventpoints ¿Quieres utilizarlos?</h1><br>
+   <div class="center modal-content ">
+      <h1> Tienes <strong style="color: #B6244D">{{ user.profile.eventpoints }}</strong> eventpoints ¿Quieres
+         utilizarlos?</h1><br>
 
-      </div>
-
-
-      <div class=" center modal-footer-detail">
+   </div>
 
 
-              <form action="{% url 'enroll_event_discount' object.pk %}" method="POST" id="payment-form">
-            {% csrf_token %}
+   <div class=" center modal-footer-detail">
 
-            {% if not have_creditcard %}
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{{ price_discount_cent }}" data-locale="es" data-currency="eur"
-                data-label="Sí">
-                </script>
-            <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", " btn-large discount-yes left ");
+
+      <form action="{% url 'enroll_event_discount' object.pk %}" method="POST" id="payment-form">
+         {% csrf_token %}
+
+         {% if not have_creditcard %}
+         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+            data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_discount_cent }}"
+            data-locale="es" data-currency="eur" data-label="Sí">
             </script>
-            {% else %}
-            <button class=" btn-large discount-yes-price left " type="submit">Sí ({{price_discount}} €)</button>
-            {% endif %}
+         <script>
+            document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", " btn-large discount-yes left ");
+         </script>
+         {% else %}
+         <button class=" btn-large discount-yes-price left " type="submit">Sí ({{price_discount}} €)</button>
+         {% endif %}
 
-        </form>
+      </form>
 
-              <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
-            {% csrf_token %}
+      <form action="{% url 'enroll_event' object.pk %}" method="POST" id="payment-form">
+         {% csrf_token %}
 
-            {% if not have_creditcard %}
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada"
-                data-amount="{{ price_all_cent }}" data-locale="es" data-currency="eur"
-                data-label="No">
-                </script>
-            <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
+         {% if not have_creditcard %}
+         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+            data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price_all_cent }}"
+            data-locale="es" data-currency="eur" data-label="No">
             </script>
-            {% else %}
-                <button class=" btn-large discount-no-price right " type="submit">No ({{ price_all }} €)</button>
-            {% endif %}
+         <script>
+            document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-no right");
+         </script>
+         {% else %}
+         <button class=" btn-large discount-no-price right " type="submit">No ({{ price_all }} €)</button>
+         {% endif %}
 
-        </form>
+      </form>
 
-      </div>
-    </div>
+   </div>
+</div>
 
 
 

@@ -1,10 +1,10 @@
 {%extends 'base.html'%}
 {% block content %}
-    {% if not user.is_authenticated %}
-    <style>
+{% if not user.is_authenticated %}
+<style>
 
-    </style>
-    {% endif %}
+</style>
+{% endif %}
 
 <div class="row">
     <div class="wrapper wrapper--w1070">
@@ -95,7 +95,7 @@
         </div>
         <div class="col m6">
             {% if event.picture %}
-            <a href="{% url 'detail_event' event.pk %}"><img class="img-search" src="https://ispp20.s3.amazonaws.com/{{ event.picture }} "
+            <a href="{% url 'detail_event' event.pk %}"><img class="img-search" src="{{ event.picture.url }} "
                     alt="event picture"></a>
             {% else %}
 
@@ -107,7 +107,7 @@
     {% include 'pagination.html' %}
 </div>
 
-    <style>
+<style>
     body {
         background-size: cover;
         display: flex;
@@ -118,7 +118,5 @@
     main {
         flex: 1 0 auto;
     }
-
-
 </style>
 {% endblock %}

@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import random
 import re
 
@@ -7,7 +8,7 @@ import re
 from random import randrange
 from datetime import datetime, timedelta
 
-
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core import management
@@ -26,30 +27,10 @@ CATEGORIES = ['TV', 'Juegos', 'Idiomas',
 ENROLLMENT_STATUS = ['ACCEPTED', 'PENDING', 'REJECTED']
 EVENT_PKS_THIS_YEAR = range(1, 151)
 EVENT_PKS_FUTURE = range(151, 301)
-PROFILE_IMAGE_FILES = [
-    'https://i.imgur.com/DHM869r.png',
-    'https://i.imgur.com/nPuyNCw.png',
-    'https://i.imgur.com/zcvvJuz.png',
-    'https://i.imgur.com/JoIFIzC.png',
-    'https://i.imgur.com/q5WVAgm.png',
-    'https://i.imgur.com/L8OjFOg.png',
-    'https://i.imgur.com/V0Vx876.png',
-    'https://i.imgur.com/yejzBet.png',
-    'https://i.imgur.com/Gcw4VIN.png',
-    'https://i.imgur.com/Kt7wGfh.png',
-    'https://i.imgur.com/bq3Bb34.png',
-    'https://i.imgur.com/smMeZJA.png',
-]
-EVENT_IMAGE_FILES = [
-    'https://i.imgur.com/gIVamei.jpg',
-    'https://i.imgur.com/x9GBkxo.jpg',
-    'https://i.imgur.com/HZWQeck.jpg',
-    'https://i.imgur.com/9TwAW0f.jpg',
-    'https://i.imgur.com/WO6zhE1.jpg',
-    'https://i.imgur.com/IaA01VF.jpg',
-    'https://i.imgur.com/LKXjMBj.jpg',
-    'https://i.imgur.com/ZmkYrp3.jpg',
-]
+PROFILE_IMAGE_FILES = os.listdir(
+    'media/seed/profile')
+EVENT_IMAGE_FILES = os.listdir(
+    'media/seed/event')
 FAKE = Faker('es_ES')
 USER_PKS = range(1, 31)
 TIMEZONE = '+0000'
@@ -117,7 +98,7 @@ def seed_profiles():
             'model': 'events.Profile',
             'fields': {
                 'location': FAKE.city(),
-                'picture': random.choice(PROFILE_IMAGE_FILES),
+                'picture': "seed/profile/" + random.choice(PROFILE_IMAGE_FILES),
                 'birthdate': '1980-01-01',
                 'eventpoints': FAKE.random_int(1, 250),
                 'token': get_random_string(length=8).upper(),
@@ -133,7 +114,7 @@ def seed_profiles():
         'model': 'events.Profile',
         'fields': {
             'location': FAKE.city(),
-            'picture': random.choice(PROFILE_IMAGE_FILES),
+            'picture': "seed/profile/" + random.choice(PROFILE_IMAGE_FILES),
             'birthdate': '1980-01-01',
             'token': get_random_string(length=8).upper(),
             'bio': FAKE.text(),
@@ -204,7 +185,7 @@ def seed_events(event_pks, future=False):
         fields = {
             'title': FAKE.word(),
             'description': FAKE.text(),
-            'picture': random.choice(EVENT_IMAGE_FILES),
+            'picture': "seed/event/" + random.choice(EVENT_IMAGE_FILES),
             'location_city': city,
             'location_street': street,
             'location_number': number,

@@ -177,7 +177,7 @@ class AttendeePaymentView(generic.View):
                             else:
 
                                 return redirect('/')
-                            
+
                         event.is_paid_for = True
                         event.save()
 
@@ -277,7 +277,6 @@ class EventCreateView(generic.CreateView):
         event = form.save(commit=False)
         services.EventService().create(event, self.request.user)
         return super(EventCreateView, self).form_valid(form)
-    
 
 
 @method_decorator(login_required, name='dispatch')
@@ -717,7 +716,7 @@ class RateHostView(generic.CreateView):
         ).event_host(self.kwargs.get('event_pk'))
         context['event_pk'] = self.kwargs.get('event_pk')
         context['user_img'] = models.Profile.objects.get(
-            user_id=user.id).picture
+            user_id=user.id).picture.url
         context['host_name'] = selectors.UserSelector(
         ).event_host(self.kwargs.get('event_pk'))
         context['event_title'] = models.Event.objects.get(
