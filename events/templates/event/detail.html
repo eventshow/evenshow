@@ -3,13 +3,13 @@
 {% load static %}
 {% load transactions %}
 {% if user.is_authenticated %}
-<img class="img-detail-auth" src="{{object.picture}}">
+<img class="img-detail-auth" src="https://ispp20.s3.amazonaws.com/{{object.picture}}">
 {% else %}
-<img class="img-detail" src="{{object.picture}}">
+<img class="img-detail" src="https://ispp20.s3.amazonaws.com/{{object.picture}}">
 {% endif %}
 <div class="principal-detail">
     <div class="col m6 rectangle-info" id="host-detail">
-        <img class="img-host" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+        <img class="img-host" alt='anfitrion' src="https://ispp20.s3.amazonaws.com/{{object.created_by.profile.picture}}">
         <div class="col m5 host-rating">
             <i class="fa fa-star"><i
                     class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
@@ -156,7 +156,7 @@
         {% if event.created_by.username != 'deleted' %}
         <h3 class="host-bio">{{object.created_by.profile.bio}}</h3>
         {% endif %}
-        <img class="img-bio" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+        <img class="img-bio" alt='anfitrion' src="https://ispp20.s3.amazonaws.com/{{object.created_by.profile.picture}}">
         <div class="rating-bio">
             <i class="fa fa-star"><i
                     class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</i></i>
@@ -180,7 +180,7 @@
         <h1 class="title-section">Comentarios de otros húespedes <br> asistieron a algún evento de este anfitrión</h1>
         {% for rating in object_list %}
         <div class="comments">
-            <img class="img-comment" alt='' src="{{rating.created_by.profile.picture}}">
+            <img class="img-comment" alt='' src="https://ispp20.s3.amazonaws.com/{{rating.created_by.profile.picture}}">
             <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
                 <i class="fa fa-star"><i class="rating-search">&nbsp{{rating.score}}</i></i>

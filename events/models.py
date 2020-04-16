@@ -68,7 +68,7 @@ class Profile(models.Model):
         User, related_name="profile", on_delete=models.CASCADE)
     location = models.CharField(
         'Location', max_length=250, blank=True, null=True)
-    picture = models.FileField(
+    picture = models.ImageField(
         'Picture url', blank=True, null=True)
     birthdate = models.DateField('Birthdate')
     token = models.CharField('Personal token', max_length=8, editable=False)
@@ -129,7 +129,7 @@ class Category(models.Model):
 class Event(Common):
     title = models.CharField('Title', max_length=250)
     description = models.TextField('Description')
-    picture = models.URLField('Picture url')
+    picture = models.ImageField('Picture url')
 
     location_city = models.CharField('City', max_length=250)
     location_street = models.CharField('Street', max_length=250)

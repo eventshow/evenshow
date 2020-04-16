@@ -60,7 +60,7 @@ class EventForm(forms.ModelForm):
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-    picture = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': 'https://'}))
+    picture = forms.ImageField(required=False)
 
     class Meta:
         model = Event
@@ -155,11 +155,7 @@ class EventForm(forms.ModelForm):
             raise ValidationError('Inserte la hora de fin')
         return end_time
 
-    def clean_picture(self):
-        picture = self.cleaned_data.get('picture')
-        if not picture:
-            raise ValidationError('Inserte la imagen')
-        return picture
+    
 
     def clean(self):
         clean_data = self.cleaned_data
@@ -298,7 +294,7 @@ class ProfileForm(forms.ModelForm):
     )
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
-    picture = forms.FileField(required=False)
+    picture = forms.ImageField(required=False)
 
     class Meta:
         model = Profile

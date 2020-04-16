@@ -274,6 +274,7 @@ class EventCreateView(generic.CreateView):
         event = form.save(commit=False)
         services.EventService().create(event, self.request.user)
         return super(EventCreateView, self).form_valid(form)
+    
 
 
 @method_decorator(login_required, name='dispatch')

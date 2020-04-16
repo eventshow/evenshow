@@ -56,7 +56,7 @@
 
 <div class="container">
   <div class="center-form-create">
-    <form class="form-eventshow-create" id="create-event" method="post" action="{% url 'create_event' %}">
+    <form class="form-eventshow-create" id="create-event" method="post" enctype="multipart/form-data" action="{% url 'create_event' %}">
       {% csrf_token %}
       <div class="row">
         <div class="col s12">
