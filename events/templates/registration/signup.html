@@ -57,14 +57,11 @@
 					<div class="form-errors">
 						{{ form.friend_token.errors }}
 						<br>
-
 					</div>
 					<label>
-						<input type="checkbox" />
+						{{form.terms}}
 						<span>Acepto los <a href="{% url 'terms' %}">términos y condiciones</a></span>
-
 					</label>
-
 				</div>
 				<br>
 				<div class="form-errors">
