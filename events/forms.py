@@ -320,8 +320,6 @@ class ProfileForm(forms.ModelForm):
 
     def save(self, user=None):
         profile = super(ProfileForm, self).save(commit=False)
-        print('----------')
-        print(profile.picture)
         if user:
             profile.user = user
         profile.save()

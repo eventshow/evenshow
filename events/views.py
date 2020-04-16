@@ -954,9 +954,8 @@ class UserUpdateView(generic.UpdateView):
         self.object = self.get_object()
         form = self.form_class(request.POST, instance=self.object)
         profile_form = self.profile_form_class(
-            request.POST, instance=self.object.profile)
+            request.POST, request.FILES, instance=self.object.profile)
         if form.is_valid() and profile_form.is_valid():
-
             user = form.save()
             profile_form.save(user)
 
