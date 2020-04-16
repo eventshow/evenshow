@@ -3780,14 +3780,29 @@ table {
 
 	/* 1680x1050 */
 
-	@media screen and (max-width: 1680px) {
+	@media  only screen and (min-width: 1680px) and (max-width:1920px){
+	    .delete-buttons-delete-no {
+            margin-top: 1.2% !important;
+        }
+
+        #title-delete-comi {
+            margin-left: 15% !important;
+        }
 
 	}
 
 
 	/* 1920x1080*/
 
-	@media screen and (max-width: 1920px) {
-		
+	@media only screen and (min-width: 1920px) and (max-width: 2560px) {
+        .delete-buttons-delete-no {
+            margin-top: 1.4%;
+        }
+
+        #title-delete-comi {
+            margin-left: 19% !important;
+        }
+
+
 	}
 
