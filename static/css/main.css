@@ -3631,6 +3631,18 @@ table {
    			 position: absolute;
 		}
 
+		.delete-btn-profile {
+			font-weight: bolder;
+			font-size: 20px;
+			text-align: center;
+			width: 127px;
+			margin-left: -10%;
+			height: 63px;
+			margin-top: 177px!important;
+			position: relative !important;
+			display: block !important;
+		}
+
 		.ipad-pro-update{
 			margin-left: 31%;
 			margin-top: 9%;
@@ -3725,10 +3737,10 @@ table {
 			font-weight: bolder;
 			font-size: 20px;
 			text-align: center;
-			margin-left: -15%;
+			margin-left: -14%;
 			width: 127px;
 			height: 63px;
-			margin-top: 116px!important;
+			margin-top: 157px!important;
 			position: relative !important;
 			display: block !important;
 		}
@@ -3740,7 +3752,7 @@ table {
 			text-align: center;
 			padding-top: 4px;
 			font-size: 20px;
-			margin-top: 125px !important;
+			margin-top: 165px !important;
 			margin-left: 15% !important;
 			position: relative !important;
 			display: block !important;
@@ -3759,6 +3771,21 @@ table {
 			font-size: 27px;
 			margin-bottom: -44% !important;
     		margin-left: 3% !important;
+		}
+
+		#title-delete-comi {
+			font-weight: bold;
+			color: #686969;
+			margin: 0% auto;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			width: 600px !important;
+			font-size: 27px;
+			margin-bottom: -24% !important;
+   			margin-left: 2% !important;
 		}
 
 		.delete-btn-big {
@@ -3819,7 +3846,7 @@ table {
 		.title-share-edit {
 			margin-left: 11%;
 			margin-bottom: 9%;
-			margin-top: 2%;
+			margin-top: -22%;
 		}
 
 		.center-form {
@@ -3880,7 +3907,12 @@ table {
 		.center-form-create{
 			margin-top: -26% !important;
 		}
+
+		.ipad-pro-home {
+			margin-top: 20% !important;
+		}
 	}
+
 	/*  PIXEL 2XL*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) {
 		#title-delete-comi {
