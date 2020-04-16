@@ -3396,7 +3396,7 @@ table {
 
 		.container-login100 {
 			width: 100%;
-			min-height: 85vh !important;
+			min-height: 80vh !important;
 			display: -webkit-box;
 			display: -webkit-flex;
 			display: -moz-box;
@@ -3408,8 +3408,14 @@ table {
 			background: #ffffff !important;
 		}
 
+		#ipad-login{
+			align-content: baseline;
+			margin-top: 20%;
+			margin-bottom: -9%;
+		}
+
 		#login-res{
-			min-height: 72vh !important;
+			min-height: 51vh !important;
 		}
 
 
@@ -3918,6 +3924,36 @@ table {
 			margin-bottom: 30% !important;
 			position: relative !important;
 			display: block !important;
+		}
+
+		.container-login100 {
+			width: 100%;
+			min-height: 90vh !important;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			background: #ffffff !important;
+		}
+
+		#ipad-login {
+			align-content: baseline;
+			margin-top: 20%;
+			margin-bottom: 0%;
+		}
+
+		.login100-form {
+			width: 80% !important;
+			margin-top: 5%;
+			margin-right: 10%;
+			margin-bottom: 4% !important;
+			min-height: 81vh !important;
+			display: block;
+			padding: 242px 55px 55px 55px !important;
 		}
 
 	}
