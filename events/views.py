@@ -222,8 +222,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
         context['attendees'] = selectors.EnrollmentSelector().on_event(
             event.pk, 'ACCEPTED').count()
         context['user_can_enroll'] = not event_is_full and user_can_enroll
-        context['fee'] = services.PaymentService().fee(
-            int(event.price)*100) / 100
+        context['fee'] = fee/100
 
         return context
 

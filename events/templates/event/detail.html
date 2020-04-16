@@ -3,147 +3,153 @@
 {% load static %}
 {% load transactions %}
 
-      <link rel="stylesheet" href="{% static 'css/style.css'%}" />
+<link rel="stylesheet" href="{% static 'css/style.css'%}" />
 
 
-    {% if user.is_authenticated %}
-            <img class="img-detail-auth" alt="imagen del evento" src="{{object.picture}}">
-        {% else %}
-                <img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
-    {% endif %}
+{% if user.is_authenticated %}
+<img class="img-detail-auth" alt="imagen del evento" src="{{object.picture}}">
+{% else %}
+<img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
+{% endif %}
 
-      <div class="col m6  rectangle-info-title">
-             <h1 class="sep-title left">{{object.title}}</h1>
-          </div>
+<div class="col m6  rectangle-info-title">
+    <h1 class="sep-title left">{{object.title}}</h1>
+</div>
 
 <div class="row">
 
-   <div class="col s12 m8 l9">
+    <div class="col s12 m8 l9">
 
-   </div>
-   <div class="col s12 m4 l3 details-event-principal">
-      <h1 class="title-detail">Detalles del evento</h1>
-      <div class="col">
-         <h2 class="subtitle-detail">Fecha: <a>{{ object.start_day| date:"d M, Y" }}</a></h2>
-         <h2 class="subtitle-detail">Hora comienzo: <a>{{ object.start_time }}</a></h2>
-         <h2 class="subtitle-detail">duración: <a>{{ duration }}</a></h2>
-         <h2 class="subtitle-detail">aforo: <a> {{attendees}} / {{object.capacity}} </a></h2>
-         <h2 class="subtitle-detail">edad mín: <a>{{ object.min_age }}</a></h2>
-         <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
-      </div>
-      <div class="col s12 center">
+    </div>
+    <div class="col s12 m4 l3 details-event-principal">
+        <h1 class="title-detail">Detalles del evento</h1>
+        <div class="col">
+            <h2 class="subtitle-detail">Fecha: <a>{{ object.start_day| date:"d M, Y" }}</a></h2>
+            <h2 class="subtitle-detail">Hora comienzo: <a>{{ object.start_time }}</a></h2>
+            <h2 class="subtitle-detail">duración: <a>{{ duration }}</a></h2>
+            <h2 class="subtitle-detail">aforo: <a> {{attendees}} / {{object.capacity}} </a></h2>
+            <h2 class="subtitle-detail">edad mín: <a>{{ object.min_age }}</a></h2>
+            <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
+        </div>
+        <div class="col s12 center">
             {% if user.is_authenticated %}
-        {% if user_is_owner %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Propietario</h3>
-        {% elif not user_is_old_enough %}
-        <h3 class=" btn-large button-detail-auth-price">No tienes la edad suficiente</h3>
-        {% elif event_is_full %}
-        <h3 class=" btn-large button-detail-auth-price ">Aforo Completo</h3>
-        {% elif event.has_started %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Ya ha empezado</h3>
-        {% elif event.has_finished %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Ya ha terminado</h3>
-        {% elif user_is_enrolled %}
-        <h3 class=" btn-large button-detail-auth-price " href="">Ya estás inscrito</h3>
-        {% elif event.created_by.username == 'deleted' %}
-        <h3 class=" btn-large button-detail-auth-price" href="">No disponible</h3>
-        {% elif user_can_enroll and not event.has_started %}
-             {% if points > 0 %}
-             <a class=" waves-light btn-large modal-trigger modal-mov price-detail" href="#modal3">{{ object.price }} €</a>
+            {% if user_is_owner %}
+            <h3 class=" btn-large button-detail-auth-price " href="">Propietario</h3>
+            {% elif not user_is_old_enough %}
+            <h3 class=" btn-large button-detail-auth-price">No tienes la edad suficiente</h3>
+            {% elif event_is_full %}
+            <h3 class=" btn-large button-detail-auth-price ">Aforo Completo</h3>
+            {% elif event.has_started %}
+            <h3 class=" btn-large button-detail-auth-price " href="">Ya ha empezado</h3>
+            {% elif event.has_finished %}
+            <h3 class=" btn-large button-detail-auth-price " href="">Ya ha terminado</h3>
+            {% elif user_is_enrolled %}
+            <h3 class=" btn-large button-detail-auth-price " href="">Ya estás inscrito</h3>
+            {% elif event.created_by.username == 'deleted' %}
+            <h3 class=" btn-large button-detail-auth-price" href="">No disponible</h3>
+            {% elif user_can_enroll and not event.has_started %}
+            {% if user.profile.eventpoints > 0 %}
+            <a class=" waves-light btn-large modal-trigger modal-mov price-detail"
+                href="#modal3">{{ object.price }}€</a>
             {% else %}
-              <form action="{% url 'enroll_event' object.pk %}" method="POST">
-            {% csrf_token %}
-            {% if not have_creditcard %}
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
-                data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price }}"
-                data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
+            <form action="{% url 'enroll_event' object.pk %}" method="POST">
+                {% csrf_token %}
+                {% if not have_creditcard %}
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
+                    data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price }}"
+                    data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
+                    </script>
+                <script>
+                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth-price  price-detail");
                 </script>
-            <script>
-                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth-price  price-detail");
-            </script>
-            {% else %}
-            <button type="submit"
-                class="waves-effect waves-light btn-large button-detail-auth-price price-detail">{{ object.price }}€ </button>
-                <p class="commission">Se cobrarán {{commission}}€ en concepto de gastos de gestión.</p>
+                {% else %}
+                <button type="submit"
+                    class="waves-effect waves-light btn-large button-detail-auth-price price-detail">{{ object.price }}€
+                </button>
+                {% endif %}
+            </form>
             {% endif %}
-        </form>
-        {% endif %}
-        {% endif %}
-        {% elif event.created_by.username == 'deleted' %}
-        <h3 class="price-detail" href="">No disponible</h3>
-        {% else %}
-        <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll" href="{% url 'login' %}">INSCRIBIRSE</a>
-        {% endif %}
-      </div>
-   </div>
+            <p class="commission">Se cobrarán {{fee}}€ en concepto de gastos de gestión.</p>
+            {% endif %}
+            {% elif event.created_by.username == 'deleted' %}
+            <h3 class="price-detail" href="">No disponible</h3>
+            {% else %}
+            <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll"
+                href="{% url 'login' %}">INSCRIBIRSE</a>
+            {% endif %}
+        </div>
+    </div>
 </div>
 <hr class="hr-detail">
 <div class="row sep-detail">
-   <div class="col s12 m4 l3">
-      <h1 class="title-section">Descripción</h1>
-   </div>
-   <div class="col s12 m8 l9 ">
-      <h1 class="text-section">{{object.description}}</h1>
-   </div>
+    <div class="col s12 m4 l3">
+        <h1 class="title-section">Descripción</h1>
+    </div>
+    <div class="col s12 m8 l9 ">
+        <h1 class="text-section">{{object.description}}</h1>
+    </div>
 </div>
 <hr>
 <div class="row sep-detail">
-   <div class="col s12 m8 l9 ">
-      <h1 class="name-host-bio-detail">{{object.created_by.first_name}} {{object.created_by.last_name}}</h1>
-      {% if event.created_by.username != 'deleted' %}
-      <h3 class="text-section">{{object.created_by.profile.bio}}</h3>
-      {% endif %}
-   </div>
-   <div class="col s12 m4 l3">
-      <h1 class="title-section ipad-host-title">Anfitrión</h1>
-      <img class="img-detail-bio" id="img-detail" alt='anfitrion' src="{{object.created_by.profile.picture}}">
-      <div class="rating-host-detail">
-         <em class="fa fa-star ipad-rating-detail"><em
-            class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
-      </div>
-   </div>
+    <div class="col s12 m8 l9 ">
+        <h1 class="name-host-bio-detail">{{object.created_by.first_name}} {{object.created_by.last_name}}</h1>
+        {% if event.created_by.username != 'deleted' %}
+        <h3 class="text-section">{{object.created_by.profile.bio}}</h3>
+        {% endif %}
+    </div>
+    <div class="col s12 m4 l3">
+        <h1 class="title-section ipad-host-title">Anfitrión</h1>
+        <img class="img-detail-bio" id="img-detail" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+        <div class="rating-host-detail">
+            <em class="fa fa-star ipad-rating-detail"><em
+                    class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
+        </div>
+    </div>
 </div>
 <hr>
 <div class="row sep-detail">
-   <div class="col s12 m4 l3">
-      <h1 class="title-section">Dirección</h1>
-      <h3 class="title-section-h3" id="title-section-h3-ipad">{{object.location_street}} {{object.location_number}} <br> <a>{{object.location_city}}</a></h3>
-   </div>
-   <div class="col s12 m8 l9 map-detail">
-      <iframe title="map" src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
-   </div>
+    <div class="col s12 m4 l3">
+        <h1 class="title-section">Dirección</h1>
+        <h3 class="title-section-h3" id="title-section-h3-ipad">{{object.location_street}} {{object.location_number}}
+            <br> <a>{{object.location_city}}</a></h3>
+    </div>
+    <div class="col s12 m8 l9 map-detail">
+        <iframe title="map"
+            src="https://www.google.com/maps/embed/v1/place?key={{gmaps_key}}&q={{event.g_location}}"></iframe>
+    </div>
 </div>
 <hr>
 <div class="row sep-detail">
-<div class="col s12 m4 l3">
-      <h1 class="title-section">Información extra</h1>
-   </div>
-   <div class="col s12 m8 l9 ">
-      <h1 class="text-section">{{object.extra_info}}</h1>
-   </div>
+    <div class="col s12 m4 l3">
+        <h1 class="title-section">Información extra</h1>
+    </div>
+    <div class="col s12 m8 l9 ">
+        <h1 class="text-section">{{object.extra_info}}</h1>
+    </div>
 </div>
 <hr>
 <div class="row sep-detail">
-   <div class="col s12 m4 l3">
-      <h1 class="title-section comments-title ">Comentarios de húespedes <br> que asistieron a algún evento de este anfitrión</h1>
-   </div>
-   {% if event.created_by.username != 'deleted' %}
-   <div class="col s12 m8 l9">
-      {% for rating in object_list %}
-      <div class="comments">
-         <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture}}">
-         <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
-         <div class="user-rat">
-            <em class="fa fa-star"><em class="rating-search">&nbsp{{rating.score}}</em></em>
-         </div>
-         <h3 class="comment-detail">{{rating.comment}}</h3>
-      </div>
-      {% endfor %}
-   </div>
-   <div class="col s12 center">
-      {% include 'pagination.html' %}
-      {% endif %}
-   </div>
+    <div class="col s12 m4 l3">
+        <h1 class="title-section comments-title ">Comentarios de húespedes <br> que asistieron a algún evento de este
+            anfitrión</h1>
+    </div>
+    {% if event.created_by.username != 'deleted' %}
+    <div class="col s12 m8 l9">
+        {% for rating in object_list %}
+        <div class="comments">
+            <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture}}">
+            <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
+            <div class="user-rat">
+                <em class="fa fa-star"><em class="rating-search">&nbsp{{rating.score}}</em></em>
+            </div>
+            <h3 class="comment-detail">{{rating.comment}}</h3>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col s12 center">
+        {% include 'pagination.html' %}
+        {% endif %}
+    </div>
 </div>
 <div id="modal3" class="modal modal-evetshow-detail">
     <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons">
@@ -162,7 +168,7 @@
             <input type="hidden" name="discounted" value="discounted">
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ discounted_price }}"
-                data-locale="es" data-currency="eur" data-label="Sí ({{euros_price}})">
+                data-locale="es" data-currency="eur" data-label="Sí ({{euros_price}}€)">
                 </script>
             <script>
                 document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "  btn-large discount-yes right");
@@ -178,7 +184,7 @@
             {% if not have_creditcard %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="separated3"
                 data-key="{{ stripe_key }}" data-description="Comprar entrada" data-amount="{{ price }}"
-                data-locale="es" data-currency="eur" data-label="No ({{ euros_price }})"
+                data-locale="es" data-currency="eur" data-label="No ({{ euros_price }}€)"
                 onclick="apply_discount('False')">
                 </script>
             <script>
