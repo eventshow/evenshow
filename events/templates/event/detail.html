@@ -12,7 +12,7 @@
 <img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
 {% endif %}
 
-<div class="col m6  rectangle-info-title">
+<div class=" flow-text col m6 rectangle-info-title">
     <h1 class="sep-title left">{{object.title}}</h1>
 </div>
 
@@ -130,8 +130,13 @@
 <hr>
 <div class="row sep-detail">
     <div class="col s12 m4 l3">
+        {% if object_list == 0 %}
+        <h1 class="title-section comments-title-no ">Comentarios de húespedes <br> que asistieron a algún evento de este
+            anfitrión</h1>
+        {% else %}
         <h1 class="title-section comments-title ">Comentarios de húespedes <br> que asistieron a algún evento de este
             anfitrión</h1>
+        {% endif %}
     </div>
     {% if event.created_by.username != 'deleted' %}
     <div class="col s12 m8 l9">

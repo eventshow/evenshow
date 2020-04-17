@@ -44,7 +44,7 @@ class EventForm(forms.ModelForm):
     min_age = forms.IntegerField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
     price = forms.DecimalField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
+        attrs={'class': 'form-eventshow', 'placeholder': 'precio', 'name': 'min_age'}))
     location_city = forms.CharField(required=False,
                                     widget=forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}))
     location_street = forms.CharField(required=False, widget=forms.TextInput(

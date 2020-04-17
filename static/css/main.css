@@ -394,6 +394,8 @@ nav ul a:hover {
 	text-align: left;
 	background-color: white;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+	margin-right: 35%;
+
 }
 
 .button-detail {
@@ -661,7 +663,7 @@ nav ul a:hover {
 
 #send-buttons {
 	margin-bottom: 30% !important;
-	margin-top: -52% !important;
+	margin-top: 0% !important;
 	margin-left: -45%;
 }
 
@@ -693,7 +695,7 @@ nav ul a:hover {
 	margin-top: 10%;
 	margin-bottom: 65px !important;
 	text-align: center !important;
-	font-size: 18px;
+	font-size: 17px;
 	padding-top: 13px;
 }
 
@@ -705,7 +707,7 @@ nav ul a:hover {
 	padding-bottom: 10%;
 	margin-bottom: 65px !important;
 	align-content: center;
-	font-size: 18px;
+	font-size: 17px;
 	padding-top: 13px;
 }
 .delete-yes{
