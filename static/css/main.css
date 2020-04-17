@@ -1833,12 +1833,7 @@ table {
 		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
 		-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
 	}
-	.modal-mov {
-		margin-top: 6%;
-		width: 90%;
-		height: 71px;
-		font-size: 18px;
-	}
+
 	#titleTerms {
 		margin-top: -2px;
 		margin-bottom: 75px;

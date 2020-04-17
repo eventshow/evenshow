@@ -633,7 +633,7 @@ label {
   }
 
   .commission {
-    margin-left: -27%;
+    margin-left: -19%;
   }
 
   .img-detail-auth {
@@ -705,10 +705,12 @@ label {
   }
 
   .modal-mov {
-    margin-top: 6%;
-    width: 90%;
-    height: 71px;
-    font-size: 18px;
+  margin-top: 6%;
+    width: 70%;
+    height: 60px;
+    font-size: 25px;
+    margin-left: -43%;
+
   }
 
   .name-host-rating {
