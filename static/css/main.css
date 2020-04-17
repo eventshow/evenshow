@@ -3994,6 +3994,17 @@ table {
 
 	/* IPHONE X LANDSCAPE*/
 	@media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape){
+        .form-search {
+            margin-left: 10% !important;
+            width: 84%;
+        }
+        .search {
+            margin-right: 10%;
+        }
+
+        .sidenav.sidenav-fixed {
+            margin-top: 64px;
+        }
 
 	}
 
