@@ -3802,7 +3802,26 @@ table {
         #title-delete-comi {
             margin-left: 19% !important;
         }
-
-
+	}
+	/*iphone 5se landscape*/
+	/*CORREGIR MEDIA QUERY */
+	@media  only screen and (min-width: 568px) and (max-width:320px){	
+		.delete-btn-a {
+			
+			margin-top: 199px !important;
+			
+		}
+		#eventpoint {
+			bottom: -149%;
+		}
+		.delete-btn-a-profile {
+			
+			margin-top: 299px !important;
+			
+		}
+		.container#square {
+			margin-top: 26% !important;
+			border: 0px solid;
+		}
 	}
 
