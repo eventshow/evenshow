@@ -321,7 +321,7 @@ class ProfileForm(forms.ModelForm):
         bio = self.cleaned_data.get('bio')
         if not bio and self.initial.get('bio'):
             raise ValidationError(
-                'Una vez introducida la bio no se puede dejar en blanco')
+                'Una vez introducido el campo "sobre mí" no se puede dejar en blanco')
         return bio
 
     def clean_birthdate(self):
