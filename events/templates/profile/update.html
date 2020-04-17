@@ -16,7 +16,8 @@
     <div class="row">
         <div class="grid-example col s11 offset-s1">
             <div class="center-form">
-                <form class="form-eventshow-edit" id="edit-profile" method="POST" enctype="multipart/form-data" action="{% url 'update_profile' %}">
+                <form class="form-eventshow-edit" id="edit-profile" method="POST" enctype="multipart/form-data"
+                    action="{% url 'update_profile' %}">
                     {% csrf_token %}
                     <div class="row">
                         <div class="grid-example col s6">
@@ -75,13 +76,14 @@
                                 <label>IMAGEN</label>
                                 <div id="picture-box">
                                     <label for="id_picture" class="subir-prof">
-                                      Subir imagen
-                                  </label>
-                                  {{profile_form.picture}}
-                                  <div id="info"></div>
-                                </div>    
+                                        Subir imagen
+                                    </label>
+                                    {{profile_form.picture}}
+                                    <div id="info"></div>
+                                </div>
                                 <div class="form-errors">
                                     {{ profile_form.picture.errors }}
+                                    {{ profile_form.non_field_errors }}
                                 </div>
                             </div>
                         </div>
@@ -99,8 +101,7 @@
                     </div>
                     <div class="row">
                         <div class="grid-example col s3 offset-s8">
-                            <button id="send-buttons-data" type="submit"
-                                class=" btn-large">Enviar</button>
+                            <button id="send-buttons-data" type="submit" class=" btn-large">Enviar</button>
                         </div>
                     </div>
                 </form>

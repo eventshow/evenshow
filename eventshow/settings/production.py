@@ -201,6 +201,9 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', '')
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'events.backends.MediaStorageBackend'
 
+# Allowed image file types
+IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'bmp']
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
 )

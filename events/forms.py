@@ -1,3 +1,5 @@
+import imghdr
+
 from datetime import datetime, date
 
 from django import forms
@@ -60,7 +62,8 @@ class EventForm(forms.ModelForm):
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-    picture = forms.ImageField(required=False, widget= forms.FileInput(attrs={'onchange':'cambiar()', 'style':'display: none;'}))
+    picture = forms.ImageField(required=False, widget=forms.FileInput(
+        attrs={'onchange': 'cambiar()', 'style': 'display: none;'}))
 
     class Meta:
         model = Event
@@ -159,10 +162,16 @@ class EventForm(forms.ModelForm):
 
     def clean_picture(self):
         picture = self.cleaned_data.get('picture')
+
         if not picture:
             raise ValidationError('Inserte una imagen')
+        else:
+            if imghdr.what(picture) not in settings.IMAGE_TYPES:
+                raise ValidationError(
+                    'Formato no soportado, elija entre: JPG, JPEG, PNG')
+            if picture.size > 5000000:
+                raise ValidationError('El tamaño máximo soportado es de 5 MB')
         return picture
-    
 
     def clean(self):
         clean_data = self.cleaned_data
@@ -311,7 +320,8 @@ class ProfileForm(forms.ModelForm):
     )
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
-    picture = forms.ImageField(required=False, widget= forms.FileInput(attrs={'onchange':'cambiar()', 'style':'display: none;'}))
+    picture = forms.ImageField(required=False, widget=forms.FileInput(
+        attrs={'style': 'display: none;'}))
 
     class Meta:
         model = Profile
@@ -330,6 +340,15 @@ class ProfileForm(forms.ModelForm):
             raise ValidationError(
                 'La fecha de cumpleaños debe ser en el pasado')
         return birthdate
+
+    def clean_picture(self):
+        picture = self.cleaned_data.get('picture')
+        if picture and imghdr.what(picture) not in settings.IMAGE_TYPES:
+            raise ValidationError(
+                'Formato no soportado, elija entre: JPG, JPEG, PNG')
+        if picture and picture.size > 5000000:
+            raise ValidationError('El tamaño máximo soportado es de 5 MB')
+        return picture
 
     def save(self, user=None):
         profile = super(ProfileForm, self).save(commit=False)
