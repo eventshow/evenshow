@@ -69,7 +69,6 @@
                 {% endif %}
             </form>
             {% endif %}
-            <p class="commission">Se cobrarán {{fee}}€ en concepto de gastos de gestión.</p>
             {% endif %}
             {% elif event.created_by.username == 'deleted' %}
             <h3 class="price-detail" href="">No disponible</h3>
@@ -77,6 +76,8 @@
             <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll"
                 href="{% url 'login' %}">INSCRIBIRSE</a>
             {% endif %}
+            <p class="commission">Se <b>pueden</b> cobrar <b>hasta</b> {{fee}}€ en concepto de gastos de gestión.
+            </p>
         </div>
     </div>
 </div>
@@ -156,6 +157,7 @@
         {% endif %}
     </div>
 </div>
+{% if user.is_authenticated %}
 <div id="modal3" class="modal modal-evetshow-detail">
     <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons">
             highlight_off</em></button>
@@ -201,6 +203,5 @@
         </form>
     </div>
 </div>
-
-
+{% endif %}
 {% endblock %}
