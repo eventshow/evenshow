@@ -401,7 +401,7 @@ class SearchFilterForm(forms.Form):
     max_price = forms.DecimalField(min_value=1, decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    min_price = forms.DecimalField(decimal_places=2, required=False,
+    min_price = forms.DecimalField(min_value=0,decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
     def clean_date(self):
