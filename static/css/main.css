@@ -394,8 +394,6 @@ nav ul a:hover {
 	text-align: left;
 	background-color: white;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-	margin-right: 35%;
-
 }
 
 .button-detail {
@@ -626,25 +624,6 @@ nav ul a:hover {
 
 .login h1 {
 	margin-top: -20%;
-
-}
-
-.title-delete{
-	font-size: 30px;
-	color: #5D5E5E !important;
-	margin-top: 10%;
-	text-align: center;
-	font-weight: 600;
-}
-
-
-.user-delete{
-	font-size: 30px;
-	color: #5D5E5E !important;
-	margin-top: 10%;
-	text-align: center;
-	font-weight: 600;
-	line-height: 44px;
 }
 
 .form-eventshow-confirm-delete {
@@ -663,7 +642,7 @@ nav ul a:hover {
 
 #send-buttons {
 	margin-bottom: 30% !important;
-	margin-top: 0% !important;
+	margin-top: -52% !important;
 	margin-left: -45%;
 }
 
@@ -695,7 +674,7 @@ nav ul a:hover {
 	margin-top: 10%;
 	margin-bottom: 65px !important;
 	text-align: center !important;
-	font-size: 17px;
+	font-size: 18px;
 	padding-top: 13px;
 }
 
@@ -707,17 +686,8 @@ nav ul a:hover {
 	padding-bottom: 10%;
 	margin-bottom: 65px !important;
 	align-content: center;
-	font-size: 17px;
+	font-size: 18px;
 	padding-top: 13px;
-}
-.delete-yes{
-	padding-left: 32px !important;
-	padding-right: 32px !important;
-	font-size: 16px;
-}
-.button-delete{
-	margin-top: 5%;
-	margin-bottom: 5%;
 }
 
 #send-buttons-pw-conf2 {
@@ -1266,10 +1236,20 @@ label {
 	right: 0;
 }
 
-.delete-comission{
-	text-align: center;
-	font-size: 20px;
+#title-delete-comi {
+	font-weight: bold;
+	color: #686969;
+	margin: 0% auto;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin-bottom: -8%;
+	margin-left: 10%;
+	font-size: 19px;
+	z-index: 10;
 }
+
 #title-delete-comi-sm {
 	font-weight: bold;
 	color: #686969;
@@ -1552,7 +1532,7 @@ label {
 }
 
 .table-generic {
-	width: 103%;
+	width: 90%;
 	text-align-last: center;
 	margin: auto;
 }
@@ -1816,10 +1796,6 @@ table {
 		width: 100%;
 		margin-right: 26% !important;
 	}
-
-	.list_search_result {
-    margin-left: 0 !important;
-}
 	
 	#titleTermsAbout {
 		margin-top: -2px;
@@ -1863,11 +1839,6 @@ table {
 		margin-top: 15px;
 		margin-bottom: 15px;
 	}
-
-	.search{
-		margin-right: 14%;
-	}
-
 	#paddinButton2 {
 		margin-top: -1px;
 	}
@@ -2302,9 +2273,9 @@ table {
 		align-content: center;
 	}
 	.form-search {
-	margin-top: 40px !important;
-    margin-left: 8% !important;
-    width: 82% !important;
+		margin-top: 80px;
+		margin-left: -17%;
+		width: 99%;
 	}
 	.btn-submit {
 		width: 69% !important;
@@ -3673,9 +3644,21 @@ table {
 		}
 
 		.ipad-pro-slide  {
-			margin-top: 6% !important;
-			position: absolute !important;
+			margin-top: 6.1% !important;
+   		 	padding-top: 3% !important;
+    		padding-bottom: 3% !important;
 
+		}
+
+		.ipad-pro-slide-pan  {
+			margin-top: 6.1% !important;
+   		 	padding-top: 3% !important;
+    		padding-bottom: 3% !important;
+			position: absolute !important;
+		}
+
+		.ipad-pro-dis{
+			display: none;
 		}
 
 		.home-ipad-pro{
@@ -3700,6 +3683,7 @@ table {
 		.form-ipad-pro{
 			margin-left: 30% !important;
 			margin-right: -15% !important;
+			margin-bottom: 42%;
 		}
 	}
 
@@ -3986,17 +3970,13 @@ table {
 
 	/* IPHONE 5/SE LANDSCAPE*/
     @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
-
-		.form-search{
-			margin-left: 8.5% !important;
-			width: 10%;
-		}
-
-		.search{
-			margin-right: 30%;
-			width: 40% !important;
-		}
-
+        .input--medium{
+            width: 86%!important;
+            margin-left: 18%;
+        }
+        .search{
+            margin-right: 4%
+        }
         .list_search_result {
             margin-left: -2.5% !important;
         }
