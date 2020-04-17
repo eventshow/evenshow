@@ -6,8 +6,10 @@
         <h1 class="title-delete flow-text">¿Estás seguro de que quieres eliminar el evento <a>{{object.title}}</a>?</h1>
         <h1 class="delete-comission flow-text center">Recibirá una penalización por ello  (más información en  <a href="{% url 'terms' %}"> términos y condiciones</a>)</h1>
 
-        <button class="waves-effect waves-light btn-large center" type="submit">Sí</button>
-        <a class="waves-effect waves-light btn-large center">No</a>
+        <div class="center">
+        <button class="waves-effect waves-light btn-large " type="submit">Sí</button>
+        <a class="waves-effect waves-light btn-large ">No</a>
+        </div>
     </form>
 </div>
 <style>
