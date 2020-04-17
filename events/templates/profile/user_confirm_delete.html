@@ -1,55 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="confirm-delete">
-    <form class="form-eventshow-confirm-delete" action="{% url 'delete_profile' %}" method="post">
+<div class="container">
+    <form action="{% url 'delete_profile' %}" method="post">
         {% csrf_token %}
-        <div class="row">
-            <div class="grid-example col s12" id="delete-title-user">
-                <span class="flow-text">
-
-                        <h3 id="title-delete-profile">
-                        ¿Estás seguro de que quieres eliminar tu cuenta? Revisa nuestros <a  href="/terms">términos y
+        <h1 class="user-delete flow-text">
+            ¿Estás seguro de que quieres eliminar tu cuenta? Revisa nuestros <a  href="/terms">términos y
                         condiciones </a> antes para saber qué información se eliminará. Además, deber tener en cuenta los
                         eventos
                         que aún tienes publicados como afintrión, ya que al eliminar tu cuenta se cancelarán y esto
                         puede
-                        conllevar costes extras.
-                    </h3>
-                </span>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="grid-example col s4 offset-s2">
-                    <div class="delete-buttons-conf">
-                        {% if penalized %}
-                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        conllevar costes extras.</h1>
+
+
+
+        <div class="center">
+            {% if penalized %}
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                             data-key="{{ stripe_key }}" data-description="Pagar penalización"
                             data-amount="{{ penalty | floatformat:'0' }}" data-locale="es" data-currency="eur"
                             data-label="Sí">
                             </script>
-                        <script>
-                            document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large delete-btn");
-                        </script>
-                        {% else %}
-                        <div class="right">
-                            <button class="delete-btn-profile waves-effect waves-light btn-large btn-block"
-                                type="submit">Sí</button>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="grid-example col s6">
-                    <div class="delete-buttons-conf">
-                        <div class="left">
-                            <a  class="delete-btn-a-profile waves-effect waves-light btn-large btn-block"
-                                href="{% url 'detail_profile'%}">No</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-delete delete-yes");
+            </script>
+
+            {% else %}
+             <button class="waves-effect waves-light btn-large button-delete delete-yes" type="submit">Sí</button>
+
+            {% endif%}
+            <a href="{% url 'detail_profile'%}" class="waves-effect waves-light btn-large button-delete">No</a>
         </div>
     </form>
+
+
+
 </div>
 <style>
     body {

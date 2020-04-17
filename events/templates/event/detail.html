@@ -12,7 +12,7 @@
 <img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
 {% endif %}
 
-<div class="col m6  rectangle-info-title">
+<div class=" flow-text col m6 rectangle-info-title">
     <h1 class="sep-title left">{{object.title}}</h1>
 </div>
 
@@ -69,7 +69,6 @@
                 {% endif %}
             </form>
             {% endif %}
-            <p class="commission">Se cobrarán {{fee}}€ en concepto de gastos de gestión.</p>
             {% endif %}
             {% elif event.created_by.username == 'deleted' %}
             <h3 class="price-detail" href="">No disponible</h3>
@@ -77,6 +76,8 @@
             <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll"
                 href="{% url 'login' %}">INSCRIBIRSE</a>
             {% endif %}
+            <p class="commission">Se <b>pueden</b> cobrar <b>hasta</b> {{fee}}€ en concepto de gastos de gestión.
+            </p>
         </div>
     </div>
 </div>
@@ -130,8 +131,13 @@
 <hr>
 <div class="row sep-detail">
     <div class="col s12 m4 l3">
+        {% if object_list == 0 %}
+        <h1 class="title-section comments-title-no ">Comentarios de húespedes <br> que asistieron a algún evento de este
+            anfitrión</h1>
+        {% else %}
         <h1 class="title-section comments-title ">Comentarios de húespedes <br> que asistieron a algún evento de este
             anfitrión</h1>
+        {% endif %}
     </div>
     {% if event.created_by.username != 'deleted' %}
     <div class="col s12 m8 l9">
@@ -151,6 +157,7 @@
         {% endif %}
     </div>
 </div>
+{% if user.is_authenticated %}
 <div id="modal3" class="modal modal-evetshow-detail">
     <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons">
             highlight_off</em></button>
@@ -196,6 +203,5 @@
         </form>
     </div>
 </div>
-
-
+{% endif %}
 {% endblock %}
