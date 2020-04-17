@@ -3833,9 +3833,8 @@ table {
             margin-left: -35%;
         }
 
-
 		.list_search_result {
-			margin-left: 9.5% !important;
+			margin-left: -2.5% !important;
 		}
 
 		.text-left {
@@ -3852,7 +3851,7 @@ table {
 		}
 
 		#send-buttons-conf {
-			margin-left: -250%;
+			margin-left: -33% !important;
 		}
 
 		.login100-form {
