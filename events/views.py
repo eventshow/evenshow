@@ -441,7 +441,7 @@ class EventFilterListView(generic.ListView):
 
     def get_queryset(self):
         self.kwargs['start_day'] = self.kwargs.pop('date', None) or None
-        self.kwargs['location_city__icontains'] = self.kwargs.pop(
+        self.kwargs['location_city__unaccent__trigram_similar'] = self.kwargs.pop(
             'location', None) or None
         self.kwargs['start_time__gte'] = self.kwargs.pop(
             'start_hour', None) or None
