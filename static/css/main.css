@@ -3807,6 +3807,9 @@ table {
 /*iphone 5se landscape*/
 	/*CORREGIR MEDIA QUERY */
 	@media  only screen and (min-width: 320px) and (max-width:568px) and (orientation : landscape){
+		img.responsive-img, video.responsive-video {
+			max-width: 111%;
+		}
 		.delete-btn-a {
 
 			margin-top: 199px !important;
