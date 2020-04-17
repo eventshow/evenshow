@@ -17,6 +17,7 @@ from django.utils.timezone import now
 from faker import Faker
 
 from events.models import Category
+from events.services import PaymentService
 
 User = get_user_model()
 
@@ -260,7 +261,8 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
             'fields': fields
         }
 
-        seed_transaction(event, enroller, host, updated_at, price)
+        if status != 'REJECTED':
+            seed_transaction(event, enroller, host, updated_at, price)
         if status == 'ACCEPTED':
             ac += 1
             if enroller not in attendees:
@@ -321,15 +323,19 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
 
 
 def seed_transaction(event, transmitter, recipient, created_at, amount):
+    fee = PaymentService().fee(amount*100)
+    discounted_fee = fee * 0.85
+
     fields = {
         'amount': amount*100,
+        'discount': fee - discounted_fee,
+        'fee': fee,
         'created_at': created_at + TIMEZONE,
         'updated_at': created_at + TIMEZONE,
         'event': event,
         'created_by': transmitter,
         'customer_id': 'cus_{0}'.format(get_random_string(length=14)),
         'is_paid_for': random.choice([True, False]),
-        'discount': False,
         'recipient': recipient,
         'event': event
     }

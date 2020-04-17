@@ -28,13 +28,13 @@
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Mínimo</label>
-                    {{ form.min_price }}
+                    {{ form.min_price|default_if_none:0 }}
                     {{ form.min_price.errors }}
                     {{ form.non_field_errors }}
                 </div>
                 <div class="input-group input--medium">
                     <label class="label">Precio Máximo</label>
-                    {{ form.max_price }}
+                    {{ form.max_price|default_if_none:0 }}
                     {{ form.max_price.errors }}
                 </div>
                 <button class="btn-submit search" type="submit">Buscar</button>

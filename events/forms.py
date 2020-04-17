@@ -6,6 +6,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm, UserCreationForm
+from django.contrib.auth.password_validation import password_validators_help_texts
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.timezone import now
@@ -46,7 +47,7 @@ class EventForm(forms.ModelForm):
     min_age = forms.IntegerField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
     price = forms.DecimalField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
+        attrs={'class': 'form-eventshow', 'placeholder': 'precio', 'name': 'min_age'}))
     location_city = forms.CharField(required=False,
                                     widget=forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}))
     location_street = forms.CharField(required=False, widget=forms.TextInput(
@@ -234,7 +235,7 @@ class RegistrationForm(UserCreationForm):
         input_formats=settings.DATE_INPUT_FORMATS
     )
     password1 = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': "contraseña"}))
+        attrs={'placeholder': "contraseña"}), help_text=password_validators_help_texts())
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "confirmación contraseña"}))
     friend_token = forms.CharField(required=False, widget=forms.TextInput(
@@ -415,10 +416,10 @@ class SearchFilterForm(forms.Form):
         input_formats=('%H:%M',)
     )
 
-    max_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+    max_price = forms.DecimalField(min_value=1, decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+    min_price = forms.DecimalField(min_value=0,decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
     def clean_date(self):
@@ -434,6 +435,13 @@ class SearchFilterForm(forms.Form):
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
+
+    def clean_max_price(self):
+        max_price = self.cleaned_data.get('max_price')
+        if max_price and float(max_price) < 1:
+            raise ValidationError(
+                'El precio máximo no puede ser menor que 1')
+        return max_price
 
     def clean(self):
         min_price = self.cleaned_data.get('min_price')

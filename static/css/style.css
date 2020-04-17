@@ -64,6 +64,11 @@
   margin-right: -60%;
 }
 
+.comments-title-no{
+  margin-right: 270%;
+    margin-left: -318% !important;
+}
+
 /* IMG */
 
 .img-detail {
@@ -254,13 +259,12 @@
 }
 
 .sep-title {
-  color: #B6244D;
-  font-size: 54px;
-  border-radius: 9px;
-  text-align: center;
-  background-color: white;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  margin-left: 40%;
+	color: #B6244D;
+	font-size: 54px;
+	border-radius: 9px;
+	text-align: center;
+	background-color: white;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
 .button-detail {
