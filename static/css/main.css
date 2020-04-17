@@ -3886,12 +3886,13 @@ table {
         }
         .title-search {
             margin-left: 251% !important;
+            width: 110%;
         }
         .list_search_result {
             margin-left: 11% !important;
         }
         .sidenav.sidenav-fixed {
-            margin-top: 7.9%;
+            margin-top: 0%;
         }
 
 
