@@ -839,7 +839,7 @@ nav ul a:hover {
 }
 
 #edit-event {
-	margin-left: 35px !important;
+	margin-left: 35px;
 	margin-bottom: 14% !important;
 	padding-bottom: 2% !important;
 }
@@ -1769,6 +1769,15 @@ table {
 	padding-right: 80%;
 }
 
+.laptop-birth {
+	margin-left: -95% !important;
+	margin-right: 108% !important;
+}
+
+.laptop-picture {
+	margin-top: -2% !important;
+
+}
 
 /* RESPONSIVE */
 
@@ -1778,6 +1787,10 @@ table {
 	.title-name-terms {
 		font-size: 24px;
 	}
+	.panel-resp {
+		opacity: 1;
+	}
+	
 
 	.terms{
 		width: 100%;
@@ -2419,6 +2432,11 @@ table {
 		margin-top: 0px;
 		margin-bottom: 0px;
 	}
+
+	.panel-resp {
+		opacity: 1;
+	}
+	
 	#noPaddin {
 		padding: 0px;
 	}
@@ -3305,7 +3323,15 @@ table {
 		}
 
 		
-	
+		.center-profile-ip {
+			margin-top: -5%;
+			width: 89% !important;
+			margin-left: 7% !important;
+		}
+
+		.laptop-picture {
+			margin-left: 10% !important;
+		}
 	}
 
 	/* PIXEL 2 */
@@ -3616,6 +3642,36 @@ table {
 			margin-left: 155px;
 			margin-top: 33px;
 		}
+
+		.ipad-pro-slide  {
+			margin-top: 6% !important;
+			position: absolute !important;
+
+		}
+
+		.home-ipad-pro{
+			margin-top: 56% !important;
+			margin-left: 8% !important;
+		}
+
+		#login-res{    
+   		 	width: 80% !important;
+    		margin-top: 5%;
+    		margin-right: 10%;
+    		margin-bottom: 4% !important;
+    		min-height: 47vh !important;
+    		display: block;
+    		padding: 232px 55px 55px 55px !important;
+		}
+
+		.title-ipad-pro{
+			margin-left: 20% !important;
+		}
+
+		.form-ipad-pro{
+			margin-left: 30% !important;
+			margin-right: -15% !important;
+		}
 	}
 
 	/*  PIXEL 2XL*/
@@ -3780,7 +3836,79 @@ table {
 
         #title-delete-comi {
             margin-left: 15% !important;
-        }
+		}
+		
+		.center-form-create {
+			margin-top: -1% !important;
+			margin-left: 34% !important;
+		}
+
+		#send-buttons {
+			margin-bottom: 51% !important;
+			margin-top: 1% !important;
+			margin-left: 0%;
+		}
+
+		.send-btn {
+			margin-left: 40% !important;
+		}
+
+		.img-detail-auth {
+			width: 72% !important;
+			height: 758px;
+			object-fit: cover;
+			z-index: -1;
+			margin-top: 0px !important;;
+		}
+
+		.details-event-principal {
+			margin-top: -47.1% !important;
+    		margin-bottom: 0.6%;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 8% !important;
+			margin-bottom: 13% !important;
+			margin-left: -12% !important;
+		}
+
+		.img-detail-bio {
+			margin-left: 10% !important;
+			margin-top: 10% !important;
+			width: 150px;
+			border-radius: 50%;
+		}
+
+		.ipad-host-title {
+			margin-left: 10% !important;
+		}
+
+		.rating-host-detail {
+			margin-left: 20% !important;
+			margin-top: 5% !important;
+		}
+
+		.map-detail iframe {
+			margin-top: 8%;
+			width: 1200px !important;
+			height: 546px !important;
+			border: 0;
+		}
+
+		.comment-detail {
+			margin-left: 51%;
+			margin-top: 1%;
+			margin-bottom: 2%;
+			font-size: 18px;
+			color: #5D5E5E;
+		}
+
+		.commission {
+			margin-top: 5%;
+			text-align: left;
+			margin-right: 37px;
+			margin-bottom: 4%;
+		}
 
 	}
 
@@ -3792,7 +3920,35 @@ table {
 
         #title-delete-comi {
             margin-left: 19% !important;
-        }
+		}
+		
+		#send-buttons {
+			margin-bottom: 51% !important;
+			margin-top: 1% !important;
+			margin-left: 16%;
+		}
+
+		.send-btn {
+			margin-left: 51% !important;
+		}
+
+		.details-event-principal {
+			margin-top: -40.1% !important;
+			margin-bottom: 1.45%;
+		}
+
+		.commission {
+			margin-top: -4% !important;
+			text-align: left;
+			margin-right: 37px;
+		}
+
+		.map-detail iframe {
+			margin-top: 8%;
+			width: 1370px !important;
+			height: 646px !important;
+			border: 0;
+		}
 
 
 	}
