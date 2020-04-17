@@ -3827,6 +3827,7 @@ table {
 		.container#square {
 			margin-top: 26% !important;
 			border: 0 solid;
+			width: 523px;
 		}
 	}
 
