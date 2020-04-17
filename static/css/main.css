@@ -3675,6 +3675,11 @@ table {
 		.form-ipad-pro{
 			margin-left: 30% !important;
 			margin-right: -15% !important;
+		}
+
+		.form-ipad-pro-pan{
+			margin-left: 30% !important;
+			margin-right: -15% !important;
 			margin-bottom: 42%;
 		}
 	}
