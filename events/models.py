@@ -43,7 +43,7 @@ def get_default_category():
 def get_sentinel_user():
     user = User.objects.get_or_create(username='deleted')[0]
     Profile.objects.get_or_create(
-        user=user, picture='rvCgR1E.png', birthdate='1970-01-01')
+        user=user, picture='profile/deleted.png', birthdate='1970-01-01')
     return user
 
 
