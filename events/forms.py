@@ -4,6 +4,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm, UserCreationForm
+from django.contrib.auth.password_validation import password_validators_help_texts
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.timezone import now
@@ -225,7 +226,7 @@ class RegistrationForm(UserCreationForm):
         input_formats=settings.DATE_INPUT_FORMATS
     )
     password1 = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': "contraseña"}))
+        attrs={'placeholder': "contraseña"}), help_text=password_validators_help_texts())
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "confirmación contraseña"}))
     friend_token = forms.CharField(required=False, widget=forms.TextInput(
