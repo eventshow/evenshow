@@ -4,13 +4,30 @@
     <form action="" method="post">
         {% csrf_token %}
         <h1 class="title-delete flow-text">¿Estás seguro de que quieres eliminar el evento <a>{{object.title}}</a>?</h1>
-        <h1 class="delete-comission flow-text center">Recibirá una penalización por ello  (más información en  <a href="{% url 'terms' %}"> términos y condiciones</a>)</h1>
-
+        {% if not attendees_count == 0 %}
+        {% if not object.can_delete %}
+        <h1 class="delete-comission flow-text center">Recibirá una penalización por ello (más información en <a
+                href="{% url 'terms' %}"> términos y condiciones</a>)</h1>
+        {% endif %}
+        {% endif %}
         <div class="center">
-        <button class="waves-effect waves-light btn-large " type="submit">Sí</button>
-        <a class="waves-effect waves-light btn-large ">No</a>
+            {% if object.can_delete or attendees_count == 0 %}
+            <button class="waves-effect waves-light btn-large button-delete delete-yes" type="submit">Sí</button>
+            {% else %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ stripe_key }}"
+                data-description="Pagar penalización" data-amount="{{ penalty|floatformat:'0' }}" data-locale="es"
+                data-currency="eur" data-label="Sí">
+                </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-delete delete-yes");
+            </script>
+            {% endif%}
+            <a href="{% url 'hosted_events'%}" class="waves-effect waves-light btn-large button-delete">No</a>
         </div>
     </form>
+
+
+
 </div>
 <style>
     body {
