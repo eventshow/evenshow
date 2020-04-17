@@ -1803,6 +1803,10 @@ table {
 		width: 100%;
 		margin-right: 26% !important;
 	}
+
+	.list_search_result {
+    margin-left: 0 !important;
+}
 	
 	#titleTermsAbout {
 		margin-top: -2px;
@@ -1846,6 +1850,11 @@ table {
 		margin-top: 15px;
 		margin-bottom: 15px;
 	}
+
+	.search{
+		margin-right: 14%;
+	}
+
 	#paddinButton2 {
 		margin-top: -1px;
 	}
@@ -2280,9 +2289,9 @@ table {
 		align-content: center;
 	}
 	.form-search {
-		margin-top: 80px;
-		margin-left: -17%;
-		width: 99%;
+	margin-top: 40px !important;
+    margin-left: 8% !important;
+    width: 82% !important;
 	}
 	.btn-submit {
 		width: 69% !important;
@@ -3821,13 +3830,17 @@ table {
 
 	/* IPHONE 5/SE LANDSCAPE*/
     @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
-        .input--medium{
-            width: 86%!important;
-            margin-left: 18%;
-        }
-        .search{
-            margin-right: 4%
-        }
+
+		.form-search{
+			margin-left: 8.5% !important;
+			width: 10%;
+		}
+
+		.search{
+			margin-right: 30%;
+			width: 40% !important;
+		}
+
         .list_search_result {
             margin-left: -2.5% !important;
         }
