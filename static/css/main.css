@@ -663,7 +663,6 @@ nav ul a:hover {
 
 #send-buttons {
 	margin-bottom: 30% !important;
-	margin-top: 0% !important;
 	margin-left: -45%;
 }
 
@@ -1988,7 +1987,6 @@ table {
 	}
 	#send-buttons {
 		margin-bottom: 30% !important;
-		margin-top: -80% !important;
 	}
 	.send-btn {
 		margin-left: 25% !important;
@@ -3500,7 +3498,6 @@ table {
 		
 		#send-buttons {
 			margin-bottom: 30% !important;
-			margin-top: -80% !important;
 			margin-left: 85%;
 		}
 		.send-btn {
@@ -3778,7 +3775,6 @@ table {
 	@media only screen and (min-width: 375px) and (max-width: 667px) {
 		#send-buttons {
 			margin-bottom: 30%;
-			margin-top: -80%;
 			margin-left: 30%;
 		}
 		.send-btn {
