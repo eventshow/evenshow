@@ -398,10 +398,10 @@ class SearchFilterForm(forms.Form):
         input_formats=('%H:%M',)
     )
 
-    max_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+    max_price = forms.DecimalField(min_value=1, decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+    min_price = forms.DecimalField(decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
     def clean_date(self):
@@ -417,6 +417,13 @@ class SearchFilterForm(forms.Form):
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
+
+    def clean_max_price(self):
+        max_price = self.cleaned_data.get('max_price')
+        if max_price and float(max_price) < 1:
+            raise ValidationError(
+                'El precio máximo no puede ser menor que 1')
+        return max_price
 
     def clean(self):
         min_price = self.cleaned_data.get('min_price')

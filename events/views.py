@@ -396,7 +396,7 @@ class EventFilterFormView(generic.FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
-
+        print(data.get('min_price'))
         kwargs = {}
         kwargs['date'] = data.pop('date', None) or None
         kwargs['location'] = data.pop('location', None) or None
@@ -407,7 +407,6 @@ class EventFilterFormView(generic.FormView):
         self.request.session['form_values'] = self.request.POST
 
         kwargs = {key: val for key, val in kwargs.items() if val}
-
         if self.request.session.get('latitude'):
             if not bool(kwargs) or (bool(kwargs) and kwargs.get('location')):
                 del self.request.session['latitude']
