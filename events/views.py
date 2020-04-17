@@ -664,7 +664,7 @@ class RateHostView(generic.CreateView):
         ).event_host(self.kwargs.get('event_pk'))
         context['event_pk'] = self.kwargs.get('event_pk')
         context['user_img'] = models.Profile.objects.get(
-            user_id=user.id).picture
+            user_id=user.id).picture.url
         context['host_name'] = selectors.UserSelector(
         ).event_host(self.kwargs.get('event_pk'))
         context['event_title'] = models.Event.objects.get(
@@ -916,11 +916,11 @@ class UserUpdateView(generic.UpdateView):
         self.object = self.get_object()
         form = self.form_class(request.POST, instance=self.object)
         profile_form = self.profile_form_class(
-            request.POST, instance=self.object.profile)
-
+            request.POST, request.FILES, instance=self.object.profile)
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
             profile_form.save(user)
+
             return redirect(self.get_success_url())
         else:
             return self.render_to_response(

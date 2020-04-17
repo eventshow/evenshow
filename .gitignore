@@ -130,6 +130,8 @@ dmypy.json
 
 ## Eventshow stuff
 initial_data.json
+media/profile/*
+media/event/*
 
 ## IDEs stuff
 # PyCharm and WebStorm
@@ -194,3 +196,4 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
