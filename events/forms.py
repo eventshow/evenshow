@@ -157,6 +157,11 @@ class EventForm(forms.ModelForm):
             raise ValidationError('Inserte la hora de fin')
         return end_time
 
+    def clean_picture(self):
+        picture = self.cleaned_data.get('picture')
+        if not picture:
+            raise ValidationError('Inserte una imagen')
+        return picture
     
 
     def clean(self):
