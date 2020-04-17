@@ -15,7 +15,8 @@
             <tr>
               <th id="">Id</th>
               <th id="">Fecha</th>
-
+              <th id="">Cantidad base</th>
+              <th id="">Comisión base</th>
               <th id="">Descuento</th>
               <th id="">Comisión</th>
               <th id="">Cantidad</th>
@@ -29,6 +30,8 @@
           <tr>
             <td>{{transaction.id}}</td>
             <td>{{transaction.created_at}}</td>
+            <td>{% to_euros transaction.amount %}€</td>
+            <td>{% to_euros transaction.fee %}€</td>
             <td>{% to_euros transaction.discount %}€</td>
             <td>{% to_euros transaction.discounted_fee %}€</td>
             <td>{% to_euros transaction.actual_amount %}€</td>
