@@ -674,6 +674,7 @@ nav ul a:hover {
 	height: 100px;
 	margin-left: 68%;
 	margin-top: -10% !important;
+	border-radius: 50%;
 }
 
 #send-buttons-data {
@@ -855,6 +856,50 @@ nav ul a:hover {
 	display: block !important;
 }
 
+
+.subir {
+    background: #B6244D;
+    font-family: Raleway, sans-serif;
+    color: #fff;
+    padding-top: 5px;
+    padding-left: 9px;
+    padding-bottom: 5px;
+	margin-left: 70%;
+    margin-right: 5%;
+	border: 1px solid #FFF !important;
+	border-radius: 12px !important;
+	margin-top: 2.5%;
+	font-weight: normal;
+}
+
+#info {
+    margin-left: 30%;
+    margin-top: -6%;
+}
+
+.subir-prof {
+    background: #B6244D;
+    font-family: Raleway, sans-serif;
+    color: #fff;
+    padding-top: 5px;
+    padding-left: 9px;
+    padding-bottom: 5px;
+    margin-right: 45%;
+    border: 1px solid #FFF !important;
+    border-radius: 12px !important;
+    margin-top: 5.5%;
+    font-weight: normal;
+}
+
+.subir-prof:hover{
+	color:#fff;
+}
+
+	 
+	.subir:hover{
+		color:#fff;
+	}
+
 #create-event {
 	margin-left: 35px !important;
 	margin-bottom: 14% !important;
@@ -939,6 +984,19 @@ p.description {
 	margin-left: -2.5% !important;
 	font-family: Raleway, sans-serif;
 }
+
+#picture-box {
+	width: 104% !important;
+	height: 60px !important;
+	margin-bottom: 30px !important;
+	color: #5D5E5E !important;
+	border: 1px solid #B6244D !important;
+	border-radius: 12px !important;
+	padding-left: 4% !important;
+	margin-left: -2.5% !important;
+	font-family: Raleway, sans-serif;
+}
+
 
 #create-event textarea {
 	width: 105% !important;
@@ -1976,6 +2034,18 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 12px;
 	}
+
+	#picture-box {
+		width: 130% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -15% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px;
+	}
 	#iphone-left {
 		margin-left: -10% !important;
 	}
@@ -2241,6 +2311,7 @@ table {
 		height: 100px;
 		margin-left: 15%;
 		margin-top: -3% !important;
+		border-radius: 50%;
 	}
 	.title-share-edit-pw {
 		margin-left: -3%;
@@ -2476,6 +2547,18 @@ table {
 		width: auto;
 	}
 	#create-event input {
+		width: 130% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -17% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 14px;
+	}
+
+	#picture-box {
 		width: 130% !important;
 		height: 60px !important;
 		color: #5D5E5E !important;
@@ -2803,6 +2886,19 @@ table {
 			font-family: Raleway, sans-serif;
 			font-size: 14px;
 		}
+
+		#picture-box {
+			width: 109% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -7% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
 
 		#iphone-left{
 			margin-left: -4%;

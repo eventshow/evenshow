@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
                     blank=True, default=django.utils.timezone.now, editable=False, verbose_name='Updated at')),
                 ('title', models.CharField(max_length=250, verbose_name='Title')),
                 ('description', models.TextField(verbose_name='Description')),
-                ('picture', models.URLField(verbose_name='Picture url')),
+                ('picture', models.ImageField(upload_to='event', verbose_name='Picture url')),
                 ('location_city', models.CharField(
                     max_length=250, verbose_name='City')),
                 ('location_street', models.CharField(
@@ -148,8 +148,7 @@ class Migration(migrations.Migration):
                                         primary_key=True, serialize=False, verbose_name='ID')),
                 ('location', models.CharField(blank=True,
                                               max_length=250, null=True, verbose_name='Location')),
-                ('picture', models.URLField(
-                    blank=True, default='https://i.imgur.com/V0Vx876.png', null=True, verbose_name='Picture url')),
+                ('picture', models.ImageField(blank=True, default='seed/profile/JoIFIzC.png', null=True, upload_to='profile', verbose_name='Picture url')),
                 ('birthdate', models.DateField(verbose_name='Birthdate')),
                 ('token', models.CharField(editable=False,
                                            max_length=8, verbose_name='Personal token')),

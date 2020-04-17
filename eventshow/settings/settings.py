@@ -163,6 +163,9 @@ LOGOUT_REDIRECT_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Allowed image file types
+IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'bmp']
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
 )

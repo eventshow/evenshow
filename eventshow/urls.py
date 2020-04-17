@@ -14,6 +14,10 @@ urlpatterns = [
     path('auth/login', views.LoginView.as_view(authentication_form=LoginForm), name='login'),
     path('auth/update/password',
          views.PasswordChangeView.as_view(template_name='profile/update_password.html', form_class=PasswordUpdateForm, success_url=reverse_lazy('detail_profile')), name='update_password')
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
 handler404 = 'events.views.handler_404'
