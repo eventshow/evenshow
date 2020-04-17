@@ -81,8 +81,8 @@
           <div class="user-view">
             {% if  user.is_authenticated %}
 
-        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img src="{{ user.profile.picture }}"
-              alt="Avatar" class="avatar"></a></li>
+        <li><a id="avatar-movil" class='dropdown-trigger' href='#' data-target=''><img
+              src="{{ user.profile.picture.url }}" alt="Avatar" class="avatar"></a></li>
         <li><a href="{% url 'detail_profile' %}">{{ user.username }}</a></li>
         <li><a href="{% url 'referred' %}">Panel de control</a></li>
 
