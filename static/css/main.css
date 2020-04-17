@@ -3805,7 +3805,7 @@ table {
 	}
 	/*iphone 5se landscape*/
 	/*CORREGIR MEDIA QUERY */
-	@media  only screen and (min-width: 568px) and (max-width:320px){	
+	@media  only screen and (min-width: 568px) and (max-width:320px) and (orientation : landscape){
 		.delete-btn-a {
 			
 			margin-top: 199px !important;
