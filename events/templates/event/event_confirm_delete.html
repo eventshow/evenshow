@@ -1,92 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="confirm-delete">
-    <form class="form-eventshow-confirm-delete" action="" method="post">
+<div class="container">
+    <form action="{% url 'delete_event' object.pk %}" method="post">
         {% csrf_token %}
-        <div class="row">
-            <div class="col s12" id="delete-title">
-                <span class="flow-text">
-                    <h1 id="title-delete">¿Estás seguro de que quieres eliminar el evento <strong id="title-del-event">
-                            {{object.title}}</strong>?</h1>
-                </span>
+        <h1 class="title-delete flow-text">¿Estás seguro de que quieres eliminar el evento <a>{{object.title}}</a>?</h1>
 
-            </div>
-
-        </div>
         {% if not attendees_count == 0 %}
-            {% if not object.can_delete and object.title|length <= 50 %}
-            <div class="container">
-                <div class="row">
-                    <div class="grid-example col s12">
-                        <h4 id="title-delete-comi">Recibirá una penalización por ello  (más información en  <a href="{% url 'terms' %}"> términos y
-                            condiciones</a>)</h4>
-                    </div>
-                </div>
-            </div>
-            {% elif not object.can_delete and object.title|length > 50 %}
-
-            <div class="container">
-                <div class="row">
-                    <div class="grid-example col s12">
-                        <h4 id="title-delete-comi-sm">Recibirá una penalización por ello (más información en <a href="{% url 'terms' %}">términos y
-                            condiciones</a>)</h4>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+        {% if not object.can_delete %}
+        <h1 class="delete-comission flow-text center">Recibirá una penalización por ello (más información en <a
+                href="{% url 'terms' %}"> términos y condiciones</a>)</h1>
+        {% endif %}
         {% endif %}
 
-        <div class="container">
-            <div class="row">
-                {% if object.title|length <= 50 %}
-                <div class="grid-example col s4 offset-s2">
-                    <div class="delete-buttons-delete">
-                        <div class="right">
-                            {% if object.can_delete or attendees_count == 0 %}
-                            <button class="delete-btn waves-effect waves-light btn-large btn-block"
-                                type="submit">Sí</button>
-                            {% else %}
-                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="{{ stripe_key }}" data-description="Pagar penalización"
-                                data-amount="{{ penalty|floatformat:'0' }}" data-locale="es" data-currency="eur"
-                                data-label="Sí">
-                                </script>
-                            <script>
-                                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large delete-btn");
-                            </script>
-                            {% endif%}
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-example col s6">
-                    <div class="delete-buttons-delete-no">
-                        <div class="left">
-                            <a class="waves-effect waves-light btn-large btn-block delete-btn-a"
-                                href="{% url 'hosted_events'%}">No</a>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
+        <div class="center">
+            {% if object.can_delete or attendees_count == 0 %}
+            <button class="waves-effect waves-light btn-large button-delete delete-yes" type="submit">Sí</button>
+            {% else %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ stripe_key }}"
+                data-description="Pagar penalización" data-amount="{{ penalty|floatformat:'0' }}" data-locale="es"
+                data-currency="eur" data-label="Sí">
+            </script>
+                <script>
+                document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-delete delete-yes");
+            </script>
 
-                <div class="grid-example col s4 offset-s2">
-                    <div class="delete-buttons-big-title">
-                        <div class="left">
-
-                            <button class="delete-btn-big waves-effect waves-light btn-large btn-block"
-                                type="submit">Sí</button>
-                        </div>
-                        <div class="right">
-                            <a class="delete-btn-a-big waves-effect waves-light btn-large btn-block"
-                                href="{% url 'hosted_events'%}">No</a>
-
-                        </div>
-                    </div>
-                </div>
-
-                {% endif %}
-            </div>
+            {% endif%}
+            <a href="{% url 'hosted_events'%}" class="waves-effect waves-light btn-large button-delete">No</a>
         </div>
     </form>
+
+
+
 </div>
 <style>
     body {

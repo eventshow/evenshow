@@ -64,6 +64,11 @@
   margin-right: -60%;
 }
 
+.comments-title-no{
+  margin-right: 270%;
+    margin-left: -318% !important;
+}
+
 /* IMG */
 
 .img-detail {
