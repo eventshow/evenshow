@@ -189,6 +189,9 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             event.pk).count() >= event.capacity
         user_can_enroll = True
 
+        price = float(event.price*100)
+        fee = services.PaymentService().fee(price)
+
         if user.is_authenticated:
             context['user_is_enrolled'] = services.EnrollmentService(
             ).user_is_enrolled(event.pk, user)
@@ -203,9 +206,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
 
-            price = float(event.price*100)
             discounted_fee = services.PaymentService().fee_discount(price, user)
-            fee = services.PaymentService().fee(price)
 
             self.request.session['discounted_fee'] = discounted_fee
             self.request.session['fee'] = fee

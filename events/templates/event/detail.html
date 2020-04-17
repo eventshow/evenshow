@@ -151,6 +151,7 @@
         {% endif %}
     </div>
 </div>
+{% if user.is_authenticated %}
 <div id="modal3" class="modal modal-evetshow-detail">
     <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons">
             highlight_off</em></button>
@@ -196,6 +197,5 @@
         </form>
     </div>
 </div>
-
-
+{% endif %}
 {% endblock %}
