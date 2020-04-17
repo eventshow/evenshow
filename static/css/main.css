@@ -3806,3 +3806,77 @@ table {
 
 	}
 
+	/* IPHONE 5/SE LANDSCAPE*/
+    @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
+        .input--medium{
+            width: 86%!important;
+            margin-left: 18%;
+        }
+        .search{
+            margin-right: 4%
+        }
+        .list_search_result {
+            margin-left: -2.5% !important;
+        }
+        .text-left {
+            margin-left: -4%;
+        }
+        .center-form {
+            margin-left: 11.5%;
+            margin-right: 5.5%;
+        }
+        .title-share-edit-pw {
+            margin-left: -11%;
+        }
+
+        #send-buttons-conf {
+            margin-left: -35%;
+        }
+
+		.list_search_result {
+			margin-left: -2.5% !important;
+		}
+
+		.text-left {
+			margin-left: -4%;
+		}
+
+		.center-form {
+			margin-left: 11.5%;
+			margin-right: 5.5%;
+		}
+
+		.title-share-edit-pw {
+			margin-left: -11%;
+		}
+
+		#send-buttons-conf {
+			margin-left: -33% !important;
+		}
+
+		.login100-form {
+			padding-left: 64px !important;
+			padding-right: 64px !important;
+			padding-top: 83px !important;
+		}
+
+		#titleTerms {
+			margin-top: 6px;
+			margin-bottom: 6px;
+			margin-left: 3.5%;
+		}
+
+		.panel-resp {
+			opacity: 1;
+		}
+
+		.preferences {
+			margin-top: 9.9%;
+		}
+
+		ul:not(.browser-default) {
+			padding-left: 10px;
+		}
+	}
+
+
