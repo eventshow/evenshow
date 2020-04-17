@@ -642,7 +642,6 @@ nav ul a:hover {
 
 #send-buttons {
 	margin-bottom: 30% !important;
-	margin-top: -52% !important;
 	margin-left: -45%;
 }
 
@@ -1822,12 +1821,7 @@ table {
 		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
 		-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
 	}
-	.modal-mov {
-		margin-top: 6%;
-		width: 90%;
-		height: 71px;
-		font-size: 18px;
-	}
+
 	#titleTerms {
 		margin-top: -2px;
 		margin-bottom: 75px;
@@ -1977,7 +1971,6 @@ table {
 	}
 	#send-buttons {
 		margin-bottom: 30% !important;
-		margin-top: -80% !important;
 	}
 	.send-btn {
 		margin-left: 25% !important;
@@ -3502,7 +3495,6 @@ table {
 		
 		#send-buttons {
 			margin-bottom: 30% !important;
-			margin-top: -80% !important;
 			margin-left: 85%;
 		}
 		.send-btn {
@@ -3823,7 +3815,6 @@ table {
 	@media only screen and (min-width: 375px) and (max-width: 667px) {
 		#send-buttons {
 			margin-bottom: 30%;
-			margin-top: -80%;
 			margin-left: 30%;
 		}
 		.send-btn {
