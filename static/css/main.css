@@ -3874,6 +3874,26 @@ table {
 
 	/* IPHONE X LANDSCAPE*/
 	@media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape){
+        .input--medium {
+            width: 415px!important;
+        }
+        .input-group {
+            float: none !important;
+            margin-right: -65px !important;
+        }
+        .search {
+            margin-right: -4%;
+        }
+        .title-search {
+            margin-left: 251% !important;
+        }
+        .list_search_result {
+            margin-left: 11% !important;
+        }
+        .sidenav.sidenav-fixed {
+            margin-top: 7.9%;
+        }
+
 
 	}
 
