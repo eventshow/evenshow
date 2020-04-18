@@ -1422,15 +1422,6 @@ label {
 	margin-top: 77px;
 }
 
-#eventpoint {
-	font-style: italic;
-	font-family: Raleway, sans-serif;
-	position: absolute;
-	bottom: 10%;
-	width: 800px;
-	height: 10px;
-	margin-left: -12% !important;
-}
 
 .container#square {
 	width: 600px;
@@ -1939,15 +1930,7 @@ table {
 	#copiar {
 		margin-left: -89px;
 	}
-	#eventpoint {
-		font-style: italic;
-		font-family: Raleway, sans-serif;
-		position: absolute;
-		width: auto;
-		height: auto;
-		bottom: -24%;
-		margin-left: 3% !important;
-	}
+	
 	#panel {
 		margin-left: 21px;
 	}
@@ -2504,6 +2487,16 @@ table {
 		text-align: center;
 		margin-bottom: 12%;
 	}
+	.user-delete{
+		font-size: 15px;
+		line-height: 24px;
+	}
+	#movil {
+		opacity: 1;
+	}
+	.preferences{
+		margin-top: 56px;
+	}
 }
 
 	/* IPHONE X */
@@ -2518,15 +2511,7 @@ table {
 	#titleTerms {
 		margin-top: -9px;
 	}
-	#eventpoint {
-		font-style: italic;
-		font-family: Raleway, sans-serif;
-		position: absolute;
-		width: auto;
-		height: auto;
-		bottom: 10%;
-		margin-left: 3% !important;
-	}
+	
 	.center-form-create {
 		margin-top: 5% !important;
 		margin-left: -4% !important;
@@ -2795,6 +2780,10 @@ table {
 		margin-left: 39% !important;
 		margin-bottom: 8%;
 	}
+	.user-delete{
+		font-size: 15px;
+		line-height: 23px;
+	}
 }
 
 	/* IPAD */
@@ -2845,10 +2834,7 @@ table {
 			margin-top: 17%;
 			margin-bottom: 20%
 		}
-		#eventpoint {
-			bottom: 7%;
-			margin-left: -10% !important;
-		}
+		
 		.discount-no-price {
 			margin-right: 12% !important;
 		}
@@ -3422,15 +3408,15 @@ table {
 			margin-top: 13%;
 		}
 
-		
+		#movil {
+			opacity: 1;
+		}
 	
 	}
 
 	/* PIXEL 2 */
 	@media only screen and (min-width: 411px) and (max-width: 731px) {
-		#eventpoint {
-			bottom: -4%;
-		}
+		
 
 		#send-buttons-pw {
 			width: 130px;
@@ -3594,7 +3580,7 @@ table {
 		
 		#send-buttons {
 			margin-bottom: 30% !important;
-			margin-left: 85%;
+			margin-left: 85%!important;
 		}
 		.send-btn {
 			margin-left: 155% !important;
@@ -3708,16 +3694,17 @@ table {
 			margin-bottom: -58% !important;
 			margin-left: 7% !important;
 		}
+		
 	}
 
 	/* IPAD Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
 		#onlyIpadPro{
-			margin-left: 29px!important;
+			margin-left: -27px!important;
 		}
 		#panel {
 			width: 68%;
-			margin-left: 358px;
+			margin-left: 267px;
 		}
 		.table-generic {
 			width: 112%;
@@ -3732,6 +3719,12 @@ table {
 		#results-ipad {
 			margin-left: 155px;
 			margin-top: 33px;
+		}
+		.preferences{
+			margin-top: 65px!important;
+		}
+		.sidenav{
+			width: 209px;
 		}
 	}
 
@@ -3749,6 +3742,7 @@ table {
 			margin-bottom: -57%;
 			margin-left: 7%;
 		}
+		
 	}
 
 	/* SAMSUNG S5 */
@@ -3865,6 +3859,14 @@ table {
 			margin-top: 4px;
 			margin-left: 26%;
 		}
+		.user-delete{
+			font-size: 20px;
+			line-height: 28px;
+		}
+	
+		#send-buttons{
+			margin-left: 40%;
+		}
 	}
 
 	/* IPHONE 6,7,8 */
@@ -3886,6 +3888,7 @@ table {
 			margin-top: 4px;
 			margin-left: 28%;
 		}
+	
 	}
 
 	/* 1680x1050 */
