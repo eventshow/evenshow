@@ -35,6 +35,7 @@ addons:
     packages:
       - postgresql-12
       - postgresql-client-12
+sudo: false
 branches:
   only:
     - master
