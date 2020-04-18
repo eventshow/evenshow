@@ -7,7 +7,7 @@
 
 
 {% if user.is_authenticated %}
-<img class="img-detail-auth" alt="imagen del evento" src="{{object.picture.url}}">
+<img class="img-detail-auth" id="img-detail-auth" alt="imagen del evento" src="{{object.picture.url}}">
 {% else %}
 <img class="img-detail" alt="imagen del evento" src="{{object.picture.url}}">
 {% endif %}
