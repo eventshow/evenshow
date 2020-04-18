@@ -4031,7 +4031,10 @@ table {
 	/* PIXEL 2 LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape){
         .search {
-            margin-right: 0% !important;
+            margin-right: 25% !important;
+        }
+        .btn-submit {
+            width: 50% !important;
         }
         .search-result {
             margin-left: 6% !important;
@@ -4057,7 +4060,7 @@ table {
             margin-left: -37%;
         }
         .form-search {
-            margin-left: 8% !important;
+            width: 78%;
         }
         .sidenav.sidenav-fixed {
             margin-top: 6.5% !important;
