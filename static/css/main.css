@@ -877,23 +877,7 @@ nav ul a:hover {
     margin-top: -6%;
 }
 
-.subir-prof {
-    background: #B6244D;
-    font-family: Raleway, sans-serif;
-    color: #fff;
-    padding-top: 5px;
-    padding-left: 9px;
-    padding-bottom: 5px;
-    margin-right: 45%;
-    border: 1px solid #FFF !important;
-    border-radius: 12px !important;
-    margin-top: 5.5%;
-    font-weight: normal;
-}
 
-.subir-prof:hover{
-	color:#fff;
-}
 
 	 
 	.subir:hover{
@@ -985,7 +969,7 @@ p.description {
 	font-family: Raleway, sans-serif;
 }
 
-#picture-box {
+.picture-box {
 	width: 104% !important;
 	height: 60px !important;
 	margin-bottom: 30px !important;
@@ -2035,17 +2019,18 @@ table {
 		font-size: 12px;
 	}
 
-	#picture-box {
-		width: 130% !important;
+	.picture-box {
+		width: 105% !important;
 		height: 60px !important;
 		color: #5D5E5E !important;
 		border: 1px solid #B6244D !important;
 		border-radius: 12px !important;
 		padding-left: 4% !important;
-		margin-left: -15% !important;
+		margin-left: -3% !important;
 		font-family: Raleway, sans-serif;
 		font-size: 12px;
 	}
+
 	#iphone-left {
 		margin-left: -10% !important;
 	}
@@ -2558,17 +2543,18 @@ table {
 		font-size: 14px;
 	}
 
-	#picture-box {
-		width: 130% !important;
-		height: 60px !important;
-		color: #5D5E5E !important;
-		border: 1px solid #B6244D !important;
-		border-radius: 12px !important;
-		padding-left: 4% !important;
-		margin-left: -17% !important;
-		font-family: Raleway, sans-serif;
+	.picture-box {
+    	width: 105% !important;
+    	height: 60px !important;
+    	color: #5D5E5E !important;
+    	border: 1px solid #B6244D !important;
+    	border-radius: 12px !important;
+    	padding-left: 4% !important;
+    	margin-left: -3% !important;
+    	font-family: Raleway, sans-serif;
 		font-size: 14px;
 	}
+
 	.description {
 		width: 105% !important;
 		height: auto;
@@ -2887,7 +2873,7 @@ table {
 			font-size: 14px;
 		}
 
-		#picture-box {
+		.picture-box {
 			width: 109% !important;
 			height: 60px !important;
 			color: #5D5E5E !important;
@@ -3212,7 +3198,7 @@ table {
 		}
 
 		#edit-event label{
-			margin-left: -12% !important;
+			margin-left: -12%;
 		}
 
 		.ipad-bio{
@@ -3655,7 +3641,7 @@ table {
 			width: 100% !important;
 			object-fit: cover;
 			z-index: -1;
-			margin-top: -68px;
+			margin-top: -68px !important;
 			height: 512px;
 		}
 
@@ -3981,6 +3967,7 @@ table {
 
 		.panel-resp {
 			opacity: 1;
+			padding-top: 7%;
 		}
 
 		.preferences {
@@ -3989,6 +3976,208 @@ table {
 
 		ul:not(.browser-default) {
 			padding-left: 10px;
+		}
+
+		.form-home {
+			margin-left: -9px !important;
+			margin-top: 7%;
+		}
+
+		.location-prov input {
+			width: 98% !important;
+			padding-right: 34% !important;
+		}
+
+		.form-eventshow input {
+			width: 96% !important;
+			height: 60px !important;
+			margin-bottom: 30px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 3% !important;
+			font-family: Raleway, sans-serif;
+		}
+
+		.preferences {
+			margin-top: 53px !important;
+		}
+
+		#create-event {
+			margin-left: 47px !important;
+			margin-bottom: 14% !important;
+			padding-bottom: 2% !important;
+			margin-right: -5%;
+		}
+
+		#create-event input {
+			width: 110% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -8% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
+
+		#iphone-left {
+			margin-left: -5% !important;
+		}
+
+		#iphone-right {
+			margin-right: -5% !important;
+		}
+
+		#send-buttons {
+			margin-bottom: 30%;
+			margin-left: 175%;
+		}
+
+		.picture-box {
+			width: 115% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -8% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
+		.subir {
+			background: #B6244D;
+			font-family: Raleway, sans-serif;
+			color: #fff;
+			padding-top: 7px;
+			padding-left: 9px;
+			padding-right: 9px;
+			padding-bottom: 7px;
+			margin-left: 70%;
+			margin-right: 5%;
+			border: 1px solid #FFF !important;
+			border-radius: 12px !important;
+			margin-top: 3.5%;
+			font-weight: normal;
+		}
+
+		.send-btn {
+			margin-left: 208% !important;
+		}
+
+		.img-detail-auth {
+			margin-top: -73px !important;
+			width: 100% !important;
+			height: 457px;
+			object-fit: cover;
+		}
+
+		#details-event-landscape {
+			margin-left: 35% !important;
+			margin-top: -4% !important;
+		}
+
+		.button-detail-auth-price {
+			margin-left: -61% !important;
+			margin-bottom: 9%;
+		}
+
+		.commission {
+			margin-left: -48% !important;
+		}
+
+		#map-detail-landscape {
+			width: 520px !important;
+			height: 270px !important;
+		}
+
+		.img-detail-bio {
+			margin-top: 11px !important;
+			margin-left: 34% !important;
+			border-radius: 50%;
+		}
+
+		#img-detail {
+			margin-top: 11px !important;
+			margin-left: 34% !important;
+		}
+
+		#rating-host-landscape {
+			margin-left: 42% !important;
+		}
+
+
+		.img-comment-detail {
+			margin-left: 16% !important;
+			border-radius: 50%;
+		}
+
+		.comments {
+			margin-top: 35% !important;
+		}
+
+		.comment-detail {
+			margin-left: 39% !important;
+			margin-bottom: 30%;
+		}
+
+		.name-host-detail {
+			margin-left: 39% !important;
+			margin-top: -30% !important;
+			margin-bottom: 2%;
+			margin-right: 2%;
+		}
+
+		#edit-profile {
+			margin-left: -25%;
+			margin-top: 4%;
+			padding-right: 10% !important;
+			padding-bottom: 3% !important;
+			padding-top: 7% !important;
+		}
+
+		#send-buttons-pw-conf {
+			width: 130px;
+			height: 40%;
+			margin-left: -7%;
+			margin-top: 10%;
+			padding-bottom: 30%;
+			margin-bottom: 65px !important;
+			align-content: center;
+			font-size: 15px;
+			padding-top: 0px;
+		}
+
+		#edit-event {
+			margin-left: 4px !important;
+			margin-bottom: 14% !important;
+			padding-bottom: 2% !important;
+			margin-right: -2%;
+		}
+
+		.landscape-right{
+			margin-right: -5% !important;
+		}
+
+		#picture-box-ip{
+			width: 106% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -2% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
+		#send-buttons-data {
+			margin-bottom: 3% !important;
+			margin-left: 25% !important;
+			margin-top: 60% !important;
 		}
 	}
 
@@ -4006,6 +4195,95 @@ table {
             margin-top: 64px;
         }
 
+		.img-detail-auth {
+			margin-top: -80px !important;
+			width: 100% !important;
+			height: 767px;
+			object-fit: cover;
+		}
+
+		.rectangle-info-title {
+			position: absolute;
+			z-index: 1;
+			margin-left: 5%;
+			height: 93px;
+			border-radius: 8px;
+			margin-top: -33%;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -46%;
+			margin-bottom: 11%;
+		}
+
+		.commission {
+			margin-top: 5%;
+			text-align: left;
+			margin-right: 37px;
+			margin-left: -14%;
+		}
+
+		#img-detail {
+			margin-top: 11px !important;
+			margin-left: 2% !important;
+			border-radius: 50%;
+		}
+
+		.ipad-host-title {
+			margin-top: 0% !important;
+			margin-left: 4%;
+		}
+
+		.comments {
+			margin-top: 14%;
+		}
+
+		.img-comment-detail {
+			margin-left: 37%;
+			margin-top: 2%;
+			width: 100px;
+			border-radius: 50%;
+		}
+
+		.picture-box {
+			width: 113% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -7% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
+		.subir-iphone {
+			background: #B6244D;
+			font-family: Raleway, sans-serif;
+			color: #fff;
+			padding-top: 3px;
+			padding-left: 9px;
+			padding-right: 9px;
+			padding-bottom: 3px;
+			margin-left: 58% !important;
+			margin-right: 2% !important;
+			border: 1px solid #FFF !important;
+			border-radius: 12px !important;
+			margin-top: 1.5%;
+			font-weight: normal;
+		}
+
+		#info {
+			margin-left: -1%;
+			margin-top: -18%;
+			font-size: 11px;
+		}
+
+		.center-profile {
+			width: 90% !important;
+			margin-left: 6% !important;
+		}
 	}
 
 	/* IPAD LANDSCAPE*/
@@ -4015,7 +4293,133 @@ table {
 
 	/* PIXEL 2 LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape){
+		.pixel-footer {
+			margin-left: 1%;
+			color: white;
+		}
 
+		.form-eventshow {
+			margin-left: 14%;
+			background: #FFF;
+			width: 175%;
+			border-radius: 15px;
+			border: 1px solid #B6244D;
+			padding: 25px 40px 90px;
+		}
+
+		.center-form-create {
+			margin-top: 5% !important;
+			margin-left: 1% !important;
+		}
+
+		#create-event input {
+			width: 113% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -9% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
+		#iphone-left {
+			margin-left: -6%;
+		}
+
+		#iphone-right {
+			margin-right: -6%;
+		}
+
+		#send-buttons {
+			margin-bottom: 30% !important;
+			margin-left: -34%;
+		}
+
+		.grid-example.col.m4.s12.start_day {
+			margin-left: -6%;
+			margin-right: 12%;
+		}
+
+		.grid-example.col.m4.s12.language {
+			margin-right: -5%;
+			margin-left: 12%;
+		}
+
+		.picture-box {
+			width: 117% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -9% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
+		.send-btn {
+			margin-left: -7% !important;
+		}
+
+		#details-event-landscape {
+			margin-top: 2%;
+			margin-right: 30%;
+		}
+
+		.title-detail {
+			margin-left: -37%;
+			width: 500px;
+		}
+
+		.button-detail-auth-price {
+			margin-top: 12%;
+			margin-left: -12%;
+			margin-bottom: 11%;
+		}
+
+		.commission {
+			margin-top: 5%;
+			text-align: left;
+			margin-left: -68%;
+			margin-right: -60% !important;
+		}
+
+		#rating-host-landscape {
+			margin-left: 21% !important;
+		}
+
+		#map-detail-landscape {
+			width: 440px !important;
+			height: 290px !important;
+		}
+
+		.img-comment-detail {
+			margin-left: 13%;
+			margin-top: 2%;
+			width: 100px;
+		}
+
+		.user-comment {
+			margin-left: 40% !important;
+			margin-top: -5.5% !important;
+		}
+
+		#comment-detail {
+			margin-left: 39% !important;
+			margin-bottom: 33%;
+		}
+
+		img#img-detail {
+			margin-top: 11px !important;
+			margin-left: 4.5% !important;
+		}
+
+		h1.title-section.ipad-host-title{
+			margin-top: 0% !important;
+    		margin-left: 4%;
+		}
 	}
 
 	/* IPHONE 6/7/8 PLUS LANDSCAPE*/

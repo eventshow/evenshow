@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="grid-example col s6">
-                            <div class="validate-input iphone-right" id="edit-event">
+                            <div class="validate-input iphone-right landscape-right" id="edit-event">
                                 <label>EMAIL</label>
                                 {{form.email}}
                                 <div class="form-errors">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="grid-example col m6 s12 center-profile">
+                        <div class="grid-example col s12 center-profile">
                             <div class="validate-input" id="edit-event">
                                 <label class="ipad-birth-label">FECHA DE NACIMIENTO</label>
                                 {{ profile_form.birthdate }}
@@ -71,11 +71,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="grid-example col m6 s12 center-profile ipad-input">
+                        <div class="grid-example col s12 center-profile ipad-input">
                             <div class="validate-input" id="edit-event">
                                 <label>IMAGEN</label>
-                                <div id="picture-box">
-                                    <label for="id_picture" class="subir-prof">
+                                <div class="picture-box" id="picture-box-ip">
+                                    <label for="id_picture" class="subir">
                                         Subir imagen
                                     </label>
                                     {{profile_form.picture}}
