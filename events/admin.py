@@ -33,7 +33,7 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    search_fields = ('user', 'token')
+    search_fields = ('user__username', 'token')
     list_display = ('user', 'birthdate', 'age', 'token',
                     'eventpoints', 'discount', 'avg_attendee_score', 'avg_host_score')
 
