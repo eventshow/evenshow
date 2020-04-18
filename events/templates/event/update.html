@@ -33,30 +33,31 @@
 </ul>
 <ul id="slide-out resp" class="sidenav sidenav-fixed preferences">
   {% if request.get_full_path == '/events/create' %}
-  <li>    <h2 class="panel-resp">Ofrece una experiencia</h2>
+  <li>
+    <h2 class="panel-resp">Ofrece una experiencia</h2>
   </li>
   {% else %}
   <h2 class="panel-resp">{{event.title}}</h2>
   {% endif %}
   <li class="part">
-    <h3><a class="sidenav-close active" href="#test1" onclick="showClickA()">¿Cómo será?</a></h3>
+    <h3><a class="sidenav-close active" href="#how" onclick="showClickA()">¿Cómo será?</a></h3>
   </li>
   <li class="part">
-    <h3><a class= "sidenav-close" href="#test2" onclick="showClickB()">¿Cuándo será?</a></h3>
+    <h3><a class="sidenav-close" href="#when" onclick="showClickB()">¿Cuándo será?</a></h3>
   </li>
   <li class="part">
-    <h3><a class= "sidenav-close" href="#test3" onclick="showClickC()">Extra</a></h3>
+    <h3><a class="sidenav-close" href="#extra" onclick="showClickC()">Extra</a></h3>
   </li>
 </ul>
 
-<a id="movil" href="#" data-target="slide-out resp"
-        class="btn-floating btn-large sidenav-trigger panel-resp"><em id="menu-movil"
-          class="material-icons">create</em></a>
+<a id="movil" href="#" data-target="slide-out resp" class="btn-floating btn-large sidenav-trigger panel-resp"><em
+    id="menu-movil" class="material-icons">create</em></a>
 {% if request.get_full_path == '/events/create' %}
 
 <div class="container">
   <div class="center-form-create">
-    <form class="form-eventshow-create" id="create-event" method="post" enctype="multipart/form-data" action="{% url 'create_event' %}">
+    <form class="form-eventshow-create" id="create-event" method="post" enctype="multipart/form-data"
+      action="{% url 'create_event' %}">
       {% csrf_token %}
       <div class="row">
         <div class="col s12">
@@ -68,7 +69,7 @@
       <div class="container">
         <div class="center-form-create">
           <form class="form-eventshow-create" id="create-event" method="post"
-            action="{% url 'update_event' event.pk %}">
+            action="{% url 'update_event' object.pk %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
               <div class="col s12">
@@ -134,8 +135,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="grid-example col m3 offset-m10 s3 offset-s4">
-                      <a id="send-buttons" href="#test2" onclick="showClickB()"
-                        class="btn-large">Siguiente</a>
+                      <a id="send-buttons" href="#test2" onclick="showClickB()" class="btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
@@ -187,8 +187,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="grid-example col m3 offset-m10 s3 offset-s4">
-                      <a id="send-buttons" href="#test3" onclick="showClickC()"
-                        class="btn-large">Siguiente</a>
+                      <a id="send-buttons" href="#test3" onclick="showClickC()" class="btn-large">Siguiente</a>
                     </div>
                   </div>
                 </div>
@@ -224,12 +223,12 @@
                   <div class="grid-example col s12">
                     <label>IMAGEN DEL EVENTO</label>
                     <div id="picture-box">
-                    <label for="id_picture" class="subir">
-                      Subir imagen
-                  </label>
-                    {{ form.picture }}
-                  <div id="info"></div>
-                </div>
+                      <label for="id_picture" class="subir">
+                        Subir imagen
+                      </label>
+                      {{ form.picture }}
+                      <div id="info"></div>
+                    </div>
                     <div class="form-errors">
                       {{ form.picture.errors }}
                     </div>
@@ -263,14 +262,14 @@
       <script>
 
         function ValidaLongitud(campo, longitudMaxima) {
-            try {
-                if (campo.value.length > (longitudMaxima - 1))
-                    return false;
-                else
-                    return true;             
-            } catch (e) {
-                return false;
-            }
+          try {
+            if (campo.value.length > (longitudMaxima - 1))
+              return false;
+            else
+              return true;
+          } catch (e) {
+            return false;
+          }
         }
 
         function showClickA() {

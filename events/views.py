@@ -518,7 +518,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            #services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -903,7 +903,7 @@ class UserUpdateView(generic.UpdateView):
                         self).get_context_data(**kwargs)
         if self.request.POST:
             context['profile_form'] = self.profile_form_class(
-                self.request.POST, instance=self.object.profile)
+                self.request.POST, self.request.FILES, instance=self.object.profile)
         else:
             context['profile_form'] = self.profile_form_class(
                 instance=self.object.profile)

@@ -155,14 +155,14 @@ nav ul a:hover {
 /* IMG */
 
 .img-detail {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
 }
 
 .img-detail-auth {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
@@ -1054,10 +1054,10 @@ p.description {
 
     .form-search{
         margin-top: 7% !important;
-        margin-left: -10% !important;
+        margin-left: -7% !important;
     }
     .search{
-            margin-right: -6%;
+            margin-right: -8%;
     margin-top: 1%;
     }
 
@@ -1395,6 +1395,10 @@ label {
 	text-align: center;
 	padding: 13px 15px;
 	margin-left: 450px;
+}
+
+.button-event{
+	margin-left: -5% !important;
 }
 
 .comentario {
@@ -1857,6 +1861,10 @@ table {
 			margin-top: 12% !important;
 		}
 		
+	.button-event{
+		margin-left: -19% !important;
+	}
+
 	.title-name-terms {
 		font-size: 24px;
 	}
@@ -2804,13 +2812,28 @@ table {
 
 	/* IPAD */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+		.button-event{
+		margin-left: -25% !important;
+	}
+
+		.img-detail{
+			margin-top: -79px !important;
+			width: 100% !important;
+
+		}
+
 		#results-ipad {
 			margin-left: 814px;
 			margin-top: 33px;
 		}
 		.form-search {
-			margin-left: -7%;
-			margin-right: -4%;
+			margin-left: 7% !important;
+			margin-right: 0% !important;
+		}
+
+		.search{
+			margin-right: 13% !important;
 		}
 		.title-search {
 			margin-left: 44%;
@@ -3717,6 +3740,10 @@ table {
 
 	/* IPAD Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		.search {
+    margin-right: 61% !important;
+}
+
 		#onlyIpadPro{
 			margin-left: 29px!important;
 		}
@@ -3738,6 +3765,33 @@ table {
 			margin-left: 155px;
 			margin-top: 33px;
 		}
+
+			.img-detail{
+			margin-top: -11px !important;
+				width: 100% !important;
+
+		}
+
+		.img-detail-auth{
+			margin-top: -11px !important;
+			width: 100% !important;
+
+		}
+
+		.details-event-principal {
+   margin-top: -8% !important;
+    margin-left: 38% !important;
+}
+
+		.button-event {
+    margin-left: -31% !important;
+}
+
+		.sep-title{
+			margin-left: 60% !important;
+		}
+
+
 	}
 
 	/*  PIXEL 2XL*/
