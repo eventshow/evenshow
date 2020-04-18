@@ -1055,10 +1055,10 @@ p.description {
 
     .form-search{
         margin-top: 7% !important;
-        margin-left: -10% !important;
+        margin-left: -7% !important;
     }
     .search{
-            margin-right: -6%;
+            margin-right: -8%;
     margin-top: 1%;
     }
 
@@ -2824,8 +2824,12 @@ table {
 			margin-top: 33px;
 		}
 		.form-search {
-			margin-left: -7%;
-			margin-right: -4%;
+			margin-left: 7% !important;
+			margin-right: 0% !important;
+		}
+
+		.search{
+			margin-right: 13% !important;
 		}
 		.title-search {
 			margin-left: 44%;
@@ -3732,6 +3736,10 @@ table {
 
 	/* IPAD Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		.search {
+    margin-right: 61% !important;
+}
+
 		#onlyIpadPro{
 			margin-left: 29px!important;
 		}
