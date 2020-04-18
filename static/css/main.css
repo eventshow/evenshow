@@ -4015,8 +4015,42 @@ table {
 
 	/* PIXEL 2 LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape){
-
-	}
+        .search {
+            margin-right: 0%;
+        }
+        .title-search {
+            margin-left: 0%;
+        }
+        .text-left {
+            margin-left: 6%;
+        }
+        .list_search_result {
+            margin-left: -8% !important;
+        }
+        .login100-form {
+            width: 80% !important;
+            margin-right: 9%;
+            padding-right: 47px !important;
+        }
+        .panel-resp {
+            opacity: 1;
+        }
+        .form-eventshow-password {
+            width: 128%;
+            margin-left: -12%;
+            margin-bottom: -9%;
+            margin-top: -12%;
+        }
+        #name-host-title-del {
+            width: 170%;
+        }
+        #send-buttons-conf {
+            margin-left: -37%;
+        }
+        .form-search {
+            margin-left: 8% !important;
+        }
+    }
 
 	/* IPHONE 6/7/8 PLUS LANDSCAPE*/
 	@media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape){
@@ -4030,7 +4064,24 @@ table {
 
 	/*  PIXEL 2XL LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) and (orientation: landscape){
+	    .sidenav.sidenav-fixed {
+            margin-top: 0%;
+        }
+        .form-search {
+            margin-left: 11% !important;
+        }
+        .search {
+            margin-right: 20%;
+        }
+        .title-search {
+            margin-left: 256% !important;
+            width: 550%;
+        }
+        .list_search_result {
+            width:4.5%;
+        }
 	}
+
 
 	/* SAMSUNG S5 LANDSCAPE */
 	@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape){
