@@ -156,14 +156,14 @@ nav ul a:hover {
 /* IMG */
 
 .img-detail {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
 }
 
 .img-detail-auth {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
@@ -1398,6 +1398,10 @@ label {
 	margin-left: 450px;
 }
 
+.button-event{
+	margin-left: -5% !important;
+}
+
 .comentario {
 	width: 457px;
 	height: 183px;
@@ -1852,6 +1856,11 @@ table {
 
 	/* IPHONE 5/SE  */
 	@media only screen and (min-width: 320px) and (max-width: 568px) {
+
+	.button-event{
+		margin-left: -19% !important;
+	}
+
 	.title-name-terms {
 		font-size: 24px;
 	}
@@ -2799,6 +2808,17 @@ table {
 
 	/* IPAD */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+		.button-event{
+		margin-left: -25% !important;
+	}
+
+		.img-detail{
+			margin-top: -79px !important;
+			width: 100% !important;
+
+		}
+
 		#results-ipad {
 			margin-left: 814px;
 			margin-top: 33px;
@@ -3733,6 +3753,33 @@ table {
 			margin-left: 155px;
 			margin-top: 33px;
 		}
+
+			.img-detail{
+			margin-top: -11px !important;
+				width: 100% !important;
+
+		}
+
+		.img-detail-auth{
+			margin-top: -11px !important;
+			width: 100% !important;
+
+		}
+
+		.details-event-principal {
+   margin-top: -8% !important;
+    margin-left: 38% !important;
+}
+
+		.button-event {
+    margin-left: -31% !important;
+}
+
+		.sep-title{
+			margin-left: 60% !important;
+		}
+
+
 	}
 
 	/*  PIXEL 2XL*/
