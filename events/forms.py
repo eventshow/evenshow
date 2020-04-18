@@ -1,9 +1,12 @@
+import imghdr
+
 from datetime import datetime, date
 
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserChangeForm, UserCreationForm
+from django.contrib.auth.password_validation import password_validators_help_texts
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.utils.timezone import now
@@ -44,7 +47,7 @@ class EventForm(forms.ModelForm):
     min_age = forms.IntegerField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
     price = forms.DecimalField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-eventshow', 'placeholder': 'años', 'name': 'min_age'}))
+        attrs={'class': 'form-eventshow', 'placeholder': 'precio', 'name': 'min_age'}))
     location_city = forms.CharField(required=False,
                                     widget=forms.TextInput(attrs={'placeholder': 'Sevilla', 'name': 'location_city'}))
     location_street = forms.CharField(required=False, widget=forms.TextInput(
@@ -60,8 +63,8 @@ class EventForm(forms.ModelForm):
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-    picture = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': 'https://'}))
+    picture = forms.ImageField(required=False, widget=forms.ClearableFileInput(
+        attrs={'style': 'display: none;'}))
 
     class Meta:
         model = Event
@@ -73,7 +76,6 @@ class EventForm(forms.ModelForm):
                                             'onkeypress': 'return ValidaLongitud(this, 100);'}),
             'description': forms.TextInput(
                 attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
-            'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
             'capacity': forms.NumberInput(
                 attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
             'min_age': forms.NumberInput(
@@ -160,8 +162,15 @@ class EventForm(forms.ModelForm):
 
     def clean_picture(self):
         picture = self.cleaned_data.get('picture')
+
         if not picture:
-            raise ValidationError('Inserte la imagen')
+            raise ValidationError('Inserte una imagen')
+        else:
+            if imghdr.what(picture) not in settings.IMAGE_TYPES:
+                raise ValidationError(
+                    'Formato no soportado, elija entre: JPG, JPEG, PNG')
+            if picture.size > 5000000:
+                raise ValidationError('El tamaño máximo soportado es de 5 MB')
         return picture
 
     def clean(self):
@@ -225,7 +234,7 @@ class RegistrationForm(UserCreationForm):
         input_formats=settings.DATE_INPUT_FORMATS
     )
     password1 = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': "contraseña"}))
+        attrs={'placeholder': "contraseña"}), help_text=password_validators_help_texts())
     password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "confirmación contraseña"}))
     friend_token = forms.CharField(required=False, widget=forms.TextInput(
@@ -289,7 +298,7 @@ class PasswordUpdateForm(PasswordChangeForm):
     old_password = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "antigua contraseña"}))
     new_password1 = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': "nueva contraseña"}))
+        attrs={'placeholder': "nueva contraseña"}), help_text=password_validators_help_texts())
     new_password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "confirmación nueva contraseña"}))
 
@@ -311,8 +320,8 @@ class ProfileForm(forms.ModelForm):
     )
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
-    picture = forms.URLField(required=False, widget=forms.URLInput(
-        attrs={'placeholder': "https://"}))
+    picture = forms.ImageField(required=False, widget=forms.ClearableFileInput(
+        attrs={'style': 'display: none;'}))
 
     class Meta:
         model = Profile
@@ -322,7 +331,7 @@ class ProfileForm(forms.ModelForm):
         bio = self.cleaned_data.get('bio')
         if not bio and self.initial.get('bio'):
             raise ValidationError(
-                'Una vez introducida la bio no se puede dejar en blanco')
+                'Una vez introducido el campo "sobre mí" no se puede dejar en blanco')
         return bio
 
     def clean_birthdate(self):
@@ -331,6 +340,15 @@ class ProfileForm(forms.ModelForm):
             raise ValidationError(
                 'La fecha de cumpleaños debe ser en el pasado')
         return birthdate
+
+    def clean_picture(self):
+        picture = self.cleaned_data.get('picture', None)
+        if picture and imghdr.what(picture) not in settings.IMAGE_TYPES:
+            raise ValidationError(
+                'Formato no soportado, elija entre: JPG, JPEG, PNG')
+        if picture and picture.size > 5000000:
+            raise ValidationError('El tamaño máximo soportado es de 5 MB')
+        return picture
 
     def save(self, user=None):
         profile = super(ProfileForm, self).save(commit=False)
@@ -397,10 +415,10 @@ class SearchFilterForm(forms.Form):
         input_formats=('%H:%M',)
     )
 
-    max_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+    max_price = forms.DecimalField(min_value=1, decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    min_price = forms.DecimalField(min_value=0.00, decimal_places=2, required=False,
+    min_price = forms.DecimalField(min_value=0, decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
     def clean_date(self):
@@ -416,6 +434,13 @@ class SearchFilterForm(forms.Form):
         if not location_join.isalpha() and location:
             raise ValidationError('Introduzca solo letras y espacios')
         return location
+
+    def clean_max_price(self):
+        max_price = self.cleaned_data.get('max_price')
+        if max_price and float(max_price) < 1:
+            raise ValidationError(
+                'El precio máximo no puede ser menor que 1')
+        return max_price
 
     def clean(self):
         min_price = self.cleaned_data.get('min_price')

@@ -7,6 +7,7 @@ from datetime import datetime, date, timedelta
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.core.files import File
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg, Q
@@ -42,24 +43,24 @@ def get_default_category():
 def get_sentinel_user():
     user = User.objects.get_or_create(username='deleted')[0]
     Profile.objects.get_or_create(
-        user=user, picture='https://i.imgur.com/rvCgR1E.png', birthdate='1970-01-01')
+        user=user, picture='profile/deleted.png', birthdate='1970-01-01')
     return user
 
 
 class Profile(models.Model):
     PROFILE_IMAGE_FILES = [
-        'https://i.imgur.com/DHM869r.png',
-        'https://i.imgur.com/nPuyNCw.png',
-        'https://i.imgur.com/zcvvJuz.png',
-        'https://i.imgur.com/JoIFIzC.png',
-        'https://i.imgur.com/q5WVAgm.png',
-        'https://i.imgur.com/L8OjFOg.png',
-        'https://i.imgur.com/V0Vx876.png',
-        'https://i.imgur.com/yejzBet.png',
-        'https://i.imgur.com/Gcw4VIN.png',
-        'https://i.imgur.com/Kt7wGfh.png',
-        'https://i.imgur.com/bq3Bb34.png',
-        'https://i.imgur.com/smMeZJA.png',
+        'seed/profile/DHM869r.png',
+        'seed/profile/nPuyNCw.png',
+        'seed/profile/zcvvJuz.png',
+        'seed/profile/JoIFIzC.png',
+        'seed/profile/q5WVAgm.png',
+        'seed/profile/L8OjFOg.png',
+        'seed/profile/V0Vx876.png',
+        'seed/profile/yejzBet.png',
+        'seed/profile/Gcw4VIN.png',
+        'seed/profile/Kt7wGfh.png',
+        'seed/profile/bq3Bb34.png',
+        'seed/profile/smMeZJA.png',
     ]
     TOKEN_LENGTH = 8
 
@@ -67,8 +68,8 @@ class Profile(models.Model):
         User, related_name="profile", on_delete=models.CASCADE)
     location = models.CharField(
         'Location', max_length=250, blank=True, null=True)
-    picture = models.URLField(
-        'Picture url', blank=True, null=True, default=random.choice(PROFILE_IMAGE_FILES))
+    picture = models.ImageField(
+        'Picture url', upload_to='profile', default=random.choice(PROFILE_IMAGE_FILES), blank=True, null=True)
     birthdate = models.DateField('Birthdate')
     token = models.CharField('Personal token', max_length=8, editable=False)
     eventpoints = models.PositiveIntegerField(
@@ -128,7 +129,7 @@ class Category(models.Model):
 class Event(Common):
     title = models.CharField('Title', max_length=250)
     description = models.TextField('Description')
-    picture = models.URLField('Picture url')
+    picture = models.ImageField('Picture url', upload_to='event')
 
     location_city = models.CharField('City', max_length=250)
     location_street = models.CharField('Street', max_length=250)

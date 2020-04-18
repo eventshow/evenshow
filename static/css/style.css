@@ -64,17 +64,22 @@
   margin-right: -60%;
 }
 
+.comments-title-no{
+  margin-right: 270%;
+    margin-left: -318% !important;
+}
+
 /* IMG */
 
 .img-detail {
-  width: 72% !important;
+  width: 72% ;
   height: 758px;
   object-fit: cover;
   z-index: -1;
 }
 
 .img-detail-auth {
-  width: 72% !important;
+  width: 72%;
   height: 758px;
   object-fit: cover;
   z-index: -1;
@@ -276,8 +281,6 @@
 
 .commission {
   margin-top: 5%;
-  text-align: left;
-  margin-right: 37px;
 }
 
 .price-detail {
@@ -627,9 +630,6 @@ label {
     height: 518px;
   }
 
-  .commission {
-    margin-left: -27%;
-  }
 
   .img-detail-auth {
     width: 100% !important;
@@ -700,10 +700,12 @@ label {
   }
 
   .modal-mov {
-    margin-top: 6%;
-    width: 90%;
-    height: 71px;
-    font-size: 18px;
+  margin-top: 6%;
+    width: 70%;
+    height: 60px;
+    font-size: 25px;
+    margin-left: -43%;
+
   }
 
   .name-host-rating {
@@ -1067,11 +1069,13 @@ label {
 
 /* iPad */
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
   .form-search {
     margin-left: -7%;
     margin-right: -4%;
   }
+
+
 
   .title-search {
     margin-left: 44%;
@@ -1323,6 +1327,10 @@ label {
     height: 346px !important;
     border: 0;
   }
+
+  .sep-title{
+    margin-left: 57%;
+  }
 }
 
 /* PIXEL 2 */
@@ -1473,7 +1481,6 @@ label {
   }
 }
 
-/* iPad Pro */
 
 /*  PIXEL 2XL*/
 

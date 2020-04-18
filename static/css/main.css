@@ -4,13 +4,12 @@
 
 .title-search {
 	color: #5D5E5E !important;
-	margin-left: 14%;
 }
 
-.title-search-result {
+.search-result {
 	color: #5D5E5E !important;
-	margin-left: -2%;
-	margin-top: 6%;
+	margin-left: 5%;
+	margin-bottom: 3%;
 }
 
 .terminos {
@@ -156,14 +155,14 @@ nav ul a:hover {
 /* IMG */
 
 .img-detail {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
 }
 
 .img-detail-auth {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
@@ -394,6 +393,8 @@ nav ul a:hover {
 	text-align: left;
 	background-color: white;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+	margin-right: 35%;
+
 }
 
 .button-detail {
@@ -635,6 +636,16 @@ nav ul a:hover {
 	font-weight: 600;
 }
 
+
+.user-delete{
+	font-size: 30px;
+	color: #5D5E5E !important;
+	margin-top: 10%;
+	text-align: center;
+	font-weight: 600;
+	line-height: 44px;
+}
+
 .form-eventshow-confirm-delete {
 	background: #FFF;
 	align-content: center;
@@ -651,7 +662,6 @@ nav ul a:hover {
 
 #send-buttons {
 	margin-bottom: 30% !important;
-	margin-top: -52% !important;
 	margin-left: -45%;
 }
 
@@ -663,6 +673,7 @@ nav ul a:hover {
 	height: 100px;
 	margin-left: 68%;
 	margin-top: -10% !important;
+	border-radius: 50%;
 }
 
 #send-buttons-data {
@@ -683,7 +694,7 @@ nav ul a:hover {
 	margin-top: 10%;
 	margin-bottom: 65px !important;
 	text-align: center !important;
-	font-size: 18px;
+	font-size: 17px;
 	padding-top: 13px;
 }
 
@@ -695,8 +706,17 @@ nav ul a:hover {
 	padding-bottom: 10%;
 	margin-bottom: 65px !important;
 	align-content: center;
-	font-size: 18px;
+	font-size: 17px;
 	padding-top: 13px;
+}
+.delete-yes{
+	padding-left: 32px !important;
+	padding-right: 32px !important;
+	font-size: 16px;
+}
+.button-delete{
+	margin-top: 5%;
+	margin-bottom: 5%;
 }
 
 #send-buttons-pw-conf2 {
@@ -835,6 +855,50 @@ nav ul a:hover {
 	display: block !important;
 }
 
+
+.subir {
+    background: #B6244D;
+    font-family: Raleway, sans-serif;
+    color: #fff;
+    padding-top: 5px;
+    padding-left: 9px;
+    padding-bottom: 5px;
+	margin-left: 70%;
+    margin-right: 5%;
+	border: 1px solid #FFF !important;
+	border-radius: 12px !important;
+	margin-top: 2.5%;
+	font-weight: normal;
+}
+
+#info {
+    margin-left: 30%;
+    margin-top: -6%;
+}
+
+.subir-prof {
+    background: #B6244D;
+    font-family: Raleway, sans-serif;
+    color: #fff;
+    padding-top: 5px;
+    padding-left: 9px;
+    padding-bottom: 5px;
+    margin-right: 45%;
+    border: 1px solid #FFF !important;
+    border-radius: 12px !important;
+    margin-top: 5.5%;
+    font-weight: normal;
+}
+
+.subir-prof:hover{
+	color:#fff;
+}
+
+	 
+	.subir:hover{
+		color:#fff;
+	}
+
 #create-event {
 	margin-left: 35px !important;
 	margin-bottom: 14% !important;
@@ -920,6 +984,19 @@ p.description {
 	font-family: Raleway, sans-serif;
 }
 
+#picture-box {
+	width: 104% !important;
+	height: 60px !important;
+	margin-bottom: 30px !important;
+	color: #5D5E5E !important;
+	border: 1px solid #B6244D !important;
+	border-radius: 12px !important;
+	padding-left: 4% !important;
+	margin-left: -2.5% !important;
+	font-family: Raleway, sans-serif;
+}
+
+
 #create-event textarea {
 	width: 105% !important;
 	height: auto;
@@ -977,10 +1054,10 @@ p.description {
 
     .form-search{
         margin-top: 7% !important;
-        margin-left: -10% !important;
+        margin-left: -7% !important;
     }
     .search{
-            margin-right: -6%;
+            margin-right: -8%;
     margin-top: 1%;
     }
 
@@ -1320,6 +1397,10 @@ label {
 	margin-left: 450px;
 }
 
+.button-event{
+	margin-left: -5% !important;
+}
+
 .comentario {
 	width: 457px;
 	height: 183px;
@@ -1531,7 +1612,7 @@ label {
 }
 
 .table-generic {
-	width: 90%;
+	width: 103%;
 	text-align-last: center;
 	margin: auto;
 }
@@ -1774,6 +1855,16 @@ table {
 
 	/* IPHONE 5/SE  */
 	@media only screen and (min-width: 320px) and (max-width: 568px) {
+
+		.search-result{
+			margin-bottom: 12% !important;
+			margin-top: 12% !important;
+		}
+		
+	.button-event{
+		margin-left: -19% !important;
+	}
+
 	.title-name-terms {
 		font-size: 24px;
 	}
@@ -1782,6 +1873,10 @@ table {
 		width: 100%;
 		margin-right: 26% !important;
 	}
+
+	.list_search_result {
+    margin-left: 0 !important;
+}
 	
 	#titleTermsAbout {
 		margin-top: -2px;
@@ -1808,12 +1903,7 @@ table {
 		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
 		-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0) !important;
 	}
-	.modal-mov {
-		margin-top: 6%;
-		width: 90%;
-		height: 71px;
-		font-size: 18px;
-	}
+
 	#titleTerms {
 		margin-top: -2px;
 		margin-bottom: 75px;
@@ -1825,6 +1915,11 @@ table {
 		margin-top: 15px;
 		margin-bottom: 15px;
 	}
+
+	.search{
+		margin-right: 14%;
+	}
+
 	#paddinButton2 {
 		margin-top: -1px;
 	}
@@ -1952,6 +2047,18 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 12px;
 	}
+
+	#picture-box {
+		width: 130% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -15% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px;
+	}
 	#iphone-left {
 		margin-left: -10% !important;
 	}
@@ -1963,7 +2070,6 @@ table {
 	}
 	#send-buttons {
 		margin-bottom: 30% !important;
-		margin-top: -80% !important;
 	}
 	.send-btn {
 		margin-left: 25% !important;
@@ -2218,6 +2324,7 @@ table {
 		height: 100px;
 		margin-left: 15%;
 		margin-top: -3% !important;
+		border-radius: 50%;
 	}
 	.title-share-edit-pw {
 		margin-left: -3%;
@@ -2259,9 +2366,9 @@ table {
 		align-content: center;
 	}
 	.form-search {
-		margin-top: 80px;
-		margin-left: -17%;
-		width: 99%;
+	margin-top: 40px !important;
+    margin-left: 8% !important;
+    width: 82% !important;
 	}
 	.btn-submit {
 		width: 69% !important;
@@ -2453,6 +2560,18 @@ table {
 		width: auto;
 	}
 	#create-event input {
+		width: 130% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -17% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 14px;
+	}
+
+	#picture-box {
 		width: 130% !important;
 		height: 60px !important;
 		color: #5D5E5E !important;
@@ -2693,13 +2812,28 @@ table {
 
 	/* IPAD */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+		.button-event{
+		margin-left: -25% !important;
+	}
+
+		.img-detail{
+			margin-top: -79px !important;
+			width: 100% !important;
+
+		}
+
 		#results-ipad {
 			margin-left: 814px;
 			margin-top: 33px;
 		}
 		.form-search {
-			margin-left: -7%;
-			margin-right: -4%;
+			margin-left: 7% !important;
+			margin-right: 0% !important;
+		}
+
+		.search{
+			margin-right: 13% !important;
 		}
 		.title-search {
 			margin-left: 44%;
@@ -2780,6 +2914,19 @@ table {
 			font-family: Raleway, sans-serif;
 			font-size: 14px;
 		}
+
+		#picture-box {
+			width: 109% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -7% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
 
 		#iphone-left{
 			margin-left: -4%;
@@ -3475,7 +3622,6 @@ table {
 		
 		#send-buttons {
 			margin-bottom: 30% !important;
-			margin-top: -80% !important;
 			margin-left: 85%;
 		}
 		.send-btn {
@@ -3594,6 +3740,10 @@ table {
 
 	/* IPAD Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		.search {
+    margin-right: 61% !important;
+}
+
 		#onlyIpadPro{
 			margin-left: 29px!important;
 		}
@@ -3615,6 +3765,33 @@ table {
 			margin-left: 155px;
 			margin-top: 33px;
 		}
+
+			.img-detail{
+			margin-top: -11px !important;
+				width: 100% !important;
+
+		}
+
+		.img-detail-auth{
+			margin-top: -11px !important;
+			width: 100% !important;
+
+		}
+
+		.details-event-principal {
+   margin-top: -8% !important;
+    margin-left: 38% !important;
+}
+
+		.button-event {
+    margin-left: -31% !important;
+}
+
+		.sep-title{
+			margin-left: 60% !important;
+		}
+
+
 	}
 
 	/*  PIXEL 2XL*/
@@ -3753,7 +3930,6 @@ table {
 	@media only screen and (min-width: 375px) and (max-width: 667px) {
 		#send-buttons {
 			margin-bottom: 30%;
-			margin-top: -80%;
 			margin-left: 30%;
 		}
 		.send-btn {
@@ -3781,6 +3957,10 @@ table {
             margin-left: 15% !important;
         }
 
+		.search-result{
+			margin-left: 11% !important;
+		}
+
 	}
 
 	/* 1920x1080*/
@@ -3794,19 +3974,29 @@ table {
         }
 	}
 
+		.search-result{
+			margin-left: 16% !important;
+		}
+
 
 
 	/* ------------------------------------------------------------------------------------------------- */
 
 	/* IPHONE 5/SE LANDSCAPE*/
     @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
-        .input--medium{
-            width: 86%!important;
-            margin-left: 18%;
-        }
-        .search{
-            margin-right: 4%
-        }
+
+
+
+		.form-search{
+			margin-left: 8.5% !important;
+			width: 10%;
+		}
+
+		.search{
+			margin-right: 30%;
+			width: 40% !important;
+		}
+
         .list_search_result {
             margin-left: -2.5% !important;
         }
@@ -3910,6 +4100,18 @@ table {
 		#eventpoint {
 			bottom: -141%!important;
 		}
+        .form-search {
+            margin-left: 10% !important;
+            width: 84%;
+        }
+        .search {
+            margin-right: 10%;
+        }
+
+        .sidenav.sidenav-fixed {
+            margin-top: 64px;
+        }
+
 	}
 
 	/* IPAD LANDSCAPE*/
@@ -3941,7 +4143,43 @@ table {
 			margin-bottom: 49px;
 		}
 
-	}
+	
+        .search {
+            margin-right: 25% !important;
+        }
+        .btn-submit {
+            width: 50% !important;
+        }
+        .search-result {
+            margin-left: 6% !important;
+        }
+        .login100-form {
+            width: 80% !important;
+            margin-right: 9%;
+            padding-right: 47px !important;
+        }
+        .panel-resp {
+            opacity: 1;
+        }
+        .form-eventshow-password {
+            width: 128%;
+            margin-left: -12%;
+            margin-bottom: -9%;
+            margin-top: -12%;
+        }
+        #name-host-title-del {
+            width: 170%;
+        }
+        #send-buttons-conf {
+            margin-left: -37%;
+        }
+        .form-search {
+            width: 78%;
+        }
+        .sidenav.sidenav-fixed {
+            margin-top: 6.5% !important;
+        }
+    }
 
 	/* IPHONE 6/7/8 PLUS LANDSCAPE*/
 	@media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape){
@@ -3982,7 +4220,25 @@ table {
 			margin-left: 41px;
 			margin-bottom: 75px;
 		}
+	    .sidenav.sidenav-fixed {
+            margin-top: 7.6%;
+        }
+        .form-search {
+            margin-left: 11% !important;
+        }
+        .search {
+            margin-right: 20%;
+        }
+
+        .search-result {
+            margin-left: -12%;
+        }
+        .title-search {
+            width: 100%;
+        }
+
 	}
+
 
 	/* SAMSUNG S5 LANDSCAPE */
 	@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape){

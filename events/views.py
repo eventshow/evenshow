@@ -189,6 +189,9 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             event.pk).count() >= event.capacity
         user_can_enroll = True
 
+        price = float(event.price*100)
+        fee = services.PaymentService().fee(price)
+
         if user.is_authenticated:
             context['user_is_enrolled'] = services.EnrollmentService(
             ).user_is_enrolled(event.pk, user)
@@ -203,9 +206,7 @@ class EventDetailView(generic.DetailView, MultipleObjectMixin):
             user_can_enroll = not context.get('user_is_enrolled') and context.get(
                 'user_is_old_enough') and not context.get('user_is_owner')
 
-            price = float(event.price*100)
             discounted_fee = services.PaymentService().fee_discount(price, user)
-            fee = services.PaymentService().fee(price)
 
             self.request.session['discounted_fee'] = discounted_fee
             self.request.session['fee'] = fee
@@ -395,7 +396,7 @@ class EventFilterFormView(generic.FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
-
+        print(data.get('min_price'))
         kwargs = {}
         kwargs['date'] = data.pop('date', None) or None
         kwargs['location'] = data.pop('location', None) or None
@@ -406,7 +407,6 @@ class EventFilterFormView(generic.FormView):
         self.request.session['form_values'] = self.request.POST
 
         kwargs = {key: val for key, val in kwargs.items() if val}
-
         if self.request.session.get('latitude'):
             if not bool(kwargs) or (bool(kwargs) and kwargs.get('location')):
                 del self.request.session['latitude']
@@ -440,7 +440,7 @@ class EventFilterListView(generic.ListView):
 
     def get_queryset(self):
         self.kwargs['start_day'] = self.kwargs.pop('date', None) or None
-        self.kwargs['location_city__icontains'] = self.kwargs.pop(
+        self.kwargs['location_city__unaccent__trigram_similar'] = self.kwargs.pop(
             'location', None) or None
         self.kwargs['start_time__gte'] = self.kwargs.pop(
             'start_hour', None) or None
@@ -518,7 +518,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            #services.EmailService().send_email(subject, body, [recipient])
+            services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -664,7 +664,7 @@ class RateHostView(generic.CreateView):
         ).event_host(self.kwargs.get('event_pk'))
         context['event_pk'] = self.kwargs.get('event_pk')
         context['user_img'] = models.Profile.objects.get(
-            user_id=user.id).picture
+            user_id=user.id).picture.url
         context['host_name'] = selectors.UserSelector(
         ).event_host(self.kwargs.get('event_pk'))
         context['event_title'] = models.Event.objects.get(
@@ -903,7 +903,7 @@ class UserUpdateView(generic.UpdateView):
                         self).get_context_data(**kwargs)
         if self.request.POST:
             context['profile_form'] = self.profile_form_class(
-                self.request.POST, instance=self.object.profile)
+                self.request.POST, self.request.FILES, instance=self.object.profile)
         else:
             context['profile_form'] = self.profile_form_class(
                 instance=self.object.profile)
@@ -916,11 +916,11 @@ class UserUpdateView(generic.UpdateView):
         self.object = self.get_object()
         form = self.form_class(request.POST, instance=self.object)
         profile_form = self.profile_form_class(
-            request.POST, instance=self.object.profile)
-
+            request.POST, request.FILES, instance=self.object.profile)
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
             profile_form.save(user)
+
             return redirect(self.get_success_url())
         else:
             return self.render_to_response(

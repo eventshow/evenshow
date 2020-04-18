@@ -7,19 +7,17 @@
 
 
 {% if user.is_authenticated %}
-<img class="img-detail-auth" alt="imagen del evento" src="{{object.picture}}">
+<img class="img-detail-auth" alt="imagen del evento" src="{{object.picture.url}}">
 {% else %}
-<img class="img-detail" alt="imagen del evento" src="{{object.picture}}">
+<img class="img-detail" alt="imagen del evento" src="{{object.picture.url}}">
 {% endif %}
-
-<div class="col m6  rectangle-info-title">
+<div class=" flow-text col m6 rectangle-info-title">
     <h1 class="sep-title left">{{object.title}}</h1>
 </div>
 
 <div class="row">
 
     <div class="col s12 m8 l9">
-
     </div>
     <div class="col s12 m4 l3 details-event-principal">
         <h1 class="title-detail">Detalles del evento</h1>
@@ -31,22 +29,22 @@
             <h2 class="subtitle-detail">edad mín: <a>{{ object.min_age }}</a></h2>
             <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
         </div>
-        <div class="col s12 center">
+        <div class="col s12 center button-event">
             {% if user.is_authenticated %}
             {% if user_is_owner %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Propietario</h3>
+            <h3 class=" btn-large  price-detail" href="">Propietario</h3>
             {% elif not user_is_old_enough %}
-            <h3 class=" btn-large button-detail-auth-price">No tienes la edad suficiente</h3>
+            <h3 class=" btn-large price-detail">No tienes la edad suficiente</h3>
             {% elif event_is_full %}
-            <h3 class=" btn-large button-detail-auth-price ">Aforo Completo</h3>
+            <h3 class=" btn-large  price-detail">Aforo Completo</h3>
             {% elif event.has_started %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Ya ha empezado</h3>
+            <h3 class=" btn-large  price-detail" href="">Ya ha empezado</h3>
             {% elif event.has_finished %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Ya ha terminado</h3>
+            <h3 class=" btn-large price-detail " href="">Ya ha terminado</h3>
             {% elif user_is_enrolled %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Ya estás inscrito</h3>
+            <h3 class=" btn-large  price-detail" href="">Ya estás inscrito</h3>
             {% elif event.created_by.username == 'deleted' %}
-            <h3 class=" btn-large button-detail-auth-price" href="">No disponible</h3>
+            <h3 class=" btn-large price-detail" href="">No disponible</h3>
             {% elif user_can_enroll and not event.has_started %}
             {% if user.profile.eventpoints > 0 %}
             <a class=" waves-light btn-large modal-trigger modal-mov price-detail"
@@ -60,23 +58,24 @@
                     data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
                     </script>
                 <script>
-                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth-price  price-detail");
+                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large price-detail");
                 </script>
                 {% else %}
                 <button type="submit"
-                    class="waves-effect waves-light btn-large button-detail-auth-price price-detail">{{ object.price }}€
+                    class="waves-effect waves-light btn-large price-detail ">{{ object.price }}€
                 </button>
                 {% endif %}
             </form>
             {% endif %}
-            <p class="commission">Se cobrarán {{fee}}€ en concepto de gastos de gestión.</p>
             {% endif %}
             {% elif event.created_by.username == 'deleted' %}
             <h3 class="price-detail" href="">No disponible</h3>
             {% else %}
-            <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll"
+            <a class="waves-effect waves-light btn-large price-detail" id="enroll"
                 href="{% url 'login' %}">INSCRIBIRSE</a>
             {% endif %}
+            <p class="commission">Se <b>pueden</b> cobrar <b>hasta</b> {{fee}}€ en concepto de gastos de gestión.
+            </p>
         </div>
     </div>
 </div>
@@ -99,7 +98,7 @@
     </div>
     <div class="col s12 m4 l3">
         <h1 class="title-section ipad-host-title">Anfitrión</h1>
-        <img class="img-detail-bio" id="img-detail" alt='anfitrion' src="{{object.created_by.profile.picture}}">
+        <img class="img-detail-bio" id="img-detail" alt='anfitrion' src="{{object.created_by.profile.picture.url}}">
         <div class="rating-host-detail">
             <em class="fa fa-star ipad-rating-detail"><em
                     class="rating-search">&nbsp{{event.created_by.profile.avg_host_score|floatformat:1|default_if_none:"n/a"|default:"n/a" }}</em></em>
@@ -130,14 +129,19 @@
 <hr>
 <div class="row sep-detail">
     <div class="col s12 m4 l3">
+        {% if object_list == 0 %}
+        <h1 class="title-section comments-title-no ">Comentarios de húespedes <br> que asistieron a algún evento de este
+            anfitrión</h1>
+        {% else %}
         <h1 class="title-section comments-title ">Comentarios de húespedes <br> que asistieron a algún evento de este
             anfitrión</h1>
+        {% endif %}
     </div>
     {% if event.created_by.username != 'deleted' %}
     <div class="col s12 m8 l9">
         {% for rating in object_list %}
         <div class="comments">
-            <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture}}">
+            <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture.url}}">
             <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
                 <em class="fa fa-star"><em class="rating-search">&nbsp{{rating.score}}</em></em>
@@ -151,6 +155,7 @@
         {% endif %}
     </div>
 </div>
+{% if user.is_authenticated %}
 <div id="modal3" class="modal modal-evetshow-detail">
     <button type="button" class="modal-close right" data-dismiss="modal"><em class="material-icons">
             highlight_off</em></button>
@@ -196,6 +201,5 @@
         </form>
     </div>
 </div>
-
-
+{% endif %}
 {% endblock %}
