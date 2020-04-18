@@ -63,8 +63,8 @@ class EventForm(forms.ModelForm):
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-    picture = forms.ImageField(required=False, widget=forms.FileInput(
-        attrs={'onchange': 'cambiar()', 'style': 'display: none;'}))
+    picture = forms.ImageField(required=False, widget=forms.ClearableFileInput(
+        attrs={'style': 'display: none;'}))
 
     class Meta:
         model = Event
@@ -76,7 +76,6 @@ class EventForm(forms.ModelForm):
                                             'onkeypress': 'return ValidaLongitud(this, 100);'}),
             'description': forms.TextInput(
                 attrs={'required': False, 'placeholder': 'Cata de vino...', 'name': 'description'}),
-            'picture': forms.TextInput(attrs={'required': False, 'placeholder': 'https://'}),
             'capacity': forms.NumberInput(
                 attrs={'required': False, 'class': 'form-eventshow', 'placeholder': '4', 'name': 'capacity'}),
             'min_age': forms.NumberInput(
@@ -321,7 +320,7 @@ class ProfileForm(forms.ModelForm):
     )
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
-    picture = forms.ImageField(required=False, widget=forms.FileInput(
+    picture = forms.ImageField(required=False, widget=forms.ClearableFileInput(
         attrs={'style': 'display: none;'}))
 
     class Meta:
@@ -343,7 +342,7 @@ class ProfileForm(forms.ModelForm):
         return birthdate
 
     def clean_picture(self):
-        picture = self.cleaned_data.get('picture')
+        picture = self.cleaned_data.get('picture', None)
         if picture and imghdr.what(picture) not in settings.IMAGE_TYPES:
             raise ValidationError(
                 'Formato no soportado, elija entre: JPG, JPEG, PNG')
@@ -419,7 +418,7 @@ class SearchFilterForm(forms.Form):
     max_price = forms.DecimalField(min_value=1, decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
-    min_price = forms.DecimalField(min_value=0,decimal_places=2, required=False,
+    min_price = forms.DecimalField(min_value=0, decimal_places=2, required=False,
                                    widget=forms.NumberInput(attrs={'placeholder': '€€.€€'}))
 
     def clean_date(self):
