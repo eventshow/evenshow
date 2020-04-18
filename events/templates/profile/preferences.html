@@ -17,39 +17,37 @@
     width: 100%;
     z-index: 1000 !important;
   }
-
 </style>
-<ul id="slide-out out " class="sidenav sidenav-fixed control-panel  ">
-  <li>
-    <div class="user-view">
-  <li>
-    <h2>Panel del control</h2>
-  </li>
 
-</ul>
 <ul id="slide-out resp" class="sidenav sidenav-fixed preferences">
-<li>    <h2 class="panel-resp slide-event">Panel del control</h2>
-</li>
-  <li>
-    <h3><a href="{% url 'detail_profile' %}">Datos personales</a></h3>
-  </li>
-  <li>
-    <h3><a href="{% url 'receipts' %}">Mis recibos</a></h3>
-  </li>
-  <li>
-    <h3><a href="{% url 'referred' %}">Referidos</a></h3>
-  </li>
-</ul>
- <a id="movil" href="#" data-target="slide-out resp"
-        class="btn-floating btn-large  waves-light sidenav-trigger panel-resp"><em id="menu-movil"
-          class="material-icons">desktop_mac</em></a>
 
-    <style>
-    element.style {
+  <div class="control-panel">
+    <li>
+      <h2>Panel del control</h2>
+    </li>
+    <li>
+      <h3><a href="{% url 'detail_profile' %}">Datos personales</a></h3>
+    </li>
+    <li>
+      <h3><a href="{% url 'receipts' %}">Mis recibos</a></h3>
+    </li>
+    <li>
+      <h3><a href="{% url 'referred' %}">Referidos</a></h3>
+    </li>
+  </div>
+</ul>
+
+
+<a id="movil" href="#" data-target="slide-out resp"
+  class="btn-floating btn-large  waves-light sidenav-trigger panel-resp"><em id="menu-movil"
+    class="material-icons">desktop_mac</em></a>
+
+<style>
+  element.style {
     display: block;
     opacity: 0;
-}
-    </style>
+  }
+</style>
 {% endblock %}
 {% block content %}
 {%  endblock %}
