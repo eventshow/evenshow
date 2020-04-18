@@ -4,13 +4,12 @@
 
 .title-search {
 	color: #5D5E5E !important;
-	margin-left: 14%;
 }
 
-.title-search-result {
+.search-result {
 	color: #5D5E5E !important;
-	margin-left: -2%;
-	margin-top: 6%;
+	margin-left: 5%;
+	margin-bottom: 3%;
 }
 
 .terminos {
@@ -1852,6 +1851,12 @@ table {
 
 	/* IPHONE 5/SE  */
 	@media only screen and (min-width: 320px) and (max-width: 568px) {
+
+		.search-result{
+			margin-bottom: 12% !important;
+			margin-top: 12% !important;
+		}
+		
 	.title-name-terms {
 		font-size: 24px;
 	}
@@ -3898,6 +3903,10 @@ table {
             margin-left: 15% !important;
         }
 
+		.search-result{
+			margin-left: 11% !important;
+		}
+
 	}
 
 	/* 1920x1080*/
@@ -3910,6 +3919,10 @@ table {
             margin-left: 19% !important;
         }
 
+		.search-result{
+			margin-left: 16% !important;
+		}
+
 
 	}
 
@@ -3917,6 +3930,8 @@ table {
 
 	/* IPHONE 5/SE LANDSCAPE*/
     @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
+
+
 
 		.form-search{
 			margin-left: 8.5% !important;
