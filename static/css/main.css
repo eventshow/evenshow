@@ -4003,6 +4003,27 @@ table {
 	.search-result {
 		margin-left: 11% !important;
 	}
+
+	#send-buttons{
+		margin-left: -14%;
+
+	}
+
+
+
+	.subir{
+		    margin-right: 5%;
+		margin-left: 75%;
+	}
+
+	.send-btn {
+    margin-left: 32% !important;
+}
+
+	#create-event{
+		padding-bottom: 5% !important;
+	}
+
 	#send-buttons-pw {
 		width: 88%;
 	}
@@ -4025,6 +4046,11 @@ table {
 /* 1920x1080*/
 
 @media only screen and (min-width: 1920px) and (max-width: 2560px) {
+
+		.form-eventshow-create{
+		width: 81% !important;
+	}
+
 	.delete-buttons-delete-no {
 		margin-top: 1.4%;
 	}
