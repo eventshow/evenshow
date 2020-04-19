@@ -3111,7 +3111,7 @@ table {
 		.sidenav.sidenav-fixed {
 			-webkit-transform: translateX(-105%);
 			transform: translateX(-105%);
-			margin-top: 8%;
+			margin-top: 0;
 		}
 
 		.delete-btn-a {
@@ -4190,7 +4190,7 @@ width: 110%;
         }
 
         .sidenav.sidenav-fixed {
-            margin-top: 64px;
+            margin-top: 0;
         }
 
 	}
@@ -4235,7 +4235,7 @@ width: 110%;
             width: 78%;
         }
         .sidenav.sidenav-fixed {
-            margin-top: 6.5% !important;
+            margin-top: 0 !important;
         }
     }
 
@@ -4252,7 +4252,7 @@ width: 110%;
 	/*  PIXEL 2XL LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) and (orientation: landscape){
 	    .sidenav.sidenav-fixed {
-            margin-top: 7.6%;
+            margin-top: 0;
         }
         .form-search {
             margin-left: 11% !important;
