@@ -1,6 +1,9 @@
 @import url(https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
 
 /* GENERAL */
+.pixel-footer{
+	color: #fff !important;
+}
 
 .title-search {
 	color: #5D5E5E !important;
@@ -2916,7 +2919,7 @@ table {
 		}
 
 		.start_day {
-			margin-left: -4% !important;
+			margin-left: -4%;
 			margin-right: 8%;
 		}
 
@@ -3434,7 +3437,7 @@ table {
 		}
 
 		.start_day{
-			margin-left:-7% !important;
+			margin-left:-7%;
 		}
 
 		#send-buttons-pw {
@@ -4015,10 +4018,6 @@ table {
 			padding-top: 7%;
 		}
 
-		.preferences {
-			margin-top: 9.9%;
-		}
-
 		ul:not(.browser-default) {
 			padding-left: 10px;
 		}
@@ -4045,8 +4044,10 @@ table {
 		}
 
 		.preferences {
-			margin-top: 53px !important;
+			margin-top: 0% !important;
+			margin-bottom:-25%;
 		}
+
 
 		#create-event {
 			margin-left: 47px !important;
@@ -4070,6 +4071,10 @@ table {
 
 		#iphone-left {
 			margin-left: -5% !important;
+		}
+
+		#iphone-left-start {
+			margin-left: 1% !important;
 		}
 
 		#iphone-right {
@@ -4229,13 +4234,13 @@ table {
 		}
 
 		#language {
-			margin-right: 0%;
-			margin-left: 0%;
+			margin-right: 0% !important;
+			margin-left: 0% !important;
 		}
 
-		.iphone-se {
-			margin-left: 0% !important;
-			margin-right: 0%;
+		.start_day {
+			margin-left: 6% !important;
+    		margin-right: -1% !important;
 		}
 	}
 
@@ -4248,11 +4253,6 @@ table {
         .search {
             margin-right: 10%;
         }
-
-        .sidenav.sidenav-fixed {
-            margin-top: 64px;
-        }
-
 		.img-detail-auth {
 			margin-top: -80px !important;
 			width: 100% !important;
@@ -4351,6 +4351,19 @@ table {
 			text-align: center;
 			background-color: white;
 			box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+		}
+
+		.pixel-time-landscape{
+			margin-left: -7%;
+		}
+
+		.start_day{
+			margin-right: 0%;
+		}
+
+		.preferences {
+			margin-top: 0% !important;
+			margin-bottom:-25%;
 		}
 	}
 
@@ -4485,13 +4498,47 @@ table {
 		}
 
 		.start_day{
-			margin-left: -6% !important;
-    		margin-right: 12%;
+			margin-left: -6%;
+    		margin-right: 0%;
 		}
+
+		
+		.preferences {
+			margin-top: 0% !important;
+			margin-bottom:-25%;
+		}
+
+		#movil {
+			color: white !important;
+			background: #B7234D;
+			border-radius: 50% !important;
+			margin-top: 3%;
+			opacity: 1;
+			margin-left: 3%;
+		}
+
+		.panel-resp {
+			opacity: 1;
+			padding-top: 8%;
+			padding-left: 5%;
+		}
+
+		.pixel-time-landscape{
+			margin-left: -8%;
+		}
+
 	}
 
 	/* IPHONE 6/7/8 PLUS LANDSCAPE*/
 	@media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape){
+		.form-eventshow {
+			background: #FFF;
+			width: 145%;
+			margin-left: 30%;
+			border-radius: 15px;
+			border: 1px solid #B6244D;
+			padding: 25px 40px 90px;
+		}
 
 	}
 
@@ -4502,6 +4549,30 @@ table {
 
 	/*  PIXEL 2XL LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) and (orientation: landscape){
+		.preferences {
+			margin-top: 0% !important;
+			margin-bottom:-25%;
+		}
+
+		.pixel-time-landscape{
+			margin-left: -7%;
+		}
+
+		.start_day{
+			margin-right: 0%;
+		}
+
+		.picture-box {
+			width: 113% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -7% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
 	}
 
 	/* SAMSUNG S5 LANDSCAPE */
@@ -4510,6 +4581,11 @@ table {
 	}
 
 	/* IPHONE 6,7,8 LANDSCAPE*/
-	@media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: landscape){}
+	@media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: landscape){
+		#send-buttons {
+			margin-bottom: 30% !important;
+			margin-left: -56%;
+		}
+	}
 
 
