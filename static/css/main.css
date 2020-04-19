@@ -4114,6 +4114,7 @@ table {
 
 	/* IPAD LANDSCAPE*/
 	@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+	
 
 	}
 
@@ -5449,7 +5450,7 @@ table {
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .table-generic {
-        margin-left: -6%;
+        margin-left: -16%;
     }
     .title {
         margin-left: 8%;
@@ -5459,7 +5460,11 @@ table {
     .container-login100 {
         margin-top: 31% !important;
         margin-bottom: 0%;
-    }
+	}
+	#panel {
+		width: 64%!important;
+		margin-left: 359px;
+	}
 }
 
 /* PIXEL 2 LANDSCAPE*/
@@ -5566,7 +5571,15 @@ table {
 
 /* IPAD PRO LANDSCAPE*/
 
-@media only screen and (min-width: 1024px) and (max-width: 1336px) and (orientation: landscape) {}
+@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+	#panel {
+		width: 73%;
+		margin-left: 359px;
+	}
+	#onlyIpadPro{
+		margin-left: 100px;
+	}
+}
 
 /*  PIXEL 2XL LANDSCAPE*/
 
