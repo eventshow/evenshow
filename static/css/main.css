@@ -1844,6 +1844,10 @@ table {
 	/* IPHONE 5/SE  */
 	@media only screen and (min-width: 320px) and (max-width: 568px) {
 
+		.rule{
+			margin-top: 13%;
+		}
+
 		.search-result{
 			margin-bottom: 12% !important;
 			margin-top: 12% !important;
@@ -2799,6 +2803,10 @@ table {
 	/* IPAD */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {
 
+		.rule{
+			margin-left: -13%;
+		}
+
 		.button-event{
 		margin-left: -25% !important;
 	}
@@ -2822,7 +2830,7 @@ table {
 			margin-right: 13% !important;
 		}
 		.title-search {
-			margin-left: 44%;
+			margin-left: 0%;
 		}
 		#margin-ipad {
 			margin-left: -98px;
@@ -3742,9 +3750,7 @@ table {
 		.table-generic {
 			width: 112%;
 		}
-		.title-search {
-			margin-left: 18%;
-		}
+
 		.form-search {
 			margin-left: 16%;
 			margin-right: 11%;
@@ -3790,6 +3796,10 @@ table {
 
 		.sep-title{
 			margin-left: 60% !important;
+		}
+
+		#send-buttons-pw-conf {
+			margin-left: 70%;
 		}
 
 
@@ -3934,6 +3944,9 @@ table {
 		#send-buttons{
 			margin-left: 40%;
 		}
+
+
+
 	}
 
 	/* IPHONE 6,7,8 */
