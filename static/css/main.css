@@ -3702,6 +3702,7 @@ table {
 	.details-event-principal {
 		margin-top: -8% !important;
 		margin-left: 38% !important;
+		z-index: -1;
 	}
 	.button-event {
 		margin-left: -31% !important;
@@ -3891,6 +3892,7 @@ table {
 	}
 	.details-event-principal {
 		margin-top: -48% !important;
+		z-index: -1;
 	}
 	.img-detail-auth {
 		width: 73% !important;
@@ -3921,6 +3923,7 @@ table {
 	}
 	.details-event-principal {
 		margin-top: -42% !important;
+		z-index: -1;
 	}
 	.img-detail-auth {
 		margin-top: 0% !important;
