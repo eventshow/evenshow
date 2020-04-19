@@ -3739,6 +3739,13 @@ table {
 		.search {
     margin-right: 61% !important;
 }
+		.ipadPro{
+width: 110%;
+    margin-left: -9%;
+
+
+
+		}
 
 		#onlyIpadPro{
 			margin-left: -27px!important;
@@ -3995,6 +4002,20 @@ table {
 			margin-left: 36%;
 		}
 
+		.details-event-principal {
+    margin-top: -48% !important;
+}
+
+		.img-detail-auth {
+			width: 73% !important;
+		}
+
+		.hr-detail {
+    margin-top: -27px !important;
+}
+
+
+
 	}
 
 	/* 1920x1080*/
@@ -4018,6 +4039,14 @@ table {
 		#send-buttons-pw-conf{
 			width: 82%;
 			margin-left: 24%;
+		}
+
+		.details-event-principal {
+   		 margin-top: -42% !important;
+		}
+
+		.img-detail-auth {
+			margin-top: 0% !important;
 		}
 
 
