@@ -2516,7 +2516,7 @@ table {
 		opacity: 1;
 	}
 	.preferences{
-		margin-top: 56px;
+		margin-top: 0;
 	}
 	#margin-Rating{
 		margin-bottom: 39px!important;
@@ -3805,9 +3805,7 @@ width: 110%;
 			margin-left: 155px;
 			margin-top: 33px;
 		}
-		.preferences{
-			margin-top: 65px!important;
-		}
+
 		.sidenav{
 			width: 209px;
 			margin-top: 0px !important;
@@ -4168,7 +4166,7 @@ width: 110%;
 		}
 
 		.preferences {
-			margin-top: 9.9%;
+			margin-top: 0;
 		}
 
 		ul:not(.browser-default) {
