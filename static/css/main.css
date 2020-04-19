@@ -1840,6 +1840,10 @@ table {
 	margin-left: 80%;
 	padding-right: 80%;
 }
+#img-Rating{
+		max-width: 100px;
+		height: 100px;
+	}
 
 
 /* RESPONSIVE */
@@ -2513,6 +2517,13 @@ table {
 	}
 	.preferences{
 		margin-top: 56px;
+	}
+	#margin-Rating{
+		margin-bottom: 39px!important;
+	}
+	#img-Rating{
+		max-width: 73px;
+		height: 73px;
 	}
 }
 
@@ -3456,6 +3467,10 @@ table {
 		#movil {
 			opacity: 1;
 		}
+		#img-Rating{
+			max-width: 100px;
+			height: 100px;
+		}
 	
 	}
 
@@ -4159,6 +4174,11 @@ width: 110%;
 		ul:not(.browser-default) {
 			padding-left: 10px;
 		}
+		#img-Rating {
+			max-width: 73px !important;
+			height: 73px!important;
+		}
+		
 	}
 
 	/* IPHONE X LANDSCAPE*/
