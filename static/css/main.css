@@ -3334,6 +3334,11 @@ table {
 		margin-left: -5%;
 		margin-top: 3%;
 	}
+
+	.container-login100 {
+    margin-top: 31% !important;
+    margin-bottom: 0%;
+}
 	.details-event-principal {
 		margin-top: -2%;
 		width: 70% !important;
@@ -4019,7 +4024,20 @@ table {
 
 /* IPAD LANDSCAPE*/
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .table-generic {
+        margin-left: -6%;
+    }
+    .title {
+        margin-left: 8%;
+        margin-bottom: 8%;
+    }
+  
+    .container-login100 {
+        margin-top: 31% !important;
+        margin-bottom: 0%;
+    }
+}
 
 /* PIXEL 2 LANDSCAPE*/
 
