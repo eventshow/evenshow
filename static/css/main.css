@@ -4119,6 +4119,57 @@ table {
 
 	/* IPHONE 6/7/8 PLUS LANDSCAPE*/
 	@media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape){
+	    table.responsive-table {
+            padding-bottom: 40px;
+        }
+        #title-name{
+            margin-top: -50%;
+        }
+        #paddinButton{
+            margin-top: -8%;
+        }
+        .panel-resp {
+            opacity: 1;
+        }
+        .sidenav.sidenav-fixed {
+            margin-top: 6.5%;
+        }
+        .form-search {
+            width: 78%;
+        }
+        .btn-submit {
+            width: 58% !important;
+        }
+        .title-search {
+            margin-left: 38%;
+            margin-top: 3%;
+        }
+        .terminos {
+            margin-top: -5%;
+        }
+        .login100-form {
+            width: 80% !important;
+            margin-right: 9.5%;
+            margin-bottom: 4%;
+            padding-right: 6% !important;
+        }
+
+        #name-host-title-del {
+            width: 156%;
+            margin-left: -24%;
+        }
+        .form-eventshow-password {
+            width: 120%;
+            margin-bottom: -6%;
+            margin-left: -9%;
+            margin-top: -13%;
+        }
+        #edit-event {
+            margin-bottom: 0% !important;
+        }
+        #send-buttons-conf {
+            margin-left: -60%;
+        }
 
 	}
 
