@@ -20,21 +20,21 @@
                     action="{% url 'update_profile' %}">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="grid-example col s12">
-                            <div class="validate-input iphone-right" id="edit-event">
-                                <label>EMAIL</label>
-                                {{form.email}}
-                                <div class="form-errors">
-                                    {{ form.email.errors }}
-                                </div>
-                            </div>
-                        </div>
                         <div class="grid-example col s6">
                             <div class="validate-input" id="edit-event">
                                 <label>USUARIO</label>
                                 {{ form.username }}
                                 <div class="form-errors">
                                     {{ form.username.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-example col s6">
+                            <div class="validate-input iphone-right" id="edit-event">
+                                <label>EMAIL</label>
+                                {{form.email}}
+                                <div class="form-errors">
+                                    {{ form.email.errors }}
                                 </div>
                             </div>
                         </div>

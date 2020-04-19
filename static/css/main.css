@@ -2045,13 +2045,13 @@ table {
 	}
 
 	#picture-box {
-		width: 130% !important;
-		height: 60px !important;
+		width: 105% !important;
+		height: 72px !important;
 		color: #5D5E5E !important;
 		border: 1px solid #B6244D !important;
 		border-radius: 12px !important;
 		padding-left: 4% !important;
-		margin-left: -15% !important;
+		margin-left: -3% !important;
 		font-family: Raleway, sans-serif;
 		font-size: 12px;
 	}
@@ -2568,15 +2568,16 @@ table {
 	}
 
 	#picture-box {
-		width: 130% !important;
-		height: 60px !important;
+		width: 105% !important;
+		height: 85px !important;
 		color: #5D5E5E !important;
 		border: 1px solid #B6244D !important;
 		border-radius: 12px !important;
 		padding-left: 4% !important;
-		margin-left: -17% !important;
+		margin-left: -3% !important;
 		font-family: Raleway, sans-serif;
 		font-size: 14px;
+	}
 	}
 	.description {
 		width: 105% !important;
@@ -3306,20 +3307,6 @@ table {
 			padding-top: 0px;
 		}
 
-		.form-eventshow-edit {
-			background: #FFF;
-			width: 100%;
-			margin-top: -1%;
-			max-width: 800px;
-			border-radius: 15px;
-			border: 1px solid #B6244D;
-			padding: 25px 40px 70px;
-			align-items: center;
-			align-content: center;
-			margin-left: -6%;
-			margin-bottom: 15%;
-		}
-
 		#edit-event input {
 			width: 121% !important;
 			height: 60px !important;
@@ -3446,7 +3433,19 @@ table {
 			margin-top: 13%;
 		}
 
-
+		.form-eventshow-edit {
+			background: #FFF;
+			width: 95%;
+			margin-top: 3%;
+			max-width: 800px;
+			border-radius: 15px;
+			border: 1px solid #B6244D;
+			padding: 25px 40px 70px;
+			align-items: center;
+			align-content: center;
+			margin-left: -2%;
+			margin-bottom: 15%;
+		}
 
 	}
 
@@ -3688,6 +3687,22 @@ table {
 			margin-left: 27%;
 		}
 
+		#picture-box {
+			width: 104% !important;
+			height: 101px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -1% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 14px;
+		}
+
+		.iphone-right {
+			margin-right: -6% !important;
+		}
+
 	}
 
 	/* IPHONE 6/7/8 PLUS */
@@ -3803,6 +3818,11 @@ table {
 			width: 285px;
 			margin-bottom: -57%;
 			margin-left: 7%;
+		}
+		#send-buttons-data{
+			margin-bottom: 3% !important;
+   			margin-left: -16% !important;
+			margin-top: 92% !important;
 		}
 	}
 
@@ -3940,6 +3960,12 @@ table {
 		.img-detail-bio {
 			margin-top: 4px;
 			margin-left: 28%;
+		}
+
+		#send-buttons-data {
+			margin-bottom: 3% !important;
+			margin-left: -31% !important;
+			margin-top: 103% !important;
 		}
 	}
 
