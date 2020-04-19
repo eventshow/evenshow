@@ -3634,6 +3634,15 @@ table {
 /* IPAD Pro */
 
 @media only screen and (min-width: 1024px) and (max-width: 1336px) {
+
+	#picture-box{
+		width: 113% !important;
+	}
+
+	.subir{
+		margin-right: 9%;
+	}
+
 	.center-form {
 		margin-left: 27.5%;
 		margin-right: -12.5%;
