@@ -3957,6 +3957,15 @@ table {
 			margin-left: 11% !important;
 		}
 
+		#send-buttons-pw{
+			width: 88%;
+		}
+
+		#send-buttons-pw-conf{
+			width: 88%;
+			margin-left: 36%;
+		}
+
 	}
 
 	/* 1920x1080*/
@@ -3971,6 +3980,15 @@ table {
 
 		.search-result{
 			margin-left: 16% !important;
+		}
+
+		#send-buttons-pw{
+			width: 82%;
+		}
+
+		#send-buttons-pw-conf{
+			width: 82%;
+			margin-left: 24%;
 		}
 
 
