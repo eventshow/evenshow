@@ -983,7 +983,7 @@ p.description {
 
 #picture-box {
 	width: 104% !important;
-    height: 120px !important;
+    height: 62px !important;
     border: 1px solid #B6244D !important;
     border-radius: 12px !important;
     padding-left: 4% !important;
@@ -2037,7 +2037,7 @@ table {
 	}
 
 	#picture-box {
-		width: 130% !important;
+		width: 135% !important;
 		height: 60px !important;
 		color: #5D5E5E !important;
 		border: 1px solid #B6244D !important;
@@ -2514,6 +2514,31 @@ table {
 	}
 	.preferences{
 		margin-top: 56px;
+	}
+
+	.subir {
+		background: #B6244D;
+		font-family: Raleway, sans-serif;
+		color: #fff;
+		padding-top: 5px;
+		padding-left: 9px;
+		padding-bottom: 5px;
+		margin-left: 70%;
+		margin-right: 1%;
+		border: 1px solid #FFF !important;
+		border-radius: 12px !important;
+		margin-top: 2.5%;
+		font-weight: normal;
+	}
+
+	.panel-resp {
+		opacity: 1;
+		padding-left: 5%;
+		padding-top: 10%;
+	}
+
+	.preferences {
+		margin-top: 0%;
 	}
 }
 
@@ -3626,7 +3651,7 @@ table {
 
 		#send-buttons {
 			margin-bottom: 30% !important;
-			margin-left: 85%!important;
+			margin-left: 111%;
 		}
 		.send-btn {
 			margin-left: 155% !important;
@@ -3696,6 +3721,53 @@ table {
 			margin-left: 27%;
 		}
 
+		#create-event input {
+			width: 126% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -15% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 12px;
+		}
+
+		#iphone-right {
+			margin-right: -10% !important;
+		}
+
+		#iphone-left {
+			margin-left: -10% !important;
+		}
+
+		#picture-box {
+			width: 131% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -15% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 12px;
+		}
+
+		.subir {
+			background: #B6244D;
+			font-family: Raleway, sans-serif;
+			color: #fff;
+			padding-top: 5px;
+			padding-left: 9px;
+			padding-bottom: 5px;
+			margin-left: 70%;
+			margin-right: 6%;
+			border: 1px solid #FFF !important;
+			border-radius: 12px !important;
+			margin-top: 2.5%;
+			font-weight: normal;
+		}
+
 	}
 
 	/* IPHONE 6/7/8 PLUS */
@@ -3739,6 +3811,33 @@ table {
 			width: 285px;
 			margin-bottom: -58% !important;
 			margin-left: 7% !important;
+		}
+
+		#picture-box {
+			width: 131% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -15% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 12px;
+		}
+
+		.subir {
+			background: #B6244D;
+			font-family: Raleway, sans-serif;
+			color: #fff;
+			padding-top: 5px;
+			padding-left: 9px;
+			padding-bottom: 5px;
+			margin-left: 70%;
+			margin-right: 5%;
+			border: 1px solid #FFF !important;
+			border-radius: 12px !important;
+			margin-top: 2.5%;
+			font-weight: normal;
 		}
 		
 	}
@@ -3837,6 +3936,30 @@ width: 110%;
 			margin-left: 7%;
 		}
 		
+		#picture-box {
+			width: 131% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -15% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 12px;
+		}
+
+		#send-buttons {
+			margin-bottom: 30%;
+			margin-left: 103% !important;
+		}
+
+		#iphone-left {
+			margin-left: -8% !important;
+		}
+
+		#iphone-right {
+			margin-right: -8% !important;
+		}
 	}
 
 	/* SAMSUNG S5 */
@@ -3962,7 +4085,31 @@ width: 110%;
 			margin-left: 40%;
 		}
 
+		#picture-box {
+			width: 131% !important;
+			height: 60px !important;
+			color: #5D5E5E !important;
+			border: 1px solid #B6244D !important;
+			border-radius: 12px !important;
+			padding-left: 4% !important;
+			margin-left: -15% !important;
+			font-family: Raleway, sans-serif;
+			font-size: 12px;
+		}
 
+		.panel-resp {
+			opacity: 1;
+			padding-left: 5%;
+			padding-top: 10%;
+		}
+
+		.preferences {
+			margin-top: 0%;
+		}
+
+		#iphone-right {
+			margin-right: -7% !important;
+		}
 
 	}
 
@@ -3970,7 +4117,7 @@ width: 110%;
 	@media only screen and (min-width: 375px) and (max-width: 667px) {
 		#send-buttons {
 			margin-bottom: 30%;
-			margin-left: 30%;
+			margin-left: 60%;
 		}
 		.send-btn {
 			margin-left: 140% !important;
@@ -3985,7 +4132,14 @@ width: 110%;
 			margin-top: 4px;
 			margin-left: 28%;
 		}
-	
+
+		#iphone-right {
+			margin-right: -8% !important;
+		}
+		
+		#iphone-left {
+			margin-left: -8% !important;
+		}
 	}
 
 	/* 1680x1050 */
@@ -4023,7 +4177,47 @@ width: 110%;
     margin-top: -27px !important;
 }
 
+.subir {
+    background: #B6244D;
+    font-family: Raleway, sans-serif;
+    color: #fff;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 12px;
+    padding-bottom: 5px;
+    margin-left: 70%;
+    margin-right: 8%;
+    border: 1px solid #FFF !important;
+    border-radius: 12px !important;
+    margin-top: 2.5%;
+    font-weight: normal;
+}
 
+#send-buttons {
+    margin-bottom: 41% !important;
+    margin-left: -4%;
+}
+
+.send-btn {
+    margin-left: 36% !important;
+}
+
+#create-event {
+    margin-left: 3px !important;
+    margin-bottom: 0% !important;
+    padding-bottom: 2% !important;
+}
+
+	.form-eventshow-create {
+    	background: #FFF;
+    	width: 85%;
+    	max-width: 800px;
+    	border-radius: 15px;
+    	border: 1px solid #B6244D;
+    	padding: 25px 40px 70px;
+    	margin-bottom: 15% !important;
+    	margin-top: -19%;
+	}
 
 	}
 
@@ -4057,6 +4251,33 @@ width: 110%;
 		.img-detail-auth {
 			margin-top: 0% !important;
 		}
+
+		.subir {
+			background: #B6244D;
+			font-family: Raleway, sans-serif;
+			color: #fff;
+			padding-top: 5px;
+			padding-left: 10px;
+			padding-right: 12px;
+			padding-bottom: 5px;
+			margin-left: 70%;
+			margin-right: 10%;
+			border: 1px solid #FFF !important;
+			border-radius: 12px !important;
+			margin-top: 2.5%;
+			font-weight: normal;
+		}
+
+		#send-buttons {
+			margin-bottom: 41% !important;
+			margin-left: 16%;
+		}
+
+		.send-btn {
+			margin-left: 48% !important;
+		}
+
+
 
 
 	}
