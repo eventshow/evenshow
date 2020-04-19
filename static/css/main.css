@@ -2504,7 +2504,6 @@ table {
 		margin-top: 10%;
 	}
 	.control-panel {
-		z-index: 2 !important;
 		color: white !important;
 		text-align: center;
 		margin-bottom: 12%;
@@ -3760,6 +3759,15 @@ table {
 
 	/* IPAD Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+
+		.center-form {
+    margin-left: 27.5%;
+    margin-right: -12.5%;
+}
+		#send-buttons-pw {
+			margin-left: -35%;
+		}
+
 		.search {
     margin-right: 61% !important;
 }
@@ -3770,6 +3778,13 @@ width: 110%;
 
 
 		}
+		#login-res {
+    min-height: 32vh !important;
+}
+		.login h1 {
+    margin-top: -15%;
+}
+
 
 		#onlyIpadPro{
 			margin-left: -27px!important;
@@ -3795,7 +3810,7 @@ width: 110%;
 		}
 		.sidenav{
 			width: 209px;
-			margin-top: 64px !important;
+			margin-top: 0px !important;
 		}
 		#newEventPro{
 			margin-left: 275px;
@@ -3831,7 +3846,7 @@ width: 110%;
 		}
 
 		#send-buttons-pw-conf {
-			margin-left: 70%;
+			margin-left: 30%;
 		}
 
 
@@ -3975,6 +3990,10 @@ width: 110%;
 	
 		#send-buttons{
 			margin-left: 40%;
+		}
+
+		#send-buttons-pw{
+    	margin-left: -52%;
 		}
 
 
