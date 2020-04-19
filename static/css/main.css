@@ -4,13 +4,12 @@
 
 .title-search {
 	color: #5D5E5E !important;
-	margin-left: 14%;
 }
 
-.title-search-result {
+.search-result {
 	color: #5D5E5E !important;
-	margin-left: -2%;
-	margin-top: 6%;
+	margin-left: 5%;
+	margin-bottom: 3%;
 }
 
 .terminos {
@@ -156,14 +155,14 @@ nav ul a:hover {
 /* IMG */
 
 .img-detail {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
 }
 
 .img-detail-auth {
-	width: 72% !important;
+	width: 72%;
 	height: 758px;
 	object-fit: cover;
 	z-index: -1;
@@ -672,6 +671,7 @@ nav ul a:hover {
 
 .img-profile-detail {
 	height: 100px;
+	width: 100px;
 	margin-left: 68%;
 	margin-top: -10% !important;
 	border-radius: 50%;
@@ -872,22 +872,18 @@ nav ul a:hover {
 	font-weight: normal;
 }
 
-#info {
-    margin-left: 30%;
-    margin-top: -6%;
+#info{
+    margin-top: 3%;
+	z-index:-1;
 }
 
 .subir-prof {
     background: #B6244D;
-    font-family: Raleway, sans-serif;
     color: #fff;
-    padding-top: 5px;
-    padding-left: 9px;
-    padding-bottom: 5px;
-    margin-right: 45%;
-    border: 1px solid #FFF !important;
+	padding: 5px 13px 5px 13px;
+    margin-right: 5%;
     border-radius: 12px !important;
-    margin-top: 5.5%;
+    margin-top: 2%;
     font-weight: normal;
 }
 
@@ -895,7 +891,7 @@ nav ul a:hover {
 	color:#fff;
 }
 
-	 
+
 	.subir:hover{
 		color:#fff;
 	}
@@ -987,15 +983,14 @@ p.description {
 
 #picture-box {
 	width: 104% !important;
-	height: 60px !important;
-	margin-bottom: 30px !important;
-	color: #5D5E5E !important;
-	border: 1px solid #B6244D !important;
-	border-radius: 12px !important;
-	padding-left: 4% !important;
+    height: 120px !important;
+    border: 1px solid #B6244D !important;
+    border-radius: 12px !important;
+    padding-left: 4% !important;
 	margin-left: -2.5% !important;
-	font-family: Raleway, sans-serif;
 	margin-bottom: 5%;
+
+
 }
 
 
@@ -1056,10 +1051,10 @@ p.description {
 
     .form-search{
         margin-top: 7% !important;
-        margin-left: -10% !important;
+        margin-left: -7% !important;
     }
     .search{
-            margin-right: -6%;
+            margin-right: -8%;
     margin-top: 1%;
     }
 
@@ -1397,6 +1392,10 @@ label {
 	text-align: center;
 	padding: 13px 15px;
 	margin-left: 450px;
+}
+
+.button-event{
+	margin-left: -5% !important;
 }
 
 .comentario {
@@ -1844,6 +1843,16 @@ table {
 
 	/* IPHONE 5/SE  */
 	@media only screen and (min-width: 320px) and (max-width: 568px) {
+
+		.search-result{
+			margin-bottom: 12% !important;
+			margin-top: 12% !important;
+		}
+
+	.button-event{
+		margin-left: -19% !important;
+	}
+
 	.title-name-terms {
 		font-size: 24px;
 	}
@@ -1856,7 +1865,7 @@ table {
 	.list_search_result {
     margin-left: 0 !important;
 }
-	
+
 	#titleTermsAbout {
 		margin-top: -2px;
 		margin-bottom: -22px;
@@ -1887,7 +1896,7 @@ table {
 		margin-top: -2px;
 		margin-bottom: 75px;
 	}
-	
+
 	#textTerms {
 		color: black;
 		font-size: 16px;
@@ -2789,13 +2798,28 @@ table {
 
 	/* IPAD */
 	@media only screen and (min-width: 768px) and (max-width: 1024px) {
+
+		.button-event{
+		margin-left: -25% !important;
+	}
+
+		.img-detail{
+			margin-top: -79px !important;
+			width: 100% !important;
+
+		}
+
 		#results-ipad {
 			margin-left: 814px;
 			margin-top: 33px;
 		}
 		.form-search {
-			margin-left: -7%;
-			margin-right: -4%;
+			margin-left: 7% !important;
+			margin-right: 0% !important;
+		}
+
+		.search{
+			margin-right: 13% !important;
 		}
 		.title-search {
 			margin-left: 44%;
@@ -2850,7 +2874,7 @@ table {
 			border-radius: 15px;
 			border: 1px solid #B6244D;
 		}
-		
+
 
 		.location {
 			margin-top: 0%;
@@ -2908,7 +2932,7 @@ table {
 
 		.language{
 			margin-right: -4%;
-			margin-left: 8% !important; 
+			margin-left: 8% !important;
 		}
 
 		.send-btn{
@@ -3359,7 +3383,11 @@ table {
 		}
 
 		#login-res{
-			min-height: 72vh !important;
+			min-height: 51vh !important;
+		}
+
+		.wrap-login100{
+			margin-top: -28%;
 		}
 
 
@@ -3367,13 +3395,13 @@ table {
 			margin-left: 9% !important;
 			margin-top: 9%;
 		}
-	
+
 
 		.modal-mov {
    	 		margin-left: -5%;
   	  		margin-top: 3%;
 		}
-	
+
 
 		.details-event-principal {
 			margin-top: -2%;
@@ -3431,7 +3459,7 @@ table {
 			padding-top: 0px;
 			padding-bottom: 30%;
 		}
-		
+
 		#edit-event input {
 			width: 100% !important;
 			height: 60px !important;
@@ -3578,7 +3606,7 @@ table {
 		#titleTerms {
 			margin-top: -9px;
 		}
-		
+
 		#send-buttons {
 			margin-bottom: 30% !important;
 			margin-left: 85%!important;
@@ -3614,7 +3642,7 @@ table {
 			margin-left: 45.5% !important;
 			margin-bottom: 7% !important;
 		}
-		
+
 		.title-section {
     		margin-right: 2%;
     		margin-bottom: 4.5%;
@@ -3700,6 +3728,10 @@ table {
 
 	/* IPAD Pro */
 	@media only screen and (min-width: 1024px) and (max-width: 1336px) {
+		.search {
+    margin-right: 61% !important;
+}
+
 		#onlyIpadPro{
 			margin-left: -27px!important;
 		}
@@ -3734,6 +3766,33 @@ table {
 			margin-left: 14%;
 			
 		}
+
+			.img-detail{
+			margin-top: -11px !important;
+				width: 100% !important;
+
+		}
+
+		.img-detail-auth{
+			margin-top: -11px !important;
+			width: 100% !important;
+
+		}
+
+		.details-event-principal {
+   margin-top: -8% !important;
+    margin-left: 38% !important;
+}
+
+		.button-event {
+    margin-left: -31% !important;
+}
+
+		.sep-title{
+			margin-left: 60% !important;
+		}
+
+
 	}
 
 	/*  PIXEL 2XL*/
@@ -3768,7 +3827,7 @@ table {
 			border: 0;
 			margin: 3%;
 		}
-		
+
 		.title-section-h3 {
 			margin-left: -2% !important;
 			margin-bottom: 4%;
@@ -3909,6 +3968,19 @@ table {
             margin-left: 15% !important;
         }
 
+		.search-result{
+			margin-left: 11% !important;
+		}
+
+		#send-buttons-pw{
+			width: 88%;
+		}
+
+		#send-buttons-pw-conf{
+			width: 88%;
+			margin-left: 36%;
+		}
+
 	}
 
 	/* 1920x1080*/
@@ -3921,6 +3993,19 @@ table {
             margin-left: 19% !important;
         }
 
+		.search-result{
+			margin-left: 16% !important;
+		}
+
+		#send-buttons-pw{
+			width: 82%;
+		}
+
+		#send-buttons-pw-conf{
+			width: 82%;
+			margin-left: 24%;
+		}
+
 
 	}
 
@@ -3928,6 +4013,8 @@ table {
 
 	/* IPHONE 5/SE LANDSCAPE*/
     @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
+
+
 
 		.form-search{
 			margin-left: 8.5% !important;
@@ -4026,8 +4113,42 @@ table {
 
 	/* PIXEL 2 LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape){
-
-	}
+        .search {
+            margin-right: 25% !important;
+        }
+        .btn-submit {
+            width: 50% !important;
+        }
+        .search-result {
+            margin-left: 6% !important;
+        }
+        .login100-form {
+            width: 80% !important;
+            margin-right: 9%;
+            padding-right: 47px !important;
+        }
+        .panel-resp {
+            opacity: 1;
+        }
+        .form-eventshow-password {
+            width: 128%;
+            margin-left: -12%;
+            margin-bottom: -9%;
+            margin-top: -12%;
+        }
+        #name-host-title-del {
+            width: 170%;
+        }
+        #send-buttons-conf {
+            margin-left: -37%;
+        }
+        .form-search {
+            width: 78%;
+        }
+        .sidenav.sidenav-fixed {
+            margin-top: 6.5% !important;
+        }
+    }
 
 	/* IPHONE 6/7/8 PLUS LANDSCAPE*/
 	@media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape){
@@ -4041,7 +4162,25 @@ table {
 
 	/*  PIXEL 2XL LANDSCAPE*/
 	@media only screen and (min-width: 411px) and (max-width: 823px) and (orientation: landscape){
+	    .sidenav.sidenav-fixed {
+            margin-top: 7.6%;
+        }
+        .form-search {
+            margin-left: 11% !important;
+        }
+        .search {
+            margin-right: 20%;
+        }
+
+        .search-result {
+            margin-left: -12%;
+        }
+        .title-search {
+            width: 100%;
+        }
+
 	}
+
 
 	/* SAMSUNG S5 LANDSCAPE */
 	@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape){

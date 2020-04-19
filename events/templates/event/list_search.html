@@ -1,10 +1,6 @@
 {%extends 'base.html'%}
 {% block content %}
-{% if not user.is_authenticated %}
-<style>
 
-</style>
-{% endif %}
 
 <div class="row">
     <div class="wrapper wrapper--w1070">
@@ -51,23 +47,17 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row text-left">
-        <div class="col l6 list_search_result ">
+    <div class="row  search-result">
+        <div class="col s-12">
             {% if category %}
             <h1 class="title-search">Categoría <h1 class="title-event element">{{ category }}</h1>
             </h1>
             {% endif %}
             <h1 class="title-search">{{location|default_if_none:''}}</h1>
             <h3 class="title-search">{{page_obj.end_index}} de {{page_obj.paginator.count}} resultados</h3>
+           <h1 class="title-search">Todos los resultados</h1>
         </div>
     </div>
-</div>
-<div class="row text-left">
-    <div class="col l6">
-        <h1 class="title-search" id="results-ipad">Todos los resultados</h1>
-    </div>
-</div>
 <div class="container">
     {% for event in object_list %}
     <hr>

@@ -298,7 +298,7 @@ class PasswordUpdateForm(PasswordChangeForm):
     old_password = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "antigua contraseña"}))
     new_password1 = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': "nueva contraseña"}))
+        attrs={'placeholder': "nueva contraseña"}), help_text=password_validators_help_texts())
     new_password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={'placeholder': "confirmación nueva contraseña"}))
 
