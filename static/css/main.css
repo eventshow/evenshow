@@ -4237,6 +4237,10 @@ width: 110%;
             margin-right: 9.5%;
             margin-bottom: 4%;
             padding-right: 6% !important;
+            border-radius: 15px;
+        }
+        .container-login100 {
+            margin-top: 10% !important;
         }
 
         #name-host-title-del {
@@ -4280,6 +4284,9 @@ width: 110%;
         }
         .title-search {
             width: 100%;
+        }
+        .container-login100{
+            margin-top:35%;
         }
 
 	}
