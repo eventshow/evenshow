@@ -29,22 +29,22 @@
             <h2 class="subtitle-detail">edad mín: <a>{{ object.min_age }}</a></h2>
             <h2 class="subtitle-detail">idioma: <a>{{ object.lang }}</a></h2>
         </div>
-        <div class="col s12 center">
+        <div class="col s12 center button-event">
             {% if user.is_authenticated %}
             {% if user_is_owner %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Propietario</h3>
+            <h3 class=" btn-large  price-detail" href="">Propietario</h3>
             {% elif not user_is_old_enough %}
-            <h3 class=" btn-large button-detail-auth-price">No tienes la edad suficiente</h3>
+            <h3 class=" btn-large price-detail">No tienes la edad suficiente</h3>
             {% elif event_is_full %}
-            <h3 class=" btn-large button-detail-auth-price ">Aforo Completo</h3>
+            <h3 class=" btn-large  price-detail">Aforo Completo</h3>
             {% elif event.has_started %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Ya ha empezado</h3>
+            <h3 class=" btn-large  price-detail" href="">Ya ha empezado</h3>
             {% elif event.has_finished %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Ya ha terminado</h3>
+            <h3 class=" btn-large price-detail " href="">Ya ha terminado</h3>
             {% elif user_is_enrolled %}
-            <h3 class=" btn-large button-detail-auth-price " href="">Ya estás inscrito</h3>
+            <h3 class=" btn-large  price-detail" href="">Ya estás inscrito</h3>
             {% elif event.created_by.username == 'deleted' %}
-            <h3 class=" btn-large button-detail-auth-price" href="">No disponible</h3>
+            <h3 class=" btn-large price-detail" href="">No disponible</h3>
             {% elif user_can_enroll and not event.has_started %}
             {% if user.profile.eventpoints > 0 %}
             <a class=" waves-light btn-large modal-trigger modal-mov price-detail"
@@ -58,11 +58,11 @@
                     data-locale="es" data-currency="eur" data-label="{{ object.price }}€">
                     </script>
                 <script>
-                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large button-detail-auth-price  price-detail");
+                    document.getElementsByClassName("stripe-button-el")[0].setAttribute("class", "waves-effect waves-light btn-large price-detail");
                 </script>
                 {% else %}
                 <button type="submit"
-                    class="waves-effect waves-light btn-large button-detail-auth-price price-detail">{{ object.price }}€
+                    class="waves-effect waves-light btn-large price-detail ">{{ object.price }}€
                 </button>
                 {% endif %}
             </form>
@@ -71,7 +71,7 @@
             {% elif event.created_by.username == 'deleted' %}
             <h3 class="price-detail" href="">No disponible</h3>
             {% else %}
-            <a class="waves-effect waves-light btn-large button-detail-auth-price price-detail" id="enroll"
+            <a class="waves-effect waves-light btn-large price-detail" id="enroll"
                 href="{% url 'login' %}">INSCRIBIRSE</a>
             {% endif %}
             <p class="commission">Se <b>pueden</b> cobrar <b>hasta</b> {{fee}}€ en concepto de gastos de gestión.

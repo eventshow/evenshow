@@ -22,7 +22,7 @@ before_script:
   - cp ./eventshow/settings/settings.py ./eventshow/local_settings.py
   - export PATH="/usr/lib/postgresql/12/bin:$PATH"
   - psql -U postgres -c "CREATE USER showman WITH PASSWORD 'showman'"
-  - psql -U postgres -c "ALTER USER showman CREATEDB"
+  - psql -U postgres -c "ALTER USER showman SUPERUSER"
   - psql -U postgres -c "CREATE DATABASE eventshow OWNER showman"
   - python manage.py makemigrations
   - python manage.py migrate
