@@ -320,7 +320,7 @@ class ProfileForm(forms.ModelForm):
     )
     location = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'placeholder': "localidad"}))
-    picture = forms.ImageField(required=False, widget=forms.ClearableFileInput(
+    picture = forms.ImageField(required=False, widget=forms.FileInput(
         attrs={'style': 'display: none;'}))
 
     class Meta:
