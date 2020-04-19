@@ -984,6 +984,16 @@ p.description {
 	margin-bottom: 5%;
 }
 
+#picture-box-prof {
+	width: 104% !important;
+	height: 60px !important;
+	border: 1px solid #B6244D !important;
+	border-radius: 12px !important;
+	padding-left: 4% !important;
+	margin-left: -2.5% !important;
+	margin-bottom: 5%;
+}
+
 #create-event textarea {
 	width: 105% !important;
 	height: auto;
@@ -2224,7 +2234,23 @@ table {
 		margin-bottom: 15%;
 	}
 	#edit-event input {
-		width: 100% !important;
+		width: 97% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: 0% !important;
+		font-family: Raleway, sans-serif;
+		margin-bottom: -5% !important;
+		font-size: 12px;
+	}
+	.iphone-surname{
+		margin-bottom: 13%;
+	}
+
+	#picture-box-prof {
+		width: 104% !important;
 		height: 60px !important;
 		color: #5D5E5E !important;
 		border: 1px solid #B6244D !important;
@@ -2232,18 +2258,17 @@ table {
 		padding-left: 4% !important;
 		margin-left: -3% !important;
 		font-family: Raleway, sans-serif;
-		margin-bottom: -5% !important;
 		font-size: 12px;
 	}
 	#edit-event textarea {
-		width: 105% !important;
+		width: 102% !important;
 		height: auto;
 		color: #5D5E5E !important;
 		margin-bottom: -25% !important;
 		border: 1px solid #B6244D;
 		border-radius: 12px !important;
 		padding-left: 4% !important;
-		margin-left: -2.5% !important;
+		margin-left: -2% !important;
 		font-family: Raleway, sans-serif;
 		font-size: 12px !important;
 	}
@@ -2491,6 +2516,10 @@ table {
 	#img-Rating {
 		max-width: 73px;
 		height: 73px;
+	}
+
+	.iphone-email{
+		margin-right: 2%;
 	}
 }
 
@@ -2777,6 +2806,20 @@ table {
 		font-size: 15px;
 		line-height: 23px;
 	}
+
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: -42% !important;
+		margin-top: 120% !important;
+	}
+
+	.iphone-email {
+		margin-right: 1%;
+	}
+
+	.iphone-surname {
+		margin-bottom: 0%;
+	}
 }
 
 /* IPAD */
@@ -2888,9 +2931,31 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 14px;
 	}
+
+	#picture-box-prof {
+		width: 113% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -8% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 14px;
+	}
 	#iphone-left {
 		margin-left: -4%;
 	}
+	.ipad-left{
+		margin-left: -4% !important;
+		margin-top: -4%;
+	}
+
+	.ipad-right {
+		margin-right: -2% !important;
+		margin-top: -4%;
+	}
+
 	#iphone-right {
 		margin-right: -4%;
 	}
@@ -3156,12 +3221,11 @@ table {
 	.ipad-birth-label {
 		width: 140%;
 	}
-	#edit-event label {
-		margin-left: -12% !important;
-	}
+
 	.ipad-bio {
-		margin-left: -3% !important;
-		width: 156% !important;
+		margin-left: -7% !important;
+		margin-right: -1% !important;
+		width: 166% !important;
 		margin-top: -10% !important;
 	}
 	.ipad-label-bio {
@@ -3233,16 +3297,17 @@ table {
 		margin-bottom: 15%;
 	}
 	#edit-event input {
-		width: 121% !important;
+		width: 110% !important;
 		height: 60px !important;
-		margin-bottom: 8px !important;
+		margin-bottom: 6px !important;
 		color: #5D5E5E !important;
 		border: 1px solid #B6244D !important;
 		border-radius: 12px !important;
 		padding-left: 4% !important;
-		margin-left: -16.5% !important;
+		margin-left: -8.5% !important;
 		font-family: Raleway, sans-serif;
 	}
+
 	label {
 		display: block;
 		margin-left: -7px;
@@ -3389,8 +3454,8 @@ table {
 	}
 	#send-buttons-data {
 		margin-bottom: 3% !important;
-		margin-left: -40% !important;
-		margin-top: 60% !important;
+		margin-left: -14% !important;
+		margin-top: 100% !important;
 	}
 	.delete-buttons-big-title {
 		margin-top: 35%;
@@ -3562,6 +3627,26 @@ table {
 		margin-top: 11px;
 		margin-left: 27%;
 	}
+
+	#picture-box-prof {
+		width: 106% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -2% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px;
+	}
+
+	.iphone-surname {
+		margin-bottom: 0%;
+	}
+
+	.iphone-email{
+		margin-right: 4%;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
@@ -3681,6 +3766,19 @@ table {
 	#send-buttons-pw-conf {
 		margin-left: 30%;
 	}
+
+	.ipad-bio {
+		margin-left: -4% !important;
+		margin-right: -2% !important;
+		width: 166% !important;
+		margin-top: -10% !important;
+	}
+
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: 45% !important;
+		margin-top: 55% !important;
+	}
 }
 
 /*  PIXEL 2XL*/
@@ -3697,6 +3795,19 @@ table {
 		width: 285px;
 		margin-bottom: -57%;
 		margin-left: 7%;
+	}
+
+	#edit-event textarea {
+		width: 104% !important;
+		height: auto;
+		color: #5D5E5E !important;
+		margin-bottom: -25% !important;
+		border: 1px solid #B6244D;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -0.75% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px !important;
 	}
 }
 
@@ -3836,6 +3947,10 @@ table {
 	.img-detail-bio {
 		margin-top: 4px;
 		margin-left: 28%;
+	}
+
+	.iphone-email{
+		margin-right: 3%;
 	}
 }
 

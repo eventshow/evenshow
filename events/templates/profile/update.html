@@ -20,8 +20,8 @@
                     action="{% url 'update_profile' %}">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="grid-example col s12">
-                            <div class="validate-input iphone-right" id="edit-event">
+                        <div class="grid-example col s12 iphone-email">
+                            <div class="validate-input" id="edit-event">
                                 <label>EMAIL</label>
                                 {{form.email}}
                                 <div class="form-errors">
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid-example col s6">
+                        <div class="grid-example col s6 ipad-left">
                             <div class="validate-input" id="edit-event">
                                 <label>USUARIO</label>
                                 {{ form.username }}
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid-example col s6">
+                        <div class="grid-example col s6 ipad-right">
                             <div class="validate-input" id="edit-event">
                                 <label>NOMBRE</label>
                                 {{form.first_name}}
@@ -47,17 +47,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid-example col s6">
-                            <div class="validate-input iphone-right" id="edit-event">
-                                <label>APELLIDOS</label>
-                                {{form.last_name}}
-                                <div class="form-errors">
-                                    {{ form.last_name.errors }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid-example col m6 s12 center-profile">
-                            <div class="validate-input" id="edit-event">
+                        <div class="grid-example col s6 ipad-left">
+                            <div class="validate-input input-left" id="edit-event">
                                 <label class="ipad-birth-label">FECHA DE NACIMIENTO</label>
                                 {{ profile_form.birthdate }}
                                 <div class="form-errors">
@@ -65,10 +56,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid-example col s12 center-profile ipad-input">
+                        <div class="grid-example col s6 ipad-right">
+                            <div class="validate-input" id="edit-event">
+                                <label class="iphone-surname">APELLIDOS</label>
+                                {{form.last_name}}
+                                <div class="form-errors">
+                                    {{ form.last_name.errors }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-example col s12 center-profile">
                             <div class="validate-input" id="edit-event">
                                 <label>IMAGEN (.png .jpg .jpeg)</label>
-                                <div id="picture-box">
+                                <div id="picture-box-prof">
                                     <label for="id_picture" class="subir-prof right">
                                         Subir imagen
                                     </label>
