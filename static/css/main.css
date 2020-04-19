@@ -3334,6 +3334,11 @@ table {
 		margin-left: -5%;
 		margin-top: 3%;
 	}
+
+	.container-login100 {
+    margin-top: 31% !important;
+    margin-bottom: 0%;
+}
 	.details-event-principal {
 		margin-top: -2%;
 		width: 70% !important;
