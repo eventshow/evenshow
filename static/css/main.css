@@ -976,10 +976,10 @@ p.description {
 
 #picture-box {
 	width: 104% !important;
-	height: 60px !important;
-	border: 1px solid #B6244D !important;
-	border-radius: 12px !important;
-	padding-left: 4% !important;
+    height: 62px !important;
+    border: 1px solid #B6244D !important;
+    border-radius: 12px !important;
+    padding-left: 4% !important;
 	margin-left: -2.5% !important;
 	margin-bottom: 5%;
 }
@@ -2008,7 +2008,7 @@ table {
 		font-size: 12px;
 	}
 	#picture-box {
-		width: 130% !important;
+		width: 135% !important;
 		height: 60px !important;
 		color: #5D5E5E !important;
 		border: 1px solid #B6244D !important;
@@ -2482,8 +2482,30 @@ table {
 	#movil {
 		opacity: 1;
 	}
+
+	.subir {
+		background: #B6244D;
+		font-family: Raleway, sans-serif;
+		color: #fff;
+		padding-top: 5px;
+		padding-left: 9px;
+		padding-bottom: 5px;
+		margin-left: 70%;
+		margin-right: 1%;
+		border: 1px solid #FFF !important;
+		border-radius: 12px !important;
+		margin-top: 2.5%;
+		font-weight: normal;
+	}
+
+	.panel-resp {
+		opacity: 1;
+		padding-left: 5%;
+		padding-top: 10%;
+	}
+
 	.preferences {
-		margin-top: 0;
+		margin-top: 0%;
 	}
 	#margin-Rating {
 		margin-bottom: 39px!important;
@@ -3026,7 +3048,7 @@ table {
 	}
 	.panel-resp {
 		opacity: 1;
-		margin-top: 3%;
+		margin-top: 18%;
 		margin-left: 4%;
 	}
 	.sidenav.sidenav-fixed {
@@ -3612,6 +3634,15 @@ table {
 /* IPAD Pro */
 
 @media only screen and (min-width: 1024px) and (max-width: 1336px) {
+
+	#picture-box{
+		width: 113% !important;
+	}
+
+	.subir{
+		margin-right: 9%;
+	}
+
 	.center-form {
 		margin-left: 27.5%;
 		margin-right: -12.5%;
@@ -3671,6 +3702,7 @@ table {
 	.details-event-principal {
 		margin-top: -8% !important;
 		margin-left: 38% !important;
+		z-index: -1;
 	}
 	.button-event {
 		margin-left: -31% !important;
@@ -3860,6 +3892,7 @@ table {
 	}
 	.details-event-principal {
 		margin-top: -48% !important;
+		z-index: -1;
 	}
 	.img-detail-auth {
 		width: 73% !important;
@@ -3890,6 +3923,7 @@ table {
 	}
 	.details-event-principal {
 		margin-top: -42% !important;
+		z-index: -1;
 	}
 	.img-detail-auth {
 		margin-top: 0% !important;
