@@ -3726,6 +3726,13 @@ table {
 		.sidenav{
 			width: 209px;
 		}
+		#newEventPro{
+			margin-left: 275px;
+		}
+		#send-buttons {
+			margin-left: 14%;
+			
+		}
 	}
 
 	/*  PIXEL 2XL*/
