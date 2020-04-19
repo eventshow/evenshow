@@ -20,6 +20,15 @@
                     action="{% url 'update_profile' %}">
                     {% csrf_token %}
                     <div class="row">
+                        <div class="grid-example col s12">
+                            <div class="validate-input iphone-right" id="edit-event">
+                                <label>EMAIL</label>
+                                {{form.email}}
+                                <div class="form-errors">
+                                    {{ form.email.errors }}
+                                </div>
+                            </div>
+                        </div>
                         <div class="grid-example col s6">
                             <div class="validate-input" id="edit-event">
                                 <label>USUARIO</label>
@@ -29,17 +38,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid-example col s6">
-                            <div class="validate-input iphone-right" id="edit-event">
-                                <label>EMAIL</label>
-                                {{form.email}}
-                                <div class="form-errors">
-                                    {{ form.email.errors }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="grid-example col s6">
                             <div class="validate-input" id="edit-event">
                                 <label>NOMBRE</label>
@@ -58,8 +56,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="grid-example col m6 s12 center-profile">
                             <div class="validate-input" id="edit-event">
                                 <label class="ipad-birth-label">FECHA DE NACIMIENTO</label>
@@ -69,25 +65,22 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="grid-example col m6 s12 center-profile ipad-input">
+                        <div class="grid-example col s12 center-profile ipad-input">
                             <div class="validate-input" id="edit-event">
-                                <label>IMAGEN</label>
+                                <label>IMAGEN (.png .jpg .jpeg)</label>
                                 <div id="picture-box">
-                                    <label for="id_picture" class="subir-prof">
+                                    <label for="id_picture" class="subir-prof right">
                                         Subir imagen
                                     </label>
-                                    {{profile_form.picture}}
                                     <div id="info"></div>
+                                    {{profile_form.picture}}
+                                 
                                 </div>
                                 <div class="form-errors">
                                     {{ profile_form.picture.errors }}
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="grid-example col s12 center-profile ipad-bio">
                             <div class="validate-input" id="edit-event">
                                 <label class="ipad-label-bio">SOBRE MÍ</label>
@@ -97,8 +90,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="grid-example col s3 offset-s8">
                             <button id="send-buttons-data" type="submit" class=" btn-large">Enviar</button>
                         </div>

@@ -54,7 +54,7 @@
     id="menu-movil" class="material-icons">create</em></a>
 {% if request.get_full_path == '/events/create' %}
 
-<div class="container">
+<div class="container" id="newEventPro">
   <div class="center-form-create">
     <form class="form-eventshow-create" id="create-event" method="post" enctype="multipart/form-data"
       action="{% url 'create_event' %}">
@@ -291,4 +291,12 @@
       <script type="text/javascript">
         showClickA();
       </script>
+
+    <style>
+      @media only screen and (min-width: 1024px) and (max-width: 1336px) {
+
+        .logo{
+			margin-left: 80%;
+		}}
+            </style>
       {% endblock %}
