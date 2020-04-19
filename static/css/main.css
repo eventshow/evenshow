@@ -3396,7 +3396,11 @@ table {
 		}
 
 		#login-res{
-			min-height: 72vh !important;
+			min-height: 51vh !important;
+		}
+
+		.wrap-login100{
+			margin-top: -28%;
 		}
 
 
