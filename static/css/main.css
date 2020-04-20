@@ -4244,6 +4244,13 @@ table {
 	#onlyIpadPro {
 		margin-left: 2px!important;
 	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: 16%!important;
+	}
+	.send-btn {
+		margin-left: 49% !important;
+	}
 }
 
 /* PIXEL 2 LANDSCAPE*/
@@ -4421,6 +4428,11 @@ table {
 @media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
 	.eventpoints {
 		margin-top: 32%;
+	}
+
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -59%;
 	}
 }
 
