@@ -3678,6 +3678,10 @@ table {
 		margin-left: 41px;
 		margin-bottom: 75px;
 	}
+	.eventpoints {
+		margin-top: 19%;
+		margin-bottom: -71px;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
@@ -4204,6 +4208,10 @@ table {
 			margin-left: 41px;
 			margin-bottom: 14px;
 		}
+		.subir {
+			margin-top: 4.5%!important;
+			width: 91px;
+		}
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4226,6 +4234,7 @@ table {
 		margin-bottom: 30% !important;
 		margin-left: -19%!important;
 	}
+	
 }
 
 /* IPAD LANDSCAPE*/
@@ -4331,6 +4340,10 @@ table {
 	.user-delete {
 		font-size: 18px;
 		line-height: 23px;
+	}
+	.eventpoints {
+		margin-top: 19%;
+		margin-bottom: -1px;
 	}
 }
 
@@ -4516,9 +4529,8 @@ table {
 		margin-left: -81%!important;
 	}
 	.subir {
-		
-		margin-top: 0.5%;
-		
+		margin-top: 3.5%;
+		margin-left: 67%;
 	}
 }
 
