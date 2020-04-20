@@ -327,7 +327,7 @@ def seed_transaction(event, transmitter, recipient, created_at, event_date, amou
     fee = PaymentService().fee(amount*100)
     discounted_fee = fee * 0.85
 
-    if event_date <= datetime.now():
+    if event_date <= datetime.now().date():
         is_paid = random.choice([True, False])
     else:
         is_paid = False
