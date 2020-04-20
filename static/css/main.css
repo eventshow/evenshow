@@ -4202,6 +4202,10 @@ table {
 		#iphone-left {
 			margin-left: -1% !important;
 		}
+		#panel {
+			margin-left: 41px;
+			margin-bottom: 14px;
+		}
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4311,6 +4315,14 @@ table {
 		margin-left: -3% !important;
 		
 	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 0px;
+	}
+	.user-delete {
+		font-size: 18px;
+		line-height: 23px;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
@@ -4394,11 +4406,23 @@ table {
 		margin-left: -3% !important;
 		
 	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 3px;
+	}
+	.user-delete {
+		font-size: 18px;
+		line-height: 23px;
+	}
 }
 
 /* IPAD PRO LANDSCAPE*/
 
-@media only screen and (min-width: 1024px) and (max-width: 1336px) and (orientation: landscape) {}
+@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+	.eventpoints {
+		margin-top: 32%;
+	}
+}
 
 /*  PIXEL 2XL LANDSCAPE*/
 
