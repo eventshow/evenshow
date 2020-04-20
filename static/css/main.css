@@ -4133,8 +4133,8 @@ table {
 	}
 	.panel-resp {
 		opacity: 1;
-		    margin-top: 10%;
-    margin-left: 3%;
+        margin-top: 10%;
+        margin-left: 3%;
 	}
 	.preferences {
 		margin-top: 0;
@@ -4146,6 +4146,9 @@ table {
 		max-width: 73px !important;
 		height: 73px!important;
 	}
+    .form-eventshow {
+        width: 90%;
+    }
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4177,6 +4180,9 @@ table {
     .container-login100 {
         margin-top: 31% !important;
         margin-bottom: 0%;
+    }
+    .form-home {
+        margin-left: 11% !important;
     }
 }
 
@@ -4220,6 +4226,12 @@ table {
 	.sidenav.sidenav-fixed {
 		margin-top: 0 !important;
 	}
+    nav {
+        width: 105%;
+    }
+    .form-eventshow {
+        width: 95%;
+    }
 }
 
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
@@ -4280,6 +4292,18 @@ table {
     #send-buttons-conf {
         margin-left: -60%;
     }
+    .form-home {
+        width: 100% !important;
+    }
+    .form-eventshow {
+        width: 94%;
+    }
+    .page-footer {
+        width: 105% !important;
+    }
+    nav {
+        width: 105%;
+    }
 }
 
 /* IPAD PRO LANDSCAPE*/
@@ -4307,6 +4331,10 @@ table {
 	.container-login100{
 		margin-top:35%;
 	}
+	.form-home {
+        margin-left: 10% !important;
+        margin-top: 1%;
+    }
 }
 
 /* SAMSUNG S5 LANDSCAPE */
@@ -4337,6 +4365,19 @@ table {
     #send-buttons-conf {
         margin-left: -80%;
     }
+    nav {
+        width: 105%;
+    }
+    .form-home {
+        margin-right: -4%;
+    }
+    .about-us{
+        margin-left:60%
+    }
+    .form-eventshow {
+        width: 91%;
+    }
+
 }
 
 	
