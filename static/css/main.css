@@ -4179,6 +4179,18 @@ table {
 	}
 	#text3 {
 		width: 365px;}
+		#create-event input {
+			width: 98% !important;
+			
+			margin-left: -1% !important;
+			
+		}
+		#picture-box {
+			width: 103% !important;
+			
+			margin-left: -3% !important;
+			
+		}
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4272,6 +4284,22 @@ table {
 	#titleThanks {
 		margin-bottom: 49px;
 	}
+	#create-event input {
+		width: 95% !important;
+		
+		margin-left: 1% !important;
+		
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -63%!important;
+	}
+	#picture-box {
+		width: 103% !important;
+		
+		margin-left: -3% !important;
+		
+	}
 }
 
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
@@ -4338,6 +4366,22 @@ table {
 	}
 	#titleThanks {
 		margin-bottom: 49px;
+	}
+	#create-event input {
+		width: 99% !important;
+		
+		margin-left: -3% !important;
+		
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -63%;
+	}
+	#picture-box {
+		width: 103% !important;
+		
+		margin-left: -3% !important;
+		
 	}
 }
 
