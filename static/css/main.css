@@ -3438,6 +3438,9 @@ table {
 		max-width: 100px;
 		height: 100px;
 	}
+	#edit-buttons {
+        margin-left: 7% !important;
+    }
 }
 
 /* PIXEL 2 */
@@ -3816,6 +3819,9 @@ table {
 		margin-left: 45% !important;
 		margin-top: 55% !important;
 	}
+	#edit-buttons {
+        margin-left: 13% !important;
+    }
 }
 
 /*  PIXEL 2XL*/
@@ -3846,6 +3852,9 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 12px !important;
 	}
+	#edit-buttons {
+        margin-left: 10%;
+    }
 }
 
 /* SAMSUNG S5 */
@@ -3989,6 +3998,9 @@ table {
 	.iphone-email{
 		margin-right: 3%;
 	}
+	#edit-buttons {
+        margin-left: 8%;
+    }
 }
 
 /* 1680x1050 */
@@ -4149,6 +4161,12 @@ table {
     .form-eventshow {
         width: 90%;
     }
+    #edit-buttons {
+        margin-left:14%;
+    }
+    #edit-profile {
+        margin-left: -24%;
+    }
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4183,6 +4201,9 @@ table {
     }
     .form-home {
         margin-left: 11% !important;
+    }
+    #edit-buttons {
+        margin-left: 14% !important;
     }
 }
 
@@ -4231,6 +4252,15 @@ table {
     }
     .form-eventshow {
         width: 95%;
+    }
+
+    #edit-profile {
+        margin-left: -7%;
+        width: 115%;
+    }
+
+    #edit-buttons {
+        margin-left: 23%;
     }
 }
 
@@ -4304,6 +4334,15 @@ table {
     nav {
         width: 105%;
     }
+
+    #edit-profile {
+        margin-left: -8%;
+        width: 115%;
+    }
+
+    #edit-buttons {
+        margin-left: 26%;
+    }
 }
 
 /* IPAD PRO LANDSCAPE*/
@@ -4339,7 +4378,11 @@ table {
 
 /* SAMSUNG S5 LANDSCAPE */
 
-@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape) {}
+@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape) {
+    #edit-buttons {
+        margin-left: 24% !important;
+    }
+}
 
 /* IPHONE 6,7,8 LANDSCAPE*/
 
@@ -4376,6 +4419,9 @@ table {
     }
     .form-eventshow {
         width: 91%;
+    }
+    #edit-buttons {
+        margin-left: 20%;
     }
 
 }
