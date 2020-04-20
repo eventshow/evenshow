@@ -3755,6 +3755,10 @@ table {
 
 @media only screen and (min-width: 1024px) and (max-width: 1336px) {
 
+	.eventpoints{
+		margin-top: 85%;
+	}
+
 	#picture-box{
 		width: 113% !important;
 	}
