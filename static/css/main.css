@@ -4188,9 +4188,7 @@ table {
 		}
 		#picture-box {
 			width: 103% !important;
-			
 			margin-left: -3% !important;
-			
 		}
 		#send-buttons {
 			margin-bottom: 30% !important;
@@ -4224,6 +4222,10 @@ table {
 	.name-host-rating{
 		margin-bottom: 110px;
 	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -19%!important;
+	}
 }
 
 /* IPAD LANDSCAPE*/
@@ -4246,10 +4248,10 @@ table {
 	}
 	#send-buttons {
 		margin-bottom: 30% !important;
-		margin-left: 16%!important;
+		margin-left: 16%;
 	}
 	.send-btn {
-		margin-left: 49% !important;
+		margin-left: 49% ;
 	}
 }
 
@@ -4461,10 +4463,14 @@ table {
 		margin-bottom: 117px;
 	}
 	#picture-box {
-		width: 113% !important;
+		width: 113%;
 		
-		margin-left: -7% !important;
+		margin-left: -7% ;
 		
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -17%;
 	}
 }
 
