@@ -3674,6 +3674,10 @@ table {
 	.iphone-email{
 		margin-right: 4%;
 	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 75px;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
@@ -3718,6 +3722,16 @@ table {
 		width: 285px;
 		margin-bottom: -58% !important;
 		margin-left: 7% !important;
+	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 75px;
+	}
+	.name-host-rating {
+			
+		margin-top: 18%;
+		margin-bottom: 115px;
+	
 	}
 }
 
@@ -4146,6 +4160,25 @@ table {
 		max-width: 73px !important;
 		height: 73px!important;
 	}
+	.container#square {
+		margin-top: 26% !important;
+		border: 0 solid;
+		width: 523px;
+	}
+	.name-host-rating {
+		margin-top: 36%!important;
+		margin-bottom: 115px;
+	}
+	#titleThanks {
+		margin-bottom: 49px;
+		width: 487px!important;
+	}
+	#text2Thanks {
+		width: 531px!important;
+		margin-bottom: 28px;
+	}
+	#text3 {
+		width: 365px;}
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4160,6 +4193,9 @@ table {
 	}
 	.sidenav.sidenav-fixed {
 		margin-top: 0;
+	}
+	.name-host-rating{
+		margin-bottom: 110px;
 	}
 }
 
@@ -4177,7 +4213,10 @@ table {
     .container-login100 {
         margin-top: 31% !important;
         margin-bottom: 0%;
-    }
+	}
+	#onlyIpadPro {
+		margin-left: 2px!important;
+	}
 }
 
 /* PIXEL 2 LANDSCAPE*/
@@ -4219,6 +4258,19 @@ table {
 	}
 	.sidenav.sidenav-fixed {
 		margin-top: 0 !important;
+	}
+	.name-host-rating {
+			
+		margin-top: 18%;
+		margin-bottom: 115px;
+	
+	}
+	#text2Thanks {
+		width: 708px;
+		margin-bottom: 28px;
+	}
+	#titleThanks {
+		margin-bottom: 49px;
 	}
 }
 
@@ -4279,7 +4331,14 @@ table {
     }
     #send-buttons-conf {
         margin-left: -60%;
-    }
+	}
+	#text2Thanks {
+		width: 641px;
+		margin-bottom: 28px;
+	}
+	#titleThanks {
+		margin-bottom: 49px;
+	}
 }
 
 /* IPAD PRO LANDSCAPE*/
@@ -4307,11 +4366,23 @@ table {
 	.container-login100{
 		margin-top:35%;
 	}
+	.name-host-rating{
+		margin-bottom: 117px;
+	}
 }
 
 /* SAMSUNG S5 LANDSCAPE */
 
-@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape) {}
+@media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape) {
+	#titleThanks {
+		margin-bottom: 49px;
+		width: 590px;
+	}
+	#text2Thanks {
+		width: 582px;
+		margin-bottom: 28px;
+	}
+}
 
 /* IPHONE 6,7,8 LANDSCAPE*/
 
