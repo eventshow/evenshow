@@ -19,7 +19,7 @@
 
     <div class="col s12 m8 l9">
     </div>
-    <div class="col s12 m4 l3 details-event-principal">
+    <div id="detail-principal-landscape" class="col s12 m4 l3 details-event-principal">
         <h1 class="title-detail">Detalles del evento</h1>
         <div class="col">
             <h2 class="subtitle-detail">Fecha: <a>{{ object.start_day| date:"d M, Y" }}</a></h2>
@@ -142,7 +142,7 @@
         {% for rating in object_list %}
         <div class="comments">
             <img class="img-comment-detail" alt='' src="{{rating.created_by.profile.picture.url}}">
-            <h3 class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
+            <h3 id="user-landscape" class="name-host-detail user-comment">{{rating.created_by.username}}</h3>
             <div class="user-rat">
                 <em class="fa fa-star"><em class="rating-search">&nbsp{{rating.score}}</em></em>
             </div>
