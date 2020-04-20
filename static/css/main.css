@@ -170,6 +170,8 @@ nav ul a:hover {
 	margin-left: 3%;
 	margin-top: 16%;
 	width: 150px;
+	height: 150px;
+	border-radius: 100px;
 }
 
 .objetfitcover>.img-detail {
@@ -4081,6 +4083,39 @@ table {
 /* IPHONE 5/SE LANDSCAPE*/
 
 @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
+
+	#user-landscape{
+		margin-top: -20% !important;
+		margin-bottom: -4% !important;
+	}
+
+	#detail-principal-landscape{
+		margin-left: 35% !important;
+	}
+
+	.modal-mov{
+		    margin-left: -21% !important;
+	}
+
+
+	.img-comment-detail {
+    margin-left: 12% !important;
+}
+
+	.map-detail{
+		margin-left: 12% !important;
+	}
+	.commission{
+		margin-left: -20% !important;
+	}
+	.img-detail-auth{
+		margin-top: -73px !important;
+	}
+
+	.img-detail{
+		margin-top: -73px !important;
+	}
+
 	.form-search {
 		margin-left: 8.5% !important;
 		width: 10%;
