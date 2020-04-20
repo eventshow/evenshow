@@ -552,11 +552,11 @@ label {
 }
 
 .discount-no-price {
-  margin-right: 30% !important;
+  margin-right: 30% ;
 }
 
 .discount-yes-price {
-  margin-left: 30% !important;
+  margin-left: 30% ;
 }
 
 .modal-evetshow {

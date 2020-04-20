@@ -4597,6 +4597,16 @@ table {
 		margin-top: 120% !important;
 	}
 
+		.discount-yes-price {
+		margin-left: 18% !important;
+	}
+
+	.discount-no-price {
+		margin-right: 18% !important;
+
+
+	}
+
 }
 
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
@@ -4678,6 +4688,7 @@ table {
     #name-host-title-del {
         width: 156%;
         margin-left: -24%;
+		margin-bottom: 42%;
     }
     .form-eventshow-password {
         width: 120%;
@@ -4761,6 +4772,16 @@ table {
 		margin-left: -1% !important;
 	}
 
+		.discount-yes-price {
+		margin-left: 18% !important;
+	}
+
+	.discount-no-price {
+		margin-right: 18% !important;
+
+
+	}
+
 
 }
 
@@ -4824,19 +4845,32 @@ table {
 /* SAMSUNG S5 LANDSCAPE */
 
 @media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape) {
-    #edit-buttons {
-        margin-left: 24% !important;
-    }
+	#edit-buttons {
+		margin-left: 24% !important;
+	}
+
 	#titleThanks {
 		margin-bottom: 49px;
 		width: 590px;
 	}
+
 	#text2Thanks {
 		width: 582px;
 		margin-bottom: 28px;
 	}
+
 	.img-profile-detail {
-	    margin-left:56%;
+		margin-left: 56%;
+	}
+
+	.discount-yes-price {
+		margin-left: 18% !important;
+	}
+
+	.discount-no-price {
+		margin-right: 18% !important;
+
+
 	}
 }
 
@@ -4919,6 +4953,16 @@ table {
 		margin-left: -4% !important;
 		font-family: Raleway, sans-serif;
 		font-size: 12px;
+	}
+
+		.discount-yes-price {
+		margin-left: 18% !important;
+	}
+
+	.discount-no-price {
+		margin-right: 18% !important;
+
+
 	}
 
 }
