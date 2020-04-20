@@ -223,11 +223,12 @@
                   <div class="grid-example col s12">
                     <label>IMAGEN DEL EVENTO</label>
                     <div id="picture-box">
-                      <label for="id_picture" class="subir">
+                      <label for="id_picture" class="subir-prof right">
                         Subir imagen
                       </label>
-                      {{ form.picture }}
-                      <div id="info"></div>
+
+                      <div id="info" class="subir-img-texto"></div>
+                        {{ form.picture }}
                     </div>
                     <div class="form-errors">
                       {{ form.picture.errors }}

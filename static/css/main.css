@@ -170,6 +170,8 @@ nav ul a:hover {
 	margin-left: 3%;
 	margin-top: 16%;
 	width: 150px;
+	height: 150px;
+	border-radius: 100px;
 }
 
 .objetfitcover>.img-detail {
@@ -982,6 +984,12 @@ p.description {
     padding-left: 4% !important;
 	margin-left: -2.5% !important;
 	margin-bottom: 5%;
+}
+.subir-img-texto{
+	width: 100px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
 }
 
 #picture-box-prof {
@@ -1843,6 +1851,10 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+
+	.modal-mov{
+		margin-left: -3% !important;
+	}
 	.rule {
 		margin-top: 13%;
 	}
@@ -4099,6 +4111,41 @@ table {
 /* IPHONE 5/SE LANDSCAPE*/
 
 @media only screen and (min-width: 320px) and (max-width: 568px) and (orientation: landscape) {
+
+	#user-landscape{
+		margin-top: -20% !important;
+		margin-bottom: -4% !important;
+	}
+
+	#detail-principal-landscape{
+		margin-left: 35% !important;
+	}
+
+	.modal-mov{
+		margin-left: -21% !important;
+	}
+
+	.img-comment-detail {
+    margin-left: 12% !important;
+}
+
+	.map-detail{
+		margin-left: 12% !important;
+	}
+	.commission{
+		margin-left: -20% !important;
+	}
+	.img-detail-auth{
+		margin-top: -74px !important;
+		margin-left: 14px;
+	}
+
+
+
+	.img-detail{
+		margin-top: -74px !important;
+	}
+
 	.form-search {
 		margin-left: 8.5% !important;
 		width: 10%;
@@ -4151,8 +4198,8 @@ table {
 	}
 	.panel-resp {
 		opacity: 1;
-		    margin-top: 10%;
-    margin-left: 3%;
+        margin-top: 10%;
+        margin-left: 3%;
 	}
 	.preferences {
 		margin-top: 0;
@@ -4212,6 +4259,9 @@ table {
 			margin-top: 4.5%!important;
 			width: 91px;
 		}
+    .form-eventshow {
+        width: 90%;
+    }
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4261,12 +4311,44 @@ table {
 	}
 	.send-btn {
 		margin-left: 49% ;
-	}
+	
+    }
+    .form-home {
+        margin-left: 11% !important;
+    }
 }
 
 /* PIXEL 2 LANDSCAPE*/
 
 @media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape) {
+
+
+	#detail-principal-landscape{
+		margin-top: 0;
+		    margin-left: 36%;
+	}
+
+		.img-detail-auth{
+		margin-top: -79px ;
+	}
+
+		.comment-detail{
+			margin-top: -5% !important;
+		}
+
+
+	.img-detail{
+		margin-top: -79px !important;
+	}
+
+	.name-host-detail{
+		margin-top: -20% !important;
+	}
+
+	.img-comment-detail{
+		margin-left: 7% !important;
+	}
+
 	.search {
 		margin-right: 25% !important;
 	}
@@ -4345,11 +4427,47 @@ table {
 		margin-top: 19%;
 		margin-bottom: -1px;
 	}
+    nav {
+        width: 105%;
+    }
+    .form-eventshow {
+        width: 95%;
+    }
 }
 
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
 
 @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape) {
+
+	#user-landscape{
+		margin-top: 5% !important;
+
+	}
+
+	.price-detail{
+		margin-left: -18%;
+	}
+
+	.sep-title{
+		margin-top: -10%;
+	}
+
+	#detail-principal-landscape{
+		margin-top: 0;
+		    margin-left: 36%;
+	}
+
+	.img-detail{
+		width: 100% !important;
+		margin-top: -79px !important;
+	}
+
+	.img-detail-auth{
+		width: 100% !important;
+		margin-top: -79px !important;
+
+	}
+
     table.responsive-table {
         padding-bottom: 40px;
     }
@@ -4436,6 +4554,19 @@ table {
 		font-size: 18px;
 		line-height: 23px;
 	}
+    
+    .form-home {
+        width: 100% !important;
+    }
+    .form-eventshow {
+        width: 94%;
+    }
+    .page-footer {
+        width: 105% !important;
+    }
+    nav {
+        width: 105%;
+    }
 }
 
 /* IPAD PRO LANDSCAPE*/
@@ -4485,6 +4616,10 @@ table {
 		margin-bottom: 30% !important;
 		margin-left: -17%;
 	}
+	.form-home {
+        margin-left: 10% !important;
+        margin-top: 1%;
+    }
 }
 
 /* SAMSUNG S5 LANDSCAPE */
@@ -4532,6 +4667,20 @@ table {
 		margin-top: 3.5%;
 		margin-left: 67%;
 	}
+    
+    nav {
+        width: 105%;
+    }
+    .form-home {
+        margin-right: -4%;
+    }
+    .about-us{
+        margin-left:60%
+    }
+    .form-eventshow {
+        width: 91%;
+    }
+
 }
 
 	
