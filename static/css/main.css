@@ -4178,7 +4178,8 @@ table {
 		margin-bottom: 28px;
 	}
 	#text3 {
-		width: 365px;}
+		width: 365px;
+	}
 		#create-event input {
 			width: 98% !important;
 			
@@ -4190,6 +4191,16 @@ table {
 			
 			margin-left: -3% !important;
 			
+		}
+		#send-buttons {
+			margin-bottom: 30% !important;
+			margin-left: 146%!important;
+		}
+		#iphone-right {
+			margin-right: 0% !important;
+		}
+		#iphone-left {
+			margin-left: -1% !important;
 		}
 }
 
@@ -4375,7 +4386,7 @@ table {
 	}
 	#send-buttons {
 		margin-bottom: 30% !important;
-		margin-left: -63%;
+		margin-left: -37%!important;
 	}
 	#picture-box {
 		width: 103% !important;
@@ -4451,7 +4462,16 @@ table {
     }
     #send-buttons-conf {
         margin-left: -80%;
-    }
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -81%!important;
+	}
+	.subir {
+		
+		margin-top: 0.5%;
+		
+	}
 }
 
 	
