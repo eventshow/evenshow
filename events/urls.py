@@ -72,4 +72,6 @@ path('about_us', TemplateView.as_view(template_name='about_us.html'),
 
     path('ups', TemplateView.as_view(template_name='not_impl.html'),
          name='not_impl'),
+       path('thanks', TemplateView.as_view(template_name='enrollment/thanks.html'),
+         name='not_impl'),
 ]

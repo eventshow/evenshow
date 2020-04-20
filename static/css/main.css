@@ -3689,6 +3689,14 @@ table {
 	.iphone-email{
 		margin-right: 4%;
 	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 75px;
+	}
+	.eventpoints {
+		margin-top: 19%;
+		margin-bottom: -71px;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
@@ -3734,11 +3742,25 @@ table {
 		margin-bottom: -58% !important;
 		margin-left: 7% !important;
 	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 75px;
+	}
+	.name-host-rating {
+			
+		margin-top: 18%;
+		margin-bottom: 115px;
+	
+	}
 }
 
 /* IPAD Pro */
 
 @media only screen and (min-width: 1024px) and (max-width: 1336px) {
+
+	.eventpoints{
+		margin-top: 85%;
+	}
 
 	#picture-box{
 		width: 113% !important;
@@ -4205,6 +4227,54 @@ table {
 		max-width: 73px !important;
 		height: 73px!important;
 	}
+	.container#square {
+		margin-top: 26% !important;
+		border: 0 solid;
+		width: 523px;
+	}
+	.name-host-rating {
+		margin-top: 36%!important;
+		margin-bottom: 115px;
+	}
+	#titleThanks {
+		margin-bottom: 49px;
+		width: 487px!important;
+	}
+	#text2Thanks {
+		width: 531px!important;
+		margin-bottom: 28px;
+	}
+	#text3 {
+		width: 365px;
+	}
+		#create-event input {
+			width: 98% !important;
+			
+			margin-left: -1% !important;
+			
+		}
+		#picture-box {
+			width: 103% !important;
+			margin-left: -3% !important;
+		}
+		#send-buttons {
+			margin-bottom: 30% !important;
+			margin-left: 146%!important;
+		}
+		#iphone-right {
+			margin-right: 0% !important;
+		}
+		#iphone-left {
+			margin-left: -1% !important;
+		}
+		#panel {
+			margin-left: 41px;
+			margin-bottom: 14px;
+		}
+		.subir {
+			margin-top: 4.5%!important;
+			width: 91px;
+		}
     .form-eventshow {
         width: 90%;
     }
@@ -4229,6 +4299,14 @@ table {
 	.sidenav.sidenav-fixed {
 		margin-top: 0;
 	}
+	.name-host-rating{
+		margin-bottom: 110px;
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -19%!important;
+	}
+	
 }
 
 /* IPAD LANDSCAPE*/
@@ -4245,6 +4323,17 @@ table {
     .container-login100 {
         margin-top: 31% !important;
         margin-bottom: 0%;
+	}
+	#onlyIpadPro {
+		margin-left: 2px!important;
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: 16%;
+	}
+	.send-btn {
+		margin-left: 49% ;
+	
     }
     .form-home {
         margin-left: 11% !important;
@@ -4321,6 +4410,47 @@ table {
 	}
 	.sidenav.sidenav-fixed {
 		margin-top: 0 !important;
+	}
+	.name-host-rating {
+			
+		margin-top: 18%;
+		margin-bottom: 115px;
+	
+	}
+	#text2Thanks {
+		width: 708px;
+		margin-bottom: 28px;
+	}
+	#titleThanks {
+		margin-bottom: 49px;
+	}
+	#create-event input {
+		width: 95% !important;
+		
+		margin-left: 1% !important;
+		
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -63%!important;
+	}
+	#picture-box {
+		width: 103% !important;
+		
+		margin-left: -3% !important;
+		
+	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 0px;
+	}
+	.user-delete {
+		font-size: 18px;
+		line-height: 23px;
+	}
+	.eventpoints {
+		margin-top: 19%;
+		margin-bottom: -1px;
 	}
     nav {
         width: 105%;
@@ -4426,7 +4556,39 @@ table {
     }
     #send-buttons-conf {
         margin-left: -60%;
-    }
+	}
+	#text2Thanks {
+		width: 641px;
+		margin-bottom: 28px;
+	}
+	#titleThanks {
+		margin-bottom: 49px;
+	}
+	#create-event input {
+		width: 99% !important;
+		
+		margin-left: -3% !important;
+		
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -37%!important;
+	}
+	#picture-box {
+		width: 103% !important;
+		
+		margin-left: -3% !important;
+		
+	}
+	#panel {
+		margin-left: 41px;
+		margin-bottom: 3px;
+	}
+	.user-delete {
+		font-size: 18px;
+		line-height: 23px;
+	}
+    
     .form-home {
         width: 100% !important;
     }
@@ -4452,7 +4614,16 @@ table {
 
 /* IPAD PRO LANDSCAPE*/
 
-@media only screen and (min-width: 1024px) and (max-width: 1336px) and (orientation: landscape) {}
+@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+	.eventpoints {
+		margin-top: 32%;
+	}
+
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -59%;
+	}
+}
 
 /*  PIXEL 2XL LANDSCAPE*/
 
@@ -4475,6 +4646,19 @@ table {
 	.container-login100{
 		margin-top:35%;
 	}
+	.name-host-rating{
+		margin-bottom: 117px;
+	}
+	#picture-box {
+		width: 113%;
+		
+		margin-left: -7% ;
+		
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -17%;
+	}
 	.form-home {
         margin-left: 10% !important;
         margin-top: 1%;
@@ -4487,6 +4671,14 @@ table {
     #edit-buttons {
         margin-left: 24% !important;
     }
+	#titleThanks {
+		margin-bottom: 49px;
+		width: 590px;
+	}
+	#text2Thanks {
+		width: 582px;
+		margin-bottom: 28px;
+	}
 }
 
 /* IPHONE 6,7,8 LANDSCAPE*/
@@ -4512,7 +4704,16 @@ table {
     }
     #send-buttons-conf {
         margin-left: -80%;
-    }
+	}
+	#send-buttons {
+		margin-bottom: 30% !important;
+		margin-left: -81%!important;
+	}
+	.subir {
+		margin-top: 3.5%;
+		margin-left: 67%;
+	}
+    
     nav {
         width: 105%;
     }
