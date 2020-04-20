@@ -3697,6 +3697,9 @@ table {
 		margin-top: 19%;
 		margin-bottom: -71px;
 	}
+	.img-profile-detail {
+	    margin-left: 31%;
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
@@ -3887,7 +3890,7 @@ table {
 		font-size: 12px !important;
 	}
 	#edit-buttons {
-        margin-left: 10%;
+        margin-left: 7%;
     }
 }
 
@@ -4339,7 +4342,7 @@ table {
         margin-left: 11% !important;
     }
     #edit-buttons {
-        margin-left: 14% !important;
+        margin-left: 12% !important;
     }
 }
 
@@ -4608,7 +4611,7 @@ table {
     }
 
     #edit-buttons {
-        margin-left: 26%;
+        margin-left: 22% !important;
     }
 }
 
@@ -4623,6 +4626,9 @@ table {
 		margin-bottom: 30% !important;
 		margin-left: -59%;
 	}
+	#edit-buttons {
+        margin-left: 16.5% !important;
+    }
 }
 
 /*  PIXEL 2XL LANDSCAPE*/
@@ -4679,6 +4685,9 @@ table {
 		width: 582px;
 		margin-bottom: 28px;
 	}
+	.img-profile-detail {
+	    margin-left:56%;
+	}
 }
 
 /* IPHONE 6,7,8 LANDSCAPE*/
@@ -4727,7 +4736,7 @@ table {
         width: 91%;
     }
     #edit-buttons {
-        margin-left: 20%;
+        margin-left: 20% !important;
     }
 
 }
