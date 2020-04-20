@@ -4303,7 +4303,54 @@ table {
     }
     #edit-profile {
         margin-left: -24%;
-    }
+	}
+	
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: 20% !important;
+		margin-top: 110% !important;
+	}
+
+	.form-eventshow-edit {
+		background: #FFF;
+		width: 130%;
+		margin-top: -3%;
+		max-width: 800px;
+		border-radius: 15px;
+		border: 1px solid #B6244D;
+		padding: 25px 40px 70px;
+		align-items: center;
+		align-content: center;
+		margin-left: -15% !important;
+		margin-bottom: 15%;
+	}
+
+	.iphone-surname{
+		margin-bottom: -1% !important;
+	}
+
+	.iphone-email{
+		margin-right: -1% !important;
+
+	}
+
+	.ipad-right{
+		margin-right: -4% !important;
+
+	}
+
+	#edit-event textarea {
+		width: 109% !important;
+		height: auto;
+		color: #5D5E5E !important;
+		margin-bottom: -25% !important;
+		border: 1px solid #B6244D;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -3.5% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px !important;
+	}
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4329,6 +4376,12 @@ table {
 
 	.img-profile-detail{
 		margin-left: 57%;
+	}
+
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: 45% !important;
+		margin-top: 105% !important;
 	}
 	
 }
@@ -4494,7 +4547,56 @@ table {
 
     #edit-buttons {
         margin-left: 23%;
-    }
+	}
+	
+	.iphone-email {
+		margin-right: 2%;
+	}
+
+	#edit-event input {
+		width: 100% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -1% !important;
+		font-family: Raleway, sans-serif;
+		margin-bottom: 4% !important;
+		font-size: 12px;
+	}
+
+	#picture-box-prof {
+		width: 108% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -2% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px;
+	}
+
+	#edit-event textarea {
+		width: 109% !important;
+		height: auto;
+		color: #5D5E5E !important;
+		margin-bottom: -25% !important;
+		border: 1px solid #B6244D;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -2.75% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px !important;
+	}
+
+	#send-buttons-data {
+		margin-bottom: 3% !important;
+		margin-left: 34% !important;
+		margin-top: 120% !important;
+	}
+
 }
 
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
@@ -4641,7 +4743,25 @@ table {
 
     #edit-buttons {
         margin-left: 22% !important;
-    }
+	}
+	
+	#edit-event input {
+		width: 100% !important;
+		height: 60px !important;
+		margin-bottom: 30px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -3% !important;
+		font-family: Raleway, sans-serif;
+	}
+
+	.ipad-left{
+		margin-left: -1% !important;
+	}
+
+
 }
 
 /* IPAD PRO LANDSCAPE*/
@@ -4697,7 +4817,8 @@ table {
 	.form-home {
         margin-left: 10% !important;
         margin-top: 1%;
-    }
+	}
+	
 }
 
 /* SAMSUNG S5 LANDSCAPE */
@@ -4766,7 +4887,39 @@ table {
     }
     #edit-buttons {
         margin-left: 20% !important;
-    }
+	}
+	
+	.iphone-surname {
+		margin-bottom: 13%;
+	}
+
+	#edit-event input {
+		width: 100% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -3% !important;
+		font-family: Raleway, sans-serif;
+		margin-bottom: 4% !important;
+		font-size: 12px;
+	}
+	.ipad-left{
+		margin-left: -1% !important;
+	}
+
+	#picture-box-prof {
+		width: 109% !important;
+		height: 60px !important;
+		color: #5D5E5E !important;
+		border: 1px solid #B6244D !important;
+		border-radius: 12px !important;
+		padding-left: 4% !important;
+		margin-left: -4% !important;
+		font-family: Raleway, sans-serif;
+		font-size: 12px;
+	}
 
 }
 
