@@ -1845,6 +1845,10 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+
+	.modal-mov{
+		margin-left: -3% !important;
+	}
 	.rule {
 		margin-top: 13%;
 	}
@@ -4094,9 +4098,8 @@ table {
 	}
 
 	.modal-mov{
-		    margin-left: -21% !important;
+		margin-left: -21% !important;
 	}
-
 
 	.img-comment-detail {
     margin-left: 12% !important;
@@ -4109,11 +4112,14 @@ table {
 		margin-left: -20% !important;
 	}
 	.img-detail-auth{
-		margin-top: -73px !important;
+		margin-top: -74px !important;
+		margin-left: 14px;
 	}
 
+
+
 	.img-detail{
-		margin-top: -73px !important;
+		margin-top: -74px !important;
 	}
 
 	.form-search {
@@ -4224,6 +4230,34 @@ table {
 /* PIXEL 2 LANDSCAPE*/
 
 @media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape) {
+
+
+	#detail-principal-landscape{
+		margin-top: 0;
+		    margin-left: 36%;
+	}
+
+		.img-detail-auth{
+		margin-top: -79px ;
+	}
+
+		.comment-detail{
+			margin-top: -5% !important;
+		}
+
+
+	.img-detail{
+		margin-top: -79px !important;
+	}
+
+	.name-host-detail{
+		margin-top: -20% !important;
+	}
+
+	.img-comment-detail{
+		margin-left: 7% !important;
+	}
+
 	.search {
 		margin-right: 25% !important;
 	}
@@ -4272,6 +4306,36 @@ table {
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
 
 @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape) {
+
+	#user-landscape{
+		margin-top: 5% !important;
+
+	}
+
+	.price-detail{
+		margin-left: -18%;
+	}
+
+	.sep-title{
+		margin-top: -10%;
+	}
+
+	#detail-principal-landscape{
+		margin-top: 0;
+		    margin-left: 36%;
+	}
+
+	.img-detail{
+		width: 100% !important;
+		margin-top: -79px !important;
+	}
+
+	.img-detail-auth{
+		width: 100% !important;
+		margin-top: -79px !important;
+
+	}
+
     table.responsive-table {
         padding-bottom: 40px;
     }
