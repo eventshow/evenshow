@@ -2560,6 +2560,13 @@ table {
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
+
+	.img-profile-detail{
+
+		margin-left: 27%;
+
+	}
+
 	.title-about {
 		margin-top: 0px;
 		margin-bottom: 0px;
@@ -2859,6 +2866,11 @@ table {
 /* IPAD */
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
+	.img-profile-detail{
+		margin-left: 47%;
+
+	}
+
 	.user-delete {
 		font-size: 21px;
 		line-height: 33px;
@@ -3450,6 +3462,9 @@ table {
 		max-width: 100px;
 		height: 100px;
 	}
+	#edit-buttons {
+        margin-left: 7% !important;
+    }
 }
 
 /* PIXEL 2 */
@@ -3694,6 +3709,10 @@ table {
 		margin-top: 19%;
 		margin-bottom: -71px;
 	}
+	.img-profile-detail {
+	    margin-left: 36%;
+
+	}
 }
 
 /* IPHONE 6/7/8 PLUS */
@@ -3754,6 +3773,10 @@ table {
 /* IPAD Pro */
 
 @media only screen and (min-width: 1024px) and (max-width: 1336px) {
+
+	.img-profile-detail{
+		margin-left: 56%;
+	}
 
 	.eventpoints{
 		margin-top: 85%;
@@ -3850,6 +3873,9 @@ table {
 		margin-left: 45% !important;
 		margin-top: 55% !important;
 	}
+	#edit-buttons {
+        margin-left: 13% !important;
+    }
 }
 
 /*  PIXEL 2XL*/
@@ -3880,6 +3906,9 @@ table {
 		font-family: Raleway, sans-serif;
 		font-size: 12px !important;
 	}
+	#edit-buttons {
+        margin-left: 7%;
+    }
 }
 
 /* SAMSUNG S5 */
@@ -4023,6 +4052,9 @@ table {
 	.iphone-email{
 		margin-right: 3%;
 	}
+	#edit-buttons {
+        margin-left: 8%;
+    }
 }
 
 /* 1680x1050 */
@@ -4266,6 +4298,12 @@ table {
     .form-eventshow {
         width: 90%;
     }
+    #edit-buttons {
+        margin-left:14%;
+    }
+    #edit-profile {
+        margin-left: -24%;
+    }
 }
 
 /* IPHONE X LANDSCAPE*/
@@ -4287,6 +4325,10 @@ table {
 	#send-buttons {
 		margin-bottom: 30% !important;
 		margin-left: -19%!important;
+	}
+
+	.img-profile-detail{
+		margin-left: 57%;
 	}
 	
 }
@@ -4320,12 +4362,19 @@ table {
     .form-home {
         margin-left: 11% !important;
     }
+    #edit-buttons {
+        margin-left: 12% !important;
+    }
+
 }
 
 /* PIXEL 2 LANDSCAPE*/
 
 @media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape) {
 
+	.img-profile-detail {
+    margin-left: 56%;
+}
 
 	#detail-principal-landscape{
 		margin-top: 0;
@@ -4437,12 +4486,25 @@ table {
     .form-eventshow {
         width: 95%;
     }
+
+    #edit-profile {
+        margin-left: -7%;
+        width: 115%;
+    }
+
+    #edit-buttons {
+        margin-left: 23%;
+    }
 }
 
 /* IPHONE 6/7/8 PLUS LANDSCAPE*/
 
 @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape) {
 
+
+	.img-profile-detail{
+		margin-left: 55%;
+	}
 	#user-landscape{
 		margin-top: 5% !important;
 
@@ -4571,6 +4633,15 @@ table {
     nav {
         width: 105%;
     }
+
+    #edit-profile {
+        margin-left: -8%;
+        width: 115%;
+    }
+
+    #edit-buttons {
+        margin-left: 22% !important;
+    }
 }
 
 /* IPAD PRO LANDSCAPE*/
@@ -4584,6 +4655,9 @@ table {
 		margin-bottom: 30% !important;
 		margin-left: -59%;
 	}
+	#edit-buttons {
+        margin-left: 16.5% !important;
+    }
 }
 
 /*  PIXEL 2XL LANDSCAPE*/
@@ -4629,6 +4703,9 @@ table {
 /* SAMSUNG S5 LANDSCAPE */
 
 @media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape) {
+    #edit-buttons {
+        margin-left: 24% !important;
+    }
 	#titleThanks {
 		margin-bottom: 49px;
 		width: 590px;
@@ -4636,6 +4713,9 @@ table {
 	#text2Thanks {
 		width: 582px;
 		margin-bottom: 28px;
+	}
+	.img-profile-detail {
+	    margin-left:56%;
 	}
 }
 
@@ -4683,6 +4763,9 @@ table {
     }
     .form-eventshow {
         width: 91%;
+    }
+    #edit-buttons {
+        margin-left: 20% !important;
     }
 
 }
