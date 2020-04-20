@@ -2560,6 +2560,13 @@ table {
 /* IPHONE X */
 
 @media only screen and (min-width: 375px) and (max-width: 812px) {
+
+	.img-profile-detail{
+
+		margin-left: 27%;
+
+	}
+
 	.title-about {
 		margin-top: 0px;
 		margin-bottom: 0px;
@@ -2859,6 +2866,11 @@ table {
 /* IPAD */
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
+	.img-profile-detail{
+		margin-left: 47%;
+
+	}
+
 	.user-delete {
 		font-size: 21px;
 		line-height: 33px;
@@ -3698,7 +3710,8 @@ table {
 		margin-bottom: -71px;
 	}
 	.img-profile-detail {
-	    margin-left: 31%;
+	    margin-left: 36%;
+
 	}
 }
 
@@ -3760,6 +3773,10 @@ table {
 /* IPAD Pro */
 
 @media only screen and (min-width: 1024px) and (max-width: 1336px) {
+
+	.img-profile-detail{
+		margin-left: 56%;
+	}
 
 	.eventpoints{
 		margin-top: 85%;
@@ -4309,6 +4326,10 @@ table {
 		margin-bottom: 30% !important;
 		margin-left: -19%!important;
 	}
+
+	.img-profile-detail{
+		margin-left: 57%;
+	}
 	
 }
 
@@ -4344,12 +4365,16 @@ table {
     #edit-buttons {
         margin-left: 12% !important;
     }
+
 }
 
 /* PIXEL 2 LANDSCAPE*/
 
 @media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape) {
 
+	.img-profile-detail {
+    margin-left: 56%;
+}
 
 	#detail-principal-landscape{
 		margin-top: 0;
@@ -4476,6 +4501,10 @@ table {
 
 @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape) {
 
+
+	.img-profile-detail{
+		margin-left: 55%;
+	}
 	#user-landscape{
 		margin-top: 5% !important;
 
