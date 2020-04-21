@@ -63,7 +63,7 @@ class EventForm(forms.ModelForm):
     end_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'end_time'}))
     category = forms.ModelChoiceField(Category.objects.all(), empty_label=None)
-    picture = forms.ImageField(required=False, widget=forms.ClearableFileInput(
+    picture = forms.ImageField(required=False, widget=forms.FileInput(
         attrs={'style': 'display: none;'}))
 
     class Meta:
