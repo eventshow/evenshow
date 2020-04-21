@@ -165,12 +165,8 @@ class EventForm(forms.ModelForm):
 
         if not picture:
             raise ValidationError('Inserte una imagen')
-        else:
-            if imghdr.what(picture) not in settings.IMAGE_TYPES:
-                raise ValidationError(
-                    'Formato no soportado, elija entre: JPG, JPEG, PNG')
-            if picture.size > 5000000:
-                raise ValidationError('El tamaño máximo soportado es de 5 MB')
+        elif picture.size > 5000000:
+            raise ValidationError('El tamaño máximo soportado es de 5 MB')
         return picture
 
     def clean(self):
@@ -343,9 +339,6 @@ class ProfileForm(forms.ModelForm):
 
     def clean_picture(self):
         picture = self.cleaned_data.get('picture', None)
-        if picture and imghdr.what(picture) not in settings.IMAGE_TYPES:
-            raise ValidationError(
-                'Formato no soportado, elija entre: JPG, JPEG, PNG')
         if picture and picture.size > 5000000:
             raise ValidationError('El tamaño máximo soportado es de 5 MB')
         return picture
