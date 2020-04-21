@@ -94,7 +94,7 @@
 
 .details-event-principal {
   margin-top: -55%;
-  z-index: -1!important;
+  z-index: 0!important;
 }
 
 .principal-detail {
