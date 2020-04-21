@@ -125,7 +125,7 @@
 
 #nav {
 	background-color: #B7234D;
-	z-index: -1 !important;
+	z-index: 100 !important;
 }
 
 .sep-home {
