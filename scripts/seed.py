@@ -147,6 +147,7 @@ def seed_events(event_pks, future=False):
                                           end_date='+2y')
         else:
             start_day = FAKE.date_between(start_date='-1y', end_date='now')
+
         category = CATEGORIES.index(random.choice(CATEGORIES))
         host = random.choice(USER_PKS)
 
@@ -183,6 +184,11 @@ def seed_events(event_pks, future=False):
         end_time = random_time(min_end_time, max_end_time)
         capacity = FAKE.random_int(2, 20)
 
+        if start_day <= datetime.now().date():
+            is_paid = random.choice([True, False])
+        else:
+            is_paid = False
+
         fields = {
             'title': FAKE.word(),
             'description': FAKE.text(),
@@ -202,7 +208,7 @@ def seed_events(event_pks, future=False):
             'price': price,
             'created_by': host,
             'category': category,
-            'is_paid_for': False,
+            'is_paid_for': is_paid,
         }
         event = {
             'pk': event_pk,
@@ -211,7 +217,7 @@ def seed_events(event_pks, future=False):
         }
 
         seed_event_enrollments(event_pk, enrollers, host,
-                               start_day, price, capacity)
+                               start_day, price, capacity, is_paid)
 
         INITIAL_DATA.append(event)
 
@@ -232,7 +238,7 @@ def generate_addresses():
     return data
 
 
-def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
+def seed_event_enrollments(event, enrollers, host, event_date, price, capacity, is_paid):
     created_at = FAKE.date_time_between(
         start_date='-1y', end_date=event_date)
     updated_at = FAKE.date_time_between(
@@ -263,7 +269,7 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity):
 
         if status != 'REJECTED':
             seed_transaction(event, enroller, host,
-                             updated_at, event_date, price)
+                             updated_at, is_paid, price)
         if status == 'ACCEPTED':
             ac += 1
             if enroller not in attendees:
@@ -323,14 +329,9 @@ def seed_event_ratings(event, revieweds, reviewers, on, event_date):
             INITIAL_DATA.append(rating)
 
 
-def seed_transaction(event, transmitter, recipient, created_at, event_date, amount):
+def seed_transaction(event, transmitter, recipient, created_at, is_paid, amount):
     fee = PaymentService().fee(amount*100)
     discounted_fee = fee * 0.85
-
-    if event_date <= datetime.now().date():
-        is_paid = random.choice([True, False])
-    else:
-        is_paid = False
 
     fields = {
         'amount': amount*100,
