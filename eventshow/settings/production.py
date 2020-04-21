@@ -35,7 +35,7 @@ STRIPE_VARIABLE_FEE = 1.029
 # Google Maps
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
 
-EVENTPOINT_VALUE = 0.005
+EVENTPOINT_VALUE = 0.5
 EVENTPOINT_BONUS = 0.05
 EVENTPOINTS = 50
 
@@ -203,8 +203,6 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', '')
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'events.backends.MediaStorageBackend'
 
-# Allowed image file types
-IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'bmp']
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
