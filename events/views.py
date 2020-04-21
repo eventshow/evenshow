@@ -396,7 +396,6 @@ class EventFilterFormView(generic.FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
-        print(data.get('min_price'))
         kwargs = {}
         kwargs['date'] = data.pop('date', None) or None
         kwargs['location'] = data.pop('location', None) or None
