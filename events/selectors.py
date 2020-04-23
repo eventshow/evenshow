@@ -60,7 +60,6 @@ class EventSelector:
         return models.Event.objects.filter(ratings__created_by=user, ratings__on=on)
 
     def nearby_events_distance(self, user, distance, latitude, longitude, **kwargs):
-        now = datetime.now()
         filters = {key: val for key, val in kwargs.items() if val}
         events = self.base_search_events(user).filter(**filters)
         result = []
@@ -77,7 +76,6 @@ class EventSelector:
         return models.Event.objects.filter(pk__in=result)
 
     def events_filter_search(self, user: User, **kwargs) -> QuerySet:
-        now = datetime.now()
         events = self.base_search_events(user)
         filters = {key: val for key, val in kwargs.items() if val}
         return events.filter(**filters)
