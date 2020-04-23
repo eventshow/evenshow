@@ -97,8 +97,13 @@ class EventForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data.get('title')
+        title_join = title.replace(' ', '')
         if not title:
             raise ValidationError('Inserte un título')
+        elif not title_join.isalpha():
+            raise ValidationError('Introduzca solo letras y espacios')
+        else:
+            title = title.title()
         return title
 
     def clean_description(self):
