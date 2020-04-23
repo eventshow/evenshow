@@ -25,6 +25,7 @@ INITIAL_DATA = []
 
 CATEGORIES = ['TV', 'Juegos', 'Idiomas',
               'Aprender', 'Cocina', 'Deportes', 'Otros']
+DATE_FORMAT = '%Y-%m-%d %H:%M:%S%z'
 ENROLLMENT_STATUS = ['ACCEPTED', 'PENDING', 'REJECTED']
 EVENT_PKS_THIS_YEAR = range(1, 151)
 EVENT_PKS_FUTURE = range(151, 301)
@@ -67,7 +68,7 @@ def seed_users():
             'last_name': last_name,
             'email': profile['mail'],
             'is_staff': False,
-            'date_joined': now().strftime('%Y-%m-%d %H:%M:%S%z'),
+            'date_joined': now().strftime(DATE_FORMAT),
         }
         user = {
             'pk': pk,
@@ -85,7 +86,7 @@ def seed_users():
             'is_superuser': True,
             'username': 'showman',
             'is_staff': True,
-            'date_joined': now().strftime('%Y-%m-%d %H:%M:%S%z'),
+            'date_joined': now().strftime(DATE_FORMAT),
         }
     }
 
@@ -154,15 +155,6 @@ def seed_events(event_pks, future=False):
         aux = list(USER_PKS).copy()
         aux.remove(host)
         enrollers = random.sample(set(aux), k=FAKE.random_int(1, len(aux)))
-        splited_address = FAKE.address().split('\n')
-        city = splited_address[1].split(',')[0]
-
-        street = re.match(
-            r'[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-ZÀ-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?(( ?[a-zA-Z\-]+)+)?)',
-            splited_address[0]).group()
-
-        # finds all digits in string and take the first which is the street number
-        number = [int(s) for s in splited_address[0].split() if s.isdigit()][0]
 
         address = random.choice(addresses)
         city = address['localidad']
@@ -242,8 +234,8 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity, 
     created_at = FAKE.date_time_between(
         start_date='-1y', end_date=event_date)
     updated_at = FAKE.date_time_between(
-        start_date=created_at, end_date=event_date).strftime('%Y-%m-%d %H:%M:%S%z')
-    created_at = created_at.strftime('%Y-%m-%d %H:%M:%S%z')
+        start_date=created_at, end_date=event_date).strftime(DATE_FORMAT)
+    created_at = created_at.strftime(DATE_FORMAT)
 
     ac = 0
     ix = 0
@@ -291,7 +283,7 @@ def seed_event_enrollments(event, enrollers, host, event_date, price, capacity, 
 
 def seed_event_ratings(event, revieweds, reviewers, on, event_date):
     created_at = FAKE.date_time_between(
-        start_date=event_date, end_date='+1y').strftime('%Y-%m-%d %H:%M:%S%z')
+        start_date=event_date, end_date='+1y').strftime(DATE_FORMAT)
 
     if on == 'HOST':
         for reviewer in reviewers:
