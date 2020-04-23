@@ -8,7 +8,6 @@ Eventshow is a PWA which main in focus is a matchamaking system that puts in tou
 * pip 20.0.2
   * virtualenvwrapper 4.8.4 (optional but useful)
   * django 3.0.4
-* npm 6.14.2
 * postgresql 12.2-1
 
 (The remaining requirements will specified in **requirements.txt** file)
