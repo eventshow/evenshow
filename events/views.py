@@ -363,8 +363,6 @@ class EventUpdateView(generic.UpdateView):
             event = form.save(commit=False)
             event_db = models.Event.objects.get(pk=event_pk)
 
-            attende_list = selectors.UserSelector().event_attendees(event_pk)
-
             subject = 'Evento actualizado'
             body = 'El evento ' + event_db.title + \
                 'en el que estás inscrito ha sido actualizado'
@@ -742,7 +740,6 @@ class RateAttendeeView(generic.CreateView):
         rating = form.save(commit=False)
 
         event = models.Event.objects.get(id=self.kwargs.get('event_pk'))
-        host = selectors.UserSelector().event_host(self.kwargs.get('event_pk'))
         created_by = self.request.user
 
         rating.created_by = created_by
