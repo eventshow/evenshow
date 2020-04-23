@@ -24,6 +24,7 @@ Eventshow is a PWA which main in focus is a matchamaking system that puts in tou
     1. `$ sudo -iu postgres`
     2. `[postgres]$ psql -c "create user showman with password 'showman'"`
     3. `[postgres]$ psql -c "create database eventshow owner showman`
+    4. (optional) `[postgres]$ psql -c "alter user showman with superuser"`
 6. Then we use `$(eventshow) python manage.py makemigrations` and `$(eventshow) python manage.py migrate` to apply all the migrations to the database.
 7. Finally, we use `$python manage.py runscript seed` which will seed/populate the DB and create a superuser with username 'showman' and password 'showman'. Every other user created will have a username 'x' with password 'x'. If the script returns an error like **Can't run script seed** comment the next lines in the **/scripts/seed.py** file:
 ```
