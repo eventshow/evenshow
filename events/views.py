@@ -457,7 +457,7 @@ class EventFilterListView(generic.ListView):
                 self.request.user, **self.kwargs).order_by('start_day')
         else:
             queryset = selectors.EventSelector().nearby_events_distance(
-                self.request.user, 50000, self.request.session.get('latitude'), self.request.session.get('longitude'), **self.kwargs)
+                self.request.user, 5000, self.request.session.get('latitude'), self.request.session.get('longitude'), **self.kwargs)
 
         return queryset
 
