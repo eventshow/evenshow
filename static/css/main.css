@@ -3408,6 +3408,8 @@ table {
 		justify-content: center;
 		align-items: center;
 		background: #ffffff !important;
+		margin-top: 31% !important;
+        margin-bottom: 0%;
 	}
 	#login-res {
 		min-height: 51vh !important;
@@ -3424,10 +3426,6 @@ table {
 		margin-top: 3%;
 	}
 
-	.container-login100 {
-    margin-top: 31% !important;
-    margin-bottom: 0%;
-}
 	.details-event-principal {
 		margin-top: -2%;
 		width: 70% !important;
@@ -3921,31 +3919,16 @@ table {
 		margin-top: 0px;
 		margin-bottom: 0px;
 	}
-	.map-detail iframe {
-		width: 370px;
-		height: 242px;
-		border: 0;
-		margin: 3%;
-	}
 	.title-section-h3 {
 		margin-left: -2% !important;
 		margin-bottom: 4%;
 		margin-top: 7%;
-	}
-	.img-detail-bio {
-		margin-top: 11px !important;
-		margin-left: 29.5% !important;
 	}
 	.rating-host-detail {
 		margin-left: 41% !important;
 	}
 	.title-detail {
 		margin-left: -25%;
-	}
-	.button-detail-auth-price {
-		margin-top: 12%;
-		margin-left: -37%;
-		margin-bottom: 11%;
 	}
 	#title-delete-comi {
 		font-weight: bold;
@@ -4013,6 +3996,7 @@ table {
 	.button-detail-auth-price {
 		margin-left: -40%;
 		margin-bottom: 9%;
+		margin-top: 12%;
 	}
 	.img-detail-bio {
 		margin-top: 4px;
@@ -4189,22 +4173,6 @@ table {
 	.search {
 		margin-right: 30%;
 		width: 40% !important;
-	}
-	.list_search_result {
-		margin-left: -2.5% !important;
-	}
-	.text-left {
-		margin-left: -4%;
-	}
-	.center-form {
-		margin-left: 11.5%;
-		margin-right: 5.5%;
-	}
-	.title-share-edit-pw {
-		margin-left: -11%;
-	}
-	#send-buttons-conf {
-		margin-left: -35%;
 	}
 	.list_search_result {
 		margin-left: -2.5% !important;
