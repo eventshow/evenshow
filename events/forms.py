@@ -13,12 +13,13 @@ from django.utils.timezone import now
 
 from .models import Category, Event, Profile, Rating
 
+
 CHOICES_YES_NO = ((False, "No"), (True, "Sí"))
-
 CHOICES_SCORE = (('--', " "), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5))
-
 CHOICES_LANGUAGES = (("ESPAÑOL", "Español"), ("INGLES", "Inglés"), ("MANDARIN", "Mandarín"), ("HINDI", "Hindi"),
                      ("POTUGUES", "Portugués"), ("ARABE", "Árabe"), ("OTROS", "Otros"))
+
+DATE_PLACEHOLDER = 'dd/mm/aaaa'
 
 User = get_user_model()
 
@@ -56,7 +57,7 @@ class EventForm(forms.ModelForm):
                                       widget=forms.TextInput(attrs={'placeholder': '01', 'name': 'location_number'}))
     start_day = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,
                                 widget=forms.DateInput(format=settings.DATE_INPUT_FORMATS[0],
-                                                       attrs={'class': 'form-control', 'placeholder': 'dd/mm/aaaa',
+                                                       attrs={'class': 'form-control', 'placeholder': DATE_PLACEHOLDER,
                                                               'name': 'start_day'}))
     start_time = forms.TimeField(required=False, widget=forms.TimeInput(format='%H:%M', attrs={
         'class': 'form-eventshow', 'placeholder': 'hh:mm', 'name': 'start_time'}))
@@ -170,19 +171,10 @@ class EventForm(forms.ModelForm):
         return picture
 
     def clean(self):
-        clean_data = self.cleaned_data
-        title = self.cleaned_data.get('title')
-        description = self.cleaned_data.get('description')
-        capacity = self.cleaned_data.get('capacity')
-        min_age = self.cleaned_data.get('min_age')
-        price = self.cleaned_data.get('price')
-        location_city = self.cleaned_data.get('location_city')
-        location_street = self.cleaned_data.get('location_street')
-        location_number = self.cleaned_data.get('location_number')
+        cleaned_data = self.cleaned_data
         start_day = self.cleaned_data.get('start_day')
         start_time = self.cleaned_data.get('start_time')
         end_time = self.cleaned_data.get('end_time')
-        picture = self.cleaned_data.get('picture')
         time1 = datetime.strptime("08:00", "%H:%M").time()
 
         if isinstance(start_day, type(date)) and (start_day < datetime.now().date() or
@@ -200,6 +192,8 @@ class EventForm(forms.ModelForm):
         if isinstance(start_time, type(time)) and isinstance(end_time, type(time)) and (start_time >= end_time):
             raise ValidationError(
                 'El evento no puede empezar después de terminar')
+
+        return cleaned_data
 
 
 class LoginForm(AuthenticationForm):
@@ -225,7 +219,7 @@ class RegistrationForm(UserCreationForm):
         required=True,
         widget=forms.DateInput(
             format=settings.DATE_INPUT_FORMATS[0],
-            attrs={'placeholder': "dd/mm/aaaa"}
+            attrs={'placeholder': DATE_PLACEHOLDER}
         ),
         input_formats=settings.DATE_INPUT_FORMATS
     )
@@ -310,7 +304,7 @@ class ProfileForm(forms.ModelForm):
         required=True,
         widget=forms.DateInput(
             format=settings.DATE_INPUT_FORMATS[0],
-            attrs={'placeholder': "dd/mm/aaaa"}
+            attrs={'placeholder': DATE_PLACEHOLDER}
         ),
         input_formats=settings.DATE_INPUT_FORMATS
     )
@@ -358,7 +352,7 @@ class SearchHomeForm(forms.Form):
         required=False,
         widget=forms.DateInput(
             format=settings.DATE_INPUT_FORMATS[0],
-            attrs={'placeholder': "dd/mm/aaaa"}
+            attrs={'placeholder': DATE_PLACEHOLDER}
         ),
         input_formats=settings.DATE_INPUT_FORMATS
     )
@@ -395,7 +389,7 @@ class SearchFilterForm(forms.Form):
         required=False,
         widget=forms.DateInput(
             format=settings.DATE_INPUT_FORMATS[0],
-            attrs={'placeholder': "dd/mm/aaaa"}
+            attrs={'placeholder': DATE_PLACEHOLDER}
         ),
         input_formats=settings.DATE_INPUT_FORMATS
     )
