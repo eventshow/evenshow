@@ -2,7 +2,7 @@
 
 //Geolocalizacion
 
-window.onload = getLocation();
+window.onload = function() {getLocation()};
 
 function getLocation() {
     if (navigator.geolocation) {
