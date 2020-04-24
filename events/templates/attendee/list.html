@@ -26,14 +26,15 @@
       </div>
     </div>
     <div class="table-generic">
-      <table cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
+      <table description="attendeeList" cellpadding="1" cellspacing="1" class="responsive-table" id="myTable">
+        <caption></caption>
         <thead>
           <div class="provisional">
             <tr>
-              <th>Puntuar</th>
-              <th>Usuario</th>
-              <th>Nombre</th>
-              <th>Apellidos</th>
+              <th id="">Puntuar</th>
+              <th id="">Usuario</th>
+              <th id="">Nombre</th>
+              <th id="">Apellidos</th>
             </tr>
           </div>
         </thead>
@@ -44,7 +45,7 @@
               {% if att not in rated_attendees and event_has_finished and att.username != 'deleted' %}
               <button id="noPaddin" type="button"
                 onclick="location.href='{% url 'create_rating_attendee' event_pk att.pk %}'" title="Puntuar">
-                <i id="title-name" class="samll material-icons">star</i>
+                <em id="title-name" class="samll material-icons">star</em>
               </button>
               {% elif att in rated_attendees %}
               {% user_on_event user event_pk as rating %}
