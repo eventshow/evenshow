@@ -57,7 +57,6 @@ class EnrollmentService:
         enrollment.save()
 
     def user_can_enroll(self, event_pk: int, user: User) -> bool:
-        event = models.Event.objects.get(pk=event_pk)
         user_is_enrolled = self.user_is_enrolled(
             event_pk, user)
         user_is_old_enough = self.user_is_old_enough(event_pk, user)
@@ -167,14 +166,6 @@ class RatingService:
 
                     valid = True
         return valid
-
-    def is_attendee_or_host(self, event: models.Event, rating: models.Rating):
-        rol = rating.on
-        if event.created_by == rating.created_by:
-            rol = 'ATTENDEE'
-        else:
-            rol = 'HOST'
-        return rol
 
 
 class PaymentService():
