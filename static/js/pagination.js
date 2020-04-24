@@ -74,7 +74,7 @@ $.fn.pageMe = function(opts){
     }
 
     function next(){
-        goToPage = parseInt(pager.data("curr")) + 1;
+        var goToPage = parseInt(pager.data("curr")) + 1;
         goTo(goToPage);
     }
 

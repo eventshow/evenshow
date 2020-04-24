@@ -110,6 +110,7 @@ button {
   background: none;
   border: none;
   font-family: inherit;
+  cursor: pointer;
 }
 
 /* ==========================================================================
@@ -579,10 +580,6 @@ input:disabled {
   background: transparent;
 }
 
-
-button {
-  cursor: pointer;
-}
 
 /* CHECKBOX */
 /* Radio button */
