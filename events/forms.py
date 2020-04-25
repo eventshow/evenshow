@@ -135,11 +135,26 @@ class EventForm(forms.ModelForm):
             raise ValidationError('Introduzca el precio')
         return price
 
-    def clean_location_number(self):
+    def clean_location_city(self):
         location_city = self.cleaned_data.get('location_city')
+        location_city_join = location_city.replace(' ', '')
+        if not location_city:
+            raise ValidationError('Complete la ubicación')
+        elif location_city and not location_city_join.isalpha():
+            raise ValidationError('Introduzca solo letras y espacios')
+        else:
+            location_city = location_city.title()
+        return location_city
+
+    def clean_location_street(self):
         location_street = self.cleaned_data.get('location_street')
+        if not location_street:
+            raise ValidationError('Complete la ubicación')
+        return location_street
+
+    def clean_location_number(self):
         location_number = self.cleaned_data.get('location_number')
-        if not location_city or not location_street or not location_number:
+        if not location_number:
             raise ValidationError('Complete la ubicación')
         return location_number
 
