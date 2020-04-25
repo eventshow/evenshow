@@ -65,7 +65,7 @@
             </button>
             {% endif %}
             {% elif object.event in user_rated_events %}
-            {% user_on_event user object.event as rating %}
+            {% user_on_event_host user object.event as rating %}
             <em id="title-name" class="samll material-icons">star<em class="rating-search">{{rating.score}}</em></em>
             {% endif%}
             {% elif not object.event.has_started%}

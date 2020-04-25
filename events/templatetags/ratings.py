@@ -8,5 +8,10 @@ User = get_user_model()
 
 
 @register.simple_tag
-def user_on_event(user: User, event: Event) -> Rating:
+def user_on_event_host(user: User, event: Event) -> Rating:
     return Rating.objects.filter(created_by=user, event=event).first()
+
+
+@register.simple_tag
+def user_on_event_on_attendee(user: User, event: Event, attendee: User) -> Rating:
+    return Rating.objects.filter(created_by=user, event=event, reviewed=attendee).first()
