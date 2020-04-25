@@ -743,11 +743,6 @@ input:disabled {
   color: #333;
 }
 
-.input--style-1:-ms-input-placeholder {
-  /* Microsoft Edge */
-  color: #333;
-}
-
 .m-b-0 {
   margin-bottom: 0;
 }
