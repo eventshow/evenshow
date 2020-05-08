@@ -1,6 +1,16 @@
 @import url(https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
 /* GENERAL */
 
+.started{
+	background-color: #5D5E5E!important;
+    margin-left: 57px;
+	margin-right: 100px;
+	padding: 10px;
+	border-radius: 15px !important;
+}
+.started:hover {
+	background-color: #5D5E5E !important;
+}
 .title-search {
 	color: #5D5E5E !important;
 }
