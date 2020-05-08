@@ -1861,6 +1861,13 @@ table {
 /* IPHONE 5/SE  */
 
 @media only screen and (min-width: 320px) and (max-width: 568px) {
+	.started {
+		background-color: #5D5E5E!important;
+		margin-left: 34px;
+		margin-right: 43px;
+		padding: 10px;
+		border-radius: 15px !important;
+	}
 
 	.modal-mov{
 		margin-left: -3% !important;
@@ -3922,6 +3929,13 @@ table {
 /* SAMSUNG S5 */
 
 @media only screen and (min-width: 360px) and (max-width: 640px) {
+	.started {
+		background-color: #5D5E5E!important;
+		margin-left: 10px;
+		margin-right: 18px;
+		padding: 10px;
+		border-radius: 15px !important;
+	}
 	.title-name-terms {
 		font-size: 24px;
 	}
@@ -4402,6 +4416,13 @@ table {
 /* PIXEL 2 LANDSCAPE*/
 
 @media only screen and (min-width: 411px) and (max-width: 731px) and (orientation: landscape) {
+	.started {
+		background-color: #5D5E5E!important;
+		margin-left: -21px;
+		margin-right: -19px;
+		padding: 10px;
+		border-radius: 15px !important;
+	}
 
 	.img-profile-detail {
     margin-left: 56%;
@@ -4591,6 +4612,13 @@ table {
 
 @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape) {
 
+	.started {
+		background-color: #5D5E5E!important;
+		margin-left: -6px;
+		margin-right: -10px;
+		padding: 10px;
+		border-radius: 15px !important;
+	}
 
 	.img-profile-detail{
 		margin-left: 55%;
@@ -4766,6 +4794,13 @@ table {
 /* IPAD PRO LANDSCAPE*/
 
 @media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+	.started {
+		background-color: #5D5E5E!important;
+		margin-left: 19px;
+		margin-right: 58px;
+		padding: 10px;
+		border-radius: 15px !important;
+	}
 	.eventpoints {
 		margin-top: 32%;
 	}
@@ -4823,6 +4858,13 @@ table {
 /* SAMSUNG S5 LANDSCAPE */
 
 @media only screen and (min-width: 360px) and (max-width: 640px) and (orientation: landscape) {
+	.started {
+		background-color: #5D5E5E!important;
+		margin-left: -19px;
+		margin-right: -52px;
+		padding: 10px;
+		border-radius: 15px !important;
+	}
 	#edit-buttons {
 		margin-left: 24% !important;
 	}
