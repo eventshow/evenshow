@@ -296,7 +296,7 @@ class EventDeleteView(generic.DeleteView):
             recipient_list_queryset = attendees
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
 
             self.object.delete()
             return redirect('hosted_events')
@@ -369,7 +369,7 @@ class EventUpdateView(generic.UpdateView):
             recipient_list_queryset = selectors.UserSelector().event_attendees(event_pk)
             recipient_list = list(
                 recipient_list_queryset.values_list('email', flat=True))
-            services.EmailService().send_email(subject, body, recipient_list)
+            # services.EmailService().send_email(subject, body, recipient_list)
             services.EventService().update(event, host)
             return super(EventUpdateView, self).form_valid(form)
 
@@ -517,7 +517,7 @@ class EnrollmentCreateView(generic.View):
                 enrollment.created_by.username, event.title)
             recipient = event.created_by.email
 
-            services.EmailService().send_email(subject, body, [recipient])
+            # services.EmailService().send_email(subject, body, [recipient])
 
             return render(request, 'enrollment/thanks.html', context)
         else:
@@ -542,7 +542,7 @@ class EnrollmentDeleteView(generic.View):
             body = 'El usuario {0} ha cancelado su asistencia a tu evento {1} en Eventshow'.format(
                 user.username, event.title)
             recipient = event.created_by.email
-            services.EmailService().send_email(subject, body, [recipient])
+            # services.EmailService().send_email(subject, body, [recipient])
 
             return redirect('enrolled_events')
         else:
@@ -597,7 +597,7 @@ class EnrollmentUpdateView(generic.View):
             recipient = models.Enrollment.objects.get(
                 pk=enrollment_pk).created_by
 
-            services.EmailService().send_email(
+            # services.EmailService().send_email(
                 subject, body, [recipient.email])
 
             return redirect('list_enrollments', event.pk)
@@ -605,49 +605,49 @@ class EnrollmentUpdateView(generic.View):
             return redirect('/')
 
     def updatable(self, host):
-        enrollment_pk = self.kwargs.get('pk')
-        event_has_started = models.Enrollment.objects.get(
-            pk=enrollment_pk).event.has_started
+        enrollment_pk=self.kwargs.get('pk')
+        event_has_started=models.Enrollment.objects.get(
+            pk = enrollment_pk).event.has_started
         return services.EnrollmentService().host_can_update(host,
                                                             enrollment_pk) and services.EnrollmentService().is_pending(
             enrollment_pk) and not event_has_started
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name = 'dispatch')
 class PasswordUpdateView(generic.UpdateView):
-    template_name = 'profile/update_password.html'
-    model = User
-    form_class = forms.PasswordUpdateForm
-    success_url = reverse_lazy('detail_profile')
+    template_name='profile/update_password.html'
+    model=User
+    form_class=forms.PasswordUpdateForm
+    success_url=reverse_lazy('detail_profile')
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordUpdateView, self).get_context_data(**kwargs)
-        context['form'] = self.form_class(user=self.object)
+        context=super(PasswordUpdateView, self).get_context_data(**kwargs)
+        context['form']=self.form_class(user = self.object)
         return context
 
     def get_object(self):
         return self.request.user
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name = 'dispatch')
 class RateHostView(generic.CreateView):
-    template_name = 'rating/rating.html'
-    model = models.Rating
-    form_class = forms.RatingForm
-    success_url = '/events/enrolled'
+    template_name='rating/rating.html'
+    model=models.Rating
+    form_class=forms.RatingForm
+    success_url='/events/enrolled'
 
     def get(self, request, *args, **kwargs):
-        created_by = request.user
-        event_exist = services.EventService().exist_event(self.kwargs.get('event_pk'))
+        created_by=request.user
+        event_exist=services.EventService().exist_event(self.kwargs.get('event_pk'))
         if (not event_exist):
             return redirect('home')
         else:
-            event = models.Event.objects.get(pk=self.kwargs.get('event_pk'))
-            exist_already_rating = selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
+            event=models.Event.objects.get(pk = self.kwargs.get('event_pk'))
+            exist_already_rating=selectors.RatingSelector().exists_this_rating_for_this_user_and_event(created_by,
                                                                                                          event,
                                                                                                          event.created_by)
 
-            is_enrolled_for_this_event = services.EnrollmentService().user_is_enrolled_and_accepted(event.id,
+            is_enrolled_for_this_event=services.EnrollmentService().user_is_enrolled_and_accepted(event.id,
                                                                                                     created_by)
             host = event.created_by
             auto_rating = self.request.user.id == host.id
