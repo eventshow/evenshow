@@ -1863,7 +1863,7 @@ table {
 		margin-top: 12% !important;
 	}
 	.button-event {
-		margin-left: -19% !important;
+		margin-left: -2.5% !important;
 	}
 	.title-name-terms {
 		font-size: 24px;
@@ -3853,7 +3853,7 @@ table {
 		margin-left: -31% !important;
 	}
 	.sep-title {
-		margin-left: 60% !important;
+		margin-left: 117% !important;
 	}
 	#send-buttons-pw-conf {
 		margin-left: 30%;
@@ -3927,9 +3927,11 @@ table {
 	.rating-host-detail {
 		margin-left: 41% !important;
 	}
-	.title-detail {
-		margin-left: -25%;
+
+	.button-event{
+		margin-left: -0.5% !important;
 	}
+
 	#title-delete-comi {
 		font-weight: bold;
 		color: #686969;
@@ -4039,6 +4041,8 @@ table {
 	#edit-buttons {
         margin-left: 8%;
     }
+
+
 }
 
 /* 1680x1050 */
@@ -4138,7 +4142,7 @@ table {
 	}
 
 	#detail-principal-landscape{
-		margin-left: 35% !important;
+		margin-left: 25% !important;
 	}
 
 	.modal-mov{
@@ -4750,6 +4754,10 @@ table {
 
 	}
 
+	.portrait-button{
+		margin-left: -20% !important;
+	}
+
 
 }
 
@@ -4845,6 +4853,10 @@ table {
 /* IPHONE 6,7,8 LANDSCAPE*/
 
 @media only screen and (min-width: 375px) and (max-width: 667px) and (orientation: landscape) {
+		.portrait-button{
+		margin-left: -27% !important;
+	}
+
     .search-result {
         margin-left: -14% !important;
     }
@@ -4931,6 +4943,9 @@ table {
 		margin-right: 18% !important;
 
 
+	}
+	.img-detail-auth{
+		margin-top: -76px !important;
 	}
 
 }
