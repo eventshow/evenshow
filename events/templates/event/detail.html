@@ -32,19 +32,19 @@
         <div class="col s12 center button-event">
             {% if user.is_authenticated %}
             {% if user_is_owner %}
-            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento">Eres propietario</h3>
+            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>Eres propietario</h3>
             {% elif not user_is_old_enough %}
-            <h3 class=" btn-large price-detail-no portrait-button" title="No puedes inscribirte a este evento">No tienes la edad suficiente</h3>
+            <h3 class=" btn-large price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>No tienes la edad suficiente</h3>
             {% elif event_is_full %}
-            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento">Aforo Completo</h3>
+            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>Aforo Completo</h3>
             {% elif event.has_started %}
-            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento">Ya ha empezado</h3>
+            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>Ya ha empezado</h3>
             {% elif event.has_finished %}
-            <h3 class=" btn-large price-detail-no portrait-button" title="No puedes inscribirte a este evento">Ya ha terminado</h3>
+            <h3 class=" btn-large price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>Ya ha terminado</h3>
             {% elif user_is_enrolled %}
-            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento">Ya estás inscrito</h3>
+            <h3 class=" btn-large  price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>Ya estás inscrito</h3>
             {% elif event.created_by.username == 'deleted' %}
-            <h3 class=" btn-large price-detail-no portrait-button" title="No puedes inscribirte a este evento">No disponible</h3>
+            <h3 class=" btn-large price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>No disponible</h3>
             {% elif user_can_enroll and not event.has_started %}
             {% if user.profile.eventpoints > 0 %}
             <a class=" waves-light btn-large modal-trigger modal-mov price-detail"
@@ -69,7 +69,7 @@
             {% endif %}
             {% endif %}
             {% elif event.created_by.username == 'deleted' %}
-            <h3 class="price-detail-no portrait-button" title="No puedes inscribirte a este evento">No disponible</h3>
+            <h3 class="price-detail-no portrait-button" title="No puedes inscribirte a este evento" disabled>No disponible</h3>
             {% else %}
             <a class="waves-effect waves-light btn-large price-detail" id="enroll"
                 href="{% url 'login' %}">INSCRIBIRSE</a>

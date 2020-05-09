@@ -94,7 +94,7 @@
 
 .details-event-principal {
   margin-top: -55%;
-  z-index: -1!important;
+  z-index: 0!important;
 }
 
 .principal-detail {
@@ -295,6 +295,11 @@
   font-size: 25px;
   white-space: pre;
   margin-top: 18%;
+  background-color: grey !important;
+  z-index: -1 !important;
+}
+
+.price-detail-no:hover{
   background-color: grey !important;
 }
 

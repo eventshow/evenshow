@@ -130,10 +130,12 @@
 
 .sep-home {
 	margin-right: 2%;
+	z-index: 1 !important;
 }
 
 .sep-home li {
 	margin-top: 1%;
+		z-index: 1 !important;
 }
 
 .sh-eventshow {
