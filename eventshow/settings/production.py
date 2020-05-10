@@ -28,7 +28,7 @@ SECRET_KEY = '-9x776!@a8$%5jxgt!la$o0mn()cc2xf4so4_95_-bc33w(wka'
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 STRIPE_CONNECT_CLIENT_ID = os.environ.get('STRIPE_CONNECT_CLIENT_ID', '')
-STRIPE_REQUEST_URI = 'https://eventshow.herokuapp.com/oauth/callback'
+STRIPE_REQUEST_URI = os.environ.get('STRIPE_REQUEST_URI', '')''
 STRIPE_CONST_FEE = 25
 STRIPE_VARIABLE_FEE = 1.029
 
@@ -42,7 +42,8 @@ EVENTPOINTS = 50
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://eventshow.herokuapp.com']
+ALLOWED_HOSTS = ['https://eventshow-ppl.herokuapp.com',
+                 'https://www.event-show.es']
 
 
 # Application definition
